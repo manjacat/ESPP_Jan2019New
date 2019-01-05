@@ -1,0 +1,801 @@
+﻿@model eSPP.Models.AccountViewRegistrationModel
+
+@{ 
+	eSPP.Models.GroupFeature groupFeature = new eSPP.Models.GroupFeature();
+	List<Guid> userGroupIDList = new List<Guid>();
+	List<eSPP.Models.GroupFeaturesDisplay> groupFeatureDisplayList = new List<eSPP.Models.GroupFeaturesDisplay>();
+	if (User.Identity.IsAuthenticated)
+	{
+		UserGroup userGroup = new UserGroup();
+		userGroupIDList = userGroup.GetGroupByLoginUser();
+		groupFeatureDisplayList = groupFeature.GetFeatureListByGroup(userGroupIDList);
+	}
+}
+<div id="content">
+
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa-fw fa fa-pencil-square-o"></i>
+                Administrator
+                <span>
+                    >
+                    Profil Pengguna
+                </span>
+            </h1>
+        </div>
+    </div>
+	@if (ViewBag.StatusMessage == "Katalaluan Telah Berjaya Ditukar. Katalaluan Baru Telah Ditukar Dan Dihantar Ke Emel")
+	{
+		<div class="row">
+			<article class="col-sm-12">
+				<div class="alert alert-success fade in">
+					<button class="close" data-dismiss="alert">
+						×
+					</button>
+					<i class="fa-fw fa fa-check"></i>
+					<strong>Berjaya</strong> @ViewBag.StatusMessage <strong>@ViewBag.emel</strong>
+				</div>
+			</article>
+		</div>
+	}
+	@if (ViewBag.StatusMessage == "Katalaluan Anda Telah Berjaya Ditukar.")
+	{
+		<div class="row">
+			<article class="col-sm-12">
+				<div class="alert alert-success fade in">
+					<button class="close" data-dismiss="alert">
+						×
+					</button>
+					<i class="fa-fw fa fa-check"></i>
+					<strong>Berjaya</strong> @ViewBag.StatusMessage
+				</div>
+			</article>
+		</div>
+	}
+	@if (ViewBag.StatusMessage == "Profil Anda Telah Berjaya Dikemaskini.")
+	{
+		<div class="row">
+			<article class="col-sm-12">
+				<div class="alert alert-success fade in">
+					<button class="close" data-dismiss="alert">
+						×
+					</button>
+					<i class="fa-fw fa fa-check"></i>
+					<strong>Berjaya</strong> @ViewBag.StatusMessage
+				</div>
+			</article>
+		</div>
+	}
+	else
+	{
+        <!-- NEW WIDGET START -->
+        <!-- WIDGET END -->
+	}
+
+
+
+
+    <section id="widget-grid" class="">
+        <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-custombutton="false">
+            <header>
+                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                <h2>Kemaskini Pengguna <span style="color:red">@ViewBag.error</span></h2>
+            </header>
+            <div>
+                <div class="widget-body no-padding">
+                    @using (Html.BeginForm("UserProfile", "Admin", FormMethod.Post, new { @class = "smart-form", id = "smart-form-register", enctype = "multipart/form-data", autocomplete = "off" }))
+					{
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.UserID)
+						@Html.HiddenFor(model => model.Email)
+						@Html.HiddenFor(model => model.NoKP)
+						<input type="hidden" name="getuserid" value="@ViewBag.id" />
+						<input type="hidden" name="staffno" value="@ViewBag.staffno" />
+                        <header>
+                            Maklumat Pengguna
+                        </header>
+                        <fieldset>
+                            <div class="row">
+                                <section class="col col-lg-2 col-md-2 col-sm-12">
+                                    <label class="label">
+                                        Nama Penuh
+                                    </label>
+                                </section>
+                                <section class="col col-lg-4 col-md-4 col-sm-12">
+                                    <label class="input">
+
+                                        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", disabled = "disabled" } })
+                                    </label>
+                                </section>
+                            </div>
+                            <div class="row">
+                                <section class="col col-lg-2 col-md-2 col-sm-12">
+                                    <label class="label">
+                                        No. Kad Pengenalan Baru
+                                    </label>
+                                </section>
+                                <section class="col col-lg-4 col-md-4 col-sm-12">
+                                    <label class="input">
+
+                                        @Html.EditorFor(model => model.NoKP, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", disabled = "disabled" } })
+                                    </label>
+                                </section>
+                            </div>
+                            <!--<div class="row">
+                                <section class="col col-lg-2 col-md-2 col-sm-12">
+                                    <label class="label">
+                                        Kata Laluan
+                                    </label>
+                                </section>
+                                <section class="col col-lg-4 col-md-4 col-sm-12">
+                                    <label class="input">
+
+                                        @*Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })*@
+                                    </label>
+                                </section>
+                            </div>-->
+                            <!--<div class="row">
+                                <section class="col col-lg-2 col-md-2 col-sm-12">
+                                    <label class="label">
+                                        No Telefon
+                                    </label>
+                                </section>
+                                <section class="col col-lg-4 col-md-4 col-sm-12">
+                                    <label class="input">
+
+                                        @*Html.EditorFor(model => model.PhoneNo, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })*@
+                                    </label>
+                                </section>
+                            </div>-->
+                            <div class="row">
+                                <section class="col col-lg-2 col-md-2 col-sm-12">
+                                    <label class="label">
+                                        Alamat Emel
+                                    </label>
+                                </section>
+                                <section class="col col-lg-4 col-md-4 col-sm-12">
+                                    <label class="input">
+
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", type = "email", disabled = "disabled" } })
+                                    </label>
+                                </section>
+                            </div>
+                            <div class="row">
+                                <section class="col col-lg-2 col-md-2 col-sm-12">
+                                    <label class="label">
+                                        No Pekerja
+                                    </label>
+                                </section>
+                                <section class="col col-lg-4 col-md-4 col-sm-12">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.NoStaff, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", disabled = "disabled" } })
+                                    </label>
+                                </section>
+                            </div>
+							<div class="row">
+								<section class="col col-lg-2 col-md-2 col-sm-12">
+									<label class="label">
+										Kumpulan Pengguna
+									</label>
+								</section>
+								<section class="col col-lg-4 col-md-4 col-sm-12">
+									<div class="smart-form">
+										<div class="select">
+											@Html.DropDownListFor(model => model.Role, new SelectList(ViewBag.role, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+											<i></i>
+										</div>
+									</div>
+								</section>
+							</div>
+							<div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+								<div class="text-right">
+									<label class="">Kemaskini : </label>
+									<span class="onoffswitch">
+										<input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mKakitangan-btn" value="off">
+										<label class="onoffswitch-label" for="mKakitangan-btn">
+											<span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+											<span class="onoffswitch-switch"></span>
+										</label>
+									</span>
+								</div>
+							</div>
+
+                        </fieldset>
+
+                                <footer>
+									<button type="submit" class="btn btn-success" id="Kemaskini" name="Command" value="Kemaskini">Kemaskini</button>
+									<a class="btn btn-default btn-primary" href="@Url.Action("ChangePassword", "Manage", new { getuserid = ViewBag.id })" title="Profil Kakitangan">Tukar Katalaluan</a>
+                                    <button type="button" class="btn btn-default" onclick="javascript: history.go(-1)">
+                                        Kembali
+                                    </button>
+                                </footer>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- END MAIN CONTENT -->
+
+@section pagespecific {
+    <!--<script type="text/javascript">
+
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+    $(document).ready(function () {
+
+        var $checkoutForm = $('#checkout-form').validate({
+            // Rules for form validation
+            rules: {
+                fname: {
+                    required: true
+                },
+                lname: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                phone: {
+                    required: true
+                },
+                country: {
+                    required: true
+                },
+                city: {
+                    required: true
+                },
+                code: {
+                    required: true,
+                    digits: true
+                },
+                address: {
+                    required: true
+                },
+                name: {
+                    required: true
+                },
+                card: {
+                    required: true,
+                    creditcard: true
+                },
+                cvv: {
+                    required: true,
+                    digits: true
+                },
+                month: {
+                    required: true
+                },
+                year: {
+                    required: true,
+                    digits: true
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                fname: {
+                    required: 'Please enter your first name'
+                },
+                lname: {
+                    required: 'Please enter your last name'
+                },
+                email: {
+                    required: 'Please enter your email address',
+                    email: 'Please enter a VALID email address'
+                },
+                phone: {
+                    required: 'Please enter your phone number'
+                },
+                country: {
+                    required: 'Please select your country'
+                },
+                city: {
+                    required: 'Please enter your city'
+                },
+                code: {
+                    required: 'Please enter code',
+                    digits: 'Digits only please'
+                },
+                address: {
+                    required: 'Please enter your full address'
+                },
+                name: {
+                    required: 'Please enter name on your card'
+                },
+                card: {
+                    required: 'Please enter your card number'
+                },
+                cvv: {
+                    required: 'Enter CVV2',
+                    digits: 'Digits only'
+                },
+                month: {
+                    required: 'Select month'
+                },
+                year: {
+                    required: 'Enter year',
+                    digits: 'Digits only please'
+                }
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+
+        var $registerForm = $("#smart-form-register").validate({
+
+            // Rules for form validation
+            rules: {
+                username: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 20
+                },
+                passwordConfirm: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 20,
+                    equalTo: '#password'
+                },
+                firstname: {
+                    required: true
+                },
+                lastname: {
+                    required: true
+                },
+                gender: {
+                    required: true
+                },
+                terms: {
+                    required: true
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                login: {
+                    required: 'Please enter your login'
+                },
+                email: {
+                    required: 'Please enter your email address',
+                    email: 'Please enter a VALID email address'
+                },
+                password: {
+                    required: 'Please enter your password'
+                },
+                passwordConfirm: {
+                    required: 'Please enter your password one more time',
+                    equalTo: 'Please enter the same password as above'
+                },
+                firstname: {
+                    required: 'Please select your first name'
+                },
+                lastname: {
+                    required: 'Please select your last name'
+                },
+                gender: {
+                    required: 'Please select your gender'
+                },
+                terms: {
+                    required: 'You must agree with Terms and Conditions'
+                }
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+
+        var $reviewForm = $("#review-form").validate({
+            // Rules for form validation
+            rules: {
+                name: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                review: {
+                    required: true,
+                    minlength: 20
+                },
+                quality: {
+                    required: true
+                },
+                reliability: {
+                    required: true
+                },
+                overall: {
+                    required: true
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                name: {
+                    required: 'Please enter your name'
+                },
+                email: {
+                    required: 'Please enter your email address',
+                    email: '<i class="fa fa-warning"></i><strong>Please enter a VALID email addres</strong>'
+                },
+                review: {
+                    required: 'Please enter your review'
+                },
+                quality: {
+                    required: 'Please rate quality of the product'
+                },
+                reliability: {
+                    required: 'Please rate reliability of the product'
+                },
+                overall: {
+                    required: 'Please rate the product'
+                }
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+
+        var $commentForm = $("#comment-form").validate({
+            // Rules for form validation
+            rules: {
+                name: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                url: {
+                    url: true
+                },
+                comment: {
+                    required: true
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                name: {
+                    required: 'Enter your name',
+                },
+                email: {
+                    required: 'Enter your email address',
+                    email: 'Enter a VALID email'
+                },
+                url: {
+                    email: 'Enter a VALID url'
+                },
+                comment: {
+                    required: 'Please enter your comment'
+                }
+            },
+
+            // Ajax form submition
+            submitHandler: function (form) {
+                $(form).ajaxSubmit({
+                    success: function () {
+                        $("#comment-form").addClass('submited');
+                    }
+                });
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+
+        var $contactForm = $("#contact-form").validate({
+            // Rules for form validation
+            rules: {
+                name: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                message: {
+                    required: true,
+                    minlength: 10
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                name: {
+                    required: 'Please enter your name',
+                },
+                email: {
+                    required: 'Please enter your email address',
+                    email: 'Please enter a VALID email address'
+                },
+                message: {
+                    required: 'Please enter your message'
+                }
+            },
+
+            // Ajax form submition
+            submitHandler: function (form) {
+                $(form).ajaxSubmit({
+                    success: function () {
+                        $("#contact-form").addClass('submited');
+                    }
+                });
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+
+        var $loginForm = $("#login-form").validate({
+            // Rules for form validation
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 20
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                email: {
+                    required: 'Please enter your email address',
+                    email: 'Please enter a VALID email address'
+                },
+                password: {
+                    required: 'Please enter your password'
+                }
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+
+        var $orderForm = $("#order-form").validate({
+            // Rules for form validation
+            rules: {
+                name: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                phone: {
+                    required: true
+                },
+                interested: {
+                    required: true
+                },
+                budget: {
+                    required: true
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                name: {
+                    required: 'Please enter your name'
+                },
+                email: {
+                    required: 'Please enter your email address',
+                    email: 'Please enter a VALID email address'
+                },
+                phone: {
+                    required: 'Please enter your phone number'
+                },
+                interested: {
+                    required: 'Please select interested service'
+                },
+                budget: {
+                    required: 'Please select your budget'
+                }
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+
+        // START AND FINISH DATE
+        $('#startdate').datepicker({
+            dateFormat: 'dd.mm.yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#finishdate').datepicker('option', 'minDate', selectedDate);
+            }
+        });
+
+        $('#finishdate').datepicker({
+            dateFormat: 'dd.mm.yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#startdate').datepicker('option', 'maxDate', selectedDate);
+            }
+        });
+
+
+
+    })
+
+    </script>-->
+    <script type="text/javascript">
+    //$("form").attr({ "id": "tp", "class": "smart-form" })
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+    $(document).ready(function () {
+
+        var $registerForm = $("#smart-form-register").validate({
+
+            // Rules for form validation
+            rules: {
+                Username: {
+                    required: true
+                },
+                Password: {
+                    required: true
+                },
+                Email: {
+                    required: true
+                },
+                NoKP: {
+                    required: true
+                },
+                DOB: {
+                    required: false
+                },
+                Age: {
+                    required: false
+                },
+                Sex: {
+                    required: false
+                },
+                Religion: {
+                    required: false
+                },
+                Race: {
+                    required: false
+                },
+                Status: {
+                    required: false
+                },
+                PhoneNo: {
+                    required: false
+                },
+                FaxNo: {
+                    required: false
+                },
+                Address: {
+                    required: false
+                },
+                PostCode: {
+                  required: false,
+                  number: true
+                },
+                MailPostCode: {
+                    required: false,
+                    number: true
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                Username: {
+                    required: "Diperlukan"
+                },
+                Password: {
+                    required: "Diperlukan"
+                },
+                Email: {
+                    required: "Diperlukan",
+                },
+                NoKP: {
+                    required: "Diperlukan"
+                },
+                DOB: {
+                    required: "Diperlukan"
+                },
+
+                Age: {
+                    required: "Diperlukan"
+                },
+                Sex: {
+                    required: "Diperlukan"
+                },
+                Religion: {
+                    required: "Diperlukan"
+                },
+                Race: {
+                    required: "Diperlukan"
+                },
+                Status: {
+                    required: "Diperlukan"
+                },
+                PhoneNo: {
+                    required: "Diperlukan"
+                },
+                FaxNo: {
+                    required: "Diperlukan"
+                },
+                Address: {
+                    required: "Diperlukan"
+                },
+                PostCode: {
+                    required: "Poskod diperlukan",
+                    number: "Sila masukkan poskod dengan betul"
+                },
+               MailPostCode: {
+                    required: "Poskod diperlukan",
+                    number: "Sila masukkan poskod dengan betul"
+                }
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+		})
+		$("input[name='sah[]']").on("change", function () {
+			if ($(this).attr("id") == "mKakitangan-btn") {
+				if ($(this).is(':checked') == true) {
+					$(this).val('on')
+					$("input[type='text'],select").removeAttr('disabled');
+					$("input[type='email']").removeAttr('disabled');
+					$("input[name='Username']").attr('readonly', 'readonly');
+					$("input[name='NoKP']").attr('readonly', 'readonly');
+					$("input[name='Email']").attr('readonly', 'readonly');
+					$("input[name='NoStaff']").attr('readonly', 'readonly');
+				}
+				else {
+					$(this).val('off')
+
+					$("input[type='text']").each(function () {
+						$(this).val(function () {
+							return this.defaultValue;
+						});
+					})
+
+					$("input[name='Username']").removeAttr('readonly', 'readonly');
+					$("input[name='NoKP']").removeAttr('readonly', 'readonly');
+					$("input[name='Email']").removeAttr('readonly', 'readonly');
+					$("input[name='NoStaff']").removeAttr('readonly', 'readonly');
+					$("input[type='text'],select").attr('disabled', 'disabled');
+					$("input[type='email']").attr('disabled', 'disabled');
+				}
+			}
+		})
+    });
+    </script>
+}

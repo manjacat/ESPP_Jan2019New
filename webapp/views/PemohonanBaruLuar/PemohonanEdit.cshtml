@@ -1,0 +1,417 @@
+﻿
+@model eSPP.Models.HR_SEMINAR_LUAR
+<!-- MAIN CONTENT -->
+<div id="content">
+
+
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-3" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Kemaskini Sewaan Pejabat</h2>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body fuelux">
+
+                            <div class="wizard">
+                                <ul class="steps">
+                                    <li data-target="#step1" class="active">
+                                        <span class="badge badge-info">1</span>Langkah 1<span class="chevron"></span>
+                                    </li>
+                                    <li data-target="#step2">
+                                        <span class="badge">2</span>Langkah 2<span class="chevron"></span>
+                                    </li>
+                                    <li data-target="#step3">
+                                        <span class="badge">3</span>Langkah 3<span class="chevron"></span>
+                                    </li>
+
+                                </ul>
+                                <div class="actions">
+                                    <button type="button" id="test2" class="btn btn-sm btn-primary btn-prev">
+                                        <i class="fa fa-arrow-left"></i>Sebelum
+                                    </button>
+                                    <button type="button" id="test" class="btn btn-sm btn-success btn-next" data-last="Tamat">
+                                        Seterusnya<i class="fa fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="step-content">
+                                @using (Html.BeginForm("EditSewaanPejabat", "Bangunan", FormMethod.Post, new { @class = "smart-form", id = "tp", enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationBootstrap()
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                  
+                                    <div class="step-pane active" id="step1">
+                                        <!-- wizard form starts here -->
+                                        <h3><strong>Step 1 </strong> - Kemaskini Pelanggan</h3>
+                                        <br />
+                                        <br />
+
+                                        <div class="row">
+                                        
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="step-pane" id="step2">
+                                        <h3><strong>Step 2 </strong> - Kemaskini Sewaan Pejabat</h3>
+                                        <br>
+                                        <br>
+                                        <div class="row">
+                                           
+                                        </div>
+
+                                    </div>
+                                    <div class="step-pane" id="step3">
+                                        <h3><strong>Step 3 </strong> - Kemaskini Sewaan Pejabat</h3>
+                                        <br />
+                                        <br />
+                                        <div class="row">
+                                      
+                                        </div>
+                                    </div>
+    }
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="TambahModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div id='TambahModalContent'></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="EditModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div id='EditModalContent'></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="RenewModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div id='RenewModalContent'></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="PadamModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div id='PadamModalContent'></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="InfoModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div id='InfoModalContent'></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end widget content -->
+
+                    </div>
+                    <!-- end widget div -->
+
+                </div>
+                <!-- end widget -->
+
+            </article>
+            <!-- WIDGET END -->
+
+        </div>
+
+        <!-- end row -->
+        <!-- end row -->
+
+    </section>
+    <!-- end widget grid -->
+
+</div>
+<!-- END MAIN CONTENT -->
+@section pagespecific {
+    <script src="/scripts/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="/scripts/plugin/fuelux/wizard/wizard.min.js"></script>
+
+    <script type="text/javascript">
+
+            // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+        $(document).ready(function () {
+
+            //Bootstrap Wizard Validations
+
+           
+
+           
+
+        });
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+
+
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($("#cust_name").val() == "") {
+                $("#hide").hide();
+                $("#hide2").hide();
+            }
+            else {
+                $("#hide").show();
+                $("#hide2").show();
+            }
+            if ($('#sewa_peti').val() == "false")
+            {
+                $('#p_pobox_id').val(0);
+                $('div #sewaPeti').removeClass('hide').addClass('hide');
+                $('#sewa_peti').removeAttr('checked');
+                $('#sewa_peti').attr('disabled', 'disabled');
+            }
+            else if ($('#sewa_peti').val() == "true")
+            {
+                $('div #sewaPeti').removeClass('hide');
+                $('#sewa_peti').attr('checked', 'true');
+                $('#sewa_peti').attr('disabled', 'disabled');
+            }
+            if ($('#sewa_parking').val() == "false") {
+
+                $('div #sewaParking').removeClass('hide').addClass('hide');
+                $('#sewa_parking').removeAttr('checked');
+                $('#sewa_parking').attr('disabled', 'disabled');
+
+            }
+            else if ($('#sewa_parking').val() == "true") {
+                $('div #sewaParking').removeClass('hide');
+                $('#sewa_parking').attr('checked', 'true');
+                $('#sewa_parking').attr('disabled', 'disabled');
+            }
+
+            //$('#sewaPeti, #sewaParking').addClass('hide');
+            $('#sewa_peti, #sewa_parking').on('click', function () {
+                if ($(this).val() == "false") {
+                    $(this).val('true');
+
+
+                }
+                else if ($(this).val() == "true") {
+                    $(this).val('false');
+                }
+                if ($('#sewa_peti').val() == "true") {
+                    debugger;
+                    $('div #sewaPeti').removeClass('hide');
+                    //$('#p_pobox_id').val('');
+
+                }
+                else if ($('#sewa_peti').val() == "false") {
+                    $('div #sewaPeti').addClass('hide');
+                    $('#p_pobox_id').val(0);
+
+
+                }
+                if ($('#sewa_parking').val() == "true") {
+                    debugger;
+                    $('div #sewaParking').removeClass('hide');
+                    //$('#p_pobox_id').removeAttr('readonly');
+
+                }
+                else if ($('#sewa_parking').val() == "false") {
+                    $('div #sewaParking').addClass('hide');
+
+                }
+            });
+
+            //start (bila nama dah wujud keluar error)
+            /*$('#cust_name').on('input', function (e) {
+                debugger;
+                var search = $(this).val();
+                var cust_id = $('#cust_id').val();
+                $.ajax({
+                    url: "../../Bangunan/Daftar2",
+                    data: { "search": search, "cust_id": cust_id },
+                    contentType: "application/json; charset=utf-8",
+                    type: 'GET',
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == "ada") {
+                            $('#error').html('Telah Wujud (sila isi nama yang lain)').css("color", "red");
+                            //$('#submit').attr('disabled', 'disabled');
+                        }
+                        else if (data == "tiada") {
+                            $('#error').html('');
+                            //$('#submit').removeAttr('disabled');
+                        }
+                        else if(data == "current")
+                        {
+                            $('#error').html('');
+                            //$('#submit').removeAttr('disabled');
+                        }
+                    }
+                })
+            });*/
+            //end (bila nama dah wujud keluar error)
+        });
+
+        $(function () {
+            $(document).on('click', '.btn-add', function (e) {
+                e.preventDefault();
+
+                var controlForm = $('.controls'),
+                    currentEntry = $(this).parents('.entry:first'),
+                    newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+                newEntry.find('input').val('');
+                controlForm.find('.entry:not(:last) .btn-add')
+                    .removeClass('btn-add').addClass('btn-remove')
+                    .removeClass('btn-success').addClass('btn-danger')
+                    .html('<span class="glyphicon glyphicon-minus"></span>');
+            }).on('click', '.btn-remove', function (e) {
+                $(this).parents('.entry:first').remove();
+
+                e.preventDefault();
+                return false;
+            });
+
+            $(document).on('click', '.btn-add2', function (e) {
+                e.preventDefault();
+                //$('div #sorok:not(:first)').removeClass('hide')
+                var controlForm = $('#bapak'),
+                    currentEntry = $('div #sorok:first'),
+                    newEntry = $(currentEntry.clone().removeClass('hide')).appendTo(controlForm);
+
+                newEntry.find('input').val('');
+                controlForm.find('#after:not(:last) .btn-add2')
+                    .removeClass('btn-add2').addClass('btn-remove2')
+                    .removeClass('btn-success').addClass('btn-danger')
+                    .html('<span class="glyphicon glyphicon-minus"></span>');
+            }).on('click', '.btn-remove2', function (e) {
+                $(this).parents('div #sorok:first').remove();
+
+                e.preventDefault();
+                return false;
+            });
+
+        });
+        $(document).ready(function () {
+            var counter = $("input[name='new_rate[]']").length;
+            console.log(counter)
+
+            $(document).on('click', '.btn-add3', function (e) {
+
+                var newTextBoxDiv = $(document.createElement('tr'))
+                     .addClass("entry3");
+
+                var start_date = $("#rate_end_date" + counter).val();
+                var end_date = $("#agreement_end_date").val();
+                var previous_rate = $("#new_rate" + counter).val();
+                var new_rate = $("#new_rate" + counter).val();
+
+                newTextBoxDiv.after().html('<td><label class="input"><input class="form-control rate_start_date datepicker2" type="text" name="rate_start_date[]" id="rate_start_date' + (counter + 1) + '" value="' + start_date + '" readonly ="readonly" /><input class="form-control" type="hidden" name="rate_id[]" id="rate_id' + (counter + 1) + '" ></label></td>' +
+                                           '<td><label class="input"><input class="form-control rate_end_date datepicker3" type="text" name="rate_end_date[]" id="rate_end_date' + (counter + 1) + '" value="' + end_date + '" readonly ="readonly" /></label></td>' +
+                                           '<td><label class="input"><input class="form-control previous_rate" type="text" name="previous_rate[]" id="previous_rate' + (counter + 1) + '" value="' + previous_rate + '" /></label></td>' +
+                                           '<td><label class="input"><input class="form-control percent" type="text" name="percent[]" id="percent' + (counter + 1) + '" value="0" /></label></td>' +
+                                           '<td><label class="input"><input class="form-control new_rate" type="text" name="new_rate[]" id="new_rate' + (counter + 1) + '" value="' + new_rate + '" /></label></td>' +
+                                           '<td><label class="input"><input class="form-control adjustment" type="text" name="adjustment[]" id="adjustment' + (counter + 1) + '" value="0" /></label></td>' +
+                                           '<td><button class="btn btn-danger btn-remove3" type="button" style="padding: 6px 10px"><span class="glyphicon glyphicon-minus"></span></button></td>');
+
+                newTextBoxDiv.appendTo("#TextBoxesGroup");
+
+                counter++;
+
+            }).on('click', '.btn-remove3', function (e) {
+                counter--;
+                $(this).parents('.entry3:first').remove();
+
+                e.preventDefault();
+                return false;
+            });
+
+            $('.entry3:not(:first) .btn-add3')
+                    .removeClass('btn-add3').addClass('btn-remove3')
+                    .removeClass('btn-success').addClass('btn-danger')
+                    .html('<span class="glyphicon glyphicon-minus"></span>');
+
+            $(document).on('input', '.percent, .new_rate, .previous_rate', function (ev) {
+                // grab ID to get row number
+                thisID = $(this).attr("id");
+                console.log(rowNum = thisID.slice(-1));
+
+                $("input[name='new_rate[]']").length
+
+                //get Amount entered
+                amt = $('#previous_rate' + rowNum).val();
+                //get QTY
+                qty = $('#percent' + rowNum).val();
+                tot = parseFloat(amt) + amt * qty / 100;
+                $('#new_rate' + rowNum).val(tot.toFixed(2));
+
+                for (var i = parseInt(rowNum) ; i < $("input[name='new_rate[]']").length ; i++) {
+                    debugger;
+                    amt = $('#previous_rate' + i).val();
+                    //get QTY
+                    qty = $('#percent' + i).val();
+                    tot = parseFloat(amt) + amt * qty / 100;
+                    $('#new_rate' + i).val(tot.toFixed(2));
+
+                    console.log($('#previous_rate' + (i + 1)).val(tot.toFixed(2)));
+
+                    amt = $('#previous_rate' + $("input[name='new_rate[]']").length).val();
+                    //get QTY
+                    qty = $('#percent' + $("input[name='new_rate[]']").length).val();
+                    tot = parseFloat(amt) + amt * qty / 100;
+                    $('#new_rate' + $("input[name='new_rate[]']").length).val(tot.toFixed(2));
+
+                }
+
+                //console.log($("input [name='new_rate[1][4]']"));
+            });
+
+            //$('#total').val($('#itm-qty').val() * $('#itm-amnt').val());
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        //$("form").attr({ "id": "tp", "class": "smart-form" })
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+
+
+    </script>
+}

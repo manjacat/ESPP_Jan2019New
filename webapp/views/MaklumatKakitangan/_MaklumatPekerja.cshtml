@@ -1,0 +1,52 @@
+﻿
+@model eSPP.Models.HR_MAKLUMAT_PERIBADI
+<div class="well">
+    <fieldset>
+        <div class="row">
+            <div class="col col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <img src="/content/img/avatars/sunny-big.png" alt="" width="120" height="120" />
+            </div>
+            <div class="col col-lg-8 col-md-8 col-sm-10 col-xs-12 smart-form">
+                <div class="row">
+                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <label class="label col-lg-2 col-md-2  col-sm-2">Nama Pekerja</label>
+                        <label class="input col-lg-6 col-md-8  col-sm-8">
+                            <i class="icon-append fa fa-question-circle"></i>
+                            @Html.EditorFor(model => model.HR_NAMA_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                            <b class="tooltip tooltip-top-right">
+                                <i class="fa fa-warning txt-color-teal"></i>
+                                Sila penuhkan di ruangan ini
+                            </b>
+                        </label>
+                    </section>
+                </div>
+                <div class="row">
+                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <label class="label col-lg-2 col-md-2  col-sm-2">No. KP (Baru)</label>
+                        <label class="input col-lg-4 col-md-4 col-sm-4">
+                            <i class="icon-append fa fa-question-circle"></i>
+                            @Html.EditorFor(model => model.HR_NO_KPBARU, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                            <b class="tooltip tooltip-top-right">
+                                <i class="fa fa-warning txt-color-teal"></i>
+                                Sila masukkan hanya nombor sahaja
+                            </b>
+                        </label>
+                    </section>
+                </div>
+                <div class="row">
+                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <label class="label col-lg-2 col-md-2 col-sm-2">No. Pekerja</label>
+                        <label class="input col-lg-2 col-md-2 col-sm-2">
+                            <i class="icon-append fa fa-question-circle"></i>
+                            @Html.EditorFor(model => model.HR_NO_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                            <b class="tooltip tooltip-top-right">
+                                <i class="fa fa-warning txt-color-teal"></i>
+                                Sila masukkan hanya nombor sahaja
+                            </b>
+                        </label>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>

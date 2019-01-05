@@ -1,0 +1,593 @@
+﻿@model IEnumerable<eSPP.Models.HR_MAKLUMAT_PERIBADI>
+
+<div id="content">
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa-fw fa fa-pencil-square-o"></i>
+                Forms
+                <span>
+                    >
+                    Pergerakan Gaji
+                </span>
+            </h1>
+        </div>
+    </div>
+
+    <section id="widget-grid" class="">
+
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <!-- WIDGET END -->
+
+        </div>
+
+        <!-- end row -->
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <article class="col-sm-12">
+
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-align-justify"></i> </span>
+                        <h2>Senarai Pergerakan Gaji</h2>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body">
+
+                            <div class="row">
+                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="well">
+                                        @using (Html.BeginForm("SenaraiPergerakanGaji", "Kewangan8", FormMethod.Post, new { id = "form" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <div class="row">
+                                                @*<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 smart-form">
+                                                    <label class="select">
+                                                        @Html.DropDownList("jenistindakan", new SelectList(ViewBag.JenisTindakan, "Value", "Text"), new { @class = "form-control", id = "jenistindakan" })
+                                                        <i></i>
+                                                    </label>
+                                                </div>*@
+                                                <div class="col col-lg-3 col-md-6 col-sm-12 col-xs-12 smart-form">
+                                                    <div class="row">
+                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
+                                                            <b>Taraf pekerja : </b>
+                                                        </div>
+                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                            <div class="inline-group">
+                                                                <label class="radio">
+                                                                    <input type="radio" id="tarafpekerja" name="tarafpekerja" value="Y" @(ViewBag.tarafpekerja == "Y"? "checked":"")>
+                                                                    <i></i>Kakitangan
+                                                                </label>
+                                                                <label class="radio">
+                                                                    <input type="radio" id="tarafpekerja" name="tarafpekerja" value="T" @(ViewBag.tarafpekerja == "T"? "checked":"")>
+                                                                    <i></i>Pekerja
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-3 col-md-6 col-sm-12 col-xs-12 smart-form">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
+                                                        <b>Taraf Jawatan : </b>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                        <label class="select">
+                                                            @Html.DropDownList("tarafjawatan", new SelectList(ViewBag.TarafJawatan, "Value", "Text"), new { @class = "form-control", id = "tarafjawatan" })
+                                                            <i></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-3 col-md-6 col-sm-12 col-xs-12 smart-form">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
+                                                        <b>Jenis Perubahan : </b>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                        <label class="select">
+                                                            @Html.DropDownList("jenisperubahan", new SelectList(ViewBag.JenisPerubahan, "Value", "Text"), new { @class = "form-control", id = "jenisperubahan" })
+                                                            <i></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-2 col-md-6 col-sm-12 col-xs-12 smart-form">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
+                                                        <b>Bulan : </b>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                        <label class="select">
+                                                            @Html.DropDownList("bulan", new SelectList(ViewBag.month, "Value", "Text"), new { @class = "form-control", id = "bulan" })
+                                                            <i></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                @*<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 smart-form">
+                                                    <label class="input">
+                                                        @Html.TextBox("tahun", null, new { @class = "form-control", id = "tahun", disabled = "disabled", placeholder ="Tahun" })
+                                                    </label>
+                                                </div>*@
+                                            </div>
+                                        }
+
+                                        @using (Html.BeginForm("PDFSenaraiPergerakanGaji", "Kewangan8", FormMethod.Post, new { id = "form-print", target = "_blank" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <div class="row hide">
+                                                @*<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 smart-form">
+                                                        <label class="select">
+                                                            @Html.DropDownList("jenistindakan", new SelectList(ViewBag.JenisTindakan, "Value", "Text"), new { @class = "form-control", id = "jenistindakan" })
+                                                            <i></i>
+                                                        </label>
+                                                    </div>*@
+                                                <div class="col col-lg-3 col-md-6 col-sm-12 col-xs-12 smart-form">
+                                                    <div class="row">
+                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
+                                                            <b>Taraf pekerja : </b>
+                                                        </div>
+                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                            <div class="inline-group">
+                                                                <label class="radio">
+                                                                    <input type="radio" id="tarafpekerja" name="tarafpekerja" value="Y" @(ViewBag.tarafpekerja == "Y" ? "checked" : "")>
+                                                                    <i></i>Katitangan
+                                                                </label>
+                                                                <label class="radio">
+                                                                    <input type="radio" id="tarafpekerja" name="tarafpekerja" value="T" @(ViewBag.tarafpekerja == "T" ? "checked" : "")>
+                                                                    <i></i>Pekerja
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-3 col-md-6 col-sm-12 col-xs-12 smart-form">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
+                                                        <b>Taraf Jawatan : </b>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                        <label class="select">
+                                                            @Html.DropDownList("tarafjawatan", new SelectList(ViewBag.TarafJawatan, "Value", "Text"), new { @class = "form-control", id = "tarafjawatan" })
+                                                            <i></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-3 col-md-6 col-sm-12 col-xs-12 smart-form">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
+                                                        <b>Jenis Perubahan : </b>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                        <label class="select">
+                                                            @Html.DropDownList("jenisperubahan", new SelectList(ViewBag.JenisPerubahan, "Value", "Text"), new { @class = "form-control", id = "jenisperubahan" })
+                                                            <i></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-2 col-md-6 col-sm-12 col-xs-12 smart-form">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
+                                                        <b>Bulan : </b>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                        <label class="select">
+                                                            @Html.DropDownList("bulan", new SelectList(ViewBag.month, "Value", "Text"), new { @class = "form-control", id = "bulan" })
+                                                            <i></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                @*<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 smart-form">
+                                                        <label class="input">
+                                                            @Html.TextBox("tahun", null, new { @class = "form-control", id = "tahun", disabled = "disabled", placeholder ="Tahun" })
+                                                        </label>
+                                                    </div>*@
+                                            </div>
+                                        }
+                                        @using (Html.BeginForm("EXCSenaraiPergerakanGaji", "Kewangan8", FormMethod.Post, new { id = "form-excel" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <div class="row hide">
+                                                @*<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 smart-form">
+                                                        <label class="select">
+                                                            @Html.DropDownList("jenistindakan", new SelectList(ViewBag.JenisTindakan, "Value", "Text"), new { @class = "form-control", id = "jenistindakan" })
+                                                            <i></i>
+                                                        </label>
+                                                    </div>*@
+                                                <div class="col col-lg-3 col-md-6 col-sm-12 col-xs-12 smart-form">
+                                                    <div class="row">
+                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
+                                                            <b>Taraf pekerja : </b>
+                                                        </div>
+                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                            <div class="inline-group">
+                                                                <label class="radio">
+                                                                    <input type="radio" id="tarafpekerja" name="tarafpekerja" value="Y" @(ViewBag.tarafpekerja == "Y" ? "checked" : "")>
+                                                                    <i></i>Katitangan
+                                                                </label>
+                                                                <label class="radio">
+                                                                    <input type="radio" id="tarafpekerja" name="tarafpekerja" value="T" @(ViewBag.tarafpekerja == "T" ? "checked" : "")>
+                                                                    <i></i>Pekerja
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-3 col-md-6 col-sm-12 col-xs-12 smart-form">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
+                                                        <b>Taraf Jawatan : </b>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                        <label class="select">
+                                                            @Html.DropDownList("tarafjawatan", new SelectList(ViewBag.TarafJawatan, "Value", "Text"), new { @class = "form-control", id = "tarafjawatan" })
+                                                            <i></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-3 col-md-6 col-sm-12 col-xs-12 smart-form">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
+                                                        <b>Jenis Perubahan : </b>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                        <label class="select">
+                                                            @Html.DropDownList("jenisperubahan", new SelectList(ViewBag.JenisPerubahan, "Value", "Text"), new { @class = "form-control", id = "jenisperubahan" })
+                                                            <i></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-2 col-md-6 col-sm-12 col-xs-12 smart-form">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
+                                                        <b>Bulan : </b>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                        <label class="select">
+                                                            @Html.DropDownList("bulan", new SelectList(ViewBag.month, "Value", "Text"), new { @class = "form-control", id = "bulan" })
+                                                            <i></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                @*<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 smart-form">
+                                                        <label class="input">
+                                                            @Html.TextBox("tahun", null, new { @class = "form-control", id = "tahun", disabled = "disabled", placeholder ="Tahun" })
+                                                        </label>
+                                                    </div>*@
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
+                            <table id="datatable_tabletools" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th data-hide="phone">No Pekerja</th>
+                                        <th data-class="expand">Nama Pekerja</th>
+                                        <th>Jawatan</th>
+                                        <th data-hide="phone,tablet">Jabatan</th>
+                                        <th data-hide="phone,tablet">Bahagian</th>
+                                        <th data-hide="phone,tablet">Unit</th>
+                                        <th data-hide="phone,tablet">Gred</th>
+                                        <th data-hide="phone,tablet">Gaji Pokok</th>
+                                        <th data-hide="phone,tablet">Tarikh Pergerakan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ var no = 0;}
+                                    @foreach (HR_MAKLUMAT_PERIBADI item in Model)
+                                    {
+                                        ++no;
+                                        var jabatan = "";
+                                        var jawatan = "";
+                                        var bahagian = "";
+                                        var unit = "";
+                                        var gred = "";
+                                        List<GE_JABATAN> listJabatan = ViewBag.jabatan;
+                                        GE_JABATAN jbt = listJabatan.Where(s => s.GE_KOD_JABATAN == item.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN).SingleOrDefault();
+                                        if (jbt != null)
+                                        {
+                                            jabatan = jbt.GE_KETERANGAN_JABATAN;
+                                        }
+                                        List<HR_JAWATAN> listJawatan = ViewBag.jawatan;
+                                        HR_JAWATAN jwt = listJawatan.SingleOrDefault(s => s.HR_KOD_JAWATAN == item.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
+                                        if (jwt != null)
+                                        {
+                                            jawatan = jwt.HR_NAMA_JAWATAN;
+                                        }
+                                        List<GE_BAHAGIAN> listBahagian = ViewBag.bahagian;
+                                        GE_BAHAGIAN bhg = listBahagian.SingleOrDefault(s => s.GE_KOD_JABATAN == item.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN && s.GE_KOD_BAHAGIAN == item.HR_MAKLUMAT_PEKERJAAN.HR_BAHAGIAN);
+                                        if (bhg != null)
+                                        {
+                                            bahagian = bhg.GE_KETERANGAN;
+                                        }
+                                        List<GE_UNIT> listUnit = ViewBag.unit;
+                                        GE_UNIT u = listUnit.SingleOrDefault(s => s.GE_KOD_JABATAN == item.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN && s.GE_KOD_BAHAGIAN == item.HR_MAKLUMAT_PEKERJAAN.HR_BAHAGIAN && s.GE_KOD_UNIT == item.HR_MAKLUMAT_PEKERJAAN.HR_UNIT);
+                                        if (u != null)
+                                        {
+                                            unit = u.GE_KETERANGAN;
+                                        }
+                                        List<GE_PARAMTABLE> listGred = ViewBag.gred;
+                                        var grdTxt = Convert.ToInt32(item.HR_MAKLUMAT_PEKERJAAN.HR_GRED);
+                                        GE_PARAMTABLE grd = listGred.SingleOrDefault(s => s.ORDINAL == grdTxt);
+                                        if (grd != null)
+                                        {
+                                            gred = grd.SHORT_DESCRIPTION;
+                                        }
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(model => item.HR_NO_PEKERJA)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(model => item.HR_NAMA_PEKERJA)
+                                            </td>
+                                            <td>
+                                                @jawatan
+                                            </td>
+                                            <td>
+                                                @jabatan
+                                            </td>
+                                            <td>
+                                                @bahagian
+                                            </td>
+                                            <td>
+                                                @unit
+                                            </td>
+                                            <td>
+                                                @gred
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(model => item.HR_MAKLUMAT_PEKERJAAN.HR_GAJI_POKOK)
+                                            </td>
+                                            <td>
+                                                @string.Format("{0:dd/MM/yyyy}", item.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI)
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+</div>
+@section pagespecific {
+    <script type="text/javascript">
+
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+        $(document).ready(function () {
+
+            /* // DOM Position key index //
+
+            l - Length changing (dropdown)
+            f - Filtering input (search)
+            t - The Table! (datatable)
+            i - Information (records)
+            p - Pagination (paging)
+            r - pRocessing
+            < and > - div elements
+            <"#id" and > - div with an id
+            <"class" and > - div with a class
+            <"#id.class" and > - div with an id and class
+
+            Also see: http://legacy.datatables.net/usage/features
+            */
+
+            /* BASIC ;*/
+            var responsiveHelper_dt_basic = undefined;
+            var responsiveHelper_datatable_fixed_column = undefined;
+            var responsiveHelper_datatable_col_reorder = undefined;
+            var responsiveHelper_datatable_tabletools = undefined;
+
+            var breakpointDefinition = {
+                tablet: 1024,
+                phone: 480
+            };
+
+            $('#dt_basic').dataTable({
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>" +
+                    "t" +
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+                "autoWidth": true,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_dt_basic) {
+                        responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_dt_basic.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_dt_basic.respond();
+                }
+            });
+
+            /* END BASIC */
+
+            /* COLUMN FILTER  */
+            var otable = $('#datatable_fixed_column').DataTable({
+                //"bFilter": false,
+                //"bInfo": false,
+                //"bLengthChange": false
+                //"bAutoWidth": false,
+                //"bPaginate": false,
+                //"bStateSave": true // saves sort state using localStorage
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+                "autoWidth": true,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_datatable_fixed_column) {
+                        responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_datatable_fixed_column.respond();
+                }
+
+            });
+
+            // custom toolbar
+            $("div.toolbar").html('<div class="text-right"><img src="/Content/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+
+            // Apply the filter
+            $("#datatable_fixed_column thead th input[type=text]").on('keyup change', function () {
+
+                otable
+                    .column($(this).parent().index() + ':visible')
+                    .search(this.value)
+                    .draw();
+
+            });
+            /* END COLUMN FILTER */
+
+            /* COLUMN SHOW - HIDE */
+            $('#datatable_col_reorder').dataTable({
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'C>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                "autoWidth": true,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_datatable_col_reorder) {
+                        responsiveHelper_datatable_col_reorder = new ResponsiveDatatablesHelper($('#datatable_col_reorder'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_datatable_col_reorder.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_datatable_col_reorder.respond();
+                }
+            });
+
+            /* END COLUMN SHOW - HIDE */
+
+            /* TABLETOOLS */
+            $('#datatable_tabletools').dataTable({
+
+                // Tabletools options:
+                //   https://datatables.net/extensions/tabletools/button_options
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'l<'btn-print'>>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                /*"oTableTools": {
+                    "aButtons": [
+                    "copy",
+                    "csv",
+                    "xls",
+                       {
+                           "sExtends": "pdf",
+                           "sTitle": "SmartAdmin_PDF",
+                           "sPdfMessage": "SmartAdmin PDF Export",
+                           "sPdfSize": "letter"
+                       },
+                       {
+                           "sExtends": "print",
+                           "sMessage": "Generated by SmartAdmin <i>(press Esc to close)</i>"
+                       }
+                    ],
+                    "sSwfPath": "/Scripts/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+                },*/
+                "autoWidth": true,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_datatable_tabletools) {
+                        responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#datatable_tabletools'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_datatable_tabletools.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_datatable_tabletools.respond();
+                }
+            });
+
+            $("div.btn-print").html('<div class="text-right">' +
+                '<button type = "button" name = "print" id = "print" class = "btn btn-default" title = "Cetak PDF"><i class = "fa fa-print"></i><i class = "fa fa-file-pdf-o"></i></button>' +
+                '<button type = "button" name = "excel" id = "excel" class = "btn btn-default" title = "Muat Turun Excel"><i class = "fa fa-download"></i><i class = "fa fa-file-excel-o"></i></button>' +
+                '</div>');
+
+            /* END TABLETOOLS */
+
+            $("#print").on("click", function () {
+                $('#form-print').submit();
+            })
+
+            $("#excel").on("click", function () {
+                $('#form-excel').submit();
+            })
+
+            var tahun = $('#tahun').val();
+            $('#tahun').focus().val('').val(tahun);
+
+            $('#tarafpekerja, #tarafjawatan, #bulan, #jenisperubahan').on('input', function () {
+
+                if ($('#bulan').val() != "")
+                {
+                    //$("#datatable_tabletools tbody").html("");
+                    /*$.ajax({
+                        url: "../Kewangan8/SenaraiPergerakanGaji2",
+                        type: "GET",
+                        dataType: "JSON",
+                        data: { bulan: $("#bulan").val(), tahun: $("#tahun").val() },
+                        success: function (data2) {
+                            $.each(data2, function (i, v) {
+
+                                $('#datatable_tabletools').dataTable({
+                                    "data": v,
+                                    "columns": [
+                                        { "data": 'HR_MAKLUMAT_KEWANGAN8.HR_NO_PEKERJA' },
+                                        { "data": 'HR_MAKLUMAT_PERIBADI.HR_NAMA_PEKERJA' }, //or { data: 'MONTH', title: 'Month' }`
+                                        { "data": 'HR_MAKLUMAT_KEWANGAN8.HR_TARIKH_KEYIN' },
+                                        { "data": 'HR_MAKLUMAT_PEKERJAAN.HR_JABATAN' },
+                                        { "data": 'HR_MAKLUMAT_KEWANGAN8.HR_KOD_JAWATAN' }
+                                    ]
+                                })
+                                //var tarikh = new Date(parseInt(v.HR_MAKLUMAT_KEWANGAN8.HR_TARIKH_KEYIN.replace(/\/Date\((\d+)\)\//, '$1')));
+                                //$("#datatable_tabletools tbody").append($("<tr><td>" + v.HR_MAKLUMAT_KEWANGAN8.HR_NO_PEKERJA + "</td><td>" + v.HR_MAKLUMAT_PERIBADI.HR_NAMA_PEKERJA + "</td><td>" + tarikh.toLocaleDateString('en-GB') + "</td><td>" + v.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN + "</td><td>" + v.HR_MAKLUMAT_KEWANGAN8.HR_KOD_JAWATAN + "</td></tr>"))
+                            })
+                        }
+                    })*/
+                    $('#form').submit();
+                }
+            })
+
+        });
+
+    </script>
+}

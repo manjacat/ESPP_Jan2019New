@@ -1,0 +1,37 @@
+﻿@model IEnumerable<eSPP.Models.GroupFeaturesDisplay>
+
+
+<h2>Manage Feature</h2>
+
+<p>
+    @Html.ActionLink("Back to list", "Index")
+</p>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.FeatureName)
+            </th>
+            <th>@Html.DisplayNameFor(model => model.ControllerName)</th>
+            <th>@Html.DisplayNameFor(model => model.ActionName)</th>
+        </tr>
+    @foreach (var item in Model)
+    {
+        var vChecked = "";
+        if (item.Selected)
+        {
+            vChecked = "checked";
+        }
+        <tr>
+            <td><input type="checkbox" name="SystemFeatureID" value="@item.SystemFeatureID" @vChecked /></td>
+            <td>@item.FeatureName</td>
+            <td>@item.ControllerName</td>
+            <td>@item.ActionName</td>
+        </tr>
+    }
+    </table>
+    <input type="submit" value="Update Changes" class="btn btn-default" />
+}

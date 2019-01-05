@@ -1,0 +1,1009 @@
+﻿@model eSPP.Models.JabatanBahagianUnitModels
+<div id="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa-fw fa fa-pencil-square-o"></i>
+                Forms
+                <span>
+                    >
+                    Jabatan / Bahagian / Unit
+                </span>
+            </h1>
+        </div>
+    </div>
+    <section id="widget-grid" class="">
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <!-- WIDGET END -->
+
+        </div>
+
+        <!-- end row -->
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <article class="col-sm-12">
+                <div class="row">
+                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                        <label class="label">
+                            Jabatan <font color="red">*</font>
+                        </label>
+                    </section>
+                    <section class="col col-lg-6 col-md-6 col-sm-12">
+                        <label class="input">
+                            @Html.DropDownListFor(model => model.HR_JABATAN, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                        </label>
+                    </section>
+                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                        <label class="label">
+                            Tahun Bekerja <font color="red">*</font>
+                        </label>
+                    </section>
+                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                        <label class="input">
+
+                            <input class="form-control" value="@DateTime.Now.Year" name="tahunbekerja" id="tahunbekerja">
+                            @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                        </label>
+                    </section>
+                </div>
+                <div class="row">
+                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                        <label class="label">
+                            Bahagian <font color="red">*</font>
+                        </label>
+                    </section>
+                    <section class="col col-lg-6 col-md-6 col-sm-12">
+                        <label class="input">
+
+                            @Html.DropDownListFor(model => model.HR_BAHAGIAN, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                        </label>
+                    </section>
+                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                        <label class="label">
+                            Bulan Bekerja
+                        </label>
+                    </section>
+                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                        <label class="input">
+
+                            @Html.DropDownList("bulanbekerja", null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                        </label>
+                    </section>
+                </div>
+
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-align-justify"></i> </span>
+                        <h2>  Jabatan / Bahagian / Unit</h2>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body">
+
+
+                            <br />
+
+
+                            <hr class="simple">
+                            <ul id="myTab1" class="nav nav-tabs bordered">
+                                <li class="active">
+                                    <a href="#s1" data-toggle="tab">Jabatan <span class="badge bg-color-blue txt-color-white"></span></a>
+                                </li>
+                                <li>
+                                    <a href="#s2" data-toggle="tab"><i class=""></i> Bahagian</a>
+                                </li>
+                                <li>
+                                    <a href="#s3" data-toggle="tab"><i class=""></i> Unit</a>
+                                </li>
+
+                            </ul>
+
+                            <div id="myTabContent1" class="tab-content padding-10">
+                                <div class="tab-pane fade in active" id="s1">
+                                    <div>
+
+                                        <fieldset>
+
+                                            <div class="">
+                                                <table id="datatable_Jabatan" class="table table-striped table-bordered table-hover" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th data-hide="phone">Kod Jabatan</th>
+                                                            <th data-class="expand">Singkatan</th>
+                                                            <th>Jabatan</th>
+                                                            <th data-hide="phone">Pilih</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @{ var no = 0;}
+                                                        @foreach (var item in Model.GE_JABATAN)
+                                                        {
+                                                            ++no;
+                                                            <tr>
+
+                                                                <td>
+                                                                    <a class="InfoJabatan" id="InfoJabatan" href="javascript:void(0)" data-id="@item.GE_KOD_JABATAN" title="Kemaskini">@item.GE_KOD_JABATAN</a>
+                                                                </td>
+                                                                <td>@Html.DisplayFor(modelItem => item.GE_SINGKATAN)</td>
+                                                                <td>@Html.DisplayFor(modelItem => item.GE_KETERANGAN_JABATAN)</td>
+
+                                                                <td>
+                                                                    <a class="btn btn-default btn-xs EditJabatan" id="EditJabatan" href="javascript:void(0)" data-id="@item.GE_KOD_JABATAN" title="Kemaskini"><i class="fa fa-edit"></i></a>
+                                                                    <a class="btn btn-default btn-xs PadamJabatan" id="PadamJabatan" href="javascript:void(0)" data-id="@item.GE_KOD_JABATAN" title="Padam"><i class="fa fa-trash-o"></i></a>
+                                                                </td>
+
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="s2"> 
+                                   
+                                 
+                                    <fieldset>
+
+                                        <div class="">
+                                            <table id="datatable_Bahagian" class="table table-striped table-bordered table-hover" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-hide="phone">Kod Jabatan</th>
+                                                        <th data-class="expand">Kod Bahagian</th>
+                                                        <th>Singkatan</th>
+                                                        <th data-hide="phone">Nama Bahagian</th>
+                                                        <th data-hide="phone">Pilih</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{ var no1 = 0;}
+                                                    @foreach (var item in Model.GE_BAHAGIAN)
+                                                    {
+                                                        ++no1;
+                                                        <tr>
+                                                            <td>
+                                                                <a class="Info" id="InfoBahagian" href="javascript:void(0)" data-id="@item.GE_KOD_BAHAGIAN"  value="@item.GE_KOD_JABATAN"  title="Kemaskini">@item.GE_KOD_JABATAN</a>
+
+                                                            </td>
+                                                            
+                                                            <td>@Html.DisplayFor(modelItem => item.GE_KOD_BAHAGIAN)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.GE_SINGKATAN)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.GE_KETERANGAN)</td>
+                                                            <td>
+                                                                <a class="btn btn-default btn-xs EditBahagian" id="EditBahagian" href="javascript:void(0)" data-id="@item.GE_KOD_BAHAGIAN"   value="@item.GE_KOD_JABATAN" title="Kemaskini"><i class="fa fa-edit"></i></a>
+                                                                <a class="btn btn-default btn-xs PadamBahagian" id="PadamBahagian" href="javascript:void(0)" data-id="@item.GE_KOD_BAHAGIAN"   value="@item.GE_KOD_JABATAN" title="Padam"><i class="fa fa-trash-o"></i></a>
+                                                            </td>
+
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </fieldset>
+
+                                </div>
+                                <div class="tab-pane fade" id="s3">
+
+                                    <fieldset>
+
+                                        <div class="">
+                                            <table id="datatable_Unit" class="table table-striped table-bordered table-hover" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-hide="phone">Kod Jabatan</th>
+                                                        <th data-class="expand">Kod Bahagian</th>
+                                                        <th>Unit</th>
+                                                        <th data-hide="phone">Singkatan</th>
+                                                        <th data-hide="phone">Keterangan</th>
+                                                        <th data-hide="phone">Pilih</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{ var no2 = 0;}
+                                                    @foreach (var item in Model.GE_UNIT)
+                                                    {
+                                                        ++no2;
+                                                        <tr>
+                                                            <td>
+                                                                <a class="Info" id="InfoUnit" href="javascript:void(0)" data-id="@item.GE_KOD_JABATAN" value="@item.GE_KOD_BAHAGIAN" data="@item.GE_KOD_UNIT" title="Kemaskini">@item.GE_KOD_JABATAN</a>
+
+                                                            </td>
+                                                            <td>
+                                                               @item.GE_KOD_BAHAGIAN
+
+                                                            </td>
+                                                            
+                                                            <td>@Html.DisplayFor(modelItem => item.GE_KOD_UNIT)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.GE_SINGKATAN)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.GE_KETERANGAN)</td>
+                                                         
+                                                            <td>
+                                                                <a class="btn btn-default btn-xs EditUnit" id="EditUnit" href="javascript:void(0)" data-id="@item.GE_KOD_JABATAN" value="@item.GE_KOD_BAHAGIAN" data="@item.GE_KOD_UNIT" title="Kemaskini"><i class="fa fa-edit"></i></a>
+                                                                <a class="btn btn-default btn-xs PadamUnit" id="PadamUnit" href="javascript:void(0)" data-id="@item.GE_KOD_JABATAN" value="@item.GE_KOD_BAHAGIAN" data="@item.GE_KOD_UNIT" title="Padam"><i class="fa fa-trash-o"></i></a>
+                                                            </td>
+
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </fieldset>
+
+
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </article>
+
+        </div>
+    </section>
+</div>
+ <!-- TambahJabatan -->
+
+<div class="modal fade" id="TambahJabatanModel" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='TambahJabatanModelContent'></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="EditJabatanModel" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='EditJabatanModelContent'></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="InfoJabatanModel" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='InfoJabatanModelContent'></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="PadamJabatanModel" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='PadamJabatanModelContent'></div>
+        </div>
+    </div>
+</div>
+  
+ <!-- TambahBahagian -->
+<div class="modal fade" id="TambahModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='TambahModalContent'></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="EditModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='EditModalContent'></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="InfoModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='InfoModalContent'></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="PadamModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='PadamModalContent'></div>
+        </div>
+    </div>
+</div>
+
+ <!-- TambahUnit-->
+<div class="modal fade" id="TambahUnitModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='TambahUnitModalContent'></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="EditUnitModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='EditUnitModalContent'></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="InfoUnitModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='InfoUnitModalContent'></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="PadamUnitModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='PadamUnitModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<!-- end row -->
+<!-- ui-dialog -->
+<!-- END MAIN CONTENT -->
+@section pagespecific {
+    <script type="text/javascript">
+
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+        $(document).ready(function () {
+
+            /* // DOM Position key index //
+
+            l - Length changing (dropdown)
+            f - Filtering input (search)
+            t - The Table! (datatable)
+            i - Information (records)
+            p - Pagination (paging)
+            r - pRocessing
+            < and > - div elements
+            <"#id" and > - div with an id
+            <"class" and > - div with a class
+            <"#id.class" and > - div with an id and class
+
+            Also see: http://legacy.datatables.net/usage/features
+            */
+
+            /* BASIC ;*/
+            var responsiveHelper_dt_basic = undefined;
+            var responsiveHelper_datatable_fixed_column = undefined;
+            var responsiveHelper_datatable_col_reorder = undefined;
+            var responsiveHelper_datatable_Jabatan = undefined;
+            var responsiveHelper_datatable_Bahagian = undefined;
+            var responsiveHelper_datatable_Unit = undefined;
+            var breakpointDefinition = {
+                tablet: 1024,
+                phone: 480
+            };
+
+            $('#dt_basic').dataTable({
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>" +
+                    "t" +
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+                "autoWidth": true,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_dt_basic) {
+                        responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_dt_basic.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_dt_basic.respond();
+                }
+            });
+
+            /* END BASIC */
+
+            /* COLUMN FILTER  */
+            var otable = $('#datatable_fixed_column').DataTable({
+                //"bFilter": false,
+                //"bInfo": false,
+                //"bLengthChange": false
+                //"bAutoWidth": false,
+                //"bPaginate": false,
+                //"bStateSave": true // saves sort state using localStorage
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+                "autoWidth": true,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_datatable_fixed_column) {
+                        responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_datatable_fixed_column.respond();
+                }
+
+            });
+
+            // custom toolbar
+            $("div.toolbar").html('<div class="text-right"><img src="/Content/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+
+            // Apply the filter
+            $("#datatable_fixed_column thead th input[type=text]").on('keyup change', function () {
+
+                otable
+                    .column($(this).parent().index() + ':visible')
+                    .search(this.value)
+                    .draw();
+
+            });
+            /* END COLUMN FILTER */
+
+            /* COLUMN SHOW - HIDE */
+            $('#datatable_col_reorder').dataTable({
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'C>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                "autoWidth": true,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_datatable_col_reorder) {
+                        responsiveHelper_datatable_col_reorder = new ResponsiveDatatablesHelper($('#datatable_col_reorder'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_datatable_col_reorder.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_datatable_col_reorder.respond();
+                }
+            });
+
+            /* END COLUMN SHOW - HIDE */
+
+            /* TABLETOOLS */
+            $('#datatable_Jabatan').dataTable({
+
+                // Tabletools options:
+                //   https://datatables.net/extensions/tabletools/button_options
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'lT<'btn-add-Jabatan'>>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                "oTableTools": {
+                    "aButtons": [
+                    "copy",
+                    "csv",
+                    "xls",
+                       {
+                           "sExtends": "pdf",
+                           "sTitle": "SmartAdmin_PDF",
+                           "sPdfMessage": "SmartAdmin PDF Export",
+                           "sPdfSize": "letter"
+                       },
+                       {
+                           "sExtends": "print",
+                           "sMessage": "Generated by SmartAdmin <i>(press Esc to close)</i>"
+                       }
+                    ],
+                    "sSwfPath": "/Scripts/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+                },
+                "autoWidth": true,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_datatable_Jabatan) {
+                        responsiveHelper_datatable_Jabatan = new ResponsiveDatatablesHelper($('#datatable_Jabatan'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_datatable_Jabatan.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_datatable_Jabatan.respond();
+                }
+            });
+
+            $("div.btn-add-Jabatan").html('<div class="text-right"><button type = "button" name = "Tambah" id = "TambahJabatan" class = "btn btn-success"><i class = "fa fa-plus"></i></button></div>');
+            /* END TABLETOOLS */
+
+            /* END COLUMN SHOW - HIDE */
+
+
+    //BAHAGIAN
+
+            /* TABLETOOLS */
+            $('#datatable_Bahagian').dataTable({
+
+                // Tabletools options:
+                //   https://datatables.net/extensions/tabletools/button_options
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'lT<'btn-add-Bahagian'>>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                "oTableTools": {
+                    "aButtons": [
+                    "copy",
+                    "csv",
+                    "xls",
+                       {
+                           "sExtends": "pdf",
+                           "sTitle": "SmartAdmin_PDF",
+                           "sPdfMessage": "SmartAdmin PDF Export",
+                           "sPdfSize": "letter"
+                       },
+                       {
+                           "sExtends": "print",
+                           "sMessage": "Generated by SmartAdmin <i>(press Esc to close)</i>"
+                       }
+                    ],
+                    "sSwfPath": "/Scripts/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+                },
+                "autoWidth": true,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_datatable_Bahagian) {
+                        responsiveHelper_datatable_Bahagian = new ResponsiveDatatablesHelper($('#datatable_Bahagian'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_datatable_Bahagian.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_datatable_Bahagian.respond();
+                }
+            });
+
+            $("div.btn-add-Bahagian").html('<div class="text-right"><button type = "button" name = "Tambah" id = "TambahBahagian" class = "btn btn-success"><i class = "fa fa-plus"></i></button></div>');
+            /* END TABLETOOLS */
+
+
+   //UNIT
+
+            /* TABLETOOLS */
+            $('#datatable_Unit').dataTable({
+
+                // Tabletools options:
+                //   https://datatables.net/extensions/tabletools/button_options
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'lT<'btn-add-Unit'>>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                "oTableTools": {
+                    "aButtons": [
+                    "copy",
+                    "csv",
+                    "xls",
+                       {
+                           "sExtends": "pdf",
+                           "sTitle": "SmartAdmin_PDF",
+                           "sPdfMessage": "SmartAdmin PDF Export",
+                           "sPdfSize": "letter"
+                       },
+                       {
+                           "sExtends": "print",
+                           "sMessage": "Generated by SmartAdmin <i>(press Esc to close)</i>"
+                       }
+                    ],
+                    "sSwfPath": "/Scripts/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+                },
+                "autoWidth": true,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_datatable_Unit) {
+                        responsiveHelper_datatable_Unit = new ResponsiveDatatablesHelper($('#datatable_Unit'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_datatable_Unit.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_datatable_Unit.respond();
+                }
+            });
+
+            $("div.btn-add-Unit").html('<div class="text-right"><button type = "button" name = "Tambah" id = "TambahUnit" class = "btn btn-success"><i class = "fa fa-plus"></i></button></div>');
+            /* END TABLETOOLS */
+
+
+
+            /*
+         * CONVERT DIALOG TITLE TO HTML
+         * REF: http://stackoverflow.com/questions/14488774/using-html-in-a-dialogs-title-in-jquery-ui-1-10
+         */
+            /*$.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
+                _title: function (title) {
+                    if (!this.options.title) {
+                        title.html("&#160;");
+                    } else {
+                        title.html(this.options.title);
+                    }
+                }
+            }));
+
+
+            // Dialog click
+            $('#tambah').click(function () {
+                $('#dialog_simple').dialog('open');
+                return false;
+
+            });
+
+            $('#dialog_simple').dialog({
+                autoOpen: false,
+                width: 600,
+                resizable: false,
+                modal: true,
+                title: "<div class='widget-header'><h4><i class='fa fa-warning'></i> Tambah Maklumat Gred Baru</h4></div>",
+                buttons: [{
+                    html: "<i class='fa fa-plus'></i>&nbsp; Tambah",
+                    "class": "btn btn-success",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }, {
+                    html: "<i class='fa fa-times'></i>&nbsp; Batal",
+                    "class": "btn btn-default",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }]
+            });*/
+            //dialog
+
+    //JABATAN
+
+            var TambahJabatan = "JabatanBahagianUnit/TambahJabatan";
+            $("#TambahJabatan").click(function () {
+                
+                var $buttonClicked = $(this);
+                //var id = $buttonClicked.attr('data-id');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: TambahJabatan,
+                    contentType: "application/json; charset=utf-8",
+                    //data: { "Id": id },
+                    datatype: "json",
+                    success: function (data) {
+                        
+                        $('#TambahJabatanModelContent').html(data);
+                        $('#TambahJabatanModel').modal(options);
+                        $('#TambahJabatanModel').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+
+
+            var EditJabatan = "JabatanBahagianUnit/EditJabatan";
+            $("#datatable_Jabatan").on("click", "#EditJabatan", function () {
+                
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: EditJabatan,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id},
+                    datatype: "json",
+                    success: function (data) {
+                        
+                        $('#EditJabatanModelContent').html(data);
+                        $('#EditJabatanModel').modal(options);
+                        $('#EditJabatanModel').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+
+
+            var InfoJabatan = "JabatanBahagianUnit/InfoJabatan";
+            $("#datatable_Jabatan").on("click", "#InfoJabatan", function () {
+                
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: InfoJabatan,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id },
+                    datatype: "json",
+                    success: function (data) {
+                        
+                        $('#InfoJabatanModelContent').html(data);
+                        $('#InfoJabatanModel').modal(options);
+                        $('#InfoJabatanModel').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+
+            var PadamJabatan = "JabatanBahagianUnit/PadamJabatan";
+            $("#datatable_Jabatan").on("click", "#PadamJabatan", function () {
+                
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id'); 
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: PadamJabatan,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id},
+                    datatype: "json",
+                    success: function (data) {
+                        
+                        $('#PadamJabatanModelContent').html(data);
+                        $('#PadamJabatanModel').modal(options);
+                        $('#PadamJabatanModel').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+
+     //BAHAGIAN
+
+            var TambahBahagian = "JabatanBahagianUnit/TambahBahagian";
+            $("#TambahBahagian").click(function () {
+                
+                var $buttonClicked = $(this);
+                //var id = $buttonClicked.attr('data-id');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: TambahBahagian,
+                    contentType: "application/json; charset=utf-8",
+                    //data: { "Id": id },
+                    datatype: "json",
+                    success: function (data) {
+                        
+                        $('#TambahModalContent').html(data);
+                        $('#TambahModal').modal(options);
+                        $('#TambahModal').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+
+
+            var EditBahagian = "JabatanBahagianUnit/EditBahagian";
+            $("#datatable_Bahagian").on("click", "#EditBahagian", function () {
+                
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var kod = $buttonClicked.attr('value');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: EditBahagian,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id, "kod": kod },
+                    datatype: "json",
+                    success: function (data) {
+                        
+                        $('#EditModalContent').html(data);
+                        $('#EditModal').modal(options);
+                        $('#EditModal').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+
+
+            var InfoBahagian = "JabatanBahagianUnit/InfoBahagian";
+            $("#datatable_Bahagian").on("click", "#InfoBahagian", function () {
+                
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var kod = $buttonClicked.attr('value');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: InfoBahagian,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id, "kod": kod },
+                    datatype: "json",
+                    success: function (data) {
+                        
+                        $('#InfoModalContent').html(data);
+                        $('#InfoModal').modal(options);
+                        $('#InfoModal').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+
+            var PadamBahagian = "JabatanBahagianUnit/PadamBahagian";
+            $("#datatable_Bahagian").on("click", "#PadamBahagian", function () {
+                
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var kod = $buttonClicked.attr('value');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: PadamBahagian,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id, "kod": kod },
+                    datatype: "json",
+                    success: function (data) {
+                        
+                        $('#PadamModalContent').html(data);
+                        $('#PadamModal').modal(options);
+                        $('#PadamModal').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+
+
+    //UNIT
+
+            var TambahUnit = "JabatanBahagianUnit/TambahUnit";
+            $("#TambahUnit").click(function () {
+                
+                var $buttonClicked = $(this);
+                //var id = $buttonClicked.attr('data-id');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: TambahUnit,
+                    contentType: "application/json; charset=utf-8",
+                    //data: { "Id": id },
+                    datatype: "json",
+                    success: function (data) {
+                        
+                        $('#TambahUnitModalContent').html(data);
+                        $('#TambahUnitModal').modal(options);
+                        $('#TambahUnitModal').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+
+
+            var EditUnit = "JabatanBahagianUnit/EditUnit";
+            $("#datatable_Unit").on("click", "#EditUnit", function () {
+                
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var kod = $buttonClicked.attr('value');
+                var kodunit = $buttonClicked.attr('data');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: EditUnit,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id, "kod": kod, "kodunit": kodunit },
+                    datatype: "json",
+                    success: function (data) {
+                        
+                        $('#EditUnitModalContent').html(data);
+                        $('#EditUnitModal').modal(options);
+                        $('#EditUnitModal').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+
+
+            var InfoUnit = "JabatanBahagianUnit/InfoUnit";
+            $("#datatable_Unit").on("click", "#InfoUnit", function () {
+                
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var kod = $buttonClicked.attr('value');
+                var kodunit = $buttonClicked.attr('data');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: InfoUnit,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id, "kod": kod, "kodunit" : kodunit },
+                    datatype: "json",
+                    success: function (data) {
+                        
+                        $('#InfoUnitModalContent').html(data);
+                        $('#InfoUnitModal').modal(options);
+                        $('#InfoUnitModal').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+
+            var PadamUnit = "JabatanBahagianUnit/PadamUnit";
+            $("#datatable_Unit").on("click", "#PadamUnit", function () {
+                
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var kod = $buttonClicked.attr('value');
+                var kodunit = $buttonClicked.attr('data');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: PadamUnit,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id, "kod": kod, "kodunit": kodunit },
+                    datatype: "json",
+                    success: function (data) {
+                        
+                        $('#PadamUnitModalContent').html(data);
+                        $('#PadamUnitModal').modal(options);
+                        $('#PadamUnitModal').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+
+
+        });
+
+    </script>
+}

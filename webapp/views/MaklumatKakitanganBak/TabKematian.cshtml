@@ -1,0 +1,289 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+<div class="tab-pane" id="Kematian">
+    <div class="row">
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Pengesahan Kematian
+            </legend>
+            <div class="row smart-form">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jabatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-building"></i>
+                                    <input type="text" name="HR_JABATAN_T" id="HR_JABATAN_T" class="form-control" value="@ViewBag.jabatan" disabled="disabled" />
+                                </label>
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Kematian</label>
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <input type="text" name="HR_MAKLUMAT_KEMATIAN.HR_TARIKH_KEMATIAN" id="HR_MAKLUMAT_KEMATIAN_HR_TARIKH_KEMATIAN" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_KEMATIAN.HR_TARIKH_KEMATIAN)" disabled="disabled" />
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                </div>
+
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Pewaris
+            </legend>
+            <div class="row smart-form">
+
+                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama Pewaris</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+
+                                    @Html.EditorFor(model => model.HR_MAKLUMAT_KEMATIAN.HR_NAMA_PEWARIS, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", list = "listPewaris" } })
+                                    @{
+                                        List<HR_MAKLUMAT_PEWARIS> mPewaris = ViewBag.HR_PEWARIS;
+                                        if (mPewaris.Where(s => s.HR_NO_PEKERJA == Model.HR_SENARAI_PERIBADI.ElementAt(0).HR_NO_PEKERJA).Count() > 0)
+                                        {
+                                            <datalist id="listPewaris">
+                                                @foreach (var item in mPewaris.Where(s => s.HR_NO_PEKERJA == Model.HR_SENARAI_PERIBADI.ElementAt(0).HR_NO_PEKERJA).ToList())
+                                                {
+                                                    <option value="@item.HR_NAMA_PEWARIS">@item.HR_NAMA_PEWARIS</option>
+                                                }
+
+                                            </datalist>
+                                        }
+                                    }
+                                </label>
+
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Alamat</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_MAKLUMAT_KEMATIAN.HR_ALAMAT1, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_MAKLUMAT_KEMATIAN.HR_ALAMAT2, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_MAKLUMAT_KEMATIAN.HR_ALAMAT3, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Negeri</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_MAKLUMAT_KEMATIAN.HR_NEGERI, new SelectList(ViewBag.Negeri, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Poskod</label>
+                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            @Html.EditorFor(model => model.HR_MAKLUMAT_KEMATIAN.HR_POSKOD, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                        </label>
+                                    </div>
+
+                                </section>
+
+                                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bandar</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            @Html.EditorFor(model => model.HR_MAKLUMAT_KEMATIAN.HR_BANDAR, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. KP(Baru)</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_MAKLUMAT_KEMATIAN.HR_NO_KP_PEWARIS, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Hubungan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_MAKLUMAT_KEMATIAN.HR_HUBUNGAN, new SelectList(ViewBag.HR_HUBUNGAN, "Value", "Text", Model.HR_MAKLUMAT_KEMATIAN.HR_HUBUNGAN), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+
+
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Telefon(R)</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_MAKLUMAT_KEMATIAN.HR_NO_TELRUMAH, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                </label>
+                            </div>
+
+                        </section>
+
+
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Telefon(P)</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_MAKLUMAT_KEMATIAN.HR_NO_TELPEJABAT, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Telefon(HP)</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_MAKLUMAT_KEMATIAN.HR_NO_TELBIMBIT, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                </div>
+
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>Pengesahan Pegawai</legend>
+            <div class="row smart-form">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama Pegawai</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_MAKLUMAT_KEMATIAN.HR_NAMA_PEGAWAI, new SelectList(ViewBag.HR_NO_PENYELIA, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control select2", disabled = "disabled" })
+
+                                </label>
+
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jawatan Pegawai</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_MAKLUMAT_KEMATIAN.HR_JAWATAN_PEGAWAI, new SelectList(ViewBag.HR_JAWATAN, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh</label>
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <input type="text" name="HR_MAKLUMAT_KEMATIAN.HR_TARIKH_BAYAR" id="HR_MAKLUMAT_KEMATIAN_HR_TARIKH_BAYAR" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_KEMATIAN.HR_TARIKH_BAYAR)" disabled="disabled" />
+                                </label>
+                            </div>
+
+                        </section>
+
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+        <br />
+
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <label class="">Kemaskini : </label>
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mKematian-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mKematian-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" name="kemaskini" class="form-control" value="off">
+            </div>
+        </div>
+    </div>
+</div>

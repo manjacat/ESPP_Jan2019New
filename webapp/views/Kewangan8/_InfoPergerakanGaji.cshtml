@@ -1,0 +1,587 @@
+﻿@model eSPP.Models.PergerakanGajiModels
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Info Pergerakan Gaji <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("EditPergerakanGaji", "Kewangan8",new { key = ViewBag.key, value = ViewBag.value, bulan = ViewBag.bulan }, FormMethod.Post, new { @class = "smart-form", id = "formEdit" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_NO_PEKERJA)
+            @Html.HiddenFor(model => model.HR_KOD_PELARASAN)
+            @Html.HiddenFor(model => model.HR_KEW8_ID)
+            @Html.HiddenFor(model => model.HR_TARIKH_MULA)
+            @Html.HiddenFor(model => model.HR_KOD_PERUBAHAN)
+            <fieldset>
+                <div class="row">
+                    <div class="col col-6">
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Jawatan</label>
+                                <div class="col col-8">
+                                    <label class="input">
+                                        @Html.Editor("HR_JAWATAN",  new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col col-6">
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Kod Gaji Berkomputer</label>
+                                <div class="col col-6">
+                                    <label class="input">
+                                        @Html.Editor("HR_KOD_GAJI", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-6">
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Sistem Saraan</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        @Html.Editor("HR_SISTEM", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Gaji Min</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        @*@Html.Hidden("HR_MATRIKS_GAJI_P", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })*@
+                                        @Html.Editor("HR_GAJI_MIN_P", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+
+                                <label class="label col col-2">Gaji Max</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        @Html.Editor("HR_GAJI_MAX_P", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Gaji Pokok</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        @Html.Editor("HR_GAJI_POKOK", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Tarikh Pergerakan Gaji</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        <input type="text" name="HR_TARIKH_MULA" id="HR_TARIKH_MULA" class = "form-control" value="@(string.Format("{0:dd/MM/yyyy}",Model.HR_TARIKH_MULA))" disabled ="disabled" />
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Tarikh Perubahan</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        <input type="text" name="HR_TARIKH_KEYIN" id="HR_TARIKH_KEYIN" class="form-control" value="@(string.Format("{0:dd/MM/yyyy}",Model.HR_TARIKH_KEYIN))" disabled = "disabled" />
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Elaun Kritikal %</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        @Html.Editor("HR_KRITIKAL", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Jenis Perubahan</label>
+                                <div class="col col-8">
+                                    <label class="input">
+                                        @Html.Editor("HR_JENIS_PERUBAHAN", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Elaun Wilayah %</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        @Html.Editor("HR_WILAYAH", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+                    <div class="col col-6">
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Jenis Pergerakan Gaji</label>
+                                <div class="col col-8">
+                                    <div class="inline-group">
+                                        <label class="radio">
+                                            @Html.RadioButtonFor(model => model.HR_JENIS_PERGERAKAN,"D", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } } )
+                                            <i></i>Mendata
+                                        </label>
+                                        <label class="radio">
+                                            @Html.RadioButtonFor(model => model.HR_JENIS_PERGERAKAN,"S", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            <i></i>Statik
+                                        </label>
+                                        <label class="radio">
+                                            @Html.RadioButtonFor(model => model.HR_JENIS_PERGERAKAN, "J", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            <i></i>Anjakan
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Gred</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_GRED, new { htmlAttributes = new { @class = "form-control", list = "list-gred", disabled = "disabled" } })
+                                        @Html.HiddenFor(model => model.HR_GRED, new { htmlAttributes = new { id = "HR_GRED2" } })
+                                        <datalist id="list-gred">
+                                            @foreach (GE_PARAMTABLE gred in ViewBag.gred)
+                                            {
+                                                <option value="@gred.SHORT_DESCRIPTION" data-value="@gred.ORDINAL">@gred.ORDINAL</option>
+                                            }
+                                        </datalist>
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Gaji Min</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_GAJI_MIN, new { htmlAttributes = new { @class = "form-control", list="list-min", disabled = "disabled" } })
+                                        @Html.HiddenFor(model => model.HR_GAJI_MIN, new { htmlAttributes = new { id = "HR_GAJI_MIN2" } })
+                                        <datalist id="list-min"></datalist>
+                                    </label>
+                                </div>
+
+                                <label class="label col col-2">Gaji Max</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_GAJI_MAX, new { htmlAttributes = new { @class = "form-control", list = "list-max", disabled = "disabled" } })
+                                        @Html.HiddenFor(model => model.HR_GAJI_MAX, new { htmlAttributes = new { id = "HR_GAJI_MAX2" } })
+                                        <datalist id="list-max"></datalist>
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Pergerakan Gaji Pokok</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_GAJI_BARU, new { htmlAttributes = new { @class = "form-control", list = "list-gaji", disabled = "disabled" } })
+                                        @Html.HiddenFor(model => model.HR_GAJI_BARU, new { htmlAttributes = new { id = "HR_GAJI_BARU2" } })
+                                        <datalist id="list-gaji"></datalist>
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Perubahan Gaji</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_JUMLAH_PERUBAHAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                        @Html.HiddenFor(model => model.HR_JUMLAH_PERUBAHAN, new { htmlAttributes = new { id = "HR_JUMLAH_PERUBAHAN2" } })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Perubahan Elaun Kritikal</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        @Html.Editor("HR_PERUBAHAN_KRITIKAL", null, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Pergerakan Elaun Kritikal</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        @Html.Editor("HR_PERGERAKAN_KRITIKAL", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Perubahan Elaun Wilayah</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        @Html.Editor("HR_PERUBAHAN_WILAYAH", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Pergerakan Elaun Wilayah</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        @Html.Editor("HR_PERGERAKAN_WILAYAH", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-6">
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">No. Surat Kebenaran</label>
+                                <div class="col col-8">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_NO_SURAT_KEBENARAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Butir-Butir Perubahan</label>
+                                <div class="col col-8">
+                                    <label class="textarea textarea-resizable">
+                                        @Html.TextAreaFor(model => model.HR_BUTIR_PERUBAHAN, new { @class = "form-control custom-scroll", rows = "5", disabled = "disabled" })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col col-6">
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Nama Pengesahan Pegawai</label>
+                                <div class="col col-8">
+                                    <label class="input">
+                                        @Html.TextBox("HR_NAMA_PEGAWAI", null, new { @class = "form-control", list = "list-pegawai", autocomplete = "off", disabled = "disabled" })
+                                        <datalist id="list-pegawai">
+                                            @foreach (var pegawai in ViewBag.pegawai)
+                                            {
+                                                <option value="@(pegawai.HR_NAMA_PEKERJA) - @(pegawai.HR_NO_PEKERJA)" data-value="@pegawai.HR_NO_PEKERJA"></option>
+                                            }
+                                        </datalist>
+                                        
+                                    </label>
+                                    @Html.HiddenFor(model => model.HR_NP_FINALISED_HR)
+                                    @Html.HiddenFor(model => model.HR_FINALISED_IND_HR)
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </fieldset>
+            <footer>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Kembali
+                </button>
+            </footer>
+        }
+
+    </div>
+
+</div><!-- /.modal-content -->
+<script type="text/javascript">
+    //$("form").attr({ "id": "tp", "class": "smart-form" })
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+    $(document).ready(function () {
+
+        @*var validateform = $("#form-tambah").validate({
+
+            // Rules for form validation
+            rules: {
+                land_lot_name: {
+                    required: true,
+                    remote: {
+                        url: "../Tanah/CariNamaLot",
+                        type: "get",
+                        data: {
+                            lot_name: function(){
+                                return $("#land_lot_name").val();
+                            }
+                        }
+                    }
+                },
+                state: {
+                    required: true
+                },
+                city: {
+                    required: true
+                },
+                hak_milik: {
+                    required: true
+                },
+                immensity: {
+                    required: true,
+                    number: true
+                },
+                category: {
+                    required: true
+                },
+                mukim: {
+                    required: true
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                land_lot_name: {
+                    required: "Nama Lot diperlukan"
+                },
+                state: {
+                    required: "Negeri diperlukan"
+                },
+                city: {
+                    required: "Bandar diperlukan"
+                },
+                hak_milik: {
+                    required: "No. hak milik diperlukan"
+                },
+                immensity: {
+                    required: "Luas diperlukan",
+                    number: "Sila masukkan hanya nombor sahaja"
+                },
+                category: {
+                    required: "Kategori diperlukan"
+                },
+                mukim: {
+                    required: "Mukim diperlukan"
+                }
+
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+        var popup;
+        $("#btn_coordinate").click(function () {
+            debugger
+            popup = window.open("@Url.Action("GetCoordinate", "Tanah")", "Coordinate", "toolbar=yes,scrollbars=yes,resizable=yes,top=250,left=1000,width=800,height=650");
+            popup.focus();
+        });*@
+
+        $("#HR_NAMA_PEGAWAI").on('input', function () {
+            var value = $(this).val();
+            var d = value.split(' - ')
+            $(this).val(d[0]);
+            $("#HR_NP_FINALISED_HR").val(d[1]);
+        });
+        JenisPergerakanBtn($("#HR_JENIS_PERGERAKAN:checked").val())
+        if ($("#HR_JENIS_PERGERAKAN:checked").val() == "D" || $("#HR_JENIS_PERGERAKAN:checked").val() == "S")
+        {
+            $("#HR_GRED").attr("disabled", "disabled");
+            $("#HR_GAJI_MIN").attr("disabled", "disabled");
+            $("#HR_GAJI_MAX").attr("disabled", "disabled");
+            $("#HR_GAJI_BARU").attr("disabled", "disabled");
+            $("#HR_JUMLAH_PERUBAHAN").attr("disabled", "disabled");
+        }
+        else {
+            $("#HR_GRED").removeAttr("disabled");
+            $("#HR_GAJI_MIN").removeAttr("disabled");
+            $("#HR_GAJI_MAX").removeAttr("disabled");
+            $("#HR_GAJI_BARU").removeAttr("disabled");
+            $("#HR_JUMLAH_PERUBAHAN").removeAttr("disabled");
+        }
+
+        function JenisPergerakanBtn(VALUE) {
+            $("#HR_GAJI_MIN").val("");
+            $("#HR_GAJI_MAX").val("");
+            $("#HR_GAJI_BARU").val("");
+            $("#HR_JUMLAH_PERUBAHAN").val("");
+
+            $("#list-min").html('<option></option>');
+            $("#list-max").html('<option></option>');
+            if (VALUE == "J") {
+                $("#HR_GRED").removeAttr("disabled");
+                $("#HR_GAJI_MIN").removeAttr("disabled");
+                $("#HR_GAJI_MAX").removeAttr("disabled");
+                $("#HR_GAJI_BARU").removeAttr("disabled");
+                $("#HR_JUMLAH_PERUBAHAN").removeAttr("disabled");
+
+                $.ajax({
+                    url: "../Kewangan8/GajiMin",
+                    type: "GET",
+                    data: { HR_GRED: $("#HR_GRED").val() },
+                    dataType: "Json",
+                    success: function (data) {
+                        $.each(data, function (i, v) {
+                            $("#list-min").append($("<option></option>").val(v.HR_GAJI_MIN).attr("data-value", v.HR_PERINGKAT))
+                        })
+                    }
+                });
+            }
+            else if (VALUE == "S" || VALUE == "D") {
+                $("#HR_GRED").attr("disabled", "disabled");
+                $("#HR_GAJI_MIN").attr("disabled", "disabled");
+                $("#HR_GAJI_MAX").attr("disabled", "disabled");
+                $("#HR_GAJI_BARU").attr("disabled", "disabled");
+                $("#HR_JUMLAH_PERUBAHAN").attr("disabled", "disabled");
+
+                $.ajax({
+                    url: "../Kewangan8/JenisPergerakan",
+                    type: "GET",
+                    data: { HR_NO_PEKERJA: $("#HR_NO_PEKERJA").val(), HR_JENIS_PERGERAKAN: VALUE },
+                    dataType: "Json",
+                    success: function (data) {
+                        $("#HR_GRED").val(data.HR_GRED);
+                        $("#HR_GAJI_MIN").val(data.HR_GAJI_MIN);
+                        $("#HR_GAJI_MAX").val(data.HR_GAJI_MAX);
+                        $("#HR_GAJI_BARU").val(data.HR_GAJI_BARU);
+                        $("#HR_JUMLAH_PERUBAHAN").val(data.HR_JUMLAH_PERUBAHAN);
+                    }
+                })
+            }
+        }
+
+        $("input[name='HR_JENIS_PERGERAKAN']").on("click", function () {
+            var VALUE = $(this).val();
+            JenisPergerakanBtn(VALUE);
+            //$(".HR_GRED").val("");
+
+        });
+
+        //$("#list-gred option").each(function (i, el) {
+        //    gred[$(el).data("value")] = $(el).val();
+        //});
+
+        $("#HR_GRED, #HR_GAJI_MIN, #HR_GAJI_MAX").on("input", function () {
+            $("#HR_GAJI_BARU").val("");
+            $("#list-gaji").html('<option></option>');
+
+            if ($("#HR_GRED").val() != "" && $("#HR_GAJI_MIN").val() != "" && $("#HR_GAJI_MAX").val() != "") {
+                $.ajax({
+                    url: "../Kewangan8/GajiPokok",
+                    type: "GET",
+                    data: { HR_GRED: $("#HR_GRED").val(), HR_GAJI_MIN: $("#HR_GAJI_MIN").val(), HR_GAJI_MAX: $("#HR_GAJI_MAX").val() },
+                    dataType: "Json",
+                    success: function (data) {
+                        $.each(data, function (i, v) {
+                            $("#list-gaji").append($("<option></option>").val(v.HR_GAJI_POKOK))
+                        })
+                    }
+                })
+            }
+        })
+
+        $("#HR_GRED").on('input', function () {
+            $("#HR_GAJI_MIN").val("");
+            $("#HR_GAJI_MAX").val("");
+            $("#HR_JUMLAH_PERUBAHAN").val("");
+            $("#HR_GAJI_BARU").val("");
+
+            $("#list-min").html('<option></option>');
+            $("#list-max").html('<option></option>');
+            $("#list-gaji").html('<option></option>');
+            var value = $(this).val();
+            $.ajax({
+                url: "../Kewangan8/GajiMin",
+                type: "GET",
+                data: { HR_GRED: value },
+                dataType: "Json",
+                success: function (data) {
+                    $.each(data, function (i, v) {
+                        $("#list-min").append($("<option></option>").val(v.HR_GAJI_MIN).attr("data-value", v.HR_PERINGKAT))
+                    })
+
+                }
+            })
+        });
+
+
+        $("#HR_GAJI_MIN").on('input', function () {
+            $("#HR_GAJI_MAX").val("");
+            $("#HR_JUMLAH_PERUBAHAN").val("");
+            $("#HR_GAJI_BARU").val("");
+
+            $("#list-max").html('<option></option>');
+            $("#list-gaji").html('<option></option>');
+            var value = $(this).val();
+            $.ajax({
+                url: "../Kewangan8/GajiMax",
+                type: "GET",
+                data: { HR_GAJI_MIN: $(this).val(), HR_GRED: $('#HR_GRED').val() },
+                dataType: "Json",
+                success: function (data) {
+                    $.each(data, function (i, v) {
+                        $("#list-max").append($("<option></option>").val(v.HR_GAJI_MAX).attr("data-value", v.HR_TAHAP))
+                    })
+
+                }
+            })
+        });
+
+        $("#HR_GAJI_BARU").on('input', function () {
+            $("#HR_JUMLAH_PERUBAHAN").val("");
+            var value = $(this).val();
+            $.ajax({
+                url: "../Kewangan8/PerubahanGaji",
+                type: "GET",
+                data: { HR_NO_PEKERJA: $("#HR_NO_PEKERJA").val(), HR_GAJI_BARU: $(this).val() },
+                dataType: "Json",
+                success: function (data) {
+                    $("#HR_JUMLAH_PERUBAHAN").val(data)
+
+                }
+            })
+        });
+    });
+</script>
+

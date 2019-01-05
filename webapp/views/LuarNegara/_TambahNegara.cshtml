@@ -1,0 +1,514 @@
+﻿
+
+@model eSPP.Models.HR_SEMINAR_LUAR
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Tambah Permohonan Ke Luar Negeri  <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("TambahNegara", "LuarNegara", FormMethod.Post, new { id = "order-form", @class = "smart-form", novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_KOD_LAWATAN)
+            @Html.HiddenFor(model => model.HR_JENIS_IND)
+            @Html.HiddenFor(model => model.HR_TARIKH_PERMOHONAN)
+
+            <div id="peribadi">
+
+                @if (Model.HR_JENIS_IND == "R")
+                {
+
+                    <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                       
+                        <div class="row">
+
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Permohonan</label>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-calendar"></i>
+
+                                                <input type="text" name="HR_TARIKH_PERMOHONAN" id="HR_TARIKH_PERMOHONAN" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_PERMOHONAN)" , disabled="disabled" />
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                    <section class="col col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bulan</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                @Html.DropDownList("bulan", null, String.Empty, htmlAttributes: new { @class = "form-control" })
+
+                                            </label>
+                                        </div>
+                                    </section>
+                                    <section class="col col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tahun</label>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+                                            <label class="input">
+
+                                                <input class="form-control" value="@DateTime.Now.Year" name="tahundibayar" id="tahundibayar">
+
+                                            </label>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend style="background-color:white">
+                            Maklumat Lawatan   (Urusan Rasmi)  
+                        </legend>
+                        <label class="label">
+                            Peringatan : Bahagian yang bertanda (<font color="red">*</font>) adalah wajib di isi.
+                        </label>
+                        <br/>
+                        <div class="row">
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama Persidangan/Seminar/Lawatan Rasmi<font color="red">*</font></label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="textarea textarea-resizable">
+                                        <i class="icon-append fa fa-comment"></i>
+                                        @Html.TextAreaFor(model => model.HR_NAMA_SEMINAR, new { @class = "form-control", rows = 5 })
+
+                                    </label>
+                                </div>
+
+                            </section>
+
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tujuan<font color="red">*</font></label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_TUJUAN, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                        <div class="row">
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tempat</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_TEMPAT, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </label>
+                                </div>
+
+                            </section>
+
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Dari</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    
+                                    <label class="input">
+                                        <i class="icon-append fa fa-calendar"></i>
+                                        <input type="text" name="HR_TARIKH_MULA" id="HR_TARIKH_MULA" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_MULA)" readonly = 'readonly'/>
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                        <div class="row">
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Hingga</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-calendar"></i>
+                                        <input type="text" name="HR_TARIKH_TAMAT" id="HR_TARIKH_TAMAT" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_TAMAT)" readonly = 'readonly' />
+                                    </label>
+                                </div>
+
+                            </section>
+
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Perbelanjaan Ditanggung oleh </label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="select">
+                                        @Html.DropDownListFor(model => model.HR_PERBELANJAAN, new SelectList(ViewBag.belanja, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control" })
+                                        <i></i>
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                        <div class="row">
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kelulusan Kementerian Hal Ehwal Dalam Negeri dan Kementerian Luar Negeri( jika di negara komunis) </label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="select">
+                                        @Html.DropDownListFor(model => model.HR_LULUS_IND, new SelectList(ViewBag.luluskementerian, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control" })
+                                        <i></i>
+                                    </label>
+                                </div>
+
+                            </section>
+
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Faedahnya kepada Negeri-Negeri Selangor</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+
+                                        @Html.EditorFor(model => model.HR_FAEDAH, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                    </fieldset>
+
+                }
+                else if (Model.HR_JENIS_IND == "P")
+                {
+                    <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                        <div class="row">
+
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Permohonan</label>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-calendar"></i>
+
+                                                <input type="text" name="HR_TARIKH_PERMOHONAN" id="HR_TARIKH_PERMOHONAN" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_PERMOHONAN)" , disabled="disabled" />
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                    <section class="col col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bulan</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                @Html.DropDownList("bulan", null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                            
+                                            </label>
+                                        </div>
+                                    </section>
+                                    <section class="col col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tahun</label>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+                                            <label class="input">
+
+                                                <input class="form-control" value="@DateTime.Now.Year" name="tahundibayar" id="tahundibayar">
+
+                                            </label>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend style="background-color:white">
+                            Maklumat Lawatan  (Urusan Persendirian)
+                        </legend>
+                        <label class="label">
+                            Peringatan : Bahagian yang bertanda (<font color="red">*</font>) adalah wajib di isi.
+                        </label>
+                        <br/>
+                        <div class="row">
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Dari</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+
+                                    <label class="input">
+                                        <i class="icon-append fa fa-calendar"></i>
+                                        <input type="text" name="HR_TARIKH_MULA" id="HR_TARIKH_MULA" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_MULA)" readonly='readonly' />
+                                    </label>
+                                </div>
+
+                            </section>
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Hingga</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-calendar"></i>
+                                        <input type="text" name="HR_TARIKH_TAMAT" id="HR_TARIKH_TAMAT" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_TAMAT)" readonly='readonly' />
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama Persidangan/Seminar/Lawatan Rasmi<font color="red">*</font></label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="textarea textarea-resizable">
+                                        <i class="icon-append fa fa-comment"></i>
+                                        @Html.TextAreaFor(model => model.HR_NAMA_SEMINAR, new { @class = "form-control", rows = 5 })
+
+                                    </label>
+                                </div>
+
+                            </section>
+
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tujuan<font color="red">*</font></label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_TUJUAN, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                        <div class="row">
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tempat</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_TEMPAT, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </label>
+                                </div>
+
+                            </section>
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Perbelanjaan Ditanggung oleh </label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="select">
+                                        @Html.DropDownListFor(model => model.HR_PERBELANJAAN, new SelectList(ViewBag.belanja, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control" })
+                                        <i></i>
+                                    </label>
+                                </div>
+
+                            </section>
+
+                        </div>
+                        <div class="row">
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Alamat Semasa Bercuti</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_ALAMAT_CUTI, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </label>
+                                </div>
+                            </section>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend style="background-color:white">
+                            Maklumat Kelulusan Cuti Rehat
+                        </legend>
+                        <div class="row">
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Mula Cuti</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+
+                                    <label class="input">
+                                        <i class="icon-append fa fa-calendar"></i>
+                                        <input type="text" name="HR_TARIKH_CUTI" id="HR_TARIKH_CUTI" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_CUTI)" readonly='readonly' />
+                                    </label>
+                                </div>
+
+                            </section>
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Akhir Cuti</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-calendar"></i>
+                                        <input type="text" name="HR_TARIKH_CUTI_AKH" id="HR_TARIKH_CUTI_AKH" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_CUTI_AKH)" readonly='readonly' />
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jumlah Hari Cuti</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="textarea textarea-resizable">
+                                        <i class="icon-append fa fa-comment"></i>
+                                        @Html.EditorFor(model => model.HR_JUMLAH_CUTI, new { htmlAttributes = new { @class = "form-control" } })
+                                    </label>
+                                </div>
+
+                            </section>
+
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Kembali Bertugas</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-calendar"></i>
+                                        <input type="text" name="HR_TARIKH_KEMBALI" id="HR_TARIKH_KEMBALI" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_KEMBALI)" readonly='readonly' />
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                       
+                    </fieldset>
+
+                
+
+                        }
+
+                        <footer>
+                            <button type="submit" id="btn" class="btn btn-primary">
+                                <span class="fa fa-send-o"></span> Hantar
+                            </button>
+                            <a type="button" class="btn btn-default" href="luarnegara">
+                                Kembali
+                            </a>
+                        </footer>
+                    </div>
+                }
+
+            </div>
+
+           
+</div>
+
+    <div class="modal fade" id="TambahModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='TambahModalContent'></div>
+            </div>
+        </div>
+    </div>
+
+
+<script type="text/javascript">
+        $(".modal-dialog").css("min-width", "70%");
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+
+
+            var $orderForm = $("#order-form").validate({
+                // Rules for form validation
+                rules: {
+                    HR_NAMA_SEMINAR: {
+                        required: true
+                        
+                    },
+                    HR_TUJUAN: {
+                        required: true
+
+                    }
+
+                },
+
+                // Messages for form validation
+                messages: {
+                    HR_NAMA_SEMINAR: {
+                        required: 'Nama Seminar diperlukan'
+                    },
+                    HR_TUJUAN: {
+                        required: 'Tujuan Seminar diperlukan',
+
+                    }
+
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+
+
+
+
+
+
+
+            $('#HR_TARIKH_MULA').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_TAMAT').datepicker('option', 'minDate', selectedDate);
+
+
+                }
+            });
+
+
+            $('#HR_TARIKH_TAMAT').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_MULA').datepicker('option', 'maxDate', selectedDate);
+
+
+                }
+            });
+
+            $('#HR_TARIKH_CUTI').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_CUTI_AKH').datepicker('option', 'minDate', selectedDate);
+
+
+                }
+            });
+
+
+            $('#HR_TARIKH_CUTI_AKH').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_CUTI').datepicker('option', 'maxDate', selectedDate);
+
+
+                }
+            });
+
+            $('#HR_TARIKH_KEMBALI').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    //$('#HR_TARIKH_TAMAT').datepicker('option', 'minDate', selectedDate);
+
+
+                }
+            });
+
+
+
+        })
+</script> 
+
+
+
+
+   

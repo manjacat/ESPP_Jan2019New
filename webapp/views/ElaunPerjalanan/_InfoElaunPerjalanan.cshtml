@@ -1,0 +1,110 @@
+﻿
+
+
+
+@model eSPP.Models.HR_KADAR_PERBATUAN
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Info  Kadar Tuntutan Perjalanan <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("InfoElaunPerjalanan", "ElaunPerjalanan", FormMethod.Post,new {@class = "smart-form"}))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_KELAS);
+
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Kelas  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-info"></i>
+                                @Html.EditorFor(model => model.HR_KELAS, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Km Mula  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-clock-o"></i>
+                                @Html.EditorFor(model => model.HR_KM_MULA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Km Akhir  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-clock-o"></i>
+                                @Html.EditorFor(model => model.HR_KM_AKHIR, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Jumlah (RM)  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-plus-circle"></i>
+                                @Html.EditorFor(model => model.HR_NILAI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Status</label>
+                        <div class="col col-8">
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>Aktif
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>Tidak Aktif
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </fieldset>
+            <footer>
+               
+                <a type="button" class="btn btn-default" href="SenaraiKadarTuntutan">
+                    Kembali
+                </a>
+            </footer>
+        }
+
+    </div>
+
+</div>
+@section pagespecific { 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+        })
+    </script> 
+}

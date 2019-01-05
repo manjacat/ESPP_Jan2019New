@@ -1,0 +1,219 @@
+﻿
+@model eSPP.Models.HR_SEMINAR_LUAR_DETAIL
+
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Ubah Senarai Pemohon<span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("EditPekerja", "LuarNegara", FormMethod.Post, new { id = "order-form", @class = "smart-form", novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_NO_PEKERJA);
+            @Html.HiddenFor(model => model.HR_KOD_LAWATAN);
+
+            <div id="peribadi">
+
+
+                <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="label">
+                        Peringatan : Bahagian yang bertanda (<font color="red">*</font>) adalah wajib di isi.
+                    </label>
+                    <br />
+
+                    <div class="row">
+
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Pekerja <font color="red">*</font></label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-list-alt"></i>
+                                            @Html.EditorFor(model => model.HR_NO_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                        </label>
+                                    </div>
+                                </section>
+
+                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kekerapan Ke Luar Negeri</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="select">
+                                            @Html.DropDownListFor(model => model.HR_KERAP_IND, new SelectList(ViewBag.kerap, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control" })
+                                            <i></i>
+                                        </label>
+                                    </div>
+                                </section>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama Pekerja</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-list-alt"></i>
+                                    @Html.Editor("HR_NAMA_PEKERJA", (string)ViewBag.HR_NAMA_PEKERJA, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </label>
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jawatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-list-alt"></i>
+                                    @Html.Editor("HR_JAWATAN", (string)ViewBag.HR_NAMA_PEKERJA, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jabatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-list-alt"></i>
+                                    @Html.Editor("HR_JABATAN", (string)ViewBag.HR_NAMA_PEKERJA, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bahagian</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-list-alt"></i>
+                                    @Html.Editor("HR_BAHAGIAN", (string)ViewBag.HR_NAMA_PEKERJA, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <header>
+                        Rekod Ke Luar Negeri
+                    </header>
+
+
+                    <fieldset>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tarikh Permohonan</th>
+                                    <th>Nama Seminar</th>
+                                    <th>Tarikh Mula</th>
+                                    <th>Tarikh Tamat</th>
+                                    <th>Tempat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ var no = 0;}
+                                @foreach (HR_SEMINAR_LUAR_DETAIL item in ViewBag.seminarluar)
+                                {
+
+                                    ++no;
+                                    <tr>
+                                        <td>@string.Format("{0:dd/MM/yyyy}", item.HR_SEMINAR_LUAR.HR_TARIKH_PERMOHONAN)</td>
+                                        <td>@item.HR_SEMINAR_LUAR.HR_NAMA_SEMINAR</td>
+                                        <td>@string.Format("{0:dd/MM/yyyy}", item.HR_SEMINAR_LUAR.HR_TARIKH_MULA)</td>
+                                        <td>@string.Format("{0:dd/MM/yyyy}", item.HR_SEMINAR_LUAR.HR_TARIKH_TAMAT)</td>
+                                        <td>@item.HR_SEMINAR_LUAR.HR_TEMPAT</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </fieldset>
+
+                    <br />
+                </fieldset>
+            </div>
+            <footer>
+                <button type="submit" id="btn" class="btn btn-primary">
+                    <span class="fa fa-send-o"></span> Hantar
+                </button>
+                <a type="button" class="btn btn-default" href="luarnegara">
+                    Kembali
+                </a>
+            </footer>
+                                    }
+
+    </div>
+
+</div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+
+            var $orderForm = $("#order-form").validate({
+                // Rules for form validation
+                rules: {
+                    HR_SINGKATAN: {
+                        required: true,
+                        remote: {
+                            url: "JenisPeperiksaan/CariEditPeperiksaan",
+                            type: "get",
+                            data: {
+                                singkatan: function () {
+                                    return $("#HR_SINGKATAN").val();
+                                },
+                                kod: function () {
+                                    return $("#HR_KOD_PEPERIKSAAN").val();
+                                }
+                               
+                            }
+                        }
+                    },
+                    HR_KETERANGAN: {
+                        required: true,
+                        remote: {
+                            url: "JenisPeperiksaan/CariEditPeperiksaan",
+                            type: "get",
+                            data: {
+                                keterangan: function () {
+                                    return $("#HR_KETERANGAN").val();
+                                },
+                                kod: function () {
+                                    return $("#HR_KOD_PEPERIKSAAN").val();
+                                }
+                            }
+                        }
+                    },
+
+
+                },
+
+                // Messages for form validation
+                messages: {
+                    
+                    HR_SINGKATAN: {
+                        required: 'Singkatan diperlukan'
+                    },
+                    HR_KETERANGAN: {
+                        required: 'Keterangan diperlukan'
+                    },
+
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+        })
+    </script> 

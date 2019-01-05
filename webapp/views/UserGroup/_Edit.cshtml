@@ -1,0 +1,156 @@
+﻿@model eSPP.Models.UserGroup
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Edit @Html.DisplayFor(model => model.UserGroupName)
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Nama Role</label>
+                        <div class="col col-8">
+                                @Html.EditorFor(model => model.UserGroupName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.UserGroupName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </section>
+
+            </fieldset>
+
+            <footer>
+                <button type="submit" class="btn btn-primary">
+                    <span class="fa fa-save"></span> Simpan
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Kembali
+                </button>
+            </footer>
+        }
+
+
+    </div>
+
+</div><!-- /.modal-content -->
+<script type="text/javascript">
+    $("form").attr({ "id": "form", "class": "smart-form" })
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+    $(document).ready(function () {
+
+        var $registerForm = $("#form").validate({
+
+            // Rules for form validation
+            rules: {
+                main_asset_id: {
+                    required: true
+                },
+                cust_id: {
+                    required: true
+                },
+                pobox_name: {
+                    required: true
+                },
+                active: {
+                    required: false
+                },
+
+                start_date: {
+                    required: true
+                },
+                end_date: {
+                    required: true
+                },
+                rate: {
+                    required: true
+                },
+                invoice_type: {
+                    required: true
+                },
+                invoice_date: {
+                    required: true
+
+                },
+                collateral: {
+                    required: true
+                },
+            },
+
+            // Messages for form validation
+            messages: {
+                main_asset_id: {
+                    required: "Nama bangunan diperlukan"
+                },
+                cust_id: {
+                    required: "Nama syarikat diperlukan"
+                },
+                cust_id: {
+                    required: "Nama peti surat diperlukan"
+                },
+                start_date: {
+                    required: "Tarikh mula diperlukan"
+                },
+                end_date: {
+                    required: "Tarikh mula diperlukan"
+                },
+                rate: {
+                    required: "Kadar diperlukan"
+                },
+                invoice_type: {
+                    required: "Jenis invois diperlukan"
+                },
+                invoice_date: {
+                    required: "Tarikh invois diperlukan"
+                },
+                collateral: {
+                    required: "Cagaran diperlukan"
+                },
+
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        })
+    });
+
+    // START AND FINISH DATE
+    $('#start_date').datepicker({
+        dateFormat: 'dd/mm/yy',
+        prevText: '<i class="fa fa-chevron-left"></i>',
+        nextText: '<i class="fa fa-chevron-right"></i>',
+        onSelect: function (selectedDate) {
+            $('#end_date').datepicker('option', 'minDate', selectedDate);
+        }
+    });
+
+    $('#end_date').datepicker({
+        dateFormat: 'dd/mm/yy',
+        prevText: '<i class="fa fa-chevron-left"></i>',
+        nextText: '<i class="fa fa-chevron-right"></i>',
+        onSelect: function (selectedDate) {
+            $('#start_date').datepicker('option', 'maxDate', selectedDate);
+        }
+    });
+
+    $('#invoice_date').datepicker({
+        dateFormat: 'dd/mm/yy',
+        prevText: '<i class="fa fa-chevron-left"></i>',
+        nextText: '<i class="fa fa-chevron-right"></i>',
+    });
+
+    $("#main_asset_id option:first, #main_lot_id option:first, #floor_id option:first, #cust_id option:first, #operation option:first, #invoice_type option:first, #status option:first, #active option:first").attr("disabled", "disabled")
+    $("input, select").attr("autocomplete", "off");
+</script>
+
+

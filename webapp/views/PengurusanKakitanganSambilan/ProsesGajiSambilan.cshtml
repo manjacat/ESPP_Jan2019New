@@ -1,0 +1,75 @@
+﻿@model eSPP.Models.AgreementModels
+<div id="content">
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa-fw fa fa-pencil-square-o"></i>
+                Forms
+                <span>
+                    >
+                    Pemprosesan Gaji Sambilan
+                </span>
+            </h1>
+        </div>
+    </div>
+    <section id="widget-grid" class="">
+        <div class="row">
+        </div>
+        <div class="row">
+            <article class="col-sm-12">
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-align-justify"></i> </span>
+                        <h2> Pemprosesan Gaji Sambilan</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+						<div class="widget-body no-padding">
+							@using (Html.BeginForm("ProsesGajiSambilan", "PengurusanKakitanganSambilan", FormMethod.Post, new { @class = "smart-form", id = "smart-form-register", enctype = "multipart/form-data", target = "_blank" }))
+							{
+								<fieldset>
+									<div class="row">
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="label">
+												Jenis<font color="red">*</font>
+											</label>
+										</section>
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="input">
+
+												@Html.DropDownList("jenis", null, String.Empty, htmlAttributes: new { @class = "form-control" })
+												@Html.ValidationMessage("a", "", new { @class = "text-danger" })
+											</label>
+										</section>
+									</div>
+									<div class="row">
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="label">
+												Bulan & Tahun<font color="red">*</font>
+											</label>
+										</section>
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="input">
+												<input class="form-control" name="bulantahun" id="tahunproses" data-mask="99/9999" data-mask-placeholder="-">
+												<label class="note">
+													Data format mm/yyyy
+												</label>
+												@Html.ValidationMessage("a", "", new { @class = "text-danger" })
+											</label>
+										</section>
+									</div>
+								</fieldset>
+								<footer>
+									<button type="submit" class="btn btn-default" id="Jana" name="Command" target="_blank" value="Jana"><i class="fa fa-search"></i> Jana</button>
+								</footer>
+							}
+						</div>
+						</div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+</div>

@@ -1,0 +1,165 @@
+﻿@model IEnumerable<eSPP.Models.HR_PENSYARAH>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KUMPULAN_PENSYARAH.HR_PENERANGAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NAMA_PENSYARAH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NO_KPBARU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NO_KPLAMA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NO_TELPEJABAT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NO_TELBIMBIT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NO_FAKS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_JAWATAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_GRED_KELULUSAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_GAJI_POKOK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TALAMAT1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TALAMAT2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TALAMAT3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TBANDAR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TPOSKOD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TNEGERI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_SALAMAT1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_SALAMAT2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_SALAMAT3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_SBANDAR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_SPOSKOD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_SNEGERI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NO_PEKERJA)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KUMPULAN_PENSYARAH.HR_PENERANGAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NAMA_PENSYARAH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NO_KPBARU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NO_KPLAMA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NO_TELPEJABAT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NO_TELBIMBIT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NO_FAKS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_JAWATAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_GRED_KELULUSAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_GAJI_POKOK)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TALAMAT1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TALAMAT2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TALAMAT3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TBANDAR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TPOSKOD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TNEGERI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_SALAMAT1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_SALAMAT2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_SALAMAT3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_SBANDAR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_SPOSKOD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_SNEGERI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NO_PEKERJA)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.HR_NO_PENSYARAH }) |
+            @Html.ActionLink("Details", "Details", new { id=item.HR_NO_PENSYARAH }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.HR_NO_PENSYARAH })
+        </td>
+    </tr>
+}
+
+</table>

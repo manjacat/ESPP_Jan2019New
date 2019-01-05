@@ -1,0 +1,67 @@
+﻿<!-- collapse menu button -->
+<div id="hide-menu" class="btn-header pull-right">
+    <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
+</div>
+<!-- end collapse menu -->
+<!-- #MOBILE -->
+<!-- Top menu profile link : this shows only when top menu is active -->
+<ul id="mobile-profile-img" class="header-dropdown-list hidden-xs padding-5">
+    <li class="">
+        <a href="#" class="dropdown-toggle no-margin userdropdown" data-toggle="dropdown">
+            <img src="~/content/img/avatars/sunny.png" alt="John Doe" class="online" />
+        </a>
+        <ul class="dropdown-menu pull-right">
+            <li>
+                <a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0"><i class="fa fa-cog"></i> Setting</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="#" class="padding-10 padding-top-0 padding-bottom-0"> <i class="fa fa-user"></i> Profile</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0" data-action="toggleShortcut"><i class="fa fa-arrow-down"></i> <>S</>hortcut</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0" data-action="launchFullscreen"><i class="fa fa-arrows-alt"></i> Full <>S</>creen</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="@Url.Action("LogOff", "account")" class="padding-10 padding-top-5 padding-bottom-5" data-action="userLogout"><i class="fa fa-sign-out fa-lg"></i> <strong><>L</>ogout</strong></a>
+            </li>
+            <li>
+                <a href="@Url.Action("lock", "login")" class="padding-10 padding-top-5 padding-bottom-5" data-action="lockScreen"><i class="fa fa-lock fa-lg"></i> <strong><>L</>ock</strong></a>
+            </li>
+        </ul>
+    </li>
+</ul>
+@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- logout button -->
+    <div id="logout" class="btn-header transparent pull-right">
+        <span> <a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out"></i></a> </span>
+    </div>
+}
+<div id="fullscreen" class="btn-header transparent pull-right">
+    <span> <a href="javascript:void(0);" data-action="launchFullscreen" title="Skrin Penuh"><i class="fa fa-arrows-alt"></i></a> </span>
+</div>
+<!-- end fullscreen button -->
+<!-- #Voice Command: Start Speech -->
+<!-- end voice command -->
+<!-- multiple lang dropdown : find all flags in the flags page -->
+<ul class="header-dropdown-list hidden-xs" style="visibility:hidden">
+    <li>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="~/content/img/blank.gif" class="flag flag-my" alt="Malaysia"> <span> Malaysia (MY) </span> <i class="fa fa-angle-down"></i> </a>
+        <ul class="dropdown-menu pull-right">
+            <li class="active">
+                <a href="javascript:void(0);"><img src="~/content/img/blank.gif" class="flag flag-my" alt="Malaysia"> Malaysia (MY)</a>
+            </li>
+            <li>
+                <a href="javascript:void(0);"><img src="~/content/img/blank.gif" class="flag flag-us" alt="United States"> English (US)</a>
+            </li>
+        </ul>
+    </li>
+</ul>
+<!-- end multiple lang -->

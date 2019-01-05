@@ -1,0 +1,114 @@
+﻿
+
+@model eSPP.Models.HR_JAWATAN
+
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Edit Jawatan <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("EditJawatan", "Jawatan", FormMethod.Post, new { id = "order-form", @class = "smart-form", novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_KOD_JAWATAN);
+         
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Jawatan  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-briefcase"></i>
+                                @Html.EditorFor(model => model.HR_NAMA_JAWATAN, new { htmlAttributes = new { @class = "form-control" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Status</label>
+                        <div class="col col-8">
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "Y", htmlAttributes: new { @class = "form-control" })
+                                    <i></i>Aktif
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "T", htmlAttributes: new { @class = "form-control" })
+                                    <i></i>Tidak Aktif
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+            </fieldset>
+
+            <footer>
+                <button type="submit" id="btn" class="btn btn-primary">
+                    <span class="fa fa-send-o"></span> Hantar
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Kembali
+                </button>
+            </footer>
+                                    }
+
+    </div>
+
+</div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+
+            var $orderForm = $("#order-form").validate({
+                // Rules for form validation
+                rules: {
+                    HR_NAMA_JAWATAN: {
+                        required: true,
+                        remote: {
+                            url: "../Jawatan/CariEditJawatan",
+                            type: "get",
+                            data: {
+                                nama: function () {
+                                    return $("#HR_NAMA_JAWATAN").val();
+                                },
+                                kod: function () {
+                                    return $("#HR_KOD_JAWATAN").val();
+                                }
+                            }
+                        }
+                    },
+
+
+                },
+
+                // Messages for form validation
+                messages: {
+                    HR_NAMA_JAWATAN: {
+                        required: 'Nama Jawatan diperlukan'
+                    },
+
+
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+        })
+    </script> 

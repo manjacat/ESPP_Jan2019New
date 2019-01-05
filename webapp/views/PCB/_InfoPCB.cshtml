@@ -1,0 +1,102 @@
+﻿
+
+
+
+
+@model eSPP.Models.HR_PCB
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Skrin Jadual PCB <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("InfoPCB", "PCB", FormMethod.Post,new {@class = "smart-form"}))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Kategori  </label>
+                        <div class="col col-8">
+                            <label class="select">
+                                @Html.DropDownListFor(model => model.HR_KATEGORI, null, String.Empty, new { @class = "form-control", disabled = "disabled" })
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Kod PCB  </label>
+                        <div class="col col-8">
+                            <label class="select">
+                                @Html.DropDownListFor(model => model.HR_PCB_KOD, null, String.Empty, new { @class = "form-control", disabled = "disabled" })
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Gaji Dari  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_GAJI_DARI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Gaji Hingga </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_GAJI_HINGGA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Jumlah  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_NILAI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                
+            </fieldset>
+            <footer>
+               
+                <a type="button" class="btn btn-default" href="SenaraiPCB">
+                    Kembali
+                </a>
+            </footer>
+        }
+
+    </div> 
+
+</div>
+@section pagespecific { 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+        })
+    </script> 
+}

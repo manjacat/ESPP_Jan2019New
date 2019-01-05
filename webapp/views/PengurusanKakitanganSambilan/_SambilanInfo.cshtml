@@ -1,0 +1,205 @@
+﻿@model eSPP.Models.AgreementModels
+<div>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+			&times;
+		</button>
+		<h4 class="modal-title">
+			Info Tunggakan
+		</h4>
+	</div>
+
+	<div class="modal-body no-padding">
+
+		@using (Html.BeginForm("SambilanInfo", "PengurusanKakitanganSambilan", FormMethod.Post, new { @class = "smart-form", enctype = "multipart/form-data" }))
+		{
+			<fieldset>
+				<div class="row">
+					<section class="col col-lg-3 col-md-2 col-sm-12">
+						<label class="label">
+							Bulan & Tahun Bekerja
+						</label>
+					</section>
+					<section class="col col-lg-3 col-md-2 col-sm-12">
+						<label class="input">
+							@Html.Editor("stringbulandantahunbekerja", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+						</label>
+					</section>
+					<section class="col col-lg-3 col-md-2 col-sm-12">
+						<label class="label">
+							Bulan & Tahun Dibayar
+						</label>
+					</section>
+					<section class="col col-lg-3 col-md-2 col-sm-12">
+						<label class="input">
+							@Html.Editor("stringbulandantahundibayar", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+						</label>
+					</section>
+				</div>
+				<section>
+					<div class="row">
+						<label class="label col col-4">No. Pekerja</label>
+						<div class="col col-8">
+							<label class="input">
+								@Html.EditorFor(model => model.HR_NO_PEKERJA, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+							</label>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="row">
+						<label class="label col col-4">Nama Pekerja</label>
+						<div class="col col-8">
+							<label class="input">
+								@Html.EditorFor(model => model.HR_NAMA_PEKERJA, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+							</label>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="row">
+						<label class="label col col-4">Kod Tunggakan</label>
+						<div class="col col-8">
+							<label class="input">
+								@Html.EditorFor(model => model.JABATAN, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+							</label>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="row">
+						<label class="label col col-4">Bulan Dibayar</label>
+						<div class="col col-8">
+							<label class="input">
+								@Html.EditorFor(model => model.BAHAGIAN, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+							</label>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="row">
+						<label class="label col col-4">Tahun Dibayar</label>
+						<div class="col col-8">
+							<label class="input">
+								<button type="submit" class="btn btn-success" id="Dibayar" name="Command" value="Dibayar">
+									Dibayar
+								</button>
+							</label>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="row">
+						<label class="label col col-4">Bulan Bekerja</label>
+						<div class="col col-8">
+							<label class="input">
+								<button type="submit" class="btn btn-success" id="Dibayar" name="Command" value="Dibayar">
+									Dibayar
+								</button>
+							</label>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="row">
+						<label class="label col col-4">Jumlah Tunggakan</label>
+						<div class="col col-8">
+							<label class="input">
+								<button type="submit" class="btn btn-success" id="Dibayar" name="Command" value="Dibayar">
+									Dibayar
+								</button>
+							</label>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="row">
+						<label class="label col col-4">Tahun Bekerja</label>
+						<div class="col col-8">
+							<label class="input">
+								<button type="submit" class="btn btn-success" id="Dibayar" name="Command" value="Dibayar">
+									Dibayar
+								</button>
+							</label>
+						</div>
+					</div>
+				</section>
+			</fieldset>
+			<footer>
+				<button type="submit" class="btn btn-success" id="Dibayar" name="Command" value="Dibayar">
+					Dibayar
+				</button>
+				<button type="submit" class="btn btn-default" data-dismiss="modal">
+					Kembali
+				</button>
+			</footer>
+		}
+	</div>
+</div>
+@section pagespecific {
+<script type="text/javascript">
+	//$("form").attr({ "id": "tp", "class": "smart-form" })
+	// DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+	$(document).ready(function () {
+
+		var $registerForm = $("#tp").validate({
+
+			// Rules for form validation
+			rules: {
+				cust_name: {
+					required: true
+				},
+				address: {
+					required: true
+				},
+				postcode: {
+					required: true,
+					number: true
+				},
+				city: {
+					required: true
+				},
+				state: {
+					required: true
+				},
+
+				pegawai_1: {
+					required: true
+				}
+
+			},
+
+			// Messages for form validation
+			messages: {
+				cust_name: {
+					required: "Nama syarikat diperlukan"
+				},
+				address: {
+					required: "Alamat diperlukan"
+				},
+				postcode: {
+					required: "Poskod diperlukan",
+					number: "Sila masukkan poskod dengan betul"
+				},
+				city: {
+					required: "Bandar diperlukan"
+				},
+				state: {
+					required: "Negeri diperlukan"
+				},
+
+				pegawai_1: {
+					required: "Pegawai diperlukan"
+				}
+
+			},
+
+			// Do not change code below
+			errorPlacement: function (error, element) {
+				error.insertAfter(element.parent());
+			}
+		})
+	});
+</script>
+}

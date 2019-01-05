@@ -1,0 +1,64 @@
+﻿@model IEnumerable<eSPP.Models.GroupFeaturesDisplay>
+
+<div>
+    @using (Html.BeginForm())
+    {
+
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Manage Features
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+
+        @Html.AntiForgeryToken()
+        <table class="table">
+            <tr>
+                <th>No</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FeatureName)
+                </th>
+                <th>@Html.DisplayNameFor(model => model.ControllerName)</th>
+                <th>@Html.DisplayNameFor(model => model.ActionName)</th>
+                <th>Tindakan</th>
+            </tr>
+            @{ var i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                var vChecked = "";
+                if (item.Selected)
+                {
+                    vChecked = "checked";
+                }
+                <tr>
+                    <td>@i</td>
+                    <td>@item.FeatureName</td>
+                    <td>@item.ControllerName</td>
+                    <td>@item.ActionName</td>
+                    <td><input type="checkbox" name="SystemFeatureID" value="@item.SystemFeatureID" @vChecked /></td>
+                </tr>
+            }
+        </table>
+        
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+            Kembali
+        </button>
+        <input type="submit" value="Update Changes" class="btn btn-default" />
+    </div>
+    }
+</div><!-- /.modal-content -->
+
+
+@using (Html.BeginForm())
+{
+    
+}

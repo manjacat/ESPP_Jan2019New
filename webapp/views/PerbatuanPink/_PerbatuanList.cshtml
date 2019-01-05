@@ -1,0 +1,427 @@
+﻿
+
+
+@model IEnumerable<eSPP.Models.HR_PERBATUAN_PINK>
+
+<fieldset>
+    <legend>
+        Senarai Perbatuan
+    </legend>
+
+        <table id="datatable_tabletools" class="table table-striped table-bordered table-hover" width="100%">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th data-hide="phone">Kod Perbatuan</th>
+                    <th data-class="expand">Tarikh Permohonan</th>
+                    <th>Status Penghantaran</th>
+                    <th>Status HR</th>
+                    <th data-hide="phone">Ulasan</th>
+                    
+                    <th data-hide="phone">Pilih</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                   
+                
+                    var no = 0;}
+                @foreach (var item in Model)
+                {
+                 
+                    ++no;
+
+                   
+                        <tr>
+                            <td align="center">@no</td>
+                            <td>
+                                <a class="Info" id="Info" href="@Url.Action("PerbatuanListInfo","PerbatuanPink", new { id = item.HR_NO_PEKERJA, kod = item.HR_KOD_PERBATUAN })" title="Kemaskini">@item.HR_KOD_PERBATUAN</a>
+
+                            </td>
+                           
+
+
+                            <td>@string.Format("{0:dd/MM/yyyy}", item.HR_TARIKH_PERMOHONAN)</td>
+                         
+                            <td>
+                                @{var color0 = ""; var text0 = "Tidak Aktif"; }
+                                @if (item.HR_FINALISED_IND == null)
+                                {
+                                    item.HR_FINALISED_IND = null;
+                                    color0 = "label-danger";
+                                    text0 = "Belum Lengkap";
+                                }
+                                else
+                                {
+                                    if (item.HR_FINALISED_IND == "T")
+                                    {
+                                        color0 = "label-warning";
+                                        text0 = "Dalam Proses";
+                                    }
+                                    else if (item.HR_FINALISED_IND == "Y")
+                                    {
+                                        color0 = "label-success";
+                                        text0 = "Muktamad";
+                                    }
+                                   
+
+                                }
+
+                                <span class="center-block padding-5 label @color0">
+                                    @text0
+                                </span>
+                            </td>
+                         
+
+                            <td>
+                                @{var color1 = ""; var text1 = "Tidak Aktif"; }
+                                @if (item.HR_IND_HR == null)
+                                {
+                                    item.HR_IND_HR = null;
+                                    color1 = "label-warning";
+                                    text1 = "Dalam Proses";
+                                }
+                                else
+                                {
+                                    if (item.HR_IND_HR == "T")
+                                    {
+                                        color1 = "label-danger";
+                                        text1 = "Tidak Disokong";
+                                    }
+                                    else if (item.HR_IND_HR == "Y")
+                                    {
+                                        color1 = "label-success";
+                                        text1 = "Disokong";
+                                    }
+                                    else if (item.HR_IND_HR == "R")
+                                    {
+                                        color1 = "label-danger";
+                                        text1 = "Hantar Semula";
+                                    }
+
+                                }
+
+                                <span class="center-block padding-5 label @color1">
+                                    @text1
+                                </span>
+                            </td>
+                    
+                            <td>@Html.DisplayFor(modelItem => item.HR_CATATAN)</td>
+
+
+
+
+
+
+
+                          
+
+
+                            <td>
+                                @if (item.HR_FINALISED_IND == "T" || item.HR_FINALISED_IND == null || item.HR_IND_HR == "R")
+                                {
+                                @*<a class="btn btn-default btn-xs Edit" id="Edit" href="@Url.Action("EditBorang", "PemohonanBaruLuar",  new { id = item.HR_NO_PEKERJA, kod = item.HR_KOD_PERBATUAN })" title="Kemaskini"><i class="fa fa-edit"></i></a>*@
+                                <a class="btn btn-default btn-xs Padam" id="Padam" href="@Url.Action("PerbatuanListPadam", "PerbatuanPink", new { id = item.HR_NO_PEKERJA, kod = item.HR_KOD_PERBATUAN })" title="Padam"><i class="fa fa-trash-o"></i></a>
+                                <a class="btn btn-default btn-xs Edit" id="Edit" value="Cetak" href="@Url.Action("PerbatuanListEdit", "PerbatuanPink", new { id = item.HR_NO_PEKERJA, kod = item.HR_KOD_PERBATUAN })" title="Edit" name="Command" target="_blank"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-default btn-xs Edit" id="Cetak" value="Cetak" href="@Url.Action("PrintBorang", "PerbatuanPink", new { id = item.HR_NO_PEKERJA, kod = item.HR_KOD_PERBATUAN })" title="Cetak" name="Command" target="_blank"><i class="fa fa-print"></i></a>
+                                }
+                                else if (item.HR_FINALISED_IND == "Y")
+                                {
+                                <a class="btn btn-default btn-xs Padam" @*id="Padam"*@ @*href="@Url.Action("PerbatuanListPadam", "PerbatuanPink", new { id = item.HR_NO_PEKERJA, kod = item.HR_KOD_PERBATUAN })"*@ title="Padam" disabled ="disabled"><i class="fa fa-trash-o"></i></a>
+                                <a class="btn btn-default btn-xs Edit" @*id="Edit"*@ @*value="Cetak" href="@Url.Action("PerbatuanListEdit", "PerbatuanPink", new { id = item.HR_NO_PEKERJA, kod = item.HR_KOD_PERBATUAN })"*@ title="Edit" disabled ="disabled" name="Command" target="_blank"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-default btn-xs Edit" id="Cetak" value="Cetak" href="@Url.Action("PrintBorang", "PerbatuanPink", new { id = item.HR_NO_PEKERJA, kod = item.HR_KOD_PERBATUAN })" title="Cetak" name="Command" target="_blank"><i class="fa fa-print"></i></a>
+                                }
+                                
+                            </td>
+
+                        </tr>
+
+
+
+
+
+
+                                    }
+            </tbody>
+        </table>
+
+    
+    <!-- Modal -->
+    <div class="modal fade" id="Modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='ModalContent'></div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+</fieldset>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        /* // DOM Position key index //
+
+        l - Length changing (dropdown)
+        f - Filtering input (search)
+        t - The Table! (datatable)
+        i - Information (records)
+        p - Pagination (paging)
+        r - pRocessing
+        < and > - div elements
+        <"#id" and > - div with an id
+        <"class" and > - div with a class
+        <"#id.class" and > - div with an id and class
+
+        Also see: http://legacy.datatables.net/usage/features
+        */
+
+        /* BASIC ;*/
+        var responsiveHelper_dt_basic = undefined;
+        var responsiveHelper_datatable_fixed_column = undefined;
+        var responsiveHelper_datatable_col_reorder = undefined;
+        var responsiveHelper_datatable_tabletools = undefined;
+        var responsiveHelper_datatable_tabletools2 = undefined;
+
+        var breakpointDefinition = {
+            tablet: 1024,
+            phone: 480
+        };
+
+        $('#dt_basic').dataTable({
+            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>" +
+                "t" +
+                "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+            "autoWidth": true,
+            "preDrawCallback": function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelper_dt_basic) {
+                    responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_dt_basic.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_dt_basic.respond();
+            }
+        });
+
+        /* END BASIC */
+
+        /* COLUMN FILTER  */
+        var otable = $('#datatable_fixed_column').DataTable({
+            //"bFilter": false,
+            //"bInfo": false,
+            //"bLengthChange": false
+            //"bAutoWidth": false,
+            //"bPaginate": false,
+            //"bStateSave": true // saves sort state using localStorage
+            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>" +
+                    "t" +
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+            "autoWidth": true,
+            "preDrawCallback": function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelper_datatable_fixed_column) {
+                    responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_datatable_fixed_column.respond();
+            }
+
+        });
+
+        // custom toolbar
+        $("div.toolbar").html('<div class="text-right"><img src="/Content/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+
+        // Apply the filter
+        $("#datatable_fixed_column thead th input[type=text]").on('keyup change', function () {
+
+            otable
+                .column($(this).parent().index() + ':visible')
+                .search(this.value)
+                .draw();
+
+        });
+        /* END COLUMN FILTER */
+
+        /* COLUMN SHOW - HIDE */
+        $('#datatable_col_reorder').dataTable({
+            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'C>r>" +
+                    "t" +
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "autoWidth": true,
+            "preDrawCallback": function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelper_datatable_col_reorder) {
+                    responsiveHelper_datatable_col_reorder = new ResponsiveDatatablesHelper($('#datatable_col_reorder'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_datatable_col_reorder.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_datatable_col_reorder.respond();
+            }
+        });
+
+        /* END COLUMN SHOW - HIDE */
+
+        /* TABLETOOLS */
+        $('#datatable_tabletools').dataTable({
+
+            // Tabletools options:
+            //   https://datatables.net/extensions/tabletools/button_options
+            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'l<'btn-print'>>r>" +
+                    "t" +
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            /*"oTableTools": {
+                "aButtons": [
+                "copy",
+                "csv",
+                "xls",
+                   {
+                       "sExtends": "pdf",
+                       "sTitle": "SmartAdmin_PDF",
+                       "sPdfMessage": "SmartAdmin PDF Export",
+                       "sPdfSize": "letter"
+                   },
+                   {
+                       "sExtends": "print",
+                       "sMessage": "Generated by SmartAdmin <i>(press Esc to close)</i>"
+                   }
+                ],
+                "sSwfPath": "/Scripts/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+            },*/
+            "autoWidth": true,
+            "preDrawCallback": function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelper_datatable_tabletools) {
+                    responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#datatable_tabletools'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_datatable_tabletools.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_datatable_tabletools.respond();
+            }
+        });
+
+        //$("div.btn-print").html('<div class="text-right">' +
+        //    '<button type = "button" name = "Tambah" id = "Tambah" class = "btn btn-default btn-success" title = "Tambah"><i class = "fa fa-plus"></i></button>' +
+        //    '</div>');
+
+        $("div.btn-print").html('<div class="text-right">' +
+          '<a name = "TambahPink" id = "TambahPink" class = "btn btn-danger" href="@Url.Action("TambahPerbatuan", "PerbatuanPink", new { id = @ViewBag.noPekerja })" title = "Tambah Borang Pink"><i class = "fa fa-plus"></i></a>' +
+          @*'<a name = "TambahPink" id = "TambahPink" class = "btn btn-warning" href="@Url.Action("TambahPerbatuan", "Perbatuan", new { id = @ViewBag.noPekerja })" title = "Tambah Borang Pink"><i class = "fa fa-plus"></i></a>' +*@
+
+          '</div>');
+
+
+        /* END TABLETOOLS */
+
+        $('#datatable_tabletools2').dataTable({
+
+            // Tabletools options:
+            //   https://datatables.net/extensions/tabletools/button_options
+            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'l>r>" +
+                    "t" +
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            /*"oTableTools": {
+                "aButtons": [
+                "copy",
+                "csv",
+                "xls",
+                   {
+                       "sExtends": "pdf",
+                       "sTitle": "SmartAdmin_PDF",
+                       "sPdfMessage": "SmartAdmin PDF Export",
+                       "sPdfSize": "letter"
+                   },
+                   {
+                       "sExtends": "print",
+                       "sMessage": "Generated by SmartAdmin <i>(press Esc to close)</i>"
+                   }
+                ],
+                "sSwfPath": "/Scripts/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+            },*/
+            "autoWidth": false,
+            "preDrawCallback": function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelper_datatable_tabletools2) {
+                    responsiveHelper_datatable_tabletools2 = new ResponsiveDatatablesHelper($('#datatable_tabletools2'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_datatable_tabletools2.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_datatable_tabletools2.respond();
+            }
+        });
+
+    });
+
+
+
+    @*$("#TambahPink").click(function (event) {
+        event.preventDefault();
+        var url = '@Url.Action("TambahPerbatuan", "Perbatuan", new { id = @noPekerja, kod = @kodPerbatuan })';
+        window.location.href = url;
+
+    });
+
+
+    $("#TambahPutih").click(function (event) {
+        event.preventDefault();
+        var url = '@Url.Action("TambahPerbatuanPutih","Perbatuan", new { id = @noPekerja, kod = @kodPerbatuan })';
+        window.location.href = url;
+
+    });*@
+
+
+
+    //modal
+  
+        //var myBackup = $('#Modal').clone();
+
+        //$(document).on('click', '#myReset', function () {
+        //    $('#Modal').remove();
+        //    var myClone = myBackup.clone();
+        //    $('body').append(myClone);
+        //});
+
+        //$("#Modal").off('hidden.bs.modal');
+        //$("#Modal").on('hidden.bs.modal', function () {
+        //    $("#Modal").removeAttr("style");
+        //    $("#ModalContent").html("");
+        //    $(this).data('bs.modal', null);
+        //    $(this).data('modal', null);
+        //    $(this).removeData()
+        //    $(this).data('bs.modal', null).remove();
+        //    var myClone = myBackup.clone();
+        //    $('body').append(myClone);
+        //});
+  
+    $(function () {
+        $("#datatable_tabletools").on("click", "#print", function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var HR_KOD_PERUBAHAN = $buttonClicked.attr('data-kodperubahan');
+            var HR_TARIKH_MULA = $buttonClicked.attr('data-tarikh');
+            var HR_KOD_PELARASAN = $buttonClicked.attr('data-kodpelarasan');
+
+            $("#form-slip").attr("action", "SlipKewangan8?HR_NO_PEKERJA=@(ViewBag.HR_NO_PEKERJA)&HR_KEW8_ID=" + id + "&HR_KOD_PERUBAHAN=" + HR_KOD_PERUBAHAN + "&HR_TARIKH_MULA=" + HR_TARIKH_MULA + "&HR_KOD_PELARASAN=" + HR_KOD_PELARASAN).submit();
+        });
+    });
+    //end modal
+
+</script>
+

@@ -1,0 +1,232 @@
+﻿@model eSPP.Models.HR_MAKLUMAT_KEWANGAN8
+
+<div id="content">
+
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa-fw fa fa-pencil-square-o"></i>
+                Forms
+                <span>
+                    >
+                    Justifikasi Lantikan Baru
+                </span>
+            </h1>
+        </div>
+    </div>
+    <section id="widget-grid" class="">
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <!-- WIDGET END -->
+
+        </div>
+
+        <!-- end row -->
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <article class="col-sm-12">
+
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-align-justify"></i> </span>
+                        <h2>Justifikasi Jawatan Baru</h2>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+
+
+                        <div class="widget-body no-padding">
+                            
+
+                                <div class="row padding-10">
+
+                                    <div class="col col-lg-8 col-md-10 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-1">
+                                        <div class="well">
+                                            @using (Html.BeginForm())
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <div class="row">
+                                                    <div class="col col-lg-4 col-md-4 col-sm-4 col-xs-12 smart-form">
+                                                        <div class="select">
+                                                            <select name="action" id="action" class="form-control">
+                                                                <option selected disabled="disabled">Bulan</option>
+                                                                <option value="1">Januari</option>
+                                                                <option value="2">Februari</option>
+                                                                <option value="3">March</option>
+                                                                <option value="4">April</option>
+                                                                <option value="5">Mei</option>
+                                                                <option value="6">Jun</option>
+                                                                <option value="7">Julai</option>
+                                                                <option value="8">Ogos</option>
+                                                                <option value="9">September</option>
+                                                                <option value="10">Oktober</option>
+                                                                <option value="11">November</option>
+                                                                <option value="12">December</option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12 smart-form">
+                                                        <div class="input">
+                                                            <input type="text" name="value" id="value" class="form-control" placeholder="Tahun" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                        <div class="button">
+                                                            <button class="btn btn-default btn-primary" type="submit">
+                                                                <i class="fa fa-search"></i> Cari
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="">
+                                    <table id="datatable_tabletools" class="table table-striped table-bordered table-hover" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th data-hide="phone">ID</th>
+                                                <th data-class="expand">No.Pekerja</th>
+                                                <th>Nama Pekerja</th>
+                                                <th data-hide="phone">Tarikh Pergerakan</th>
+                                                <th data-hide="phone,tablet">Jabatan</th>
+                                                <th data-hide="phone,tablet">Jawatan</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{ var no = 0;}
+                                            @foreach (var item in Model)
+                                            {
+                                                ++no;
+                                                <tr>
+                                                    <td>@no</td>
+                                                    <td>@Html.DisplayFor(modelItem => item.HR_NO_PEKERJA)</td>
+                                                    <td>@Html.DisplayFor(modelItem => item.HR_NAMA_PEKERJA)</td>
+                                                    <td></td>
+                                                    <td>@Html.DisplayFor(modelItem => item.HR_JABATAN)</td>
+                                                    <td>@Html.DisplayFor(modelItem => item.HR_JAWATAN)</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+
+
+                                <!-- end widget content -->
+
+                        
+                            @using (Html.BeginForm())
+            {
+                                @Html.AntiForgeryToken()
+                             
+                                <header>
+                                    Kewangan 8
+                                </header>
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                               No Pekerja
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+
+                                                @Html.DisplayFor(modelItem => Model.HR_NO_PEKERJA), new { htmlAttributes = new { @class = "form-control" } })
+                                              
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Nama
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+
+                                                @Html.DisplayFor(modelItem => Model.HR_NAMA_PEKERJA), new { htmlAttributes = new { @class = "form-control" } })
+                                            </label>
+                                        </section>
+                                    </div>
+
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                No. KP Baru
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+
+                                                @Html.DisplayFor(modelItem => Model.HR_KAD_PENGENALAAN), new { htmlAttributes = new { @class = "form-control" } })
+                                            </label>
+                                        </section>
+                                        
+                                    </div>
+                                    </fieldset>
+                                   
+                                <footer>
+                                    <button type="submit" class="btn btn-success">
+                                        Kemaskini
+                                    </button>
+
+                                    <button type="reset" class="btn btn-danger">
+                                        Padam
+                                    </button>
+
+                                    <button type="button" class="btn btn-default" onclick="javascript: history.go(-1)">
+                                        Kembali
+                                    </button>
+                                </footer>
+                            }
+                        </div>
+
+
+
+                    </div>
+            </article>
+        </div>
+    </section>
+</div>
+    
+   
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

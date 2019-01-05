@@ -1,0 +1,242 @@
+﻿
+@model eSPP.Models.HR_SEMINAR_LUAR
+
+
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Padam-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Kelulusan Ke Luar Negeri <span class="error"></span>
+        </h4>
+    </div> 
+    <div class="modal-header">
+<div class="modal-body no-padding">
+
+    @using (Html.BeginForm("PadamLulusPengesahanNegara","LuarNegaraPengesahan", FormMethod.Post, new { @class = "smart-form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.HR_KOD_LAWATAN);
+
+
+
+        <fieldset>
+            <div class="Padam">
+
+                <table id="datatable_tabletools" class="table table-striped table-bordered table-hover" width="100%">
+
+                    <thead>
+                        <tr>
+
+                            <th data-hide="phone">No Pekerja</th>
+                            <th data-hide="phone">Kod Lawatan</th>
+                            <th data-hide="phone">Nama Pekerja</th>
+                            <th data-hide="phone">Nama Seminar</th>
+                            <th>Laporan</th>
+                            <th>Kekerapan</th>
+                            <th data-hide="phone">Status</th>
+                            <th data-hide="phone">Kelulusan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ var nombol = 0;}
+                        @foreach (var HR_NAMA_SEMINAR in Model.HR_SEMINAR_LUAR_DETAIL)
+                        {
+                            ++nombol;
+                                <tr>
+                                    <td>
+                                        <a class="Info" id="Info" href="javascript:void(0)" data-id="@HR_NAMA_SEMINAR.HR_KOD_LAWATAN" value-id="@HR_NAMA_SEMINAR.HR_NO_PEKERJA" title="Kemaskini">@HR_NAMA_SEMINAR.HR_NO_PEKERJA</a>
+
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => HR_NAMA_SEMINAR.HR_KOD_LAWATAN)</td>
+                                    <td>
+                                        @foreach (HR_MAKLUMAT_PERIBADI item3 in ViewBag.HR_NO_PEKERJA)
+                                        {
+                                            if (item3.HR_NO_PEKERJA == HR_NAMA_SEMINAR.HR_NO_PEKERJA)
+                                            {
+                                            @item3.HR_NAMA_PEKERJA
+                                            }
+                                        }
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => HR_NAMA_SEMINAR.HR_SEMINAR_LUAR.HR_NAMA_SEMINAR)</td>
+                                    <td>@Html.DisplayFor(modelItem => HR_NAMA_SEMINAR.HR_LAPORAN_IND)</td>
+                                    <td>
+                                        @{var color2 = ""; var text = "Tidak Aktif"; }
+                                        @if (HR_NAMA_SEMINAR.HR_KERAP_IND == null)
+                                        {
+                                            HR_NAMA_SEMINAR.HR_KERAP_IND = null;
+                                            color2 = "label-warning";
+                                            text = "Tidak";
+                                        }
+                                        else
+                                        {
+                                            if (HR_NAMA_SEMINAR.HR_KERAP_IND == "T")
+                                            {
+                                                color2 = "label-danger";
+                                                text = "Tidak ";
+                                            }
+                                            else if (HR_NAMA_SEMINAR.HR_KERAP_IND == "Y")
+                                            {
+                                                color2 = "label-success";
+                                                text = "Ya";
+                                            }
+
+                                        }
+
+                                        <span class="center-block padding-5 label @color2">
+                                            @text
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        @{var color3 = ""; var text3 = "Tidak Aktif"; }
+                                        @if (HR_NAMA_SEMINAR.HR_SEMINAR_LUAR.HR_SOKONG_IND == null)
+                                        {
+                                            HR_NAMA_SEMINAR.HR_SEMINAR_LUAR.HR_SOKONG_IND = null;
+                                            color3 = "label-warning";
+                                            text3 = " Proses";
+                                        }
+                                        else
+                                        {
+                                            if (HR_NAMA_SEMINAR.HR_SEMINAR_LUAR.HR_SOKONG_IND == "T")
+                                            {
+                                                color3 = "label-danger";
+                                                text3 = "Tidak Diluluskan";
+                                            }
+                                            else if (HR_NAMA_SEMINAR.HR_SEMINAR_LUAR.HR_SOKONG_IND == "Y")
+                                            {
+                                                color3 = "label-success";
+                                                text3 = "Diluluskan";
+                                            }
+
+                                        }
+                                        <span class="center-block padding-5 label @color3">
+                                            @text3
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <label class="checkbox"><input type="checkbox" name="kelulusan" value='Y'><i></i></label>
+                                    </td>
+                                </tr>
+                                            }
+                    </tbody>
+                </table>
+            </div>
+            <div id="tablebarululus" style="padding: 15px">
+
+            </div>
+        </fieldset>
+                <fieldset>
+                    <div class="smart-form">
+                        <fieldset class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <legend style="background-color:white">
+                                MAKLUMAT PEGAWAI PENYOKONG (KETUA JABATAN/ BAHAGIAN/ UNIT)
+                            </legend>
+                            <div class="row">
+                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="inline-group">
+                                        <label class="radio">
+                                            @Html.CheckBox("HR_LULUS_PEKERJA", new { @checked = "checked" })
+                                            <i></i>Sokong
+                                        </label>
+                                        <label class="radio">
+                                            @Html.CheckBox("HR_LULUS_PEKERJA", new { @checked = "checked" })
+                                            <i></i>Tidak Sokong
+                                        </label>
+                                    </div>
+                                </section>
+                            </div>
+                            <div>
+                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No Pekerja<font color="red">*</font></label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            @Html.Editor("HR_NAMA_PEKERJA", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        </label>
+                                    </div>
+                                </section>
+                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            @Html.Editor("HR_TARIKH_LULUS_MENTERI", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        </label>
+                                    </div>
+                                </section>
+                            </div>
+                            <div>
+                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            @Html.Editor("HR_NAMA_PEKERJA", new { htmlAttributes = new { @class = "form-control" } })
+                                        </label>
+                                    </div>
+                                </section>
+                            </div>
+                        </fieldset>
+                        <fieldset class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <legend style="background-color:white">
+                                MAKLUMAT PEGAWAI PELULUS (DATUK BANDAR)
+                            </legend>
+                            <div class="row">
+                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="inline-group">
+                                        <label class="radio">
+                                            @Html.CheckBox("HR_LULUS_PEKERJA", new { @checked = "checked" })
+                                            <i></i>Sokong
+                                        </label>
+                                        <label class="radio">
+                                            @Html.CheckBox("HR_LULUS_PEKERJA", new { @checked = "checked" })
+                                            <i></i>Tidak Sokong
+                                        </label>
+                                    </div>
+                                </section>
+                            </div>
+                            <div>
+                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            @Html.Editor("HR_TARIKH_SOKONG", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        </label>
+                                    </div>
+                                </section>
+                            </div>
+                        </fieldset>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="smart-form">
+                        <footer>
+                            <button type="submit" id="btn" class="btn btn-danger">
+                                <span class="fa fa-trash-o"></span> Padam
+                            </button>
+                            <a type="button" class="btn btn-default" href="luarnegarapengesahan">
+                                Kembali
+                            </a>
+                        </footer>
+                    </div>
+                </fieldset>
+                                            }
+            </div>
+
+
+    </div>
+
+</div>
+
+@section pagespecific {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+        })
+    </script>
+}
+

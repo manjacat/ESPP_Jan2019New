@@ -1,0 +1,216 @@
+﻿
+
+@model eSPP.Models.HR_TARIKH_ACARA
+
+<div>
+    <div class="modal-header">
+        <a class="close" id="Tambah-btn" href="senaraitarikhacara" aria-hidden="true">
+            &times;
+        </a>
+        <h4 class="modal-title">
+            Tambah Tarikh Acara <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("TambahTarikh","TarikhAcara", FormMethod.Post, new { id = "order-form", @class = "smart-form", novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Jenis Acara  </label>
+                        <div class="col col-8">
+                            <label class="select">
+                                @Html.DropDownListFor(model => model.HR_KOD_ACARA, null, String.Empty, new { @class = "form-control" })
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Tarikh  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-calendar"></i>
+                                <input type="text" name="HR_TARIKH" id="HR_TARIKH"  readonly = 'readonly'>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Waktu Mula  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-clock-o"></i>
+                                @Html.TextBox("HR_WAKTU_MULA", null, new { @class = "form-control", id = "HR_WAKTU_MULA", @readonly = "readonly" })
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Waktu Akhir  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-clock-o"></i>
+                                @Html.TextBox("HR_WAKTU_AKHIR", null, new { @class = "form-control", id = "HR_WAKTU_AKHIR", @readonly = "readonly" })
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Keterangan  </label>
+                        <div class="col col-8">
+                            <label class="textarea">
+                                @Html.TextAreaFor(model => model.HR_KETERANGAN, new { @class = "form-control", rows = 3})
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </fieldset>
+            <footer>
+                <button type="submit" id="btn" class="btn btn-primary">
+                    <span class="fa fa-send-o"></span> Hantar
+                </button>
+                <a type="button" class="btn btn-default" href="senaraitarikhacara">
+                    Kembali
+                </a>
+            </footer>
+        }
+
+    </div>
+
+</div>
+<script src="../scripts/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+<script src="../scripts/plugin/clockpicker/clockpicker.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+
+            var $orderForm = $("#order-form").validate({
+                // Rules for form validation
+                rules: {
+                    HR_KOD_CUTI_UMUM: {
+                        required: true
+                    },
+
+                    HR_TARIKH: {
+                        required: true
+
+                    }
+
+                },
+
+                // Messages for form validation
+                messages: {
+                    HR_KOD_CUTI_UMUM: {
+                        required: 'Pilihan Cuti diperlukan',
+
+                    },
+                    HR_TARIKH: {
+                        required: 'Tarikh Cuti diperlukan',
+
+                    },
+
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+
+
+            });
+
+          
+         
+          
+            $('#HR_WAKTU_MULA').timepicker({ showMeridian: false });
+            $('#HR_WAKTU_AKHIR').timepicker({ showMeridian: false });
+
+
+            $('#HR_TARIKH').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    //$('#HR_TARIKH_CUTI_AKH').datepicker('option', 'maxDate', selectedDate);
+
+
+                }
+            });
+
+            //$("#HR_TARIKH").datepicker({
+            //    changeMonth: true,
+            //    changeYear: true,
+            //    dateFormat: 'dd/mm/yy',
+            //    prevText: '<i class="fa fa-chevron-left"></i>',
+            //    nextText: '<i class="fa fa-chevron-right"></i>',
+            //    minDate: 0,
+            //    onSelect: function (selectedDate) {
+            //        //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+            //        var date = $(this);
+            //        date.parent().find("em").remove();
+            //        $.ajax({
+            //            url: "CutiUmum/CariCuti",
+            //            type: "get",
+            //            datatype: "json",
+            //            data: {
+            //                tarikh: $(this).val(),
+            //                kod: function () {
+            //                    return $("#HR_KOD_CUTI_UMUM").val();
+            //                }
+            //            },
+            //            success: function (data) {
+            //                debugger
+            //                if (data != true) {
+            //                    date.valid();
+            //                    date.after('<em for="HR_TARIKH" class="invalid">Tarikh Cuti Telah Wujud</em>')
+            //                }
+            //            }
+            //        })
+            //    }
+            //});
+
+            $("#btn").on("click", function (e) {
+                
+                $.ajax({
+                    url: "CutiUmum/CariCuti",
+                    type: "get",
+                    datatype: "json",
+                    data: {
+                        tarikh: function () {
+                            return $("#HR_TARIKH").val();
+                        },
+                        kod: function () {
+                            return $("#HR_KOD_CUTI_UMUM").val();
+                        }
+                    },
+                    success: function (data) {
+                        debugger
+                        if (data != true) {
+                            $("#HR_TARIKH").valid();
+                            
+                        }
+                        else
+                        {
+                            $("#order-form").submit()
+                        }
+                    }
+                })
+                //e.preventDefault();
+            });
+        })
+    </script>

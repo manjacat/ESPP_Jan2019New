@@ -1,0 +1,417 @@
+﻿@model IEnumerable<eSPP.Models.HR_MAKLUMAT_PEKERJAAN>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_MAKLUMAT_ELAUN_POTONGAN.HR_KOD_ELAUN_POTONGAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_MAKLUMAT_PERIBADI.HR_NO_KPBARU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_PERSARAAN.HR_ALASAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_GELARAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_JABATAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_BAHAGIAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_JAWATAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_GRED)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KATEGORI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KUMP_PERKHIDMATAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARAF_JAWATAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_GAJI_POKOK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NO_AKAUN_BANK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_BULAN_KENAIKAN_GAJI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_MASUK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_SAH_JAWATAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_TAMAT_KONTRAK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_TAMAT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_SISTEM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NO_PENYELIA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_STATUS_KWSP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_STATUS_SOCSO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_STATUS_PCB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_STATUS_PENCEN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NILAI_KWSP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NILAI_SOCSO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KOD_PCB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_GAJI_PRORATA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_MATRIKS_GAJI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_UNIT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KUMPULAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KOD_BANK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TINGKATAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KAKITANGAN_IND)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_FAIL_PERKHIDMATAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NO_SIRI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_BAYARAN_CEK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_KE_JABATAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KOD_GAJI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KELAS_PERJALANAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_LANTIKAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_TIDAK_AKTIF)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_GAJI_IND)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_GAJI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_PCB_TARIKH_MULA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_PCB_TARIKH_AKHIR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NILAI_PCB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KOD_GELARAN_J)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TANGGUH_GERAKGAJI_IND)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_KEYIN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NP_KEYIN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_UBAH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NP_UBAH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_SKIM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_PERGERAKAN_GAJI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NO_KWSP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NO_PENCEN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NO_SOCSO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NO_PCB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_INITIAL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_AM_YDP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_MASUK_KERAJAAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_UNIFORM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TEKNIKAL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_KELUAR_MBPJ)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_MAKLUMAT_ELAUN_POTONGAN.HR_KOD_ELAUN_POTONGAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_MAKLUMAT_PERIBADI.HR_NO_KPBARU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_PERSARAAN.HR_ALASAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_GELARAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_JABATAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_BAHAGIAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_JAWATAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_GRED)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KATEGORI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KUMP_PERKHIDMATAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARAF_JAWATAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_GAJI_POKOK)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NO_AKAUN_BANK)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_BULAN_KENAIKAN_GAJI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_MASUK)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_SAH_JAWATAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_TAMAT_KONTRAK)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_TAMAT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_SISTEM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NO_PENYELIA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_STATUS_KWSP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_STATUS_SOCSO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_STATUS_PCB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_STATUS_PENCEN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NILAI_KWSP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NILAI_SOCSO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KOD_PCB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_GAJI_PRORATA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_MATRIKS_GAJI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_UNIT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KUMPULAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KOD_BANK)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TINGKATAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KAKITANGAN_IND)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_FAIL_PERKHIDMATAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NO_SIRI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_BAYARAN_CEK)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_KE_JABATAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KOD_GAJI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KELAS_PERJALANAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_LANTIKAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_TIDAK_AKTIF)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_GAJI_IND)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_GAJI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_PCB_TARIKH_MULA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_PCB_TARIKH_AKHIR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NILAI_PCB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KOD_GELARAN_J)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TANGGUH_GERAKGAJI_IND)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_KEYIN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NP_KEYIN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_UBAH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NP_UBAH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_SKIM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_PERGERAKAN_GAJI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NO_KWSP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NO_PENCEN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NO_SOCSO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NO_PCB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_INITIAL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_AM_YDP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_MASUK_KERAJAAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_UNIFORM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TEKNIKAL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_KELUAR_MBPJ)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.HR_NO_PEKERJA }) |
+            @Html.ActionLink("Details", "Details", new { id=item.HR_NO_PEKERJA }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.HR_NO_PEKERJA })
+        </td>
+    </tr>
+}
+
+</table>

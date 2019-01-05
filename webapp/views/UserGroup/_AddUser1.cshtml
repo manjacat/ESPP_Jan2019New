@@ -1,0 +1,46 @@
+﻿@model IEnumerable<eSPP.Models.GroupUser>
+
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Edit Pelanggan
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        <table class="table">
+            <tr>
+                <th></th>
+                <th>
+                    User Name
+                </th>
+                <th>
+                    Email
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink("Select", "AddUserConfirm", new { UserGroupID = @ViewBag.UserGroup.UserGroupID, UserID = item.UserID })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+
+                </tr>
+            }
+        </table>
+
+
+
+    </div>
+
+</div><!-- /.modal-content -->

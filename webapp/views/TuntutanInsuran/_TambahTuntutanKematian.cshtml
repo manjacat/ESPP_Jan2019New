@@ -1,0 +1,137 @@
+﻿
+@model eSPP.Models.HR_TUNTUTAN_INSURAN
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Tambah Kumpulan Pensyarah <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+        
+            @using (Html.BeginForm("TambahTuntutanKematian", "TuntutanInsuran", FormMethod.Post, new { id = "order-form", @class = "smart-form", novalidate = "novalidate" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div id="peribadi">
+
+                    <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <legend style="background-color:white">
+                            Tuntutan Insuran Kematian
+                        </legend>
+@{
+    List<HR_MAKLUMAT_PERIBADI> senaraiPeribadi = (List<HR_MAKLUMAT_PERIBADI>)ViewBag.senaraiPeribadi;
+    List<HR_MAKLUMAT_PEKERJAAN> senaraiPekerjaan = (List<HR_MAKLUMAT_PEKERJAAN>)ViewBag.senaraiPekerjaan;
+
+    @foreach (var HR_MAKLUMAT_PERIBADI in senaraiPeribadi)
+    {
+                        <div class="row">
+
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Lahir</label>
+                                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-list-alt"></i>
+                                                @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_TARIKH_LAHIR, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                            </label>
+                                        </div>
+                                    </section>
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh </label>
+                                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-list-alt"></i>
+                                                @Html.EditorFor(model => model.HR_TARIKH_TUNTUTAN, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                            </label>
+                                        </div>
+                                    </section>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Polisi</label>
+                                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-list-alt"></i>
+                                                @Html.EditorFor(model => model.HR_NO_POLISI, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                            </label>
+                                        </div>
+                                    </section>
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Punca-punca Kematian</label>
+                                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-list-alt"></i>
+                                                @Html.EditorFor(model => model.HR_NO_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Terakhir Bertugas</label>
+                                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-list-alt"></i>
+                                                @Html.EditorFor(model => model.HR_NO_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+                                    </section>
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Kematian</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-list-alt"></i>
+                                                @Html.EditorFor(model => model.HR_TARIKH_KEMATIAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+                                    </section>
+
+                                </div>
+
+                             
+                            </div>
+                        </div>
+    }
+    }
+                    </fieldset>
+                   
+                    <footer>
+                        <button type="submit" id="btn" class="btn btn-primary">
+                            <span class="fa fa-send-o"></span> Hantar
+                        </button>
+                        <button type="button" class="btn btn-default" onclick="javascript: history.go(0)">
+                            Kembali
+                        </button>
+                    </footer>
+                </div>
+            }
+
+
+
+    </div>
+
+</div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+
+
+
+
+         
+
+            
+
+          
+
+        })
+    </script> 

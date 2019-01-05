@@ -1,0 +1,124 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+<div class="tab-pane fade" id="Tanggungan">
+    <div class="row">
+
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Maklumat Tanggungan
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <table id="datatable_Tanggungan" class="table table-striped table-bordered table-hover" width="180%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>No KP(Baru) / Surat Beranak</th>
+                                <th>Jantina</th>
+                                <th>Hubungan</th>
+                                <th>Tarikh Lahir</th>
+                                <th>Tempat Lahir</th>
+                                <th>Umur</th>
+                                <th>Sekolah/IPT</th>
+                                <th>Tambah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_TANGGUNGAN.Count(); item++)
+                            {
+                                <tr id="no1">
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.Hidden("HR_MAKLUMAT_TANGGUNGAN[" + item + "].HR_NO_PEKERJA", Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_NO_PEKERJA, new { @class = "form-control", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_TANGGUNGAN[" + item + "].HR_NAMA_TANGGUNGAN", Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_NAMA_TANGGUNGAN, new { @class = "form-control", disabled = "disabled" })
+
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_TANGGUNGAN[" + item + "].HR_NO_KP", Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_NO_KP, new { @class = "form-control", disabled = "disabled", size = 12 })
+                                        </label>
+                                    </td>
+
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_TANGGUNGAN[" + item + "].HR_JANTINA", new SelectList(ViewBag.HR_JANTINA, "Value", "Text", Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_JANTINA), string.Empty, new { @class = "form-control", disabled = "disabled" })
+                                            <i></i>
+
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_TANGGUNGAN[" + item + "].HR_HUBUNGAN", new SelectList(ViewBag.HR_HUBUNGAN, "Value", "Text", Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_HUBUNGAN), string.Empty, new { @class = "form-control", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_TANGGUNGAN[" + item + "].HR_TARIKH_LAHIR", string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_TARIKH_LAHIR), new { @class = "form-control HR_MAKLUMAT_TANGGUNGAN_HR_TARIKH_LAHIR", disabled = "disabled", size = 9 })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_TANGGUNGAN[" + item + "].HR_TEMPAT_LAHIR", new SelectList(ViewBag.HR_TEMPAT_LAHIR, "Value", "Text", Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_TEMPAT_LAHIR), string.Empty, new { @class = "form-control", disabled = "disabled" })
+                                            <i></i>
+
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @{
+                                                string umur = Convert.ToString((DateTime.Now.Year - Convert.ToDateTime(Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_TARIKH_LAHIR).Year));
+                                                if (Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_TARIKH_LAHIR == null)
+                                                {
+                                                    umur = null;
+                                                }
+                                            }
+                                            @Html.TextBox("HR_MAKLUMAT_TANGGUNGAN[" + item + "].HR_UMUR", umur, new { @class = "form-control umur", disabled = "disabled", size = 2 })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_TANGGUNGAN[" + item + "].HR_SEK_IPT", Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_SEK_IPT, new { @class = "form-control", disabled = "disabled" })
+                                        </label>
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-success btn-add-Tanggungan" id="btn-add-Tanggungan@(item)" name="Tambah_Tanggungan" type="button" disabled="disabled">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+
+        <br />
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <label class="">Kemaskini : </label>
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mTanggungan-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mTanggungan-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" name="kemaskini" class="form-control" value="off">
+            </div>
+        </div>
+    </div>
+</div>

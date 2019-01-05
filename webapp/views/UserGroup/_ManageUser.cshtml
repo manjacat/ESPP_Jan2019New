@@ -1,0 +1,81 @@
+﻿@model IEnumerable<eSPP.Models.GroupUser>
+
+@{
+    ViewBag.Title = "Manage User";
+}
+
+<h2>Manage User</h2>
+
+<h2></h2>Role Name : @ViewBag.UserGroup.UserGroupName
+<hr />
+<p>
+    @Html.ActionLink("Add User", "AddUser", new { UserGroupID = ViewBag.UserGroup.UserGroupID }) |
+    @Html.ActionLink("Back to list", "Index")
+</p>
+<p>
+    <div id="divAddUser" style="width:100%;background-color:deepskyblue;display:none;padding:5px 5px 5px 5px">
+        Available User :
+        <br />
+        <select id="selAddUser">
+            @{ 
+                foreach(var groupUser in ViewBag.ReverseGroupUserList)
+                {
+                    <option value="@groupUser.UserID">@groupUser.UserName &nbsp;|&nbsp; @groupUser.Email</option>
+                }
+            }
+        </select>
+        <br />
+        <input type="button" id="butAddUser" onclick="SelectUser()" value="Insert" />
+        <input type="button" id="butCancelAddUser" onclick="CancelSelectUser()" value="Cancel" />
+        <script type="text/javascript">
+            function SelectUser() {
+                var vGroupID =  "@ViewBag.UserGroup.UserGroupID";
+                var selAddUser = document.getElementById("selAddUser");
+                var vUserID = selAddUser.value;
+                $.post('@Url.Action("AddUser", "UserGroup")', { UserGroupID: vGroupID, UserID: vUserID },
+                function () {
+                    location.reload(true);
+                },
+                function () {
+                    alert("Error");
+                });
+            }
+            function CancelSelectUser() {
+                var divAddUser = document.getElementById("divAddUser");
+                divAddUser.style.display = "none";
+            }
+        </script>
+    </div>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            User Name
+        </th>
+        <th>
+            Email
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.ActionLink("Remove User", "RemoveUser", new { UserGroupID=item.UserGroupID, UserID=item.UserID })
+        </td>
+    </tr>
+}
+
+</table>
+<script type="text/javascript">
+    function ShowAddUser() {
+        var divAddUser = document.getElementById("divAddUser");
+        divAddUser.style.display = "block";
+    }
+</script>

@@ -1,0 +1,1984 @@
+﻿
+@{
+    ViewBag.Title = "Luaran";
+}
+
+
+@model eSPP.Models.Luaran
+
+<div id="content">
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa-fw fa fa-pencil-square-o"></i>
+                Forms
+                <span>
+                    >
+                    Justifikasi Lantikan Baru
+                </span>
+            </h1>
+        </div>
+    </div>
+
+    <section id="widget-grid" class="">
+
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <!-- WIDGET END -->
+
+        </div>
+
+        <!-- end row -->
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <article class="col-sm-12">
+
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-align-justify"></i> </span>
+                        <h2>Calon Luaran</h2>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body">
+
+                            <form class="navbar-form navbar-left" role="search">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="No. KP(Baru)">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Nama">
+                                </div>
+                                <button type="submit" class="btn btn-default">
+                                    Submit
+                                </button>
+
+                            </form>
+                        </div>
+                        <hr class="simple">
+                        <ul id="myTab1" class="nav nav-tabs bordered">
+                            <li class="active">
+                                <a href="#s1" data-toggle="tab">Peribadi <span class="badge bg-color-blue txt-color-white"></span></a>
+                            </li>
+                            <li>
+                                <a href="#s2" data-toggle="tab"><i class=""></i> Aktiviti</a>
+                            </li>
+                            <li>
+                                <a href="#s3" data-toggle="tab"><i class=""></i> Bahasa</a>
+                            </li>
+                            <li>
+                                <a href="#s4" data-toggle="tab"><i class=""></i> Persekolahan</a>
+                            </li>
+                            <li>
+                                <a href="#s5" data-toggle="tab"><i class=""></i>Komputer</a>
+                            </li>
+                            <li>
+                                <a href="#s6" data-toggle="tab"><i class=""></i> Peperiksaaan</a>
+                            </li>
+                            <li>
+                                <a href="#s7" data-toggle="tab"><i class=""></i> Pengalaman Kerja</a>
+                            </li>
+                            <li>
+                                <a href="#s8" data-toggle="tab"><i class=""></i>Pengajian Tinggi</a>
+                            </li>
+                            <li>
+                                <a href="#s9" data-toggle="tab"><i class=""></i>Permohonan</a>
+                            </li>
+                           
+                            <li class="pull-right">
+                                <a href="javascript:void(0);">
+                                    <div class="sparkline txt-color-pinkDark text-align-right" data-sparkline-height="18px" data-sparkline-width="90px" data-sparkline-barwidth="7">
+                                        5,10,6,7,4,3
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div id="myTabContent1" class="tab-content padding-10">
+                            <div class="tab-pane fade in active" id="s1">
+
+
+                                <div>
+                                    <div class="widget-body no-padding">
+                                        @using (Html.BeginForm("Luaran", "LantikanBaru", FormMethod.Post, new { @class = "smart-form", id = "smart-form-register", enctype = "multipart/form-data", autocomplete = "off" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @Html.HiddenFor(model => model.NoIC)
+
+                                            <fieldset>
+                                                <div class="row">
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Nama Penuh
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.Nama, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Nama, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Keturunan
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.Keturunan, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Keturunan, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                </div>
+
+                                                <div class="row">
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Nama Lain
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.NamaLain, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.NamaLain, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Lesen Memandu
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <div class="col col-4">
+                                                            <label class="radio state-error"><input type="radio" name="radio"><i></i>Ada</label>
+
+                                                        </div>
+                                                        <div class="col col-4">
+                                                            <label class="radio state-error"><input type="radio" name="radio"><i></i>Tiada</label>
+
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                                <div class="row">
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            No.KP Lama
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.NoICLama, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.NoICLama, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Kelas
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+                                                            @Html.EditorFor(model => model.Kelas, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Kelas, "", new { @class = "text-danger" })
+
+                                                        </label>
+                                                    </section>
+                                                </div>
+
+                                                <div class="row">
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            No. KP Baru
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.NoIC, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.NoIC, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Alamat
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+                                                            @Html.EditorFor(model => model.Alamat, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Alamat, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+
+                                                </div>
+
+                                                <div class="row">
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Negeri
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+                                                            @Html.EditorFor(model => model.Negeri, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Negeri, "", new { @class = "text-danger" })
+
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.Poskod, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Poskod, "", new { @class = "text-danger" })
+
+                                                        </label>
+                                                    </section>
+
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Poskod
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.Poskod, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Poskod, "", new { @class = "text-danger" })
+
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Bandar
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+                                                            @Html.EditorFor(model => model.Bandar, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Bandar, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset>
+                                                <div class="row">
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Tempat Lahir
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.TempatLahir, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.TempatLahir, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Tarikh Lahir
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.TarikhLahir, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.TarikhLahir, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                </div>
+                                                <div class="row">
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Agama
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.Agama, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Agama, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            No. Tel Pejabat
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+                                                            @Html.EditorFor(model => model.TelPejabat, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.TelPejabat, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                </div>
+                                                <div class="row">
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Taraf Perkahwinan
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.TarafPerkahwinan, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.TarafPerkahwinan, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            No. Tel Rumah
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+                                                            @Html.EditorFor(model => model.TelRumah, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.TelRumah, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                </div>
+                                                <div class="row">
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Jantina
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.Jantina, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Jantina, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            No. Tel Bimbit
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+                                                            @Html.EditorFor(model => model.TelBimbit, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.TelBimbit, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                </div>
+                                                <div class="row">
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Warganegara
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.Warganegara, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Warganegara, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Email
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+                                                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                </div>
+                                            </fieldset>
+
+
+                                            <header>
+                                                Keterangan Keluarga
+                                            </header>
+                                            <fieldset>
+                                                <div class="row">
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Nama Bapa
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+                                                            @Html.EditorFor(model => model.NamaBapa, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.NamaBapa, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Nama Ibu
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+                                                            @Html.EditorFor(model => model.NamaIbu, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.NamaIbu, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                </div>
+                                                <div class="row">
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Tarikh Lahir
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+                                                            @Html.EditorFor(model => model.TarikhLahirBapa, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.TarikhLahirBapa, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Tarikh Lahir
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+                                                            @Html.EditorFor(model => model.TarikhLahirIbu, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.TarikhLahirIbu, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                </div>
+                                                <div class="row">
+                                                    <section class="col col-lg-2 col-md-2col-sm-12">
+                                                        <label class="label">
+                                                            Tempat Lahir
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+                                                            @Html.EditorFor(model => model.TempatLahirBapa, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.TempatLahirBapa, "", new { @class = "text-danger" })
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                        <label class="label">
+                                                            Tempat Lahir
+                                                        </label>
+                                                    </section>
+                                                    <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                        <label class="input">
+                                                            @Html.EditorFor(model => model.TempatLahirIbu, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.TempatLahirIbu, "", new { @class = "text-danger" })
+
+                                                        </label>
+                                                    </section>
+                                                </div>
+                                            </fieldset>
+
+
+                                            <footer>
+                                                <button type="submit" class="btn btn-success">
+                                                    Kemaskini
+                                                </button>
+
+                                                <button type="reset" class="btn btn-danger">
+                                                    Padam
+                                                </button>
+
+                                                <button type="button" class="btn btn-default" onclick="javascript: history.go(-1)">
+                                                    Kembali
+                                                </button>
+                                            </footer>
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="tab-pane fade" id="s2">
+                               
+                                    <form class="smart-form">
+                                        <header>
+                                            Aktiviti dan Kegiatan Ko-Kurikulum
+                                        </header>
+                                        <fieldset>
+                                            <div class="row">
+                                                <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                    <label class="label">
+                                                        Tarikh dan Aktiviti
+                                                    </label>
+                                                </section>
+                                                <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                    <label class="input">
+                                                        @Html.EditorFor(model => model.TarikhdanAktiviti, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.TarikhdanAktiviti, "", new { @class = "text-danger" })
+                                                    </label>
+                                                </section>
+                                               
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                    <label class="label">
+                                                        Peringkat
+                                                    </label>
+                                                </section>
+                                                <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                    <label class="input">
+                                                        @Html.EditorFor(model => model.Peringkat, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.Peringkat, "", new { @class = "text-danger" })
+                                                    </label>
+                                                </section>
+                                               
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-lg-2 col-md-2col-sm-12">
+                                                    <label class="label">
+                                                        Nama Aktiviti
+                                                    </label>
+                                                </section>
+                                                <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                    <label class="input">
+                                                        @Html.EditorFor(model => model.NamaAktiviti, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.NamaAktiviti, "", new { @class = "text-danger" })
+                                                    </label>
+                                                </section>
+                                               
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-lg-2 col-md-2col-sm-12">
+                                                    <label class="label">
+                                                        Anjuran
+                                                    </label>
+                                                </section>
+                                                <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                    <label class="input">
+                                                        @Html.EditorFor(model => model.Anjuran, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.Anjuran, "", new { @class = "text-danger" })
+                                                    </label>
+                                                </section>
+
+                                            </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <div class="widget-body no-padding">
+                                                <div class="table-responsive">
+
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>Tarikh Aktiviti</th>
+                                                                <th>Peringkat</th>
+                                                                <th>Aktiviti</th>
+                                                                <th>Anjuran</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+                                      
+                                    </form>
+
+                                
+                            </div>
+                            <div class="tab-pane fade" id="s3">
+                                <form class="smart-form">
+                                    <header>
+                                        Kemahiran Bahasa
+                                    </header>
+                                    <fieldset>
+                                        <div class="row">
+                                            <section class="col col-lg-3 col-md-3 col-sm-12">
+                                                <section class="col col-lg-12 col-md-12 col-sm-12">
+                                                    <label for="ex1">Bahasa</label>
+                                                </section>
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.Bahasa, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Bahasa, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-3 col-md-3 col-sm-12">
+                                                <section class="col col-lg-12 col-md-12 col-sm-12">
+                                                    <label for="ex1">Pembacaan</label>
+                                                </section>
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.Pembacaan, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Pembacaan, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-3 col-md-3 col-sm-12">
+                                                <section class="col col-lg-12 col-md-12 col-sm-12">
+                                                    <label for="ex1">Penulisan</label>
+                                                </section>
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.Penulisan, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Penulisan, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section><section class="col col-lg-3 col-md-3 col-sm-12">
+                                                <section class="col col-lg-12 col-md-12 col-sm-12">
+                                                    <label for="ex1">Pertuturan</label>
+                                                </section>
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.Pertuturan, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Pertuturan, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="widget-body no-padding">
+                                            <div class="table-responsive">
+
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Bahasa</th>
+                                                            <th>Pembacaan</th>
+                                                            <th>Penulisan</th>
+                                                            <th>Pertuturan</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+
+                                   
+                                </form>
+
+                            </div>
+                            <div class="tab-pane fade" id="s4">
+                                <form class="smart-form">
+                                  
+                                    <fieldset>
+                                        <div class="row">
+                                            <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                <label class="label">
+                                                    Tarikh Mula
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.TarikhMula, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.TarikhMula, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                <label class="label">
+                                                    Tarikh Tamat
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.TarikhTamat, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.TarikhTamat, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+
+                                        </div>
+                                        <div class="row">
+                                            <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                <label class="label">
+                                                    Nama Sekolah
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.NamaSekolah, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.NamaSekolah, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+
+                                        </div>
+                                        <div class="row">
+                                            <section class="col col-lg-2 col-md-2col-sm-12">
+                                                <label class="label">
+                                                    Darjah/Tingkat Akhir
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.Darjah, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Darjah, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="widget-body no-padding">
+                                            <div class="table-responsive">
+
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Tarikh Mula</th>
+                                                            <th>Tarikh Tamat</th>
+                                                            <th>Nama Sekolah</th>
+                                                            <th>Darjah/Tingkat</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="s5">
+                               <form class="smart-form">
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Kemahiran
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.Kemahiran, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Kemahiran, "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Tahap
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.Tahap, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Tahap, "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+
+                                    </div>
+                                    
+                                </fieldset>
+                                <fieldset>
+                                    <div class="widget-body no-padding">
+                                        <div class="table-responsive">
+
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Bilangan</th>
+                                                        <th>Kemahiran</th>
+                                                        <th>Tahap</th>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                     
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                      
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                       
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                     
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                              </form>
+                            </div>
+                            <div class="tab-pane fade" id="s6">
+                                <form class="smart-form">
+                                    <fieldset>
+                                        <div class="row">
+                                            <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                <label class="label">
+                                                    Kod Peperiksaan
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.KodPeperiksaan, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.KodPeperiksaan, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                        </div>
+                                        <div class="row">
+                                            <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                <label class="label">
+                                                    Angka Giliran
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.AngkGiliran, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.AngkGiliran, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+
+                                        </div>
+                                        <div class="row">
+                                            <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                <label class="label">
+                                                    Pangkat
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.Pangkat, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Pangkat, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                        </div>
+
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="widget-body no-padding">
+                                            <div class="table-responsive">
+
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Kod Peperiksaan</th>
+                                                            <th>Pangkat</th>
+                                                            <th>No. Giliran</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="s7">
+                                <form class="smart-form">
+
+                                    <fieldset>
+                                        <div class="row">
+                                            <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                <label class="label">
+                                                    Jawatan
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.JawatanPermohonan, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.JawatanPermohonan, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                <label class="label">
+                                                    Gaji Pokok RM
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.GajiPokok, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.GajiPokok, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+
+                                        </div>
+                                        <div class="row">
+                                            <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                <label class="label">
+                                                    Majikan
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.Majikan, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Majikan, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-2 col-md-2col-sm-12">
+                                                <label class="label">
+                                                    Tarikh Dari
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.TarikhDari, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.TarikhDari, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                        </div>
+                                        <div class="row">
+                                            <section class="col col-lg-2 col-md-2col-sm-12">
+                                                <label class="label">
+                                                    Alasan Berhenti
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.AlasanBerhenti, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.AlasanBerhenti, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-2 col-md-2col-sm-12">
+                                                <label class="label">
+                                                    Tarikh Hingga
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.TarikhHingga, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.TarikhHingga, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="widget-body no-padding">
+                                            <div class="table-responsive">
+
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Tarikh Mula</th>
+                                                            <th>Nama Syarikat</th>
+                                                            <th>Jawatan</th>
+                                                            <th>Tarikh Tamat</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="s8">
+                                <form class="smart-form">
+                                    <header>
+                                        Pengajian Tinggi
+                                    </header>
+                                    <fieldset>
+                                        <div class="row">
+                                            <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                <label class="label">
+                                                    Tarikh Lulus
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.TarikhLulus, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.TarikhLulus, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+
+                                        </div>
+                                        <div class="row">
+                                            <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                <label class="label">
+                                                    Nama Institusi
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.NamaInstitusi, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.NamaInstitusi, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+
+                                        </div>
+                                        <div class="row">
+                                            <section class="col col-lg-2 col-md-2col-sm-12">
+                                                <label class="label">
+                                                    Diploma/ Ijazah
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.DiplomaIjazah, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.DiplomaIjazah, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+
+                                        </div>
+                                        <div class="row">
+                                            <section class="col col-lg-2 col-md-2col-sm-12">
+                                                <label class="label">
+                                                    Bidang Pengkhususan
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.BidangPengkhususan, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.BidangPengkhususan, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+
+                                        </div>
+                                        <div class="row">
+                                            <section class="col col-lg-2 col-md-2col-sm-12">
+                                                <label class="label">
+                                                    C.GPA
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.CGPA, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.CGPA, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="widget-body no-padding">
+                                            <div class="table-responsive">
+
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Tarikh Lulus</th>
+                                                            <th>Nama Institusi</th>
+                                                            <th>Kelulusan</th>
+                                                            <th>Bidang Khusus</th>
+                                                            <th>C.GPA</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+
+                                </form>
+
+                            </div>
+                            <div class="tab-pane fade" id="s9">
+                                <form class="smart-form">
+
+                                    <fieldset>
+                                        <div class="row">
+                                            <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                <label class="label">
+                                                    Jawatan
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.Jawatan, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Jawatan, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                <label class="label">
+                                                    Taraf Jawatan
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.TarafJawatan, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.TarafJawatan, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+
+                                        </div>
+                                        <div class="row">
+                                            <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                <label class="label">
+                                                    Tarikh Permohonan
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.TarikhPermohonan, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.TarikhPermohonan, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-2 col-md-2col-sm-12">
+                                                <label class="label">
+                                                    Status
+                                                </label>
+                                            </section>
+                                            <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                                                </label>
+                                            </section>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="widget-body no-padding">
+                                            <div class="table-responsive">
+
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Tarikh Permohonan</th>
+                                                            <th>Jawatan</th>
+                                                            <th>Taraf Jawatan</th>
+                                                            <th>Status Temuduga</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+
+                                    </fieldset>
+
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- end widget body-->
+
+                </div>
+                <!-- end widget content -->
+            </article>
+        </div>
+        <!-- end widget -->
+        <!-- WIDGET END -->
+
+    </section>
+
+</div>
+
+        <!-- end row -->
+        <!-- row -->
+
+        
+        <!-- end row -->
+
+  
+    
+
+
+
+
+
+
+<!-- END MAIN CONTENT -->
+
+@section pagespecific {
+    <script type="text/javascript">
+
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+        $(document).ready(function () {
+
+            var $checkoutForm = $('#checkout-form').validate({
+                // Rules for form validation
+                rules: {
+                    fname: {
+                        required: true
+                    },
+                    lname: {
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    phone: {
+                        required: true
+                    },
+                    country: {
+                        required: true
+                    },
+                    city: {
+                        required: true
+                    },
+                    code: {
+                        required: true,
+                        digits: true
+                    },
+                    address: {
+                        required: true
+                    },
+                    name: {
+                        required: true
+                    },
+                    card: {
+                        required: true,
+                        creditcard: true
+                    },
+                    cvv: {
+                        required: true,
+                        digits: true
+                    },
+                    month: {
+                        required: true
+                    },
+                    year: {
+                        required: true,
+                        digits: true
+                    }
+                },
+
+                // Messages for form validation
+                messages: {
+                    fname: {
+                        required: 'Please enter your first name'
+                    },
+                    lname: {
+                        required: 'Please enter your last name'
+                    },
+                    email: {
+                        required: 'Please enter your email address',
+                        email: 'Please enter a VALID email address'
+                    },
+                    phone: {
+                        required: 'Please enter your phone number'
+                    },
+                    country: {
+                        required: 'Please select your country'
+                    },
+                    city: {
+                        required: 'Please enter your city'
+                    },
+                    code: {
+                        required: 'Please enter code',
+                        digits: 'Digits only please'
+                    },
+                    address: {
+                        required: 'Please enter your full address'
+                    },
+                    name: {
+                        required: 'Please enter name on your card'
+                    },
+                    card: {
+                        required: 'Please enter your card number'
+                    },
+                    cvv: {
+                        required: 'Enter CVV2',
+                        digits: 'Digits only'
+                    },
+                    month: {
+                        required: 'Select month'
+                    },
+                    year: {
+                        required: 'Enter year',
+                        digits: 'Digits only please'
+                    }
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+
+            var $registerForm = $("#smart-form-register").validate({
+
+                // Rules for form validation
+                rules: {
+                    username: {
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 20
+                    },
+                    passwordConfirm: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 20,
+                        equalTo: '#password'
+                    },
+                    firstname: {
+                        required: true
+                    },
+                    lastname: {
+                        required: true
+                    },
+                    gender: {
+                        required: true
+                    },
+                    terms: {
+                        required: true
+                    }
+                },
+
+                // Messages for form validation
+                messages: {
+                    login: {
+                        required: 'Please enter your login'
+                    },
+                    email: {
+                        required: 'Please enter your email address',
+                        email: 'Please enter a VALID email address'
+                    },
+                    password: {
+                        required: 'Please enter your password'
+                    },
+                    passwordConfirm: {
+                        required: 'Please enter your password one more time',
+                        equalTo: 'Please enter the same password as above'
+                    },
+                    firstname: {
+                        required: 'Please select your first name'
+                    },
+                    lastname: {
+                        required: 'Please select your last name'
+                    },
+                    gender: {
+                        required: 'Please select your gender'
+                    },
+                    terms: {
+                        required: 'You must agree with Terms and Conditions'
+                    }
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+
+            var $reviewForm = $("#review-form").validate({
+                // Rules for form validation
+                rules: {
+                    name: {
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    review: {
+                        required: true,
+                        minlength: 20
+                    },
+                    quality: {
+                        required: true
+                    },
+                    reliability: {
+                        required: true
+                    },
+                    overall: {
+                        required: true
+                    }
+                },
+
+                // Messages for form validation
+                messages: {
+                    name: {
+                        required: 'Please enter your name'
+                    },
+                    email: {
+                        required: 'Please enter your email address',
+                        email: '<i class="fa fa-warning"></i><strong>Please enter a VALID email addres</strong>'
+                    },
+                    review: {
+                        required: 'Please enter your review'
+                    },
+                    quality: {
+                        required: 'Please rate quality of the product'
+                    },
+                    reliability: {
+                        required: 'Please rate reliability of the product'
+                    },
+                    overall: {
+                        required: 'Please rate the product'
+                    }
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+
+            var $commentForm = $("#comment-form").validate({
+                // Rules for form validation
+                rules: {
+                    name: {
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    url: {
+                        url: true
+                    },
+                    comment: {
+                        required: true
+                    }
+                },
+
+                // Messages for form validation
+                messages: {
+                    name: {
+                        required: 'Enter your name',
+                    },
+                    email: {
+                        required: 'Enter your email address',
+                        email: 'Enter a VALID email'
+                    },
+                    url: {
+                        email: 'Enter a VALID url'
+                    },
+                    comment: {
+                        required: 'Please enter your comment'
+                    }
+                },
+
+                // Ajax form submition
+                submitHandler: function (form) {
+                    $(form).ajaxSubmit({
+                        success: function () {
+                            $("#comment-form").addClass('submited');
+                        }
+                    });
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+
+            var $contactForm = $("#contact-form").validate({
+                // Rules for form validation
+                rules: {
+                    name: {
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    message: {
+                        required: true,
+                        minlength: 10
+                    }
+                },
+
+                // Messages for form validation
+                messages: {
+                    name: {
+                        required: 'Please enter your name',
+                    },
+                    email: {
+                        required: 'Please enter your email address',
+                        email: 'Please enter a VALID email address'
+                    },
+                    message: {
+                        required: 'Please enter your message'
+                    }
+                },
+
+                // Ajax form submition
+                submitHandler: function (form) {
+                    $(form).ajaxSubmit({
+                        success: function () {
+                            $("#contact-form").addClass('submited');
+                        }
+                    });
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+
+            var $loginForm = $("#login-form").validate({
+                // Rules for form validation
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 20
+                    }
+                },
+
+                // Messages for form validation
+                messages: {
+                    email: {
+                        required: 'Please enter your email address',
+                        email: 'Please enter a VALID email address'
+                    },
+                    password: {
+                        required: 'Please enter your password'
+                    }
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+
+            var $orderForm = $("#order-form").validate({
+                // Rules for form validation
+                rules: {
+                    name: {
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    phone: {
+                        required: true
+                    },
+                    interested: {
+                        required: true
+                    },
+                    budget: {
+                        required: true
+                    }
+                },
+
+                // Messages for form validation
+                messages: {
+                    name: {
+                        required: 'Please enter your name'
+                    },
+                    email: {
+                        required: 'Please enter your email address',
+                        email: 'Please enter a VALID email address'
+                    },
+                    phone: {
+                        required: 'Please enter your phone number'
+                    },
+                    interested: {
+                        required: 'Please select interested service'
+                    },
+                    budget: {
+                        required: 'Please select your budget'
+                    }
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+
+            // START AND FINISH DATE
+            $('#startdate').datepicker({
+                dateFormat: 'dd.mm.yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#finishdate').datepicker('option', 'minDate', selectedDate);
+                }
+            });
+
+            $('#finishdate').datepicker({
+                dateFormat: 'dd.mm.yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#startdate').datepicker('option', 'maxDate', selectedDate);
+                }
+            });
+
+
+
+        })
+
+    </script>
+
+}

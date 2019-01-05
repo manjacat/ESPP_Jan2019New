@@ -1,0 +1,1913 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+<!-- MAIN CONTENT -->
+<div id="content">
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa fa-table fa-fw "></i>
+                Maklumat Kakitangan
+                <span>
+                    >
+                    Profil Kakitangan
+                </span>
+            </h1>
+        </div>
+        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+            <ul id="sparks" class="">
+                <li class="sparks-info">
+                    <h5> My Income <span class="txt-color-blue">$47,171</span></h5>
+                    <div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm">
+                        1300, 1877, 2500, 2577, 2000, 2100, 3000, 2700, 3631, 2471, 2700, 3631, 2471
+                    </div>
+                </li>
+                <li class="sparks-info">
+                    <h5> Site Traffic <span class="txt-color-purple"><i class="fa fa-arrow-circle-up" data-rel="bootstrap-tooltip" title="Increased"></i>&nbsp;45%</span></h5>
+                    <div class="sparkline txt-color-purple hidden-mobile hidden-md hidden-sm">
+                        110,150,300,130,400,240,220,310,220,300, 270, 210
+                    </div>
+                </li>
+                <li class="sparks-info">
+                    <h5> Site Orders <span class="txt-color-greenDark"><i class="fa fa-shopping-cart"></i>&nbsp;2447</span></h5>
+                    <div class="sparkline txt-color-greenDark hidden-mobile hidden-md hidden-sm">
+                        110,150,300,130,400,240,220,310,220,300, 270, 210
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-3" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Profil Kakitangan</h2>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body">
+                            @using (Html.BeginForm("ProfilKakitangan", "MaklumatKakitangan", FormMethod.Post, new { id = "mKakitangan", enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationBootstrap()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                
+
+                                <div class="well">
+                                    <fieldset>
+                                        <div class="row" id="infoKakitangan">
+                                            <div class="col col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                <img src="/content/img/avatars/sunny-big.png" alt="" width="120" height="120" />
+                                            </div>
+                                            <div class="col col-lg-8 col-md-8 col-sm-10 col-xs-12 smart-form">
+                                                <div class="row">
+                                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <label class="label col-lg-2 col-md-2 col-sm-2">Nama Pekerja</label>
+                                                        <div class="col-lg-6 col-md-8 col-sm-8">
+                                                            <label class="input">
+                                                                <i class="icon-append fa fa-user"></i>
+                                                                @Html.EditorFor(model => model.HR_NAMA_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+
+                                                            </label>
+                                                        </div>
+                                                        
+                                                    </section>
+                                                </div>
+                                                <div class="row">
+                                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <label class="label col-lg-2 col-md-2  col-sm-2">No. KP (Baru)</label>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="input">
+                                                                <i class="icon-append fa fa-list-alt"></i>
+                                                                @Html.EditorFor(model => model.HR_NO_KPBARU, new { htmlAttributes = new { @class = "form-control", disabled = "disabled ", maxlength = "12" } })
+                                                            </label>
+                                                        </div>
+                                                        
+                                                    </section>
+                                                </div>
+                                                <div class="row">
+                                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <label class="label col-lg-2 col-md-2 col-sm-2">No. Pekerja</label>
+                                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                                            <label class="input">
+                                                                <i class="icon-append fa fa-list-alt"></i>
+                                                                @Html.EditorFor(model => model.HR_NO_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled ", maxlength = "5" } })
+
+                                                            </label>
+                                                        </div>
+                                                        
+                                                    </section>
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                <div class="text-right">
+                                                    <label class="">Kemaskini : </label>
+                                                    <span class="onoffswitch">
+                                                        <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="st3a" value="off">
+                                                        <label class="onoffswitch-label" for="st3a">
+                                                            <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                                                            <span class="onoffswitch-switch"></span>
+                                                        </label>
+                                                        
+                                                    </span>
+                                                    <input type="hidden" name="kemaskini" class="form-control" value="off">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            
+                                @Html.HiddenFor(model => model.HR_NO_PEKERJA)
+                                @Html.HiddenFor(model => model.HR_NAMA_PEKERJA)
+                                @Html.HiddenFor(model => model.HR_NO_KPBARU)
+                                <br />
+                                <div id="lihat-info">
+                                    <div class="row">
+                                        <div class="col-md-12 tab-pane">
+                                            <ul class="nav nav-tabs">
+                                                <li class="active">
+                                                    <a href="#iss1" data-toggle="tab">Peribadi</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#iss2" data-toggle="tab">Pekerjaan</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#iss3" data-toggle="tab">Pewaris</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#iss4" data-toggle="tab">Tanggungan</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#iss5" data-toggle="tab">Kemahiran</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#iss6" data-toggle="tab">Akademik</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#iss7" data-toggle="tab">Kuarters</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#iss8" data-toggle="tab">Kemahiran</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#iss9" data-toggle="tab">Gaji/Caruman/Potongan Caruman</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content padding-10">
+                                                <div class="tab-pane active" id="iss1">
+                                                
+                                                    <div class="row">
+                                                        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <legend>
+                                                                Maklumat Pengguna
+                                                            </legend>
+                                                            <div class="row smart-form">
+
+                                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Status</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_AKTIF_IND, new SelectList(ViewBag.Status, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+                                                                            
+                                                                        </section>
+
+                                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Alasan</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_ALASAN, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+                                                                            
+                                                                        </section>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. KP (Lama)</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-list-alt"></i>
+                                                                                    @Html.EditorFor(model => model.HR_NO_KPLAMA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                </label>
+
+                                                                            </div>
+                                                                            
+                                                                        </section>
+
+                                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Taraf Perkahwinan</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_TARAF_KAHWIN, new SelectList(ViewBag.TarafKahwin, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+                                                                            
+                                                                        </section>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Lahir</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-calendar"></i>
+                                                                                    <input type="text" name="HR_TARIKH_LAHIR" id="HR_TARIKH_LAHIR" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_LAHIR)" disabled="disabled" />
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila isikan tarikh dengan betul (cth: dd/mm/yyyy)
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+                                                                            
+                                                                        </section>
+
+                                                                        <section class="col col-lg-6 col-md-6 col-sm-4 col-xs-6">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Umur</label>
+                                                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
+                                                                                <label class="input">
+                                                                                    <input type="text" name="Umur" id="Umur" class="form-control" value="@ViewBag.Umur" disabled="disabled" />
+                                                                                </label>
+                                                                            </div>
+                                                                            
+                                                                        </section>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tempat Lahir</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_TEMPAT_LAHIR, new SelectList(ViewBag.TempatLahir, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+                                                                            
+                                                                        </section>
+
+                                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kewarganegaraan</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_WARGANEGARA, new SelectList(ViewBag.Warganegara, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+                                                                        </section>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Agama</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_AGAMA, new SelectList(ViewBag.Agama, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+                                                                            
+                                                                        </section>
+
+                                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Keturunan</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_KETURUNAN, new SelectList(ViewBag.Keturunan, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+                                                                            
+                                                                        </section>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">E-mel</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-envelope-o"></i>
+                                                                                    @Html.EditorFor(model => model.HR_EMAIL, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila isikan e-mel dengan betul (cth: = example@mbpj.gov.my)
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+                                                                            
+                                                                        </section>
+
+                                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jantina</label>
+                                                                            <div class="inline-group col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="radio">
+                                                                                    @Html.RadioButtonFor(model => model.HR_JANTINA, "L", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>Lelaki
+                                                                                </label>
+                                                                                <label class="radio">
+                                                                                    @Html.RadioButtonFor(model => model.HR_JANTINA, "P", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>Perempuan
+                                                                                </label>
+                                                                            </div>
+                                                                        </section>
+
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </fieldset>
+                                                        <br />
+                                                        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <legend>
+                                                                Alamat
+                                                            </legend>
+                                                            <div class="row smart-form">
+
+                                                                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tetap</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-question-circle"></i>
+                                                                                    @Html.EditorFor(model => model.HR_TALAMAT1, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila penuhkan ruangan ini
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+                                                                            
+                                                                        </section>
+
+
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-question-circle"></i>
+                                                                                    @Html.EditorFor(model => model.HR_TALAMAT2, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila penuhkan ruangan ini
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-question-circle"></i>
+                                                                                    @Html.EditorFor(model => model.HR_TALAMAT3, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila penuhkan ruangan ini
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+                                                                            
+                                                                        </section>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Negeri</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_TNEGERI, new SelectList(ViewBag.Negeri, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+                                                                            
+                                                                        </section>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <div class="row">
+                                                                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                                                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Poskod</label>
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                                                                        <label class="input">
+                                                                                            <i class="icon-append fa fa-question-circle"></i>
+                                                                                            @Html.EditorFor(model => model.HR_TPOSKOD, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                            <b class="tooltip tooltip-top-right">
+                                                                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                                                                Sila penuhkan ruangan ini
+                                                                                            </b>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                    
+                                                                                </section>
+
+                                                                                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bandar</label>
+                                                                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                        <label class="input">
+                                                                                            <i class="icon-append fa fa-question-circle"></i>
+                                                                                            @Html.EditorFor(model => model.HR_TBANDAR, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                            <b class="tooltip tooltip-top-right">
+                                                                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                                                                Sila penuhkan ruangan ini
+                                                                                            </b>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                    
+                                                                                </section>
+                                                                            </div>
+
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Surat - Menyurat</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-question-circle"></i>
+                                                                                    @Html.EditorFor(model => model.HR_SALAMAT1, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila penuhkan ruangan ini
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+                                                                            
+                                                                        </section>
+
+
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-question-circle"></i>
+                                                                                    @Html.EditorFor(model => model.HR_SALAMAT2, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila penuhkan ruangan ini
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+                                                                            
+                                                                        </section>
+
+
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-question-circle"></i>
+                                                                                    @Html.EditorFor(model => model.HR_SALAMAT3, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila penuhkan ruangan ini
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+                                                                            
+                                                                        </section>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Negeri</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_SNEGERI, new SelectList(ViewBag.Negeri, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+                                                                            
+                                                                        </section>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <div class="row">
+                                                                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                                                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Poskod</label>
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                                                                        <label class="input">
+                                                                                            <i class="icon-append fa fa-question-circle"></i>
+                                                                                            @Html.EditorFor(model => model.HR_SPOSKOD, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                            <b class="tooltip tooltip-top-right">
+                                                                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                                                                Sila penuhkan ruangan ini
+                                                                                            </b>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                    
+                                                                                </section>
+
+                                                                                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bandar</label>
+                                                                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                        <label class="input">
+                                                                                            <i class="icon-append fa fa-question-circle"></i>
+                                                                                            @Html.EditorFor(model => model.HR_SBANDAR, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                            <b class="tooltip tooltip-top-right">
+                                                                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                                                                Sila penuhkan ruangan ini
+                                                                                            </b>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                    
+                                                                                </section>
+                                                                            </div>
+
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </fieldset>
+                                                        <br />
+                                                        <fieldset class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <legend>Kenderaan</legend>
+                                                            <div class="row smart-form">
+                                                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Lesen Memandu</label>
+                                                                    <div class="inline-group col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                                                        <label class="radio">
+                                                                            @Html.RadioButtonFor(model => model.HR_LESEN, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                            <i></i>Ada
+                                                                        </label>
+                                                                        <label class="radio">
+                                                                            @Html.RadioButtonFor(model => model.HR_LESEN, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                            <i></i>Tiada
+                                                                        </label>
+                                                                    </div>
+                                                                </section>
+
+                                                                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kelas</label>
+                                                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                        <label class="input">
+                                                                            <i class="icon-append fa fa-question-circle"></i>
+                                                                            @Html.EditorFor(model => model.HR_KELAS_LESEN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                            <b class="tooltip tooltip-top-right">
+                                                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                                                Sila penuhkan ruangan ini
+                                                                            </b>
+                                                                        </label>
+                                                                    </div>
+                                                                    
+                                                                </section>
+                                                            </div>
+                                                            <div class="row smart-form">
+                                                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">No. Pendaftaran</label>
+                                                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                                                        <label class="input">
+                                                                            <i class="icon-append fa fa-question-circle"></i>
+                                                                            @Html.EditorFor(model => model.HR_NO_KENDERAAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                            <b class="tooltip tooltip-top-right">
+                                                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                                                Sila penuhkan ruangan ini
+                                                                            </b>
+                                                                        </label>
+                                                                    </div>
+                                                                    
+                                                                </section>
+
+                                                                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jenis</label>
+                                                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                        <label class="input">
+                                                                            <i class="icon-append fa fa-question-circle"></i>
+                                                                            @Html.EditorFor(model => model.HR_JENIS_KENDERAAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                            <b class="tooltip tooltip-top-right">
+                                                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                                                Sila penuhkan ruangan ini
+                                                                            </b>
+                                                                        </label>
+                                                                    </div>
+                                                                    
+                                                                </section>
+                                                            </div>
+
+                                                            <div class="row smart-form">
+                                                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">CC Kenderaan</label>
+                                                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                        <label class="input">
+                                                                            <i class="icon-append fa fa-question-circle"></i>
+                                                                            @Html.EditorFor(model => model.HR_CC_KENDERAAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                            <b class="tooltip tooltip-top-right">
+                                                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                                                Sila penuhkan ruangan ini
+                                                                            </b>
+                                                                        </label>
+                                                                    </div>
+                                                                    
+                                                                </section>
+                                                            </div>
+                                                        </fieldset>
+                                                        <br />
+                                                        <fieldset class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <legend>Telefon</legend>
+
+                                                            <div class="row smart-form">
+                                                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Rumah</label>
+                                                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                        <label class="input">
+                                                                            <i class="icon-append fa fa-phone"></i>
+                                                                            @Html.EditorFor(model => model.HR_TELRUMAH, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                            <b class="tooltip tooltip-top-right">
+                                                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                                                Sila penuhkan ruangan ini
+                                                                            </b>
+                                                                        </label>
+                                                                    </div>
+                                                                    
+                                                                </section>
+                                                            </div>
+
+                                                            <div class="row smart-form">
+                                                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Pejabat</label>
+                                                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                        <label class="input">
+                                                                            <i class="icon-append fa fa-phone"></i>
+                                                                            @Html.EditorFor(model => model.HR_TELPEJABAT, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                            <b class="tooltip tooltip-top-right">
+                                                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                                                Sila penuhkan ruangan ini
+                                                                            </b>
+                                                                        </label>
+                                                                    </div>
+                                                                    
+                                                                </section>
+                                                            </div>
+
+                                                            <div class="row smart-form">
+                                                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bimbit</label>
+                                                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                        <label class="input">
+                                                                            <i class="icon-append fa fa-mobile-phone"></i>
+                                                                            @Html.EditorFor(model => model.HR_TELBIMBIT, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                            <b class="tooltip tooltip-top-right">
+                                                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                                                Sila penuhkan ruangan ini
+                                                                            </b>
+                                                                        </label>
+                                                                    </div>
+                                                                    
+                                                                </section>
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="text-right">
+                                                                <label class="">Kemaskini : </label>
+                                                                <span class="onoffswitch">
+                                                                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="st3b" value="off">
+                                                                    
+                                                                    <label class="onoffswitch-label" for="st3b">
+                                                                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                                                                        <span class="onoffswitch-switch"></span>
+                                                                    </label>
+                                                                </span>
+                                                                <input type="hidden" name="kemaskini" class="form-control" value="off">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="tab-pane fade" id="iss2">
+
+                                                    <div>
+
+                                                        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <legend>
+                                                                Maklumat Pengguna
+                                                            </legend>
+                                                            <div class="row smart-form">
+
+                                                                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama Penyelia</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_NO_PENYELIA, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Gelaran</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_GELARAN, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jabatan</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_JABATAN, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bahagian</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_BAHAGIAN, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Unit</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_UNIT, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jawatan</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_JAWATAN, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kategori</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_KATEGORI, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kumpulan Perkhidmatan</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_KUMP_PERKHIDMATAN, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Taraf Jawatan</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_TARAF_JAWATAN, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jumlah Tahun</label>
+                                                                            <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-question-circle"></i>
+                                                                                    @*Html.EditorFor(model => model.HR_NO_SIRI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })*@
+                                                                                    <input type="text" name="HR_JUM_TAHUN" id="HR_JUM_TAHUN" class="form-control" disabled="disabled" />
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila masukkan hanya nombor sahaja
+                                                                                    </b>
+                                                                                </label>
+                                                                                <span class="note">
+                                                                                    <strong><i class="fa fa-asterisk"></i></strong> Bagi taraf jawatan kontrak
+                                                                                </span>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kumpulan</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_KUMPULAN, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-7 col-md-7 col-sm-6 col-xs-6">
+                                                                            <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Kod PCB</label>
+                                                                            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_KOD_PCB, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+                                                                        </section>
+
+                                                                        <section class="col col-lg-5 col-md-5 col-sm-6 col-xs-6">
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @*Html.DropDownListFor(model => model.HR_KETURUNAN, new SelectList(ViewBag.Keturunan, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })*@
+                                                                                    <select name="HR_NILAI_PCB" class="form-control" id="HR_NILAI_PCB" disabled="disabled">
+                                                                                        <option value=""></option>
+                                                                                    </select>
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">PCB</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <div class="inline-group">
+                                                                                    <label class="radio">
+                                                                                        @Html.RadioButtonFor(model => model.HR_STATUS_PCB, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                        <i></i>Ada
+                                                                                    </label>
+                                                                                    <label class="radio">
+                                                                                        @Html.RadioButtonFor(model => model.HR_STATUS_PCB, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                        <i></i>Tiada
+                                                                                    </label>
+                                                                                    <label class="radio">
+                                                                                        @Html.RadioButtonFor(model => model.HR_STATUS_PCB, "N", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                        <i></i>Tetap
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jumlah</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-question-circle"></i>
+                                                                                    @*Html.EditorFor(model => model.HR_NO_SIRI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })*@
+                                                                                    <input type="text" name="HR_JUM_PCB" id="HR_JUM_PCB" class="form-control" disabled="disabled" />
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila masukkan hanya nombor sahaja
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Mula PCB</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-list-alt"></i>
+                                                                                    <input type="text" name="HR_PCB_TARIKH_MULA" id="HR_PCB_TARIKH_MULA" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_PCB_TARIKH_MULA)" disabled="disabled" />
+
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila masukkan tarikh dengan betul (cth: dd/mm/yyyy)
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Akhir PCB</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-list-alt"></i>
+                                                                                    <input type="text" name="HR_PCB_TARIKH_AKHIR" id="HR_PCB_TARIKH_AKHIR" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_PCB_TARIKH_AKHIR)" disabled="disabled" />
+
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila masukkan tarikh dengan betul (cth: dd/mm/yyyy)
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Pilihan (Pencen/KWSP)</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <div class="inline-group">
+                                                                                    <label class="radio">
+                                                                                        @Html.RadioButtonFor(model => model.HR_STATUS_PENCEN, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                        <i></i>Ada
+                                                                                    </label>
+                                                                                    <label class="radio">
+                                                                                        @Html.RadioButtonFor(model => model.HR_STATUS_KWSP, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                        <i></i>Tiada
+                                                                                    </label>
+
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">SOCSO</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <div class="inline-group">
+                                                                                    <label class="radio">
+                                                                                        @Html.RadioButtonFor(model => model.HR_STATUS_SOCSO, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                        <i></i>Ada
+                                                                                    </label>
+                                                                                    <label class="radio">
+                                                                                        @Html.RadioButtonFor(model => model.HR_STATUS_SOCSO, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                        <i></i>Tiada
+                                                                                    </label>
+
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Pilihan (Kakitangan/Pekerja)</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <div class="inline-group">
+                                                                                    <label class="radio">
+                                                                                        @Html.RadioButtonFor(model => model.HR_KAKITANGAN_IND, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                        <i></i>Kakitangan
+                                                                                    </label>
+                                                                                    <label class="radio">
+                                                                                        @Html.RadioButtonFor(model => model.HR_KAKITANGAN_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                        <i></i>Pekerja
+                                                                                    </label>
+
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <div class="row">
+                                                                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                                                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Kelas Perjalanan</label>
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                                                                        <label class="input">
+                                                                                            <i class="icon-append fa fa-question-circle"></i>
+                                                                                            @Html.EditorFor(model => model.HR_KELAS_PERJALANAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                            <b class="tooltip tooltip-top-right">
+                                                                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                                                                Sila penuhkan ruangan ini
+                                                                                            </b>
+                                                                                        </label>
+                                                                                    </div>
+
+                                                                                </section>
+
+                                                                                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">CC Kenderaan</label>
+                                                                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                        <label class="input">
+                                                                                            <i class="icon-append fa fa-question-circle"></i>
+                                                                                            @Html.EditorFor(model => model.HR_CC_KENDERAAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                            <b class="tooltip tooltip-top-right">
+                                                                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                                                                Sila penuhkan ruangan ini
+                                                                                            </b>
+                                                                                        </label>
+                                                                                    </div>
+
+                                                                                </section>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                    <div class="row">
+
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Siri</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-list-alt"></i>
+                                                                                    @Html.EditorFor(model => model.HR_NO_SIRI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila masukkan hanya nombor sahaja
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Fail Perkhidmatan</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-list-alt"></i>
+                                                                                    @Html.EditorFor(model => model.HR_FAIL_PERKHIDMATAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila masukkan hanya nombor sahaja
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bayaran Melalui Cek</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <div class="inline-group">
+                                                                                    <label class="radio">
+                                                                                        @Html.RadioButtonFor(model => model.HR_BAYARAN_CEK, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                        <i></i>YA
+                                                                                    </label>
+                                                                                    <label class="radio">
+                                                                                        @Html.RadioButtonFor(model => model.HR_BAYARAN_CEK, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                        <i></i>Tidak
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama Bank</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_KOD_BANK, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Akaun Bank</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-list-alt"></i>
+                                                                                    @Html.EditorFor(model => model.HR_NO_AKAUN_BANK, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila masukkan hanya nombor sahaja
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Sistem Saraan</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <div class="inline-group">
+                                                                                    <label class="radio">
+                                                                                        @Html.RadioButtonFor(model => model.HR_BAYARAN_CEK, "SSM", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                        <i></i>SSM
+                                                                                    </label>
+                                                                                    <label class="radio">
+                                                                                        @Html.RadioButtonFor(model => model.HR_BAYARAN_CEK, "SSB", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                        <i></i>SSB
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Gred</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_GRED, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Umur Persaraan</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-list-alt"></i>
+                                                                                    @Html.Editor("HR_UMUR_SARA", new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila masukkan hanya nombor sahaja
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+
+                                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <div class="row">
+                                                                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                                                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Gaji Matriks</label>
+                                                                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                                                                        <label class="select">
+                                                                                            @Html.DropDownListFor(model => model.HR_MATRIKS_GAJI, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                            <i></i>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </section>
+
+                                                                                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                                                                    <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                                                                                        <label class="select">
+                                                                                            @*Html.DropDownListFor(model => model.HR_MATRIKS_GAJI, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })*@
+                                                                                            <select name="HR_KATEGORI_GAJI" id="HR_KATEGORI_GAJI" class="form-control" disabled="disabled">
+                                                                                                <option value=""></option>
+                                                                                            </select>
+                                                                                            <i></i>
+                                                                                        </label>
+                                                                                    </div>
+
+                                                                                </section>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Gaji Pokok</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-list-alt"></i>
+                                                                                    @Html.EditorFor(model => model.HR_GAJI_POKOK, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila masukkan hanya nombor sahaja
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kategori Gaji</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @*Html.DropDownListFor(model => model.HR_GRED, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })*@
+                                                                                    <select name="HR_KATEGORI_GAJI" id="HR_KATEGORI_GAJI" class="form-control" disabled="disabled">
+                                                                                        <option value=""></option>
+                                                                                    </select>
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Gelaran Jawatan</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_KOD_GELARAN_J, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tingkatan</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="select">
+                                                                                    @Html.DropDownListFor(model => model.HR_TINGKATAN, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                                                    <i></i>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Masuk MPPJ</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-list-alt"></i>
+                                                                                    <input type="text" name="HR_TARIKH_MASUK" id="HR_TARIKH_MASUK" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_MASUK)" disabled="disabled" />
+
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila masukkan tarikh dengan betul (cth: dd/mm/yyyy)
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Masuk MPPJ</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-list-alt"></i>
+                                                                                    <input type="text" name="HR_TARIKH_MASUK" id="HR_TARIKH_MASUK" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_MASUK)" disabled="disabled" />
+
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila masukkan tarikh dengan betul (cth: dd/mm/yyyy)
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Tamat Perkhidmatan</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input ">
+                                                                                    <i class="icon-append fa fa-list-alt"></i>
+                                                                                    <input type="text" name="HR_TARIKH_TAMAT" id="HR_TARIKH_TAMAT" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_TAMAT)" disabled="disabled" />
+
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila masukkan tarikh dengan betul (cth: dd/mm/yyyy)
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Pengesahan Jawatan</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-list-alt"></i>
+                                                                                    <input type="text" name="HR_TARIKH_SAH_JAWATAN" id="HR_TARIKH_SAH_JAWATAN" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_SAH_JAWATAN)" disabled="disabled" />
+
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila masukkan tarikh dengan betul (cth: dd/mm/yyyy)
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Lantikan</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-list-alt"></i>
+                                                                                    <input type="text" name="HR_TARIKH_LANTIKAN" id="HR_TARIKH_LANTIKAN" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_LANTIKAN)" disabled="disabled" />
+
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila masukkan tarikh dengan betul (cth: dd/mm/yyyy)
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Tamat Kontrak</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-list-alt"></i>
+                                                                                    <input type="text" name="HR_TARIKH_TAMAT_KONTRAK" id="HR_TARIKH_TAMAT_KONTRAK" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_TAMAT_KONTRAK)" disabled="disabled" />
+
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila masukkan tarikh dengan betul (cth: dd/mm/yyyy)
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kod Komputer</label>
+                                                                            <label class="input col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <i class="icon-append fa fa-list-alt"></i>
+                                                                                @Html.EditorFor(model => model.HR_KOD_GAJI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                                                <b class="tooltip tooltip-top-right">
+                                                                                    <i class="fa fa-warning txt-color-teal"></i>
+                                                                                    Sila masukkan hanya nombor sahaja
+                                                                                </b>
+                                                                            </label>
+                                                                        </section>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Pergerakkan Gaji</label>
+                                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                                <label class="input">
+                                                                                    <i class="icon-append fa fa-list-alt"></i>
+                                                                                    <input type="text" name="HR_PERGERAKAN_GAJI" id="HR_PERGERAKAN_GAJI" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_PERGERAKAN_GAJI)" disabled="disabled" />
+
+                                                                                    <b class="tooltip tooltip-top-right">
+                                                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                                                        Sila masukkan tarikh dengan betul (cth: dd/mm/yyyy)
+                                                                                    </b>
+                                                                                </label>
+                                                                            </div>
+
+                                                                        </section>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </fieldset>
+                                                        <br />
+                                                        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <legend>
+                                                                Pengalaman Berkerja
+                                                            </legend>
+                                                            <div class="row">
+
+                                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <table id="datatable_tabletools" class="table table-striped table-bordered table-hover" width="100%">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th data-hide="phone">No</th>
+                                                                                <th data-class="expand">Nama Syarikat</th>
+                                                                                <th>Jawatan</th>
+                                                                                <th data-hide="phone">Tarikh Mula</th>
+                                                                                <th data-hide="phone,tablet">Tarikh Tamat</th>
+                                                                                <th data-hide="phone,tablet">Alasan Berhenti</th>
+                                                                                <th>Tambah</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            @{
+                                                                                var no = 0;
+                                                                            }
+                                                                            @foreach (var item in ViewBag.sPengalaman)
+                                                                            {
+                                                                                ++no;
+                                                                                <tr>
+                                                                                    <td>@no</td>
+                                                                                    <td class="smart-form">
+                                                                                        <label class="input">
+                                                                                            <input type="text" name="HR_NAMA_SYARIKAT" id="HR_NAMA_SYARIKAT" class="form-control" value="@item.HR_NAMA_SYARIKAT" style="width:100%" />
+                                                                                        </label>
+                                                                                    </td>
+                                                                                    <td class="smart-form">
+                                                                                        <lable class="input">
+                                                                                            <input type="text" name="HR_JAWATAN" id="HR_JAWATAN" class="form-control" value="@item.HR_JAWATAN" style="width:100%" />
+                                                                                        </lable>
+
+                                                                                    </td>
+                                                                                    <td class="smart-form">
+                                                                                        <lable class="input">
+                                                                                            <input type="text" name="HR_TARIKH_MULA" id="HR_TARIKH_MULA" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", item.HR_TARIKH_MULA)" style="width:100%" />
+                                                                                        </lable>
+                                                                                    </td>
+                                                                                    <td class="smart-form">
+                                                                                        <lable class="input">
+                                                                                            <input type="text" name="HR_TARIKH_TAMAT" id="HR_TARIKH_TAMAT" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", item.HR_TARIKH_TAMAT)" style="width:100%" />
+                                                                                        </lable>
+                                                                                    </td>
+                                                                                    <td class="smart-form">
+                                                                                        <lable class="textarea textarea-resizable">
+                                                                                            <textarea name="HR_JAWATAN" id="HR_JAWATAN" class="form-control" style="width:100%" rows="5">@item.HR_ALASAN_BERHENTI</textarea>
+                                                                                        </lable>
+                                                                                    </td>
+                                                                                    <td align="center">
+                                                                                        <button class="btn btn-primary btn-add" name="Tambah_Pengalaman" type="button">
+                                                                                            <i class="fa fa-plus"></i>
+                                                                                        </button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+
+                                                        </fieldset>
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="tab-pane fade" id="iss3">
+                                                    <p>
+                                                        Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table.
+                                                    </p>
+                                                </div>
+                                                <div class="tab-pane fade" id="iss4">
+                                                    <p>
+                                                        Three monkeys escaped from the zoo, one was caught watching TV, the other playing hockey, and the third one was caught reading this quote!
+                                                    </p>
+                                                </div>
+                                                <div class="tab-pane fade" id="iss5">
+                                                    <p>
+                                                        Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.
+                                                    </p>
+                                                </div>
+                                                <div class="tab-pane fade" id="iss6">
+                                                    <p>
+                                                        Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table.
+                                                    </p>
+                                                </div>
+                                                <div class="tab-pane fade" id="iss7">
+                                                    <p>
+                                                        Three monkeys escaped from the zoo, one was caught watching TV, the other playing hockey, and the third one was caught reading this quote!
+                                                    </p>
+                                                </div>
+                                                <div class="tab-pane fade" id="iss8">
+                                                    <p>
+                                                        Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.
+                                                    </p>
+                                                </div>
+                                                <div class="tab-pane fade" id="iss9">
+                                                    <p>
+                                                        Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+
+                            <footer>
+                                <div class="well text-right">
+                                    <button type="submit" name="Command" id="btn-edit" class="btn btn-primary" disabled="disabled">
+                                        <i class="fa fa-edit"> Kemaskini</i>
+                                    </button>
+                                </div>
+                            </footer>
+                            }
+                        </div>
+
+                        
+                            
+                        
+                        <!-- end widget content -->
+
+                    </div>
+                    <!-- end widget div -->
+
+                </div>
+                <!-- end widget -->
+
+            </article>
+            <!-- WIDGET END -->
+
+        </div>
+
+
+
+        <!-- end row -->
+        <!-- end row -->
+
+    </section>
+    <!-- end widget grid -->
+
+</div>
+<!-- END MAIN CONTENT -->
+@section pagespecific {
+    <script type="text/javascript">
+
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+    $(document).ready(function () {
+
+        /* // DOM Position key index //
+
+        l - Length changing (dropdown)
+        f - Filtering input (search)
+        t - The Table! (datatable)
+        i - Information (records)
+        p - Pagination (paging)
+        r - pRocessing
+        < and > - div elements
+        <"#id" and > - div with an id
+        <"class" and > - div with a class
+        <"#id.class" and > - div with an id and class
+
+        Also see: http://legacy.datatables.net/usage/features
+        */
+
+        /* BASIC ;*/
+        var responsiveHelper_dt_basic = undefined;
+        var responsiveHelper_datatable_fixed_column = undefined;
+        var responsiveHelper_datatable_col_reorder = undefined;
+        var responsiveHelper_datatable_tabletools = undefined;
+
+        var breakpointDefinition = {
+            tablet: 1024,
+            phone: 480
+        };
+
+        /* END BASIC */
+
+
+        /* TABLETOOLS */
+        $('#datatable_tabletools').dataTable({
+
+            // Tabletools options:
+            //   https://datatables.net/extensions/tabletools/button_options
+            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T>r>" +
+                    "t" +
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "oTableTools": {
+                "aButtons": [
+                "copy",
+                "csv",
+                "xls",
+                   {
+                       "sExtends": "pdf",
+                       "sTitle": "SmartAdmin_PDF",
+                       "sPdfMessage": "SmartAdmin PDF Export",
+                       "sPdfSize": "letter"
+                   },
+                   {
+                       "sExtends": "print",
+                       "sMessage": "Generated by SmartAdmin <i>(press Esc to close)</i>"
+                   }
+                ],
+                "sSwfPath": "/Scripts/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+            },
+            "autoWidth": true,
+            "preDrawCallback": function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelper_datatable_tabletools) {
+                    responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#datatable_tabletools'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_datatable_tabletools.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_datatable_tabletools.respond();
+            }
+        });
+
+        /* END TABLETOOLS */
+        /*var $mKakitangan = $('#mKakitangan').validate({
+            // Rules for form validation
+            rules: {
+                HR_NO_PEKERJA: {
+                    required: true,
+                    number: true,
+                    maxlength: 5,
+                    minlength: 5
+                },
+                HR_NAMA_PEKERJA: {
+                    required: true
+                },
+                HR_NO_KPBARU: {
+                    required: true,
+                    number: true,
+                    maxlength: 12,
+                    minlength: 12
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                HR_NO_PEKERJA: {
+                    required: 'Sila masukkan no pekerja',
+                    number: 'Sila masukkan hanya nombor sahaja',
+                    minlength: 'Sila masukkan 5 digit nombor'
+                },
+                HR_NAMA_PEKERJA: {
+                    required: 'Sila masukkan nama pekerja'
+
+                },
+                HR_NO_KPBARU: {
+                    required: 'Sila masukkan no kad pengenalan',
+                    number: 'Sila masukkan hanya nombor sahaja',
+                    minlength: 'Sila masukkan 12 digit nombor'
+                }
+                
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });*/
+
+        var $mKakitangan = $('#mKakitangan').validate({
+            // Rules for form validation
+            rules: {
+                HR_NO_PEKERJA: {
+                    required: true,
+                    number: true,
+                    maxlength: 5,
+                    minlength: 5
+                },
+                HR_NAMA_PEKERJA: {
+                    required: true
+                },
+                HR_NO_KPBARU: {
+                    required: true,
+                    number: true,
+                    maxlength: 12,
+                    minlength: 12
+                },
+                HR_EMAIL: {
+                    required: true,
+                    email: true
+                },
+                HR_TARIKH_LAHIR: {
+                    required: true
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                HR_NO_PEKERJA: {
+                    required: 'Sila masukkan no pekerja',
+                    number: 'Sila masukkan hanya nombor sahaja',
+                    minlength: 'Sila masukkan 5 digit nombor'
+                },
+                HR_NAMA_PEKERJA: {
+                    required: 'Sila masukkan nama pekerja'
+
+                },
+                HR_NO_KPBARU: {
+                    required: 'Sila masukkan no kad pengenalan',
+                    number: 'Sila masukkan hanya nombor sahaja',
+                    minlength: 'Sila masukkan 12 digit nombor'
+                },
+                HR_EMAIL: {
+                    required: 'Sila masukkan e-mel',
+                    email: 'Sila masukkan e-mel dengan betul'
+                },
+                HR_TARIKH_LAHIR: {
+                    required: 'Sila masukkan tarik lahir'
+                }
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+
+    })
+    $(function () {
+        $(document).on('click', '.btn-add', function (e) {
+            e.preventDefault();
+
+            var controlForm = $('.table'),
+                currentEntry = $(this).parents('tr:first'),
+                newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+            newEntry.find('input').val('');
+            controlForm.find('tr:not(:last) .btn-add')
+                .removeClass('btn-add').addClass('btn-remove')
+                .removeClass('btn-success').addClass('btn-danger')
+                .html('<span class="glyphicon glyphicon-minus"></span>');
+        }).on('click', '.btn-remove', function (e) {
+            $(this).parents('tr:first').remove();
+
+            e.preventDefault();
+            return false;
+        });
+    });
+    $(function () {
+        $("#btn-click").on("click",this, function (e) {
+            e.preventDefault();
+            $("#iss1 input[type='text']").removeAttr('disabled')
+            $("#iss1 input[type='radio']").removeAttr('disabled')
+            $("#iss1 input[name='HR_TARIKH_LAHIR']").removeAttr('disabled').attr('readonly', 'readonly')
+            $("#iss1 input[name='Umur']").removeAttr('disabled').attr('readonly', 'readonly')
+            $("#iss1 select").removeAttr('disabled')
+            $(".click-parent").addClass("hide")
+            $(".edit-parent").removeClass("hide")
+        })
+
+        $("#btn-click2").on("click", this, function (e) {
+            e.preventDefault();
+            $("#infoKakitangan input[type='text']").removeAttr('disabled')
+            $("#infoKakitangan input[name='HR_NO_PEKERJA']").removeAttr('disabled').attr('readonly', 'readonly')
+            
+            $(".click-parent2").addClass("hide")
+            $(".edit-parent2").removeClass("hide")
+
+        })
+
+
+        
+        $("input[name='sah[]']").on("change", this, function () {
+            
+
+            if ($(this).attr("id") == "st3a")
+            {
+                if ($(this).is(':checked') == true) {
+                    $(this).val('on')
+                    $("#infoKakitangan input[name='kemaskini']").val("on")
+                    $("#infoKakitangan input[type='text']").removeAttr('disabled');
+                    $("#infoKakitangan input[name='HR_NO_PEKERJA']").attr('readonly', 'readonly');
+                }
+                else {
+                    $(this).val('off')
+                    $("#infoKakitangan input[name='kemaskini']").val("off")
+
+                    $("#infoKakitangan input[type='text']").each(function () {
+                        $(this).val(function () {
+                            return this.defaultValue;
+                        });
+                    })
+
+                    $("#infoKakitangan input[name='HR_NO_PEKERJA']").removeAttr('readonly', 'readonly');
+                    $("#infoKakitangan input[type='text']").attr('disabled', 'disabled');
+                }
+            }
+            if ($(this).attr("id") == "st3b") {
+                if ($(this).is(':checked') == true) {
+                    $(this).val('on')
+                    $("#iss1 input[name='kemaskini']").val("on")
+
+                    $("#iss1 input[type='text']").removeAttr('disabled');
+                    $("#iss1 select").removeAttr('disabled');
+                    $("#iss1 input[type='radio']").removeAttr('disabled');
+                    $("#iss1 input[name='HR_TARIKH_LAHIR']").attr('readonly', 'readonly');
+                    $("#iss1 input[name='Umur']").attr('readonly', 'readonly');
+                }
+                else {
+                    $(this).val('off')
+                    $("#iss1 input[name='kemaskini']").val("off")
+
+                    $("#iss1 input").each(function () {
+                        $(this).val(function () {
+                            return this.defaultValue;
+                        });
+                        $('#iss1 input[type=radio]').prop('checked', function () {
+                            return $(this).attr('checked') == 'checked';
+                        });
+                    })
+
+                    $("#iss1 select option").each(function () {
+                        $(this).prop('selected', function () {
+                            return $(this).attr('selected') == 'selected';
+                        });
+                    })
+
+                    $("#iss1 input[name='HR_TARIKH_LAHIR']").removeAttr('readonly', 'readonly');
+                    $("#iss1 input[name='Umur']").removeAttr('readonly', 'readonly');
+                    $("#iss1 input[type='text']").attr('disabled', 'disabled');
+                    $("#iss1 select").attr('disabled', 'disabled');
+                    $("#iss1 input[type='radio']").attr('disabled', 'disabled');
+                    
+                    
+                }
+            }
+            var on = 0;
+            $("input[name='sah[]']").each(function () {
+                if($(this).val() == "on")
+                {
+                    on++;
+                }
+                
+            })
+
+            if (on > 0) {
+                $("#btn-edit").removeAttr("disabled");
+            }
+            else {
+                $("#btn-edit").attr("disabled", "disabled");
+            }
+        })
+
+        $('#HR_TARIKH_LAHIR').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                //$('#finishdate').datepicker('option', 'minDate', selectedDate);
+                $.ajax({
+                    url: "../../MaklumatKakitangan/KiraUmur",
+                    data: { "id": $("#HR_NO_PEKERJA").val(),"date": $(this).val()},
+                    contentType: "application/json; charset=utf-8",
+                    type: 'GET',
+                    dataType: "json",
+                    success: function (data) {
+                        $("#Umur").val(data);
+                    }
+                })
+                
+            }
+        });
+
+    });
+    </script>
+}

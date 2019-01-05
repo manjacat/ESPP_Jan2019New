@@ -1,0 +1,50 @@
+﻿@model eSPP.Models.HR_AKTIVITI
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>HR_AKTIVITI</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TAJUK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TAJUK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_WARNA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_WARNA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_ICON)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_ICON)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_AKTIF_IND)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_AKTIF_IND)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.HR_KOD_AKTIVITI }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

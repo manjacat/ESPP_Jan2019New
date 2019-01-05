@@ -1,0 +1,540 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+
+<div class="row smart-form">
+    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="row">
+            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kategori</label>
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                    <label class="select">
+                        @Html.DropDownListFor(model => model.HR_MAKLUMAT_CUTI.HR_KATEGORI_CUTI, (SelectList)ViewBag.HR_KATEGORI_CUTI, string.Empty, new { @class = "form-control" })
+                        <i></i>
+                    </label>
+                </div>
+
+            </section>
+        </div>
+    </div>
+    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="row smart-form">
+            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                        <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Tarikh Memohon</label>
+                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                            <label class="input">
+                                <input type="text" name="HR_MAKLUMAT_CUTI.HR_TARIKH_PERMOHONAN" id="HR_MAKLUMAT_CUTI_HR_TARIKH_PERMOHONAN" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_CUTI.HR_TARIKH_PERMOHONAN)" />
+                            </label>
+                        </div>
+                    </section>
+
+                    <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tahun</label>
+                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_TAHUN, new { htmlAttributes = new { @class = "form-control" } })
+                            </label>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row smart-form">
+
+    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="row smart-form">
+            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jenis Cuti</label>
+                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                            <label class="select">
+                                @Html.DropDownListFor(model => model.HR_MAKLUMAT_CUTI.HR_KOD_CUTI, new SelectList(ViewBag.HR_KOD_CUTI, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control" })
+                                <i></i>
+                            </label>
+                        </div>
+
+                    </section>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="row smart-form">
+            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+
+                    <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                        <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Kod Cuti</label>
+                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                            <label class="input">
+                                <input type="text" name="HR_MAKLUMAT_CUTI.HR_KOD_CUTI2" id="HR_MAKLUMAT_CUTI_HR_KOD_CUTI2" class="form-control" value="@Model.HR_MAKLUMAT_CUTI.HR_KOD_CUTI" readonly = "readonly"  />
+                            </label>
+                        </div>
+
+                    </section>
+                    <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Baki Terkini</label>
+                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_BAKI_TERKINI, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                            </label>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row smart-form">
+
+    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="row smart-form">
+            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                        <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Tarikh Mula Cuti</label>
+                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                            <label class="input">
+                                <input type="text" name="HR_MAKLUMAT_CUTI.HR_TARIKH_MULA_CUTI" id="HR_MAKLUMAT_CUTI_HR_TARIKH_MULA_CUTI" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_CUTI.HR_TARIKH_MULA_CUTI)" readonly = "readonly"  />
+                            </label>
+                        </div>
+
+                    </section>
+
+                    <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Hingga</label>
+                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                            <label class="input">
+                                <input type="text" name="HR_MAKLUMAT_CUTI.HR_TARIKH_TAMAT_CUTI" id="HR_MAKLUMAT_CUTI_HR_TARIKH_TAMAT_CUTI" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_CUTI.HR_TARIKH_TAMAT_CUTI)" readonly = "readonly"  />
+                            </label>
+                        </div>
+
+                    </section>
+                </div>
+                <div class="row">
+                    <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                        <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Bil. Hari Bercuti</label>
+                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_BIL_CUTI_TEMP, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly"  } })
+                            </label>
+                        </div>
+
+                    </section>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="row smart-form">
+            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                        <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Jumlah Maksimum</label>
+                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_JUMLAH_MAKSIMUM, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly"  } })
+                            </label>
+                        </div>
+
+                    </section>
+
+                    <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jum Telah Diambil</label>
+                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_BIL_CUTI_DIAMBIL, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly"  } })
+                            </label>
+                        </div>
+
+                    </section>
+                </div>
+                <div class="row" id="CutiBerekod2">
+                    <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                        <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Baki Cuti Dibawa Ke Hadapan</label>
+                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_BAKI_TAHUN_LEPAS, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            </label>
+                        </div>
+
+                    </section>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+    if ('@Model.HR_MAKLUMAT_CUTI.DISABLED' == 0) {
+        $("#HR_MAKLUMAT_CUTI_HR_KATEGORI_CUTI").attr("disabled", "disabled")
+        $("#HR_MAKLUMAT_CUTI_HR_TAHUN").attr("disabled", "disabled")
+        $("#HR_MAKLUMAT_CUTI_HR_KOD_CUTI").attr("disabled", "disabled")
+        $("#HR_MAKLUMAT_CUTI_HR_JUMLAH_MAKSIMUM").attr("disabled", "disabled")
+        $("#HR_MAKLUMAT_CUTI_HR_BAKI_CUTI_REHAT").attr("disabled", "disabled")
+        $("#HR_MAKLUMAT_CUTI_HR_BAKI_PENCEN").attr("disabled", "disabled")
+        $("#HR_MAKLUMAT_CUTI_HR_BAKI_PENCEN_TERKUMPUL").attr("disabled", "disabled")
+        $("#HR_MAKLUMAT_CUTI_HR_BAKI_TAHUN_LEPAS").attr("disabled", "disabled")
+        $("#HR_MAKLUMAT_CUTI_HR_TARIKH_PERMOHONAN").attr("disabled", "disabled")
+        $("#HR_MAKLUMAT_CUTI_HR_TAHUN").attr("disabled", "disabled")
+        $("#HR_MAKLUMAT_CUTI_HR_KOD_CUTI").attr("disabled", "disabled")
+        $("#HR_MAKLUMAT_CUTI_HR_KOD_CUTI2").attr("disabled", "disabled")
+        $("#HR_MAKLUMAT_CUTI_HR_BAKI_TERKINI").attr("disabled", "disabled")
+        $("#HR_MAKLUMAT_CUTI_HR_TARIKH_MULA_CUTI").attr("disabled", "disabled")
+        $("#HR_MAKLUMAT_CUTI_HR_TARIKH_TAMAT_CUTI").attr("disabled", "disabled")
+        $("#HR_MAKLUMAT_CUTI_HR_BIL_CUTI_TEMP").attr("disabled", "disabled")
+        $("#HR_MAKLUMAT_CUTI_HR_BIL_CUTI_DIAMBIL").attr("disabled", "disabled")
+    }
+
+            $(document).ready(function () {
+
+                $("#HR_MAKLUMAT_CUTI_HR_TARIKH_PERMOHONAN").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: 'dd/mm/yy',
+                    prevText: '<i class="fa fa-chevron-left"></i>',
+                    nextText: '<i class="fa fa-chevron-right"></i>',
+                    minDate: 0,
+                    onSelect: function (selectedDate) {
+                        //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                    }
+                });
+                $("#HR_MAKLUMAT_CUTI_HR_TARIKH_ISTERI_BERSALIN").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: 'dd/mm/yy',
+                    prevText: '<i class="fa fa-chevron-left"></i>',
+                    nextText: '<i class="fa fa-chevron-right"></i>',
+                    minDate: 0,
+                    onSelect: function (selectedDate) {
+                        //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                    }
+                });
+                $("#HR_MAKLUMAT_CUTI_HR_TARIKH_SOKONG").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: 'dd/mm/yy',
+                    prevText: '<i class="fa fa-chevron-left"></i>',
+                    nextText: '<i class="fa fa-chevron-right"></i>',
+                    minDate: 0,
+                    onSelect: function (selectedDate) {
+                        //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                    }
+                });
+                $("#HR_MAKLUMAT_CUTI_HR_TARIKH_LULUS").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: 'dd/mm/yy',
+                    prevText: '<i class="fa fa-chevron-left"></i>',
+                    nextText: '<i class="fa fa-chevron-right"></i>',
+                    minDate: 0,
+                    onSelect: function (selectedDate) {
+                        //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                    }
+                });
+                $("#HR_MAKLUMAT_CUTI_HR_TARIKH_YDP").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: 'dd/mm/yy',
+                    prevText: '<i class="fa fa-chevron-left"></i>',
+                    nextText: '<i class="fa fa-chevron-right"></i>',
+                    minDate: 0,
+                    onSelect: function (selectedDate) {
+                        //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                    }
+                });
+                $("#HR_MAKLUMAT_CUTI_HR_TARIKH_MULA_CUTI").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: 'dd/mm/yy',
+                    prevText: '<i class="fa fa-chevron-left"></i>',
+                    nextText: '<i class="fa fa-chevron-right"></i>',
+                    minDate: 0,
+                    onSelect: function (selectedDate) {
+                        $('#HR_MAKLUMAT_CUTI_HR_TARIKH_TAMAT_CUTI').datepicker('option', 'minDate', selectedDate);
+                        var start = $("#HR_MAKLUMAT_CUTI_HR_TARIKH_MULA_CUTI").datepicker("getDate");
+                        var end = $("#HR_MAKLUMAT_CUTI_HR_TARIKH_TAMAT_CUTI").datepicker("getDate");
+                        $("#HR_MAKLUMAT_CUTI_HR_SENARAI_TARIKH").html("<option></option>");
+
+                        function max() {
+                            return $("#HR_MAKLUMAT_CUTI_HR_JUMLAH_MAKSIMUM").val();
+                        }
+
+                        function BakiTerkini() {
+                            return $("#HR_MAKLUMAT_CUTI_HR_BAKI_TERKINI").val();
+                        }
+
+                        if ($("#HR_MAKLUMAT_CUTI_HR_KATEGORI_CUTI").val() == 3)
+                        {
+
+
+                            console.log(max());
+                            end = new Date(start);
+                            end.setDate(end.getDate() + parseInt(max()) - 1);
+
+                            $("#HR_MAKLUMAT_CUTI_HR_TARIKH_TAMAT_CUTI").val($.datepicker.formatDate('dd/mm/yy', end));
+                            $("#HR_MAKLUMAT_CUTI_HR_BIL_CUTI_TEMP").val(parseInt(max()))
+                        }
+                        else
+                        {
+                            //disable day in datepicker
+                            if (parseInt(BakiTerkini()) != "")
+                            {
+                                var startMax = new Date(start);
+                                var endMax = new Date(start);
+                                endMax = new Date(endMax.setDate(endMax.getDate() + parseInt(BakiTerkini()) - 1));
+                                console.log(selectedDate)
+                                console.log(endMax)
+                                while (startMax <= endMax) {
+
+                                    if ($.datepicker.formatDate('DD', startMax) == "Sunday" || $.datepicker.formatDate('DD', startMax) == "Saturday") {
+                                        endMax.setDate(endMax.getDate() + 1)
+                                    }
+                                    startMax.setDate(startMax.getDate() + 1)
+                                }
+                                $("#HR_MAKLUMAT_CUTI_HR_TARIKH_TAMAT_CUTI").datepicker('option', 'maxDate', endMax);
+                            }
+
+                            if ($("#HR_MAKLUMAT_CUTI_HR_TARIKH_MULA_CUTI").val != "" && $("#HR_MAKLUMAT_CUTI_HR_TARIKH_TAMAT_CUTI").val() != "") {
+                                $("#HR_MAKLUMAT_CUTI_HR_SENARAI_TARIKH").html("");
+                                var currentDate = new Date(start);
+                                var between = [];
+                                while (currentDate <= end) {
+                                    between.push(new Date(currentDate));
+                                    currentDate.setDate(currentDate.getDate() + 1);
+                                }
+                                var totalDay = 0;
+                                $.each(between, function (i, v) {
+                                    if ($.datepicker.formatDate('DD', v) != "Sunday" && $.datepicker.formatDate('DD', v) != "Saturday") {
+                                        totalDay++;
+                                        $("#HR_MAKLUMAT_CUTI_HR_SENARAI_TARIKH").append($("<option selected='selected'></option>").val($.datepicker.formatDate('dd/mm/yy', v)).html($.datepicker.formatDate('dd/mm/yy', v)))
+                                    }
+
+                                })
+                                $("#HR_MAKLUMAT_CUTI_HR_BIL_CUTI_TEMP").val(totalDay)
+
+                                $.ajax({
+                                    url: "../../MaklumatKakitangan/BilCuti",
+                                    data: { "no_pekerja": $("#HR_NO_PEKERJA").val(), "kod_cuti": $("#HR_MAKLUMAT_CUTI_HR_KOD_CUTI").val(), "tahun": $("#HR_MAKLUMAT_CUTI_HR_TAHUN").val() },
+                                    contentType: "application/json; charset=utf-8",
+                                    type: 'GET',
+                                    dataType: "json",
+                                    success: function (data) {
+                                        $("#HR_MAKLUMAT_CUTI_HR_BIL_CUTI_DIAMBIL").val(data)
+                                    }
+                                })
+                            }
+                        }
+
+                    }
+                });
+                $("#HR_MAKLUMAT_CUTI_HR_TARIKH_TAMAT_CUTI").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: 'dd/mm/yy',
+                    prevText: '<i class="fa fa-chevron-left"></i>',
+                    nextText: '<i class="fa fa-chevron-right"></i>',
+                    minDate: 0,
+                    onSelect: function (selectedDate) {
+                        $('#HR_MAKLUMAT_CUTI_HR_TARIKH_MULA_CUTI').datepicker('option', 'maxDate', selectedDate);
+                        var start = $("#HR_MAKLUMAT_CUTI_HR_TARIKH_MULA_CUTI").datepicker("getDate");
+                        var end = $("#HR_MAKLUMAT_CUTI_HR_TARIKH_TAMAT_CUTI").datepicker("getDate");
+                        $("#HR_MAKLUMAT_CUTI_HR_SENARAI_TARIKH").html("<option></option>");
+                        if ($("#HR_MAKLUMAT_CUTI_HR_TARIKH_MULA_CUTI").val != "" && $("#HR_MAKLUMAT_CUTI_HR_TARIKH_TAMAT_CUTI").val() != "")
+                        {
+                            $("#HR_MAKLUMAT_CUTI_HR_SENARAI_TARIKH").html("");
+                            var currentDate = new Date(start);
+                            var between = [];
+                            while(currentDate <= end)
+                            {
+                                between.push(new Date(currentDate));
+                                currentDate.setDate(currentDate.getDate() + 1);
+                            }
+                            var totalDay = 0;
+                            $.each(between, function (i, v) {
+                                if ($.datepicker.formatDate('DD', v) != "Sunday" && $.datepicker.formatDate('DD', v) != "Saturday") {
+                                    totalDay++;
+                                    $("#HR_MAKLUMAT_CUTI_HR_SENARAI_TARIKH").append($("<option selected='selected'></option>").val($.datepicker.formatDate('dd/mm/yy', v)).html($.datepicker.formatDate('dd/mm/yy', v)))
+                                }
+
+                            })
+                            $("#HR_MAKLUMAT_CUTI_HR_BIL_CUTI_TEMP").val(totalDay)
+
+                            $.ajax({
+                                url: "../../MaklumatKakitangan/BilCuti",
+                                data: { "no_pekerja": $("#HR_NO_PEKERJA").val(), "kod_cuti": $("#HR_MAKLUMAT_CUTI_HR_KOD_CUTI").val(), "tahun": $("#HR_MAKLUMAT_CUTI_HR_TAHUN").val() },
+                                contentType: "application/json; charset=utf-8",
+                                type: 'GET',
+                                dataType: "json",
+                                success: function (data) {
+                                    $("#HR_MAKLUMAT_CUTI_HR_BIL_CUTI_DIAMBIL").val(data)
+                                }
+                            })
+
+                        }
+                    }
+                });
+
+                if ($("#HR_MAKLUMAT_CUTI_HR_KATEGORI_CUTI").val() == "") {
+                    $("#HR_MAKLUMAT_CUTI_HR_KOD_CUTI").html("<option></option>");
+                }
+
+
+                $("#HR_MAKLUMAT_CUTI_HR_TAHUN, #HR_MAKLUMAT_CUTI_HR_KOD_CUTI, #HR_MAKLUMAT_CUTI_HR_KATEGORI_CUTI").on("input", function () {
+
+                    if ($(this).attr("id") == "HR_MAKLUMAT_CUTI_HR_KATEGORI_CUTI") {
+
+                        $.ajax({
+                            url: "../../MaklumatKakitangan/KategoriCuti",
+                            data: { "HR_KATEGORI_CUTI": $(this).val() },
+                            type: "GET",
+                            dataType: "json",
+                            success: function (data) {
+                                $.each(data, function (i, v) {
+                                    if ($("#HR_MAKLUMAT_CUTI_HR_KATEGORI_CUTI").val() == "2") {
+                                        $("#Cuti input[name='HR_MAKLUMAT_CUTI.HR_KOD_CUTI2']").val(v.HR_KOD_CUTI)
+                                        $("#HR_MAKLUMAT_CUTI_HR_KOD_CUTI").html("<option></option>");
+                                        $("#HR_MAKLUMAT_CUTI_HR_KOD_CUTI").append($("<option selected></option>").val(v.HR_KOD_CUTI).html(v.HR_KETERANGAN));
+
+                                    }
+                                    else {
+                                        $("#HR_MAKLUMAT_CUTI_HR_KOD_CUTI").append($("<option></option>").val(v.HR_KOD_CUTI).html(v.HR_KETERANGAN));
+                                    }
+                                    if (data.length == 1) {
+                                        if ($("#HR_MAKLUMAT_CUTI_HR_TAHUN").val().length == 4 && $("#HR_MAKLUMAT_CUTI_HR_KATEGORI_CUTI").val() == "2") {
+                                            $.ajax({
+                                                url: "../../MaklumatKakitangan/JenisCuti",
+                                                type: "GET",
+                                                data: { HR_KATEGORI_CUTI: $("#HR_MAKLUMAT_CUTI_HR_KATEGORI_CUTI").val(), HR_TARIKH_PERMOHONAN: $("#HR_MAKLUMAT_CUTI_HR_TARIKH_PERMOHONAN").val(), HR_JUMLAH_MAKSIMUM: $("#HR_MAKLUMAT_CUTI_HR_JUMLAH_MAKSIMUM").val(), HR_TAHUN: $("#HR_MAKLUMAT_CUTI_HR_TAHUN").val(), HR_KOD_CUTI: v.HR_KOD_CUTI, "NoPekerja": $("#HR_NO_PEKERJA").val(), DISABLED: $("#HR_MAKLUMAT_CUTI_DISABLED").val() },
+                                                //dataType: "json",
+                                                //contentType: "application/json: charset=utf-8",
+                                                success: function (data) {
+
+                                                    $("#Cuti #KategoriCuti").html(data);
+                                                }
+                                            });
+                                        }
+                                    }
+                                })
+                            }
+                        })
+
+                        $("#HR_MAKLUMAT_CUTI_HR_KOD_CUTI").html("<option></option>");
+                        $("#Cuti input").each(function () {
+                            $(this).not("#HR_MAKLUMAT_CUTI_HR_TARIKH_PERMOHONAN, #HR_MAKLUMAT_CUTI_HR_TAHUN, #KATEGORI_CUTI_dt, #KOD_CUTI_dt, #JUMLAH_MAKSIMUM_dt, #TAHUN_dt, #TARIKH_PERMOHONAN_dt, #kemaskini, #HR_MAKLUMAT_CUTI_DISABLED").val("");
+                        })
+                        $("#Cuti select").each(function () {
+                            if ($(this).attr("id") != "HR_MAKLUMAT_CUTI_HR_KATEGORI_CUTI") {
+                                $(this).val("");
+                            }
+                        })
+
+                        $("#Cuti #HR_MAKLUMAT_CUTI_HR_SENARAI_TARIKH").html("<option></option>");
+                        $("#Cuti #HR_MAKLUMAT_CUTI_HR_TARIKH_BATAL").html("<option></option>");
+
+                        $("#Cuti #Sokongan").addClass("hide");
+                        $("#Cuti #Kelulusan").addClass("hide");
+                        $("#Cuti #KelulusanHR").addClass("hide");
+                        $("#Cuti #KelulusanYDP").addClass("hide");
+                        $("#Cuti #CutiBerekod").addClass("hide");
+                        $("#Cuti #CutiBerekod2").addClass("hide");
+                        $("#Cuti #CutiTidakBerekod").addClass("hide");
+                        $("#Cuti #CutiKematian").addClass("hide");
+                        $("#Cuti #CutiBersalin").addClass("hide");
+
+                        $("#Cuti #Sokongan").find("legend").html("");
+                        $("#Cuti #Kelulusan").find("legend").html("");
+
+                        $("#Cuti #Kelulusan").find(".row").each(function () {
+                            $(this).not("#Ulasan").show();
+                        });
+
+                        if ($(this).val() == 1) {
+                            $("#Cuti #CutiBerekod").removeClass("hide");
+                            $("#Cuti #CutiBerekod2").removeClass("hide");
+                            $("#Cuti #Sokongan").removeClass("hide");
+                            $("#Cuti #Kelulusan").removeClass("hide");
+                            $("#Cuti #Sokongan").find("legend").html("Sokongan Ketua Bahagian");
+                            $("#Cuti #Kelulusan").find("legend").html("Kelulusan Ketua Jabatan");
+
+                        }
+                        else if ($(this).val() == 2) {
+                            $("#Cuti #CutiTidakBerekod").removeClass("hide");
+                            $("#Cuti #Sokongan").removeClass("hide");
+                            $("#Cuti #KelulusanHR").removeClass("hide");
+                            $("#Cuti #KelulusanYDP").removeClass("hide");
+                            $("#Cuti #Sokongan").find("legend").html("Sokongan Ketua Jabatan / Bahagian");
+                            $("#Cuti #KelulusanHR").find("legend").html("Pen. Pengarah Bah. Sumber Manusia");
+                        }
+                        else if ($(this).val() == 3) {
+                            $("#Cuti #Sokongan").removeClass("hide");
+                            $("#Cuti #KelulusanHR").removeClass("hide");
+                            //$("#Cuti #KelulusanYDP").removeClass("hide");
+                            /*$("#Cuti #KelulusanHR").find(".row").each(function () {
+                                $(this).not("#Ulasan").hide();
+                            });*/
+                            $("#Cuti #Sokongan").find("legend").html("Sokongan Ketua Jabatan");
+                            $("#Cuti #KelulusanHR").find("legend").html("Pen. Pengarah Bah. Sumber Manusia");
+                        }
+                        else if ($(this).val() == 4) {
+                            //$("#Cuti #Sokongan").removeClass("hide");
+                            $("#Cuti #Kelulusan").removeClass("hide");
+                            $("#Cuti #KelulusanHR").removeClass("hide");
+                            //$("#Cuti #Sokongan").find("legend").html("Kelulusan Ketua Jabatan");
+                            $("#Cuti #Kelulusan").find("legend").html("Kelulusan Ketua Jabatan");
+                            $("#Cuti #KelulusanHR").find("legend").html("Kelulusan Penolong Pengarah, Bahagian Sumber Manusia");
+                            $("#Cuti #Ulasan").hide();
+                        }
+                    }
+
+                    $("#Cuti input").each(function () {
+                        $(this).not("#HR_MAKLUMAT_CUTI_HR_TARIKH_PERMOHONAN, #HR_MAKLUMAT_CUTI_HR_TAHUN, #KATEGORI_CUTI_dt, #KOD_CUTI_dt, #JUMLAH_MAKSIMUM_dt, #TAHUN_dt, #TARIKH_PERMOHONAN_dt, #kemaskini, #HR_MAKLUMAT_CUTI_DISABLED").val("");
+                    })
+                    $("#Cuti select").each(function () {
+                        $(this).not("#HR_MAKLUMAT_CUTI_HR_KATEGORI_CUTI, #HR_MAKLUMAT_CUTI_HR_KOD_CUTI").val("");
+
+                    })
+                    $("#Cuti #HR_MAKLUMAT_CUTI_HR_SENARAI_TARIKH").html("<option></option>");
+                    $("#Cuti #HR_MAKLUMAT_CUTI_HR_TARIKH_BATAL").html("<option></option>");
+                    if ($("#HR_MAKLUMAT_CUTI_HR_KOD_CUTI").val() != "") {
+                        $("#Cuti input[name='HR_MAKLUMAT_CUTI.HR_KOD_CUTI2']").val($("#HR_MAKLUMAT_CUTI_HR_KOD_CUTI").val())
+                    }
+
+                    if ($("#HR_MAKLUMAT_CUTI_HR_TAHUN").val() != "" && $("#HR_MAKLUMAT_CUTI_HR_KOD_CUTI").val() != "") {
+                        if ($(this).val() == "CU008") {
+                            $("#Cuti #CutiKematian").removeClass("hide");
+                            $("#Cuti #CutiBersalin").addClass("hide");
+                        }
+                        if ($(this).val() == "CU007" || $(this).val() == "CU091") {
+                            $("#Cuti #CutiKematian").addClass("hide");
+                            $("#Cuti #CutiBersalin").removeClass("hide");
+                        }
+                    }
+                    if ($("#HR_MAKLUMAT_CUTI_HR_TAHUN").val().length == 4 && $("#HR_MAKLUMAT_CUTI_HR_KOD_CUTI").val() != "" && $("#HR_MAKLUMAT_CUTI_HR_KATEGORI_CUTI").val() != "2") {
+                        $.ajax({
+                            url: "../../MaklumatKakitangan/JenisCuti",
+                            type: "GET",
+                            data: { HR_KATEGORI_CUTI: $("#HR_MAKLUMAT_CUTI_HR_KATEGORI_CUTI").val(), HR_TARIKH_PERMOHONAN: $("#HR_MAKLUMAT_CUTI_HR_TARIKH_PERMOHONAN").val(), HR_JUMLAH_MAKSIMUM: $("#HR_MAKLUMAT_CUTI_HR_JUMLAH_MAKSIMUM").val(), HR_TAHUN: $("#HR_MAKLUMAT_CUTI_HR_TAHUN").val(), HR_KOD_CUTI: $("#HR_MAKLUMAT_CUTI_HR_KOD_CUTI").val(), "NoPekerja": $("#HR_NO_PEKERJA").val(), DISABLED: $("#HR_MAKLUMAT_CUTI_DISABLED").val() },
+                            //dataType: "json",
+                            //contentType: "application/json: charset=utf-8",
+                            success: function (data) {
+
+                                $("#Cuti #KategoriCuti").html(data);
+                            }
+                        });
+                    }
+                })
+        });
+</script>

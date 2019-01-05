@@ -1,0 +1,183 @@
+﻿
+
+@model eSPP.Models.HR_JADUAL_GAJI
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Info Jadual Gaji<span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("InfoJadual", "JadualGaji", FormMethod.Post,new {@class = "smart-form"}))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_SISTEM_SARAAN);
+            @Html.HiddenFor(model => model.HR_GRED_GAJI);
+            @Html.HiddenFor(model => model.HR_PERINGKAT);
+
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Sistem Saraan</label>
+                        <div class="col col-8">
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_SISTEM_SARAAN, "SSB", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>SSB
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_SISTEM_SARAAN, "SSM", htmlAttributes: new { @checked = "checked", disabled = "disabled" })
+                                    <i></i>SSM
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Gred Gaji  </label>
+                        <div class="col col-8">
+                            <label class="select">
+                                @Html.DropDownListFor(model => model.HR_GRED_GAJI, null, String.Empty, new { @class = "form-control", disabled = "disabled" })
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Peringkat  </label>
+                        <div class="col col-8">
+                            <label class="select">
+                                @Html.DropDownListFor(model => model.HR_PERINGKAT, null, String.Empty, new { @class = "form-control", disabled = "disabled" })
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Gaji Pokok  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_GAJI_POKOK, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Gaji Minimum  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_GAJI_MIN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Gaji Maximum  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_GAJI_MAX, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Kenaikan  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_RM_KENAIKAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Peratus Kenaikan  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_PERATUS_KENAIKAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Kod Gaji  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_KOD_GAJI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Status</label>
+                        <div class="col col-8">
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>Aktif
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>Tidak Aktif
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Kanan</label>
+                        <div class="col col-8">
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_KANAN_IND, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>Aktif
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_KANAN_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>Tidak Aktif
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </fieldset>
+            <footer>
+               
+                <a type="button" class="btn btn-default" href="SenaraiGaji">
+                    Kembali
+                </a>
+            </footer>
+        }
+
+    </div>
+
+</div>
+@section pagespecific { 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+        })
+    </script> 
+}

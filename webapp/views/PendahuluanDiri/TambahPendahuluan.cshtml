@@ -1,0 +1,981 @@
+﻿
+@model eSPP.Models.HR_PENDAHULUAN_DIRI
+
+
+<div id="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+        </div>
+    </div>
+    @if (ViewBag.StatusMessage == "Permohonan Telah Berjaya Dihantar.")
+    {
+        <div class="row">
+            <article class="col-sm-12">
+                <div class="alert alert-success fade in">
+                    <button class="close" data-dismiss="alert">
+                        ×
+                    </button>
+                    <i class="fa-fw fa fa-check"></i>
+                    <strong>Berjaya</strong> @ViewBag.StatusMessage <strong>@ViewBag.emel</strong>
+                </div>
+            </article>
+        </div>
+    }
+    <section id="widget-grid" class="">
+
+        <div class="row">
+
+            <article class="col-sm-12">
+
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-align-justify"></i> </span>
+                        <h2>BORANG PERBATUAN PINK</h2>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body">
+                            @using (Html.BeginForm("TambahPendahuluan", "PendahuluanDiri", new { key = ViewBag.key, value = ViewBag.value }, FormMethod.Post, new { id = "formPerbatuanPink", enctype = "multipart/form-data", novalidate = "novalidate" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationBootstrap()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                @Html.HiddenFor(model => model.HR_KOD_PENDAHULUAN);
+                                @Html.HiddenFor(model => model.HR_NO_PEKERJA);
+
+
+                                <ul id="myTab1" class="nav nav-tabs bordered">
+                                    <li class="active">
+                                        <a href="#s1" data-toggle="tab">Borang A <span class="badge bg-color-blue txt-color-white"></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="#s2" data-toggle="tab"><i class=""></i> Borang B</a>
+                                    </li>
+
+
+                                </ul>
+                                <div id="myTabContent1" class="tab-content padding-10">
+
+                                    <div class="tab-pane fade in active" id="s1">
+
+                                        <fieldset>
+                                            <legend>
+                                                MAJLIS BANDARAYA PETALING JAYA
+                                            </legend>
+                                            <div class="row smart-form">
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12"> Ruj. Jabatan</label>
+                                                                <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.EditorFor(model => model.HR_NO_RUJUKAN, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Permohonan</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        <i class="icon-append fa fa-calendar"></i>
+                                                                        <input type="text" name="HR_TARIKH_PERMOHONAN" id="HR_TARIKH_PERMOHONAN" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_PERMOHONAN)" disabled="disabled" />
+                                                                    </label>
+
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend>
+                                                PERMOHONAN UNTUK PENDAHULUAN
+                                            </legend>
+                                            <div class="row smart-form">
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">JABATAN/BAHAGIAN</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.Editor("HR_JABATAN", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">TUJUAN</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="textarea textarea-resizable">
+                                                                        @Html.TextAreaFor(model => model.HR_TUJUAN, new { @class = "form-control", rows = 3 })
+                                                                        <i></i>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">PENDAHULUAN</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.EditorFor(model => model.HR_PENDAHULUAN, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Pegawai Yang Bertanggungjawab</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.Editor("HR_PEGAWAI", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Sudah diluluskan</label>
+                                                                <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.EditorFor(model => model.HR_KELULUSAN, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Kad Pengenalan</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.Editor("HR_NO_IC", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Dikehendaki sekarang</label>
+                                                                <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        <i class="icon-prepend">RM</i>
+                                                                        @Html.EditorFor(model => model.HR_JUMLAH_SEKARANG, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">No.Gaji</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.Editor("HR_NO_GAJI", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Jumlah</label>
+                                                                <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        <i class="icon-prepend">RM</i>
+                                                                        @Html.EditorFor(model => model.HR_JUMLAH_PENUH, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Jawatan</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.Editor("HR_JAWATAN", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Mula</label>
+                                                                <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        <i class="icon-append fa fa-calendar"></i>
+                                                                        <input type="text" name="HR_TARIKH_MULA" id="HR_TARIKH_MULA" class="form-control" readonly='readonly'>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Cara Membayar Balik</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="textarea textarea-resizable">
+                                                                        @Html.TextAreaFor(model => model.HR_BAYARAN_BALIK, new { @class = "form-control", rows = 3 })
+                                                                        <i></i>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                       
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Akhir</label>
+                                                                <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        <i class="icon-append fa fa-calendar"></i>
+                                                                        <input type="text" name="HR_TARIKH_AKHIR" id="HR_TARIKH_AKHIR" class="form-control" readonly='readonly'>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <br />
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend>
+                                                MAKLUMAT SOKONGAN BERHUBUNG DENGAN BORANG PENDAHULUAN DIRI
+                                            </legend>
+                                            <div class="row smart-form">
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <h6>
+                                                                <b>
+                                                                    1. Butir-butir mengenai aktiviti/program
+                                                                </b>
+                                                            </h6>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <br />
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">1.1) Tajuk Aktiviti</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="textarea textarea-resizable">
+                                                                    @Html.TextAreaFor(model => model.HR_TUJUAN, new { @class = "form-control", rows = 3, disabled = "disabled" })
+                                                                    <i></i>
+                                                                </label>
+                                                            </div>
+                                                        </section>
+                                                        @*<section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Mula</label>
+                                                                <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.EditorFor(model => model.HR_TARIKH_MULA, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Akhir</label>
+                                                                <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.EditorFor(model => model.HR_TARIKH_AKHIR, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>*@
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <h6>
+                                                                <b>
+                                                                    2. Kelulusan Aktiviti/Program
+                                                                </b>
+                                                            </h6>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <br />
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">2.1) Sama ada aktiviti/program di bawah peruntukan Belanjawan semasa atau sesuatu Akaun Amanah Kementerian/Jabatan</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.EditorFor(model => model.HR_KELULUSAN_1, new { htmlAttributes = new { @class = "form-control" } })
+                                                                </label>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">2.2) Jika Peruntukan Belanjawan semasa Sama ada aktiviti/program tersenarai dalam Belanjawan Tahunan atau tidak</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.EditorFor(model => model.HR_KELULUSAN_2, new { htmlAttributes = new { @class = "form-control" } })
+                                                                </label>
+                                                            </div>
+
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">2.3) Jika perbelanjaan dari sesuatu Akaun Amanah Rujukan peraturan Akaun Amanah berkenaan yang membolehkan maksud perbelanjaan ini.</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.EditorFor(model => model.HR_KELULUSAN_3, new { htmlAttributes = new { @class = "form-control" } })
+                                                                </label>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">2.4) Jika sesuatu kadar bayaran digunakan, sila nyatakan rujukan Pekeliling atau Peraturan Kewangan yang menetapkan kadar berkenaan atau  sertakan surat kelulusan khas dari Bahagian Dasar Saraan dan Pengurusan bagi Penjawat Awam atau Bahagian Pengurusan Aset Awam bagi bukan Penjawat Awam, Perbendaharaan.</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.EditorFor(model => model.HR_KELULUSAN_4, new { htmlAttributes = new { @class = "form-control" } })
+                                                                </label>
+                                                            </div>
+
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+
+
+
+
+
+
+                                        @*<footer>
+                                        <div class="well text-right">
+                                            <button type="submit" name="Command" id="btn-edit" class="btn btn-success">
+                                                <i class="fa fa-save"> Simpan</i>
+                                            </button>
+                                            <button type="submit" name="Command" id="btn-edit" class="btn btn-primary">
+                                                <i class="fa fa-edit"> Seterusnya</i>
+                                            </button>
+                                        </div>
+                                    </footer>*@
+
+                                    </div>
+                                    <div class="tab-pane fade" id="s2">
+                                        <div id="peribadi">
+                                            <fieldset>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <h6>
+                                                                <b>
+                                                                    3. Pegawai-pegawai yang bertanggungjawab
+                                                                </b>
+                                                            </h6>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <br />
+                                                <div class="row smart-form">
+
+                                                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="row">
+                                                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">3.1) Nama dan jawatan pegawai yang akan diamanahkan dengan wang Pendahuluan Pelbagai serta bertanggungjawab ke atas perbelanjaan Dan penyediaan penyata perbelanjaan berkenaan</label>
+                                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.Editor("HR_PEGAWAI", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                    </label>
+                                                                </div>
+                                                            </section>
+                                                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">3.2) Sama ada Pendahuluan Pelbagai terdahulu atas nama pegawai  tersebut di perenggan 3.1 di atas telah diselesaikan atau tidak.</label>
+                                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.EditorFor(model => model.HR_PEGAWAI_2, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    </label>
+                                                                </div>
+
+                                                            </section>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="row">
+                                                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">3.3) Jika ada Pendahuluan Pelbagai yang tertunggak sila beri butir-butir berkenaan seperti berikut:(Bil.,No.Rujukan Kelulusan,Tarikh Diluluskan,Amaun)</label>
+                                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.EditorFor(model => model.HR_PEGAWAI_3, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    </label>
+                                                                </div>
+                                                            </section>
+                                                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">3.4) Sebab-sebab pelarasan tidak dapat dilakukan</label>
+                                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.EditorFor(model => model.HR_PEGAWAI_4, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    </label>
+                                                                </div>
+
+                                                            </section>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="row">
+                                                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">3.5) Tindakan Kementerian/Jabatan yang telah diambil terhadap pegawai-pegawai berkenaan.(i)	Pegawai yang diamanahkan dengan wang Pendahuluan Pelbagai</label>
+                                                                <div class="col-lg-6 col-md-3 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.Editor("HR_PEGAWAI", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                    </label>
+                                                                </div>
+                                                            </section>
+
+                                                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">(ii)	Pegawai yang bertanggungjawab ke atas pelarasan</label>
+                                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                    <label class="select">
+                                                                        @Html.DropDownListFor(model => model.HR_NAMA_PEGAWAI, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                                                        @Html.HiddenFor(model => model.HR_NAMA_PEGAWAI)
+
+                                                                        <i></i>
+                                                                    </label>
+                                                                </div>
+                                                            </section>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="row">
+                                                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">3.6) Nama dan jawatan pegawai yang bertanggungjawab terhadap pelarasan Pendahuluan Pelbagai yang diminta sekarang</label>
+                                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                    <label class="select">
+                                                                        @Html.DropDownListFor(model => model.HR_NAMA_PEGAWAI, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                                                        @Html.HiddenFor(model => model.HR_NAMA_PEGAWAI)
+
+                                                                        <i></i>
+                                                                    </label>
+                                                                </div>
+                                                            </section>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </fieldset>
+                                            <fieldset>
+                                                <legend>
+                                                    PENYATA MENGENAI KEDUDUKAN PENDAHULUAN PELBAGAI
+                                                </legend>
+
+                                                <div class="row smart-form">
+
+                                                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="row">
+                                                            <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama</label>
+                                                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.Editor("HR_PEGAWAI", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                        <i></i>
+                                                                    </label>
+                                                                </div>
+                                                            </section>
+                                                            <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No.KP/Gaji (nama yang diamanahkan dengan wang pendahuluan)</label>
+                                                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.Editor("HR_NO_IC", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                        <i></i>
+                                                                    </label>
+                                                                </div>
+                                                            </section>
+                                                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="row">
+                                                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                        <h6>
+                                                                            Pendahuluan yang diluluskan
+                                                                        </h6>
+                                                                    </section>
+                                                                </div>
+                                                            </div>
+                                                            <br />
+                                                            <br />
+                                                            <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No.Kelulusan perbendaharaan/Pegawai Pengawal</label>
+                                                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.EditorFor(model => model.HR_NO_KELULUSAN, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    </label>
+                                                                </div>
+
+                                                            </section>
+                                                            <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Amaun</label>
+                                                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        <i class="icon-prepend">RM</i>
+                                                                        @Html.Editor("HR_JUMLAH_PENUH", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                        <i></i>
+                                                                    </label>
+                                                                </div>
+                                                            </section>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="row">
+
+                                                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="row">
+                                                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                        <h6>
+                                                                            Penyelesaian Pendahuluan
+                                                                        </h6>
+                                                                    </section>
+                                                                </div>
+                                                            </div>
+                                                            <br />
+                                                            <br />
+                                                            <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jenis Dokumen</label>
+                                                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.EditorFor(model => model.HR_JENIS_DOKUMEN, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    </label>
+                                                                </div>
+
+                                                            </section>
+                                                            <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Rujukan</label>
+                                                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.EditorFor(model => model.HR_RUJUKAN, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    </label>
+                                                                </div>
+                                                            </section>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="row">
+
+                                                            <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh</label>
+                                                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.EditorFor(model => model.HR_TARIKH_SELESAI, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    </label>
+                                                                </div>
+
+                                                            </section>
+                                                            <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Amaun</label>
+                                                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.Editor("HR_JUMLAH_PENUH", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                        <i></i>
+                                                                    </label>
+                                                                </div>
+                                                            </section>
+                                                            <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Baki Pendahuluan Belum Selesai</label>
+                                                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.EditorFor(model => model.HR_BAKI_SEBELUM, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    </label>
+                                                                </div>
+                                                            </section>
+                                                            <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tindakan yang diambil terhadap Pegawai</label>
+                                                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.EditorFor(model => model.HR_TINDAKAN, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    </label>
+                                                                </div>
+                                                            </section>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset>
+                                                <legend>
+                                                    Pengesahan Pemohon
+                                                </legend>
+                                                <h5>Saya mengakui bahawa:  : </h5>
+
+                                                <pre><h7><code class="xml"> 1) Perjalanan pada tarikh-tarikh tersebut adalah benar dan diatas urusan rasmi.</code> </h7></pre>
+
+                                                <br />
+                                                <div class="row smart-form">
+                                                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="row">
+                                                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"> Pengesahan </label>
+                                                                    <div class="inline-group">
+                                                                        <label class="radio">
+                                                                            @Html.RadioButtonFor(model => model.HR_IND_PEMOHON, "Y", htmlAttributes: new { @class = "form-control" })
+                                                                            <i></i>Setuju
+                                                                        </label>
+                                                                        <label class="radio">
+                                                                            @Html.RadioButtonFor(model => model.HR_IND_PEMOHON, "T", htmlAttributes: new { @class = "form-control" })
+                                                                            <i></i>Tidak Setuju
+                                                                        </label>
+                                                                    </div>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"> Pengesahan Penghantaran </label>
+                                                                    <div class="inline-group">
+                                                                        <label class="radio">
+                                                                            @Html.RadioButtonFor(model => model.HR_FINAL_PEMOHON, "Y", htmlAttributes: new { @class = "form-control" })
+                                                                            <i></i>Muktamad
+                                                                        </label>
+                                                                        <label class="radio">
+                                                                            @Html.RadioButtonFor(model => model.HR_FINAL_PEMOHON, "T", htmlAttributes: new { @class = "form-control" })
+                                                                            <i></i>Belum Muktamad
+                                                                        </label>
+                                                                    </div>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
+                                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"> Tarikh </label>
+                                                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                        <label class="input">
+                                                                            <i class="icon-append fa fa-calendar"></i>
+                                                                            <input type="text" name="HR_TARIKH_PERMOHONAN" id="HR_TARIKH_PERMOHONAN" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_PERMOHONAN)" , readonly='readonly' />
+
+                                                                        </label>
+
+                                                                    </div>
+                                                                </section>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <footer>
+                                    <div class="well text-right">
+                                        <button type="button" class="btn btn-default" onclick="javascript: history.go(-1)">
+                                            Kembali
+                                        </button>
+                                        <button type="reset" class="btn btn-default">
+                                            Batal
+                                        </button>
+                                        <button type="submit" class="btn btn-success" id="Hantar" name="Command" value="Hantar"><i class=""></i>Hantar</button>
+
+                                    </div>
+                                </footer>
+                            }
+
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+            </article>
+
+        </div>
+    </section>
+    <div class="modal fade" id="TambahModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='TambahModalContent'></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='EditModalContent'></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="InfoModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='InfoModalContent'></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="PadamModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='PadamModalContent'></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section pagespecific {
+
+    <script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var $orderForm = $("#mKakitangan").validate({
+            // Rules for form validation
+            rules: {
+                HR_KOD_LAWATAN: {
+                    required: true,
+
+                }
+
+            },
+
+            // Messages for form validation
+            messages: {
+                HR_KOD_LAWATAN: {
+                    required: 'Nama Seminar diperlukan'
+                }
+
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+
+        $("#peribadi #HR_NAMA_PEGAWAI").on("change", function () {
+            debugger
+            $.ajax({
+                url: "../PendahuluanDiri/CariJawatanPegawai",
+                data: { "id": $(this).val() },
+                contentType: "application/json; charset=utf-8",
+                type: 'GET',
+                dataType: "json",
+                success: function (data) {
+                    debugger
+                    $("#HR_JAWATAN_PEGAWAI_HR").val(data);
+                }
+            })
+        })
+
+        $("#HR_KOD_LAWATAN").on("change", function () {
+            if ($(this).val() == "T01") {
+                $("#HR_KOD_LAWATAN").attr("disabled", "disabled");
+                $("#HR_KOD_LAWATAN").removeAttr("disabled");
+                $("#HR_KOD_LAWATAN").val("");
+                $("#HR_TARIKH_MULA").attr("disabled", "disabled");
+                $("#HR_TARIKH_MULA").removeAttr("disabled");
+                $("#HR_TARIKH_MULA").val("");
+                $("#HR_TARIKH_TAMAT").attr("disabled", "disabled");
+                $("#HR_TARIKH_TAMAT").removeAttr("disabled");
+                $("#HR_TARIKH_TAMAT").val("");
+                $("#HR_TEMPAT").attr("disabled", "disabled");
+                $("#HR_TEMPAT").removeAttr("disabled");
+                $("#HR_TEMPAT").val("");
+                $("#HR_TUJUAN").attr("disabled", "disabled");
+                $("#HR_TUJUAN").removeAttr("disabled");
+                $("#HR_TUJUAN").val("");
+
+            }
+            else {
+                $("HR_KOD_LAWATAN").val("");
+                $("HR_TARIKH_MULA").val("");
+                $("HR_TARIKH_TAMAT").val("");
+                $("HR_TEMPAT").val("");
+                $("HR_TUJUAN").val("");
+                $("#HR_NAMA_SEMINAR").attr("disabled", "disabled");
+                $("#HR_TARIKH_MULA").attr("disabled", "disabled");
+                $("#HR_TARIKH_TAMAT").attr("disabled", "disabled");
+                $("#HR_TEMPAT").attr("disabled", "disabled");
+                $("#HR_TUJUAN").attr("disabled", "disabled");
+                $("#HR_KOD_LAWATAN").removeAttr("disabled");
+                $("#HR_TARIKH_MULA").removeAttr('readonly', 'readonly');
+                $("#HR_TARIKH_TAMAT").removeAttr('readonly', 'readonly');
+                $("#HR_TEMPAT").removeAttr('readonly', 'readonly');
+                $("#HR_TUJUAN").removeAttr('readonly', 'readonly');
+
+            }
+
+            $.ajax({
+                url: "../../PemohonanBaruLuar/CariLuar",
+                data: { "id": $(this).val() },
+                contentType: "application/json; charset=utf-8",
+                type: 'GET',
+                dataType: "json",
+                success: function (data) {
+
+                    debugger;
+                    var HR_TARIKH_MULA = data.HR_TARIKH_MULA;
+                    console.log(data.HR_KOD_LAWATAN)
+                    var tarikh = new Date(parseInt(HR_TARIKH_MULA.substr(6)));
+                    var HR_TARIKH_TAMAT = data.HR_TARIKH_TAMAT;
+                    console.log(data.HR_KOD_LAWATAN)
+                    var tarikhtamat = new Date(parseInt(HR_TARIKH_TAMAT.substr(6)));
+
+
+                    $("#HR_TARIKH_MULA").val(tarikh.toLocaleDateString('en-GB'));
+                    $("#HR_TARIKH_TAMAT").val(tarikhtamat.toLocaleDateString('en-GB'));
+                    $("#HR_TEMPAT").val(data.HR_TEMPAT);
+                    $("#HR_TUJUAN").val(data.HR_TUJUAN);
+                }
+
+            })
+        })
+
+
+
+      
+        $('#HR_TARIKH_MULA').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#HR_TARIKH_AKHIR').datepicker('option', 'minDate', selectedDate);
+
+
+            }
+        });
+
+
+        $('#HR_TARIKH_AKHIR').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#HR_TARIKH_MULA').datepicker('option', 'maxDate', selectedDate);
+
+
+            }
+        });
+       
+
+
+        $('#HR_TARIKH_PERMOHONAN').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                //$('#HR_TARIKH_CUTI_AKH').datepicker('option', 'maxDate', selectedDate);
+
+
+            }
+        });
+
+
+        $('#HR_TARIKH_SOKONG').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#HR_TARIKH_LULUS_MENTERI').datepicker('option', 'minDate', selectedDate);
+
+
+            }
+        });
+
+
+      
+
+
+        var $orderForm = $("#order-form").validate({
+            // Rules for form validation
+            rules: {
+                HR_PENERANGAN: {
+                    required: true,
+                    remote: {
+                        url: "Alasan/CariAlasan",
+                        type: "get",
+                        data: {
+                            penerangan: function () {
+                                return $("#HR_PENERANGAN").val();
+                            },
+                            kod: function () {
+                                return $("#HR_KOD_ALASAN").val();
+                            }
+                        }
+                    }
+                },
+                HR_SISTEM_IND: {
+                    required: true
+
+                },
+
+            },
+
+            // Messages for form validation
+            messages: {
+                HR_PENERANGAN: {
+                    required: 'Penerangan diperlukan'
+                },
+                HR_SISTEM_IND: {
+                    required: 'Pilihan Sistem diperlukan'
+                },
+
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+
+    })
+    </script>
+}t>

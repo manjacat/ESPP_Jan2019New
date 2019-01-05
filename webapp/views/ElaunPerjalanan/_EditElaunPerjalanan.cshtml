@@ -1,0 +1,158 @@
+﻿
+
+
+
+@model eSPP.Models.HR_KADAR_PERBATUAN
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Edit  Kadar Tuntutan Perjalanan<span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("EditElaunPerjalanan","ElaunPerjalanan", FormMethod.Post, new { id = "order-form", @class = "smart-form", novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_KELAS);
+            @Html.HiddenFor(model => model.HR_KM_MULA);
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Kelas  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-info"></i>
+                                @Html.EditorFor(model => model.HR_KELAS, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Km Mula  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-clock-o"></i>
+                                @Html.EditorFor(model => model.HR_KM_MULA, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Km Akhir  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-clock-o"></i>
+                                @Html.EditorFor(model => model.HR_KM_AKHIR, new { htmlAttributes = new { @class = "form-control" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Jumlah (RM)  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-plus-circle"></i>
+                                @Html.EditorFor(model => model.HR_NILAI, new { htmlAttributes = new { @class = "form-control" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Status</label>
+                        <div class="col col-8">
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "Y", htmlAttributes: new { @class = "form-control" })
+                                    <i></i>Aktif
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "T", htmlAttributes: new { @class = "form-control" })
+                                    <i></i>Tidak Aktif
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </fieldset>
+
+            <footer>
+                <button type="submit" id="btn" class="btn btn-primary">
+                    <span class="fa fa-send-o"></span> Hantar
+                </button>
+                <a type="button" class="btn btn-default" href="SenaraiKadarTuntutan">
+                    Kembali
+                </a>
+            </footer>
+                                    }
+
+    </div>
+
+</div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+
+            var $orderForm = $("#order-form").validate({
+                // Rules for form validation
+                rules: {
+                    HR_KM_AKHIR: {
+                        required: true,
+                        remote: {
+                            url: "../ElaunPerjalanan/CariEditPerjalanan",
+                            type: "get",
+                            data: {
+                                akhir: function () {
+                                    return $("#HR_KM_AKHIR").val();
+                                },
+                                kelas: function () {
+                                    return $("#HR_KELAS").val();
+                                },
+                                mula: function () {
+                                    return $("#HR_KM_MULA").val();
+                                }
+                            }
+                        }
+                    },
+                    HR_NILAI: {
+                        required: true
+                    }
+
+                },
+
+                // Messages for form validation
+                messages: {
+                   
+                    HR_KM_AKHIR: {
+                        required: 'KM Akhir diperlukan',
+
+                    },
+                    HR_NILAI: {
+                        required: 'Nilai diperlukan',
+
+                    },
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+        })
+    </script> 

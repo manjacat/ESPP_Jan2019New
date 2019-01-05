@@ -1,0 +1,201 @@
+﻿@model IEnumerable<eSPP.Models.HR_MAKLUMAT_KEWANGAN8>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KOD_PERUBAHAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_MULA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_AKHIR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_BULAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TAHUN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_KEYIN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_BUTIR_PERUBAHAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_CATATAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NO_SURAT_KEBENARAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_AKTIF_IND)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NP_UBAH_HR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_UBAH_HR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NP_FINALISED_HR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_FINALISED_HR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_FINALISED_IND_HR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NP_UBAH_PA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_UBAH_PA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NP_FINALISED_PA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_FINALISED_PA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_FINALISED_IND_PA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_EKA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_ITP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KEW8_IND)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_BIL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KOD_JAWATAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KEW8_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_LANTIKAN_IND)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_SP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_SP_IND)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KOD_PERUBAHAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_MULA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_AKHIR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_BULAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TAHUN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_KEYIN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_BUTIR_PERUBAHAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_CATATAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NO_SURAT_KEBENARAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_AKTIF_IND)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NP_UBAH_HR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_UBAH_HR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NP_FINALISED_HR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_FINALISED_HR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_FINALISED_IND_HR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NP_UBAH_PA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_UBAH_PA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NP_FINALISED_PA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_FINALISED_PA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_FINALISED_IND_PA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_EKA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_ITP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KEW8_IND)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_BIL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KOD_JAWATAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KEW8_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_LANTIKAN_IND)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_SP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_SP_IND)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.HR_NO_PEKERJA }) |
+            @Html.ActionLink("Details", "Details", new { id=item.HR_NO_PEKERJA }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.HR_NO_PEKERJA })
+        </td>
+    </tr>
+}
+
+</table>

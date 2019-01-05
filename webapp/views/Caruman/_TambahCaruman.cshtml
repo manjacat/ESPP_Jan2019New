@@ -1,0 +1,215 @@
+﻿
+
+@model eSPP.Models.HR_CARUMAN
+
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Maklumat Caruman <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("TambahCaruman", "Caruman", FormMethod.Post, new { id = "caruman-form", @class = "smart-form", novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+          
+
+            <fieldset>
+                <section>
+                    <div class="row"> 
+                        <label class="label col col-4">Caruman  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-briefcase"></i>
+                                @Html.EditorFor(model => model.HR_PENERANGAN_CARUMAN, new { htmlAttributes = new { @class = "form-control" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Vot Caruman  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-briefcase"></i>
+                                @Html.EditorFor(model => model.HR_VOT_CARUMAN, new { htmlAttributes = new { @class = "form-control", maxlength = "5" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Singkatan  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-user"></i>
+                                @Html.EditorFor(model => model.HR_SINGKATAN, new { htmlAttributes = new { @class = "form-control", maxlength = "20" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Peratus  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_PERATUS, new { htmlAttributes = new { @class = "form-control ", placeholder = "Masukkan nombor", type = "number" } })
+                                <b class="tooltip tooltip-top-right">
+                                    <i class="fa fa-warning txt-color-teal"></i>
+                                    Sila masukkan hanya nombor sahaja
+                                </b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Jumlah  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_NILAI, new { htmlAttributes = new { @class = "form-control", placeholder = "Masukkan nombor", type = "number" } })
+                                <b class="tooltip tooltip-top-right">
+                                    <i class="fa fa-warning txt-color-teal"></i>
+                                    Sila masukkan hanya nombor sahaja
+                                </b>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Status</label>
+                        <div class="col col-8">
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "Y", htmlAttributes: new { @checked = "checked" })
+                                    <i></i>Aktif
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "T", htmlAttributes: new { @class = "form-control" })
+                                    <i></i>Tidak Aktif
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">  Kreditor  </label>
+                        <div class="col col-8">
+                            <label class="select">
+                                @Html.DropDownListFor(model => model.HR_KOD_KREDITOR, null, String.Empty, new { @class = "form-control" })
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Keterangan Slip  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_KETERANGAN_SLIP, new { htmlAttributes = new { @class = "form-control" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Kata Awalan  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_PREFIX, new { htmlAttributes = new { @class = "form-control", maxlength = "2" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </fieldset>
+            <footer>
+                <button type="submit" id="btn" class="btn btn-primary">
+                    <span class="fa fa-send-o"></span> Hantar
+                </button>
+                <a type="button" class="btn btn-default" href="SenaraiCaruman">
+                    Kembali
+                </a>
+            </footer>
+        }
+
+    </div>
+
+</div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+
+            var $carumanForm = $("#caruman-form").validate({
+                // Rules for form validation
+                rules: {
+                    HR_PENERANGAN_CARUMAN: {
+                        required: true,
+                        remote : {
+                    url : "../Caruman/CariCaruman",
+                    type : "get",
+                    data : {
+                        penerangan: function (){
+                            return $("#HR_PENERANGAN_CARUMAN").val();
+                                 }
+                             }
+                          }
+
+                  
+                    },
+                    HR_VOT_CARUMAN: {
+                        required: true
+                    },
+                    
+                    HR_SINGKATAN: {
+                        required: true
+                    },
+                    HR_KOD_KREDITOR: {
+                        required: true
+                    },
+            
+            },
+
+                // Messages for form validation
+                messages: {
+                    HR_PENERANGAN_CARUMAN: {
+                        required: 'Nama Caruman diperlukan'
+                    },
+                    HR_VOT_CARUMAN: {
+                        required: 'Vot diperlukan',
+
+                    },
+                    HR_SINGKATAN: {
+                        required: 'Singkatan diperlukan',
+
+                    },
+                    HR_KOD_KREDITOR: {
+                        required: 'Kod Kreditor diperlukan',
+
+                    },
+                },
+
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+        })
+    </script> 

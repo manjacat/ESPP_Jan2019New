@@ -1,0 +1,50 @@
+﻿@model eSPP.Models.HR_TARIKH_ACARA
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>HR_TARIKH_ACARA</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_WAKTU_MULA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_WAKTU_MULA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_WAKTU_AKHIR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_WAKTU_AKHIR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KETERANGAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KETERANGAN)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

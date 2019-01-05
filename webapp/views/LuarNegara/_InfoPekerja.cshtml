@@ -1,0 +1,170 @@
+﻿
+
+
+@model eSPP.Models.HR_SEMINAR_LUAR_DETAIL
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Info Pemohon <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("InfoPekerja","LuarNegara", FormMethod.Post, new { @class = "smart-form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+            <div id="peribadi">
+
+
+                <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="label">
+                        Peringatan : Bahagian yang bertanda (<font color="red">*</font>) adalah wajib di isi.
+                    </label>
+                    <br />
+
+                    <div class="row">
+
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Pekerja <font color="red">*</font></label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+
+                                        <label class="input">
+                                            <i class="icon-append fa fa-list-alt"></i>
+                                            @Html.EditorFor(model => model.HR_NO_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                        </label>
+                                    </div>
+                                </section>
+
+                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kekerapan Ke Luar Negeri</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="select">
+                                            @Html.DropDownListFor(model => model.HR_KERAP_IND, new SelectList(ViewBag.kerap, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </div>
+                                </section>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama Pekerja</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-list-alt"></i>
+                                    @Html.Editor("HR_NAMA_PEKERJA", (string)ViewBag.HR_NAMA_PEKERJA, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </label>
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jawatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-list-alt"></i>
+                                    @Html.Editor("HR_JAWATAN", (string)ViewBag.HR_JAWATAN, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jabatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    <i class="icon-append fa fa-list-alt"></i>
+                                    @Html.DropDownList("HR_JABATAN", new SelectList(ViewBag.HR_JABATAN, "Value", "Text"), new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </label>
+                               
+                            </div>
+                        </section>
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bahagian</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    <i class="icon-append fa fa-list-alt"></i>
+                                    @Html.DropDownList("HR_BAHAGIAN", new SelectList(ViewBag.HR_BAHAGIAN, "Value", "Text"), new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <header>
+                        Rekod Ke Luar Negeri
+                    </header>
+
+
+                    <fieldset>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tarikh Permohonan</th>
+                                    <th>Nama Seminar</th>
+                                    <th>Tarikh Mula</th>
+                                    <th>Tarikh Tamat</th>
+                                    <th>Tempat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ var no = 0;}
+                                @foreach (HR_SEMINAR_LUAR_DETAIL item in ViewBag.seminarluar)
+                                {
+
+                                    ++no;
+                                    <tr>
+                                        <td>@string.Format("{0:dd/MM/yyyy}", item.HR_SEMINAR_LUAR.HR_TARIKH_PERMOHONAN)</td>
+                                        <td>@item.HR_SEMINAR_LUAR.HR_NAMA_SEMINAR</td>
+                                        <td>@string.Format("{0:dd/MM/yyyy}", item.HR_SEMINAR_LUAR.HR_TARIKH_MULA)</td>
+                                        <td>@string.Format("{0:dd/MM/yyyy}", item.HR_SEMINAR_LUAR.HR_TARIKH_TAMAT)</td>
+                                        <td>@item.HR_SEMINAR_LUAR.HR_TEMPAT</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </fieldset>
+
+                    <br />
+                </fieldset>
+            </div>
+
+            <footer>
+
+                <a type="button" class="btn btn-default" href="luarnegara">
+                    Kembali
+                </a>
+            </footer>
+        }
+
+    </div>
+
+</div>
+@section pagespecific {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+
+          
+
+
+
+        })
+    </script>
+}

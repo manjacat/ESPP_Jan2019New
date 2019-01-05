@@ -1,0 +1,208 @@
+﻿@model eSPP.Models.HR_PENSYARAH
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>HR_PENSYARAH</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KUMPULAN_PENSYARAH.HR_PENERANGAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KUMPULAN_PENSYARAH.HR_PENERANGAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NAMA_PENSYARAH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NAMA_PENSYARAH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NO_KPBARU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NO_KPBARU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NO_KPLAMA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NO_KPLAMA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NO_TELPEJABAT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NO_TELPEJABAT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NO_TELBIMBIT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NO_TELBIMBIT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NO_FAKS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NO_FAKS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_JAWATAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_JAWATAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_GRED_KELULUSAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_GRED_KELULUSAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_GAJI_POKOK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_GAJI_POKOK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TALAMAT1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TALAMAT1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TALAMAT2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TALAMAT2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TALAMAT3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TALAMAT3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TBANDAR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TBANDAR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TPOSKOD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TPOSKOD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TNEGERI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TNEGERI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_SALAMAT1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_SALAMAT1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_SALAMAT2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_SALAMAT2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_SALAMAT3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_SALAMAT3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_SBANDAR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_SBANDAR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_SPOSKOD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_SPOSKOD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_SNEGERI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_SNEGERI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NO_PEKERJA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NO_PEKERJA)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

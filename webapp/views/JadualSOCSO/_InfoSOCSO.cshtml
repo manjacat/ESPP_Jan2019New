@@ -1,0 +1,89 @@
+﻿
+
+@model eSPP.Models.HR_SOCSO
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Info Jadual SOCSO <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("InfoSOCSO","JadualSOCSO", FormMethod.Post,new {@class = "smart-form"}))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_GAJI_DARI);
+
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">  Gaji Dari         (RM)  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_GAJI_DARI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled"} })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">  Gaji Hingga         (RM)  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_GAJI_HINGGA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Syer Majikan (RM)  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-lock"></i>
+                                @Html.EditorFor(model => model.HR_CARUMAN_MAJIKAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Syer Pekerja (RM)  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-briefcase"></i>
+                                @Html.EditorFor(model => model.HR_CARUMAN_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </fieldset>
+            <footer>
+               
+                <a type="button" class="btn btn-default" href="SenaraiSOCSO">
+                    Kembali
+                </a>
+            </footer>
+        }
+
+    </div>
+
+</div>
+@section pagespecific { 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+        })
+    </script> 
+}

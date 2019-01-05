@@ -1,0 +1,1455 @@
+﻿
+@model eSPP.Models.HR_PENDAHULUAN_DIRI
+
+
+<div id="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+        </div>
+    </div>
+    @if (ViewBag.StatusMessage == "Permohonan Telah Berjaya Dihantar.")
+    {
+        <div class="row">
+            <article class="col-sm-12">
+                <div class="alert alert-success fade in">
+                    <button class="close" data-dismiss="alert">
+                        ×
+                    </button>
+                    <i class="fa-fw fa fa-check"></i>
+                    <strong>Berjaya</strong> @ViewBag.StatusMessage <strong>@ViewBag.emel</strong>
+                </div>
+            </article>
+        </div>
+    }
+    <section id="widget-grid" class="">
+
+        <div class="row">
+
+            <article class="col-sm-12">
+
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-align-justify"></i> </span>
+                        <h2>BORANG PERBATUAN PINK</h2>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body">
+                            @using (Html.BeginForm("PendahuluanListInfo", "PendahuluanDiri", new { key = ViewBag.key, value = ViewBag.value }, FormMethod.Post, new { id = "formPerbatuanPink", enctype = "multipart/form-data", novalidate = "novalidate" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationBootstrap()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                @Html.HiddenFor(model => model.HR_KOD_PENDAHULUAN);
+                                @Html.HiddenFor(model => model.HR_NO_PEKERJA);
+
+
+                                <ul id="myTab1" class="nav nav-tabs bordered">
+                                    <li class="active">
+                                        <a href="#s1" data-toggle="tab">Borang A <span class="badge bg-color-blue txt-color-white"></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="#s2" data-toggle="tab"><i class=""></i> Borang B</a>
+                                    </li>
+
+
+                                </ul>
+                                <div id="myTabContent1" class="tab-content padding-10">
+
+                                    <div class="tab-pane fade in active" id="s1">
+
+                                        <fieldset>
+                                            <legend>
+                                                MAJLIS BANDARAYA PETALING JAYA
+                                            </legend>
+                                            <div class="row smart-form">
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12"> Ruj. Jabatan</label>
+                                                                <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.EditorFor(model => model.HR_NO_RUJUKAN, new { htmlAttributes = new { @class = "form-control" ,disabled = "disabled"} })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Permohonan</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        <i class="icon-append fa fa-calendar"></i>
+                                                                        <input type="text" name="HR_TARIKH_PERMOHONAN" id="HR_TARIKH_PERMOHONAN" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_PERMOHONAN)" disabled = "disabled" />
+
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend>
+                                                PERMOHONAN UNTUK PENDAHULUAN
+                                            </legend>
+                                            <div class="row smart-form">
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">JABATAN/BAHAGIAN</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.Editor("HR_JABATAN", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">TUJUAN</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="textarea textarea-resizable">
+                                                                        @Html.TextAreaFor(model => model.HR_TUJUAN, new { @class = "form-control", rows = 3, disabled = "disabled" })
+                                                                        <i></i>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">PENDAHULUAN</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.EditorFor(model => model.HR_PENDAHULUAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Pegawai Yang Bertanggungjawab</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.Editor("HR_PEGAWAI", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Sudah diluluskan</label>
+                                                                <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.EditorFor(model => model.HR_KELULUSAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Kad Pengenalan</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.Editor("HR_NO_IC", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Dikehendaki sekarang</label>
+                                                                <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        <i class="icon-prepend">RM</i>
+                                                                        @Html.EditorFor(model => model.HR_JUMLAH_SEKARANG, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">No.Gaji</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.Editor("HR_NO_GAJI", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Jumlah</label>
+                                                                <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        <i class="icon-prepend">RM</i>
+                                                                        @Html.EditorFor(model => model.HR_JUMLAH_PENUH, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Jawatan</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        @Html.Editor("HR_JAWATAN", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Mula</label>
+                                                                <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        <i class="icon-append fa fa-calendar"></i>
+                                                                        <input type="text" name="HR_TARIKH_MULA" id="HR_TARIKH_MULA" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_MULA)" disabled="disabled" />
+
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Cara Membayar Balik</label>
+                                                                <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                    <label class="textarea textarea-resizable">
+                                                                        @Html.TextAreaFor(model => model.HR_BAYARAN_BALIK, new { @class = "form-control", rows = 3, disabled = "disabled" })
+                                                                        <i></i>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                       
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        
+                                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <label class="label col col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Akhir</label>
+                                                                <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        <i class="icon-append fa fa-calendar"></i>
+                                                                        <input type="text" name="HR_TARIKH_AKHIR" id="HR_TARIKH_AKHIR" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_AKHIR)" disabled="disabled" />
+
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <br />
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend>
+                                                MAKLUMAT SOKONGAN BERHUBUNG DENGAN BORANG PENDAHULUAN DIRI
+                                            </legend>
+                                            <div class="row smart-form">
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <h6>
+                                                                <b>
+                                                                    1. Butir-butir mengenai aktiviti/program
+                                                                </b>
+                                                            </h6>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <br />
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">1.1) Tajuk Aktiviti</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="textarea textarea-resizable">
+                                                                    @Html.TextAreaFor(model => model.HR_TUJUAN, new { @class = "form-control", rows = 3, disabled = "disabled" })
+                                                                    <i></i>
+                                                                </label>
+                                                            </div>
+                                                        </section>
+                                                       
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <h6>
+                                                                <b>
+                                                                    2. Kelulusan Aktiviti/Program
+                                                                </b>
+                                                            </h6>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <br />
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">2.1) Sama ada aktiviti/program di bawah peruntukan Belanjawan semasa atau sesuatu Akaun Amanah Kementerian/Jabatan</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.EditorFor(model => model.HR_KELULUSAN_1, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                                </label>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">2.2) Jika Peruntukan Belanjawan semasa Sama ada aktiviti/program tersenarai dalam Belanjawan Tahunan atau tidak</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.EditorFor(model => model.HR_KELULUSAN_2, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                                </label>
+                                                            </div>
+
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">2.3) Jika perbelanjaan dari sesuatu Akaun Amanah Rujukan peraturan Akaun Amanah berkenaan yang membolehkan maksud perbelanjaan ini.</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.EditorFor(model => model.HR_KELULUSAN_3, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                                </label>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">2.4) Jika sesuatu kadar bayaran digunakan, sila nyatakan rujukan Pekeliling atau Peraturan Kewangan yang menetapkan kadar berkenaan atau  sertakan surat kelulusan khas dari Bahagian Dasar Saraan dan Pengurusan bagi Penjawat Awam atau Bahagian Pengurusan Aset Awam bagi bukan Penjawat Awam, Perbendaharaan.</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.EditorFor(model => model.HR_KELULUSAN_4, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                                </label>
+                                                            </div>
+
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+
+
+
+
+
+
+                                        @*<footer>
+                                                <div class="well text-right">
+                                                    <button type="submit" name="Command" id="btn-edit" class="btn btn-success">
+                                                        <i class="fa fa-save"> Simpan</i>
+                                                    </button>
+                                                    <button type="submit" name="Command" id="btn-edit" class="btn btn-primary">
+                                                        <i class="fa fa-edit"> Seterusnya</i>
+                                                    </button>
+                                                </div>
+                                            </footer>*@
+
+                                    </div>
+                                    <div class="tab-pane fade" id="s2">
+                                        <fieldset>
+                                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="row">
+                                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <h6>
+                                                            <b>
+                                                                3. Pegawai-pegawai yang bertanggungjawab
+                                                            </b>
+                                                        </h6>
+                                                    </section>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <br />
+                                            <div class="row smart-form">
+
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">3.1) Nama dan jawatan pegawai yang akan diamanahkan dengan wang Pendahuluan Pelbagai serta bertanggungjawab ke atas perbelanjaan Dan penyediaan penyata perbelanjaan berkenaan</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.Editor("HR_PEGAWAI", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                </label>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">3.2) Sama ada Pendahuluan Pelbagai terdahulu atas nama pegawai  tersebut di perenggan 3.1 di atas telah diselesaikan atau tidak.</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.EditorFor(model => model.HR_PEGAWAI_2, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                                </label>
+                                                            </div>
+
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">3.3) Jika ada Pendahuluan Pelbagai yang tertunggak sila beri butir-butir berkenaan seperti berikut:(Bil.,No.Rujukan Kelulusan,Tarikh Diluluskan,Amaun)</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.EditorFor(model => model.HR_PEGAWAI_3, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                                </label>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">3.4) Sebab-sebab pelarasan tidak dapat dilakukan</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.EditorFor(model => model.HR_PEGAWAI_4, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                                </label>
+                                                            </div>
+
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">3.5) Tindakan Kementerian/Jabatan yang telah diambil terhadap pegawai-pegawai berkenaan.(i)	Pegawai yang diamanahkan dengan wang Pendahuluan Pelbagai</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.Editor("HR_PEGAWAI", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                </label>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">(ii)	Pegawai yang bertanggungjawab ke atas pelarasan</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="select">
+                                                                    @Html.DropDownListFor(model => model.HR_NAMA_PEGAWAI, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                                    @Html.HiddenFor(model => model.HR_NAMA_PEGAWAI)
+
+                                                                    <i></i>
+                                                                </label>
+                                                            </div>
+
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-6 col-md-6 col-sm-12 col-xs-12">3.6) Nama dan jawatan pegawai yang bertanggungjawab terhadap pelarasan Pendahuluan Pelbagai yang diminta sekarang</label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="select">
+                                                                    @Html.DropDownListFor(model => model.HR_NAMA_PEGAWAI, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                                    @Html.HiddenFor(model => model.HR_NAMA_PEGAWAI)
+
+                                                                    <i></i>
+                                                                </label>
+                                                            </div>
+                                                        </section>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend>
+                                                PENYATA MENGENAI KEDUDUKAN PENDAHULUAN PELBAGAI
+                                            </legend>
+
+                                            <div class="row smart-form">
+
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+                                                        <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama</label>
+                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.Editor("HR_PEGAWAI", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                    <i></i>
+                                                                </label>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No.KP/Gaji (nama yang diamanahkan dengan wang pendahuluan)</label>
+                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.Editor("HR_NO_IC", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                    <i></i>
+                                                                </label>
+                                                            </div>
+                                                        </section>
+                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="row">
+                                                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <h6>
+                                                                        Pendahuluan yang diluluskan
+                                                                    </h6>
+                                                                </section>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <br />
+                                                        <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No.Kelulusan perbendaharaan/Pegawai Pengawal</label>
+                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.EditorFor(model => model.HR_NO_KELULUSAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                                </label>
+                                                            </div>
+
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Amaun</label>
+                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    <i class="icon-prepend">RM</i>
+                                                                    @Html.Editor("HR_JUMLAH_PENUH", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                    <i></i>
+                                                                </label>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+
+                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="row">
+                                                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <h6>
+                                                                        Penyelesaian Pendahuluan
+                                                                    </h6>
+                                                                </section>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <br />
+                                                        <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jenis Dokumen</label>
+                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.EditorFor(model => model.HR_JENIS_DOKUMEN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                                </label>
+                                                            </div>
+
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Rujukan</label>
+                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.EditorFor(model => model.HR_RUJUKAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                                </label>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="row">
+
+                                                        <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh</label>
+                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.EditorFor(model => model.HR_TARIKH_SELESAI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                                </label>
+                                                            </div>
+
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Amaun</label>
+                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    <i class="icon-prepend">RM</i>
+                                                                    @Html.Editor("HR_JUMLAH_PENUH", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                                    <i></i>
+                                                                </label>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Baki Pendahuluan Belum Selesai</label>
+                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.EditorFor(model => model.HR_BAKI_SEBELUM, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                                </label>
+                                                            </div>
+                                                        </section>
+                                                        <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tindakan yang diambil terhadap Pegawai</label>
+                                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                                <label class="input">
+                                                                    @Html.EditorFor(model => model.HR_TINDAKAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                                </label>
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend>
+                                                Pengesahan Pemohon
+                                            </legend>
+                                            <h5>Saya mengakui bahawa:  : </h5>
+
+                                            <pre><h7><code class="xml"> 1) Perjalanan pada tarikh-tarikh tersebut adalah benar dan diatas urusan rasmi.</code> </h7></pre>
+
+                                            <br />
+                                            <div class="row smart-form">
+                                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="row">
+                                                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"> Pengesahan </label>
+                                                                <div class="inline-group">
+                                                                    <label class="radio">
+                                                                        @Html.RadioButtonFor(model => model.HR_IND_PEMOHON, "Y", htmlAttributes: new { @class = "form-control" ,disabled = "disabled" })
+                                                                        <i></i>Setuju
+                                                                    </label>
+                                                                    <label class="radio">
+                                                                        @Html.RadioButtonFor(model => model.HR_IND_PEMOHON, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                                        <i></i>Tidak Setuju
+                                                                    </label>
+                                                                </div>
+                                                            </section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"> Pengesahan Penghantaran </label>
+                                                                <div class="inline-group">
+                                                                    <label class="radio">
+                                                                        @Html.RadioButtonFor(model => model.HR_FINAL_PEMOHON, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                                        <i></i>Muktamad
+                                                                    </label>
+                                                                    <label class="radio">
+                                                                        @Html.RadioButtonFor(model => model.HR_FINAL_PEMOHON, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                                        <i></i>Belum Muktamad
+                                                                    </label>
+                                                                </div>
+                                                            </section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
+                                                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"> Tarikh </label>
+                                                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                                    <label class="input">
+                                                                        <i class="icon-append fa fa-calendar"></i>
+                                                                        <input type="text" name="HR_TARIKH_PERMOHONAN" id="HR_TARIKH_PERMOHONAN" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_PERMOHONAN)" , readonly='readonly' />
+
+                                                                    </label>
+
+                                                                </div>
+                                                            </section>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+
+                                </div>
+
+                                <footer>
+                                    <div class="well text-right">
+                                        <button type="button" class="btn btn-default" onclick="javascript: history.go(-1)">
+                                            Kembali
+                                        </button>
+
+
+                                    </div>
+                                </footer>
+                            }
+
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+            </article>
+
+        </div>
+    </section>
+    <div class="modal fade" id="TambahModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='TambahModalContent'></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='EditModalContent'></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="InfoModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='InfoModalContent'></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="PadamModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='PadamModalContent'></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section pagespecific {
+    <script src="../../scripts/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+    <script src="../../scripts/plugin/clockpicker/clockpicker.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+
+
+            $("#formTujuan").on("input", "#rowTujuan #HR_PERBATUAN_TUJUAN_HR_NILAI, #rowTujuan #HR_PERBATUAN_TUJUAN_HR_RM_MAKAN_P, #rowTujuan #HR_PERBATUAN_TUJUAN_HR_RM_MAKAN_T, #rowTujuan #HR_PERBATUAN_TUJUAN_HR_RM_MAKAN_M", function (e) {
+
+                var itemP = $(this).parents("#rowTujuan");
+                //var jum = 0
+                var nilai = 0;
+                var jumPeratus = 0;
+                var jumRM = 0
+                //var peratus = 0;
+
+                if (itemP.find("#HR_PERBATUAN_TUJUAN_HR_NILAI").val() != "") {
+                    nilai = parseFloat(itemP.find("#HR_PERBATUAN_TUJUAN_HR_NILAI").val());
+
+                    if ($(this).attr("id") == "HR_PERBATUAN_TUJUAN_HR_RM_MAKAN_P") {
+                        var peratus = parseFloat('@ViewBag.HR_RM_MAKAN_P')
+                        var jum = nilai * peratus / 100;
+
+
+
+                        jQuery.validator.addMethod("minp", function (value, element, param) {
+
+                            if (this.optional(element)) {
+                                return true;
+                            }
+                            else if (value > jum) {
+                                return false;
+                            }
+                            return true;
+                        },
+                        "Telah melebihi RM " + jum)
+
+                        //if (parseFloat($(this).val()) > parseFloat(jum)) {
+                        //    alert("Telah melebihi RM " + jum)
+                        //    $(this).val("");
+                        //}
+                    }
+
+                    if ($(this).attr("id") == "HR_PERBATUAN_TUJUAN_HR_RM_MAKAN_T") {
+                        var peratus = parseFloat('@ViewBag.HR_RM_MAKAN_T')
+                        var jum = nilai * peratus / 100;
+
+                        jQuery.validator.addMethod("mint", function (value, element, param) {
+
+                            if (this.optional(element)) {
+                                return true;
+                            }
+                            else if (value > jum) {
+                                return false;
+                            }
+                            return true;
+                        },
+                        "Telah melebihi RM " + jum)
+                        //if (parseFloat($(this).val()) > parseFloat(jum))
+                        //{
+                        //    alert("Telah melebihi RM " + jum)
+                        //    $(this).val("");
+                        //}
+
+                    }
+
+                    if ($(this).attr("id") == "HR_PERBATUAN_TUJUAN_HR_RM_MAKAN_M") {
+                        var peratus = parseFloat('@ViewBag.HR_RM_MAKAN_M')
+                        var jum = nilai * peratus / 100;
+
+                        jQuery.validator.addMethod("minm", function (value, element, param) {
+
+                            if (this.optional(element)) {
+                                return true;
+                            }
+                            else if (value > jum) {
+                                return false;
+                            }
+                            return true;
+                        },
+                        "Telah melebihi RM " + jum)
+                        //if (parseFloat($(this).val()) > parseFloat(jum)) {
+                        //    alert("Telah melebihi RM " + jum)
+                        //    $(this).val("");
+                        //}
+                    }
+
+
+                    if (itemP.find("#HR_PERBATUAN_TUJUAN_HR_RM_MAKAN_P").val() != "") {
+                        var peratus = parseFloat('@ViewBag.HR_RM_MAKAN_P')
+                        var value2 = parseFloat(itemP.find("#HR_PERBATUAN_TUJUAN_HR_RM_MAKAN_P").val())
+                        jumPeratus += peratus;
+                        jumRM += value2;
+                    }
+
+                    if (itemP.find("#HR_PERBATUAN_TUJUAN_HR_RM_MAKAN_T").val() != "") {
+                        var peratus = parseFloat('@ViewBag.HR_RM_MAKAN_T')
+                        var value2 = parseFloat(itemP.find("#HR_PERBATUAN_TUJUAN_HR_RM_MAKAN_T").val())
+                        jumPeratus += peratus;
+                        jumRM += value2;
+                    }
+
+                    if (itemP.find("#HR_PERBATUAN_TUJUAN_HR_RM_MAKAN_M").val() != "") {
+                        var peratus = parseFloat('@ViewBag.HR_RM_MAKAN_M')
+                        var value2 = parseFloat(itemP.find("#HR_PERBATUAN_TUJUAN_HR_RM_MAKAN_M").val())
+                        jumPeratus += peratus;
+                        jumRM += value2;
+                    }
+
+                    itemP.find("#HR_PERBATUAN_TUJUAN_HR_JUMLAH_P").val(jumPeratus)
+                    itemP.find("#HR_PERBATUAN_TUJUAN_HR_JUMLAH_M").val(jumRM)
+
+                    //itemP.find("#HR_PERBATUAN_TUJUAN_HR_RM_MAKAN_P").rules("add", {
+                    //    max: jum,
+                    //    messages: {
+                    //        max: "Telah melebihi had {0}"
+                    //    }
+                    //})
+
+                    //itemP.find("#HR_PERBATUAN_TUJUAN_HR_RM_MAKAN_T").rules("add", {
+                    //    max: jum,
+                    //    messages: {
+                    //        max: "Telah melebihi had {0}"
+                    //    }
+                    //})
+                    //itemP.find("#HR_PERBATUAN_TUJUAN_HR_RM_MAKAN_M").rules("add", {
+                    //    max: jum,
+                    //    messages: {
+                    //        max: "Telah melebihi had {0}"
+                    //    }
+                    //})
+                }
+            })
+
+            $("#formTujuan").on("input", "#rowTujuan #HR_PERBATUAN_TUJUAN_HR_NILAI_HOTEL, #rowTujuan #HR_PERBATUAN_TUJUAN_HR_IND_HOTEL, #rowTujuan #HR_PERBATUAN_TUJUAN_HR_RM_HOTEL", function () {
+
+                var split = $(this).attr("name").split('.');
+                var itemP = $(this).parents("#rowTujuan");
+                var jum = 0
+                var elaun = 0;
+                var bo = itemP.find("#HR_PERBATUAN_TUJUAN_HR_NILAI_HOTEL").val()
+                if (itemP.find("#HR_PERBATUAN_TUJUAN_HR_NILAI_HOTEL").val() != "") {
+                    elaun = parseFloat(bo);
+                    if (itemP.find("#HR_PERBATUAN_TUJUAN_HR_IND_HOTEL").is(":checked")) {
+                        $("input[name='" + split[0] + ".HR_IND_HOTEL']").val(true)
+                        jum = elaun + (elaun * 20 / 100);
+                    }
+                    else {
+                        $("input[name='" + split[0] + ".HR_IND_HOTEL']").val(false)
+                        jum = elaun;
+                    }
+
+                    jQuery.validator.addMethod("minh", function (value, element, param) {
+
+                        if (this.optional(element)) {
+                            return true;
+                        }
+                        else if (value > jum) {
+                            return false;
+                        }
+                        return true;
+                    },
+                    "Telah melebihi RM " + jum)
+                }
+                itemP.find("#HR_PERBATUAN_TUJUAN_HR_RM_HOTEL").valid()
+
+                //if (parseFloat($(this).val()) > parseFloat(jum)) {
+                //    alert("Telah melebihi RM " + jum)
+                //    $(this).val("");
+                //}
+
+                if ($(this).attr("id") == "HR_PERBATUAN_TUJUAN_HR_NILAI_HOTEL") {
+                    $.ajax({
+                        url: "../../PerbatuanPink/JsonGredLojing",
+                        data: { "HR_LOKASI": itemP.find("#HR_PERBATUAN_TUJUAN_HR_LOKASI").val(), "HR_JENIS": "H", "HR_NILAI": itemP.find("#HR_PERBATUAN_TUJUAN_HR_NILAI_HOTEL").val() },
+                        contentType: "application/json; charset=utf-8",
+                        type: 'GET',
+                        dataType: "json",
+                        success: function (data) {
+                            itemP.find(".list3").html("");
+                            itemP.find("#HR_PERBATUAN_TUJUAN_HR_NILAI_LOJING").val("");
+                            $.each(data, function (i, v) {
+                                itemP.find(".list3").append($("<option value = '" + v.HR_LOJING + "'>" + v.HR_GRED + "</option>"))
+                            })
+                        }
+                    })
+
+                }
+            })
+
+            $("#formTujuan").on("input", "#rowTujuan #HR_PERBATUAN_TUJUAN_HR_NILAI_LOJING, #rowTujuan #HR_PERBATUAN_TUJUAN_HR_RM_LOJING", function () {
+                var itemP = $(this).parents("#rowTujuan");
+                var nilai = 0;
+                if (itemP.find("#HR_PERBATUAN_TUJUAN_HR_NILAI_LOJING").val() != "") {
+                    nilai = parseFloat(itemP.find("#HR_PERBATUAN_TUJUAN_HR_NILAI_LOJING").val())
+                }
+
+                jQuery.validator.addMethod("minl", function (value, element, param) {
+
+                    if (this.optional(element)) {
+                        return true;
+                    }
+                    else if (value > nilai) {
+                        return false;
+                    }
+                    return true;
+                },
+                    "Telah melebihi RM " + nilai)
+
+            })
+
+            $('#formPerbatuanPink').validate({
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+
+            /* // DOM Position key index //
+
+           l - Length changing (dropdown)
+           f - Filtering input (search)
+           t - The Table! (datatable)
+           i - Information (records)
+           p - Pagination (paging)
+           r - pRocessing
+           < and > - div elements
+           <"#id" and > - div with an id
+           <"class" and > - div with a class
+           <"#id.class" and > - div with an id and class
+
+           Also see: http://legacy.datatables.net/usage/features
+           */
+
+            /* BASIC ;*/
+            var responsiveHelper_dt_basic = undefined;
+            var responsiveHelper_datatable_fixed_column = undefined;
+            var responsiveHelper_datatable_col_reorder = undefined;
+            var responsiveHelper_datatable_tabletools = undefined;
+
+            var breakpointDefinition = {
+                tablet: 1024,
+                phone: 480
+            };
+
+            $('#dt_basic').dataTable({
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>" +
+                    "t" +
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+                "autoWidth": true,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_dt_basic) {
+                        responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_dt_basic.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_dt_basic.respond();
+                }
+            });
+
+            /* END BASIC */
+
+            /* COLUMN FILTER  */
+            var otable = $('#datatable_fixed_column').DataTable({
+                //"bFilter": false,
+                //"bInfo": false,
+                //"bLengthChange": false
+                //"bAutoWidth": false,
+                //"bPaginate": false,
+                //"bStateSave": true // saves sort state using localStorage
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+                "autoWidth": true,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_datatable_fixed_column) {
+                        responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_datatable_fixed_column.respond();
+                }
+
+            });
+
+            // custom toolbar
+            $("div.toolbar").html('<div class="text-right"><img src="/Content/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+
+            // Apply the filter
+            $("#datatable_fixed_column thead th input[type=text]").on('keyup change', function () {
+
+                otable
+                    .column($(this).parent().index() + ':visible')
+                    .search(this.value)
+                    .draw();
+
+            });
+            /* END COLUMN FILTER */
+
+            /* COLUMN SHOW - HIDE */
+            $('#datatable_col_reorder').dataTable({
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'C>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                "autoWidth": true,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_datatable_col_reorder) {
+                        responsiveHelper_datatable_col_reorder = new ResponsiveDatatablesHelper($('#datatable_col_reorder'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_datatable_col_reorder.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_datatable_col_reorder.respond();
+                }
+            });
+
+            /* END COLUMN SHOW - HIDE */
+
+            /* TABLETOOLS */
+            $('#datatable_tabletools').dataTable({
+
+                // Tabletools options:
+                //   https://datatables.net/extensions/tabletools/button_options
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add'>>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'>>",
+                "oTableTools": {
+                    "aButtons": [
+                    "copy",
+                    "csv",
+                    "xls",
+                       {
+                           "sExtends": "pdf",
+                           "sTitle": "eSPP_PDF",
+                           "sPdfMessage": "eSPP",
+                           "sPdfSize": "letter"
+                       },
+                       {
+                           "sExtends": "print",
+                           "sMessage": "eSPP <i>(press Esc to close)</i>"
+                       }
+                    ],
+                    "sSwfPath": "/Scripts/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+                },
+                "autoWidth": true,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_datatable_tabletools) {
+                        responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#datatable_tabletools'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_datatable_tabletools.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_datatable_tabletools.respond();
+                }
+            });
+
+            $("div.btn-add").html('<div class="text-right"><button type = "button" name = "Tambah" id = "Tambah" class = "btn btn-success"><i class = "fa fa-plus"></i></button></div>');
+            /* END TABLETOOLS */
+
+            /*
+         * TIMEPICKER
+         */
+            $('#HR_PERBATUAN_TUJUAN_HR_WAKTU_BERTOLAK').timepicker();
+
+            $('#HR_PERBATUAN_TUJUAN_HR_WAKTU_SAMPAI').timepicker();
+            $('#formTujuan #rowTujuan').each(function (i, v) {
+                if (i != 0) {
+                    $(v).find("#Tambah").attr({ "id": "Padam" }).removeClass("btn-success").addClass("btn-danger").html('<i class="fa fa-minus"></i>');
+                }
+
+            })
+            $(document).on("click", "#Tambah", function (e) {
+                e.preventDefault();
+
+                var controlForm = $('#formTujuan'),
+                    currentEntry = $('#rowTujuan:first'),
+                    newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+                newEntry.find('input:not("#HR_PERBATUAN_TUJUAN_HR_NILAI"),textarea').val('');
+                newEntry.find("input[type='checkbox']").removeAttr("checked");
+                //newEntry.find('#HR_PERBATUAN_TUJUAN_HR_NILAI').attr('readonly', 'readonly');
+                newEntry.find('.list3').html('');
+                newEntry.find('#Tambah').attr({ "id": "Padam" }).removeClass("btn-success").addClass("btn-danger").html('<i class="fa fa-minus"></i>');
+                //newEntry.find('#Padam').removeAttr("disabled");
+
+                $('#formTujuan #rowTujuan').each(function (i, v) {
+                    var el = $(this).find("input, textarea, select");
+                    el.each(function () {
+                        var splitName = $(this).attr("name");
+                        var s = splitName.split('.');
+                        if (s.length > 1) {
+                            $(this).removeAttr("name").attr("name", "HR_PERBATUAN_TUJUAN[" + i + "]." + s[1]);
+                            if (s[1] == "HR_TARIKH") {
+                                $(this).attr({ "id": "" }).removeClass('HR_PERBATUAN_TUJUAN_HR_TARIKH').removeClass('hasDatepicker').removeData('datepicker').unbind()
+                                .datepicker({
+                                    changeMonth: true,
+                                    changeYear: true,
+                                    dateFormat: 'dd/mm/yy',
+                                    prevText: '<i class="fa fa-chevron-left"></i>',
+                                    nextText: '<i class="fa fa-chevron-right"></i>',
+                                    onSelect: function (selectedDate) {
+                                        //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                                    }
+                                });
+                            }
+                            if (s[1] == "HR_WAKTU_BERTOLAK") {
+                                $(this).timepicker();
+                            }
+
+                            if (s[1] == "HR_WAKTU_SAMPAI") {
+                                $(this).timepicker();
+                            }
+
+                            if (s[1] == "HR_NILAI") {
+                                $(this).attr("list", "list_" + i)
+                                $(this).parents(".input").find("datalist").attr("id", "list_" + i);
+                            }
+
+                            if (s[1] == "HR_NILAI_LOJING") {
+                                $(this).attr("list", "list3_" + i)
+                                $(this).parents(".input").find("datalist").attr("id", "list3_" + i);
+                            }
+                        }
+                    })
+                });
+
+            }).on("click", "#Padam", function (e) {
+                $(this).parents('#rowTujuan:first').remove();
+
+
+                $('#formTujuan #rowTujuan').each(function (i, v) {
+
+                    var el = $(this).find("input, textarea, select");
+
+                    el.each(function () {
+                        var splitName = $(this).attr("name");
+                        var s = splitName.split('.');
+                        //console.log(s);
+                        if (s.length > 1) {
+                            $(this).removeAttr("name").attr("name", "HR_PERBATUAN_TUJUAN[" + i + "]." + s[1])
+
+                            if (s[1] == "HR_NILAI") {
+                                $(this).attr("list", "list_" + i)
+                                $(this).parents(".input").find("datalist").attr("id", "list_" + i);
+                            }
+                            if (s[1] == "HR_NILAI_LOJING") {
+                                $(this).attr("list", "list3_" + i)
+                                $(this).parents(".input").find("datalist").attr("id", "list3_" + i);
+                            }
+                        }
+                    })
+                });
+                KiraJarak()
+                e.preventDefault();
+                return false;
+            });
+
+            //$("#kiraan").on("keyup", ".HR_NILAI, .HR_KILOMETER", function () {
+
+            //    var sect = $(this).parents("section");
+            //    var nilai = $("input[name='HR_PERBATUAN_TUNTUTAN[" + sect.attr("id") + "].HR_NILAI").val();
+            //    var kilo = $("input[name='HR_PERBATUAN_TUNTUTAN[" + sect.attr("id") + "].HR_KILOMETER").val(); var kira = 0;
+            //    if (nilai != "" && kilo != "") {
+            //        kira = parseFloat(nilai) * parseFloat(kilo);
+            //    }
+
+            //    $("input[name='HR_PERBATUAN_TUNTUTAN[" + sect.attr("id") + "].JUMLAH']").val(kira);
+            //    var JUMLAHKM = 0;
+            //    var JUMLAHKMSELURUH = 0;
+            //    var TOTALPERJALANAN = 0;
+            //    $("#kiraan section").each(function (i, v) {
+            //        if ($("input[name='HR_PERBATUAN_TUNTUTAN[" + i + "].HR_KILOMETER']").val() != "") {
+            //            JUMLAHKM += parseFloat($("input[name='HR_PERBATUAN_TUNTUTAN[" + i + "].HR_KILOMETER']").val());
+            //            JUMLAHKMSELURUH += parseFloat($("input[name='HR_PERBATUAN_TUNTUTAN[" + i + "].JUMLAH']").val());
+            //            TOTALPERJALANAN += parseFloat($("input[name='HR_PERBATUAN_TUNTUTAN[" + i + "].JUMLAH']").val());
+            //        }
+
+            //    })
+            //    $("#JUMLAHKM").val(JUMLAHKM);
+            //    $("#JUMLAHKMSELURUH").val(JUMLAHKMSELURUH);
+            //    $("#TOTALPERJALANAN").val(TOTALPERJALANAN);
+            //});
+
+
+
+
+            $('#HR_TARIKH_PERMOHONAN').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    //$('#HR_TARIKH_CUTI_AKH').datepicker('option', 'maxDate', selectedDate);
+
+
+                }
+            });
+
+
+            $('#HR_TARIKH_SOKONG').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_LULUS_MENTERI').datepicker('option', 'minDate', selectedDate);
+
+
+                }
+            });
+
+
+            $('#HR_TARIKH_LULUS_MENTERI').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_SOKONG').datepicker('option', 'maxDate', selectedDate);
+
+
+                }
+            });
+
+
+            $('.HR_PERBATUAN_TUJUAN_HR_TARIKH').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_LULUS_MENTERI').datepicker('option', 'minDate', selectedDate);
+
+
+                }
+            });
+
+
+            $("#Ketua #HR_NAMA_PEGAWAI").on("change", function () {
+
+                $.ajax({
+                    url: "PerbatuanPink/CariJawatanPegawai",
+                    data: { "id": $(this).val() },
+                    contentType: "application/json; charset=utf-8",
+                    type: 'GET',
+                    dataType: "json",
+                    success: function (data) {
+                        $("#HR_JAWATAN_PEGAWAI").val(data);
+                    }
+                })
+            })
+
+
+
+            $("#Ketua #HR_NAMA_PEGAWAI_JABATAN").on("change", function () {
+
+                $.ajax({
+                    url: "PerbatuanPink/CariJawatanPegawai",
+                    data: { "id": $(this).val() },
+                    contentType: "application/json; charset=utf-8",
+                    type: 'GET',
+                    dataType: "json",
+                    success: function (data) {
+                        $("#HR_JAWATAN_PEGAWAI_JABATAN").val(data);
+                    }
+                })
+            })
+
+
+
+
+
+            function KiraJarak() {
+                var jumJarak = 0;
+                var jumJarak2 = 0;
+                var jumJarak3 = 0;
+                var JUMLAHKMSELURUH = 0;
+                var TOTALPERJALANAN = 0;
+                var JUMLAHKM = 0
+                var jum = 0;
+                $("#formTujuan #rowTujuan").each(function () {
+                    if ($(this).find("#HR_PERBATUAN_TUJUAN_HR_JARAK").val() != "") {
+                        jumJarak += parseFloat($(this).find("#HR_PERBATUAN_TUJUAN_HR_JARAK").val());
+                    }
+                })
+
+                $.ajax({
+                    url: "../../PerbatuanPink/CariJarak",
+                    data: { "kelas": $("#HR_KENDERAAN_KELAS").val(), "jarak": jumJarak },
+                    contentType: "application/json; charset=utf-8",
+                    type: 'GET',
+                    dataType: "json",
+                    success: function (data) {
+                        $("#kiraan input").val("")
+
+                        $.each(data, function (i, v) {
+                            if (parseFloat(jumJarak) >= parseFloat(v.HR_KM_AKHIR - jumJarak2)) {
+                                jumJarak3 = (v.HR_KM_AKHIR - jumJarak2);
+                                jumJarak = jumJarak - (v.HR_KM_AKHIR - jumJarak2);
+                                jumJarak2 = v.HR_KM_AKHIR
+                            }
+                            else {
+                                jumJarak3 = jumJarak;
+                            }
+
+                            jum = v.HR_NILAI * jumJarak3;
+                            $("input[name ='HR_PERBATUAN_TUNTUTAN[" + i + "].HR_KILOMETER']").val(jumJarak3);
+                            $("input[name ='HR_PERBATUAN_TUNTUTAN[" + i + "].HR_NILAI']").val(v.HR_NILAI.toFixed(2));
+                            $("input[name ='HR_PERBATUAN_TUNTUTAN[" + i + "].JUMLAH']").val(jum.toFixed(2));
+                            JUMLAHKM += jumJarak3;
+                            JUMLAHKMSELURUH += jum;
+                            TOTALPERJALANAN += jum;
+
+                        })
+                        $("#JUMLAHKM").val(JUMLAHKM)
+                        $("#JUMLAHKMSELURUH").val(JUMLAHKMSELURUH.toFixed(2))
+                        $("#TOTALPERJALANAN").val(TOTALPERJALANAN.toFixed(2))
+                    }
+                })
+            }
+
+
+
+
+            $('#HR_TARIKH_MULA').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_AKHIR').datepicker('option', 'minDate', selectedDate);
+
+
+                }
+            });
+
+
+            $('#HR_TARIKH_AKHIR').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_MULA').datepicker('option', 'maxDate', selectedDate);
+
+
+                }
+            });
+
+
+
+            $("#formTujuan").on("change", "#rowTujuan #HR_PERBATUAN_TUJUAN_HR_LOKASI", function () {
+                var list = $(this).parents("#rowTujuan").find(".list")
+                var list2 = $(this).parents("#rowTujuan").find("#list2")
+                $.ajax({
+                    url: "../../PerbatuanPink/JsonGredElaun",
+                    type: "Get",
+                    data: { "HR_LOKASI": $(this).val(), "HR_JENIS": "M" },
+                    dataType: "Json",
+                    success: function (data) {
+
+                        list.html("");
+                        $.each(data, function (i, v) {
+                            list.append($("<option value = '" + v.HR_NILAI + "'>" + v.HR_GRED + "</option>"))
+                        })
+                    }
+                })
+
+                $.ajax({
+                    url: "../../PerbatuanPink/JsonGredElaun",
+                    type: "Get",
+                    data: { "HR_LOKASI": $(this).val(), "HR_JENIS": "H" },
+                    dataType: "Json",
+                    success: function (data) {
+
+                        list2.html("");
+                        $.each(data, function (i, v) {
+                            if (v.HR_NILAI != null) {
+                                list2.append($("<option value = '" + v.HR_NILAI + "'>" + v.HR_GRED + "</option>"))
+                            }
+                        })
+                    }
+                })
+            })
+
+            $("#formTujuan").on("input", "#HR_PERBATUAN_TUJUAN_HR_JARAK", function () {
+                KiraJarak()
+            })
+
+        })
+    </script>
+}

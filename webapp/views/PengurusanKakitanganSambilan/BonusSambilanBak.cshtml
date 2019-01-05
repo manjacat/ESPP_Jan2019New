@@ -1,0 +1,567 @@
+﻿@model eSPP.Models.AgreementModels
+<div id="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa-fw fa fa-pencil-square-o"></i>
+				Pengurusan Kakitangan Sambilan
+                <span>
+                    >
+                    Pengurusan Bonus Sambilan
+                </span>
+            </h1>
+        </div>
+    </div>
+	@if (ViewBag.StatusMessage == "Permohonan Telah Berjaya Dihantar.")
+	{
+		<div class="row">
+			<article class="col-sm-12">
+				<div class="alert alert-success fade in">
+					<button class="close" data-dismiss="alert">
+						×
+					</button>
+					<i class="fa-fw fa fa-check"></i>
+					<strong>Berjaya</strong> @ViewBag.StatusMessage <strong>@ViewBag.emel</strong>
+				</div>
+			</article>
+		</div>
+	}
+    <section id="widget-grid" class="">
+        <div class="row">
+        </div>
+        <div class="row">
+            <article class="col-sm-12">
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-align-justify"></i> </span>
+                        <h2>Pengurusan Bonus Sambilan</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox">
+                        </div>
+							<div class="widget-body no-padding">
+							@using (Html.BeginForm("BonusSambilan", "PengurusanKakitanganSambilan", FormMethod.Post, new { @class = "smart-form", id = "smart-form-register", enctype = "multipart/form-data" }))
+							{
+								@Html.Hidden("CARUMANKWSP")
+								@Html.Hidden("POTONGANKWSP")
+								<form class="smart-form">
+								<fieldset>
+									<div class="row">
+										<section class="col col-lg-4 col-md-2 col-sm-12">
+											<label class="label">
+												Peringatan : Bahagian yang bertanda (<font color="red">*</font>) adalah wajib di isi.
+											</label>
+										</section>
+									</div>
+									<div class="row">
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="label">
+												Tahun & Bulan Notis<font color="red">*</font>
+											</label>
+										</section>
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="input">
+												@{
+													var bulan = DateTime.Now.ToString("MM");
+													var tahun = DateTime.Now.ToString("yyyy");
+												}
+												<input class="form-control" name="tahunbulannotis" data-mask="@bulan/@tahun" data-mask-placeholder="-">
+												<label class="note">
+													Data format mm/yyyy
+												</label>
+												@Html.Hidden("bulantahunbulannotisarray")
+												@Html.Hidden("tahuntahunbulannotisarray")
+											</label>
+										</section>
+									</div>
+									<div class="row">
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="label">
+												Bulan Di Ambil Kira Dari<font color="red">*</font>
+											</label>
+										</section>
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="input">
+												<input class="form-control" name="bulankiradari" data-mask="99/9999" data-mask-placeholder="-">
+												<label class="note">
+													Data format mm/yyyy
+												</label>
+												@Html.Hidden("bulankiradariarray")
+												@Html.Hidden("tahunkiradariarray")
+											</label>
+										</section>
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="label">
+												Hingga<font color="red">*</font>
+											</label>
+										</section>
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="input">
+												<input class="form-control" name="bulankirahingga" data-mask="@bulan/@tahun" data-mask-placeholder="-">
+												<label class="note">
+													Data format mm/yyyy
+												</label>
+												@Html.Hidden("bulanbulankirahinggaarray")
+												@Html.Hidden("tahunbulankirahinggaarray")
+											</label>
+										</section>
+									</div>
+									<div class="row">
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="label">
+												Tahun & Bulan Bonus<font color="red">*</font>
+											</label>
+										</section>
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="input">
+												<input class="form-control" name="tahunbulanbonus" data-mask="@bulan/@tahun" data-mask-placeholder="-">
+												<label class="note">
+													Data format mm/yyyy
+												</label>
+												@Html.Hidden("bulantahunbulanbonusarray")
+												@Html.Hidden("tahuntahunbulanbonusarray")
+											</label>
+										</section>
+									</div>
+									<div class="row">
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="label">
+												No. Pekerja<font color="red">*</font>
+											</label>
+										</section>
+										<section class="col col-lg-4 col-md-4 col-sm-12">
+											<label class="input">
+												@Html.EditorFor(model => model.HR_PEKERJA, new { htmlAttributes = new { @class = "form-control", list = "list" } })
+											</label>
+											<datalist id="list">
+												@{var pekerja = (List<HR_MAKLUMAT_PERIBADI>)ViewBag.PEKERJA;}
+												@foreach (var item in ViewBag.HR_PEKERJA)
+												{
+													<option value=@item.HR_NO_PEKERJA>
+														@{			
+															var info = pekerja.Where(s => s.HR_NO_PEKERJA == item.HR_NO_PEKERJA && s.HR_AKTIF_IND == "Y").SingleOrDefault();
+															if (info == null)
+															{
+																info.HR_NAMA_PEKERJA = "";
+															}
+														}
+														@info.HR_NAMA_PEKERJA
+													</option>			
+												}
+											</datalist>
+										</section>
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="label">
+												No. KP
+											</label>
+										</section>
+										<section class="col col-lg-4 col-md-4 col-sm-12">
+											<label class="input">
+
+												@Html.EditorFor(model => model.NOKP, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+												@Html.ValidationMessage("a", "", new { @class = "text-danger" })
+											</label>
+										</section>
+									</div>
+									<div class="row">
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="label">
+												Bahagian
+											</label>
+										</section>
+										<section class="col col-lg-4 col-md-4 col-sm-12">
+											<label class="input">
+
+												@Html.Editor("bahagian", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+												@Html.ValidationMessage("a", "", new { @class = "text-danger" })
+											</label>
+										</section>
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="label">
+												Jawatan
+											</label>
+										</section>
+										<section class="col col-lg-4 col-md-4 col-sm-12">
+											<label class="input">
+
+												@Html.Editor("jawatan", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+												@Html.ValidationMessage("a", "", new { @class = "text-danger" })
+											</label>
+										</section>
+									</div>
+									<div class="row">
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="label">
+												Jabatan
+											</label>
+										</section>
+										<section class="col col-lg-4 col-md-4 col-sm-12">
+											<label class="input">
+
+												@Html.Editor("jabatan", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+												@Html.ValidationMessage("a", "", new { @class = "text-danger" })
+											</label>
+										</section>
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="label">
+												Gaji Sehari (RM)
+											</label>
+										</section>
+										<section class="col col-lg-4 col-md-4 col-sm-12">
+											<label class="input">
+												@Html.Editor("gajisehari", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+												@Html.ValidationMessage("a", "", new { @class = "text-danger" })
+											</label>
+										</section>
+									</div>
+								</fieldset>
+
+								<fieldset>
+									<div class="row">
+										<section class="col col-lg-4 col-md-4 col-sm-12">
+											<header>
+												KWSP
+											</header>
+											<fieldset>
+												<div class="row">
+													<section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+														<div class="inline-group">
+															<label class="radio">
+																@Html.RadioButton("pilihankwsp", "Y", htmlAttributes: new { @class = "form-control" })
+																<i></i>Ya
+															</label>
+															<label class="radio">
+																@Html.RadioButton("pilihankwsp", "T", htmlAttributes: new { @class = "form-control" })
+																<i></i>Tidak
+															</label>
+														</div>
+													</section>
+												</div>
+											</fieldset>
+										</section>
+										<section class="col col-lg-4 col-md-4 col-sm-12">
+											<header>
+												PCB
+											</header>
+											<fieldset>
+												<div class="row">
+													<section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+														<div class="inline-group">
+															<label class="radio">
+																@Html.RadioButton("pilihanpcb", "Y", htmlAttributes: new { @class = "form-control" })
+																<i></i>Ya
+															</label>
+															<label class="radio">
+																@Html.RadioButton("pilihanpcb", "T", htmlAttributes: new { @class = "form-control" })
+																<i></i>Tidak
+															</label>
+														</div>
+													</section>
+												</div>
+											</fieldset>
+										</section>
+										<section class="col col-lg-4 col-md-4 col-sm-12">
+											<header>
+												SOCSO
+											</header>
+											<fieldset>
+												<div class="row">
+													<section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+														<div class="inline-group">
+															<label class="radio">
+																@Html.RadioButton("pilihansocso", "Y", htmlAttributes: new { @class = "form-control" })
+																<i></i>Ya
+															</label>
+															<label class="radio">
+																@Html.RadioButton("pilihansocso", "T", htmlAttributes: new { @class = "form-control" })
+																<i></i>Tidak
+															</label>
+														</div>
+													</section>
+												</div>
+											</fieldset>
+										</section>
+									</div>
+								</fieldset>
+								<fieldset>
+									<div class="row">
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="label">
+												Bonus (RM)
+											</label>
+										</section>
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="input">
+
+												@Html.EditorFor(model => model.BONUS, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+												@Html.ValidationMessage("a", "", new { @class = "text-danger" })
+											</label>
+										</section>
+									</div>
+									<div class="row">
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="label">
+												Jumlah Bonus (RM)
+											</label>
+										</section>
+										<section class="col col-lg-2 col-md-2 col-sm-12">
+											<label class="input">
+
+												@Html.EditorFor(model => model.JUMLAHBONUS, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+												@Html.ValidationMessage("a", "", new { @class = "text-danger" })
+											</label>
+										</section>
+									</div>
+								</fieldset>
+								<fieldset>
+									<header>
+										Maklumat Kerja
+									</header>
+									<fieldset>
+										<table class="table table-hover">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Bulan Bekerja</th>
+													<th>Tahun Bekerja</th>
+													<th>Jumlah Hari</th>
+													<th>Jumlah</th>
+												</tr>
+											</thead>
+											<tbody></tbody>
+										</table>
+									</fieldset>
+									<br />
+								</fieldset>
+								<footer>
+									<button type="submit" class="btn btn-default" id="Hantar" name="Command" value="Hantar"><i class="fa fa-plus"></i> Hantar</button>
+									<button type="submit" class="btn btn-default" onclick="window.location.href('@Url.Action("bonussambilan","pengurusankakitangansambilan")')" id="Batal" name="Command" value="Batal"><i class="fa fa-refresh"></i> Batal</button>
+								</footer>
+
+							</form>
+							}
+							</div>
+						</div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+</div>
+@section pagespecific {
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			$("input[name='tahunbulannotis']").keypress(function () {
+				var contents = $("input[name='tahunbulannotis']").val();
+				var string = contents.split('/');
+				var array = [];
+				var i;
+				for (i = 0; i < string.length; ++i) {
+					var bulannotis = string[0];
+					var tahunnotis = string[1];
+					$("input[name='bulantahunbulannotisarray']").val(bulannotis);
+					$("input[name='tahuntahunbulannotisarray']").val(tahunnotis);
+				}
+			});
+			$("input[name='tahunbulannotis']").on("input", function () {
+				var contents = $("input[name='tahunbulannotis']").val();
+				var string = contents.split('/');
+				var array = [];
+				var i;
+				for (i = 0; i < string.length; ++i) {
+					var bulannotis = string[0];
+					var tahunnotis = string[1];
+					$("input[name='bulantahunbulannotisarray']").val(bulandari);
+					$("input[name='tahuntahunbulannotisarray']").val(tahunndari);
+				}
+			});
+			$("input[name='bulankiradari']").keypress(function () {
+				var contents = $("input[name='bulankiradari']").val();
+				var string = contents.split('/');
+				var array = [];
+				var i;
+				for (i = 0; i < string.length; ++i) {
+					var bulandari = string[0];
+					var tahunndari = string[1];
+					$("input[name='bulankiradariarray']").val(bulandari);
+					$("input[name='tahunkiradariarray']").val(tahunndari);
+				}
+			});
+			$("input[name='bulankiradari']").on("input", function () {
+				var contents = $("input[name='bulankiradari']").val();
+				var string = contents.split('/');
+				var array = [];
+				var i;
+				for (i = 0; i < string.length; ++i) {
+					var bulandari = string[0];
+					var tahunndari = string[1];
+					$("input[name='bulankiradariarray']").val(bulandari);
+					$("input[name='tahunkiradariarray']").val(tahunndari);
+				}
+			});
+			$("input[name='bulankirahingga']").keypress(function () {
+				var contents = $("input[name='bulankirahingga']").val();
+				var string = contents.split('/');
+				var array = [];
+				var i;
+				for (i = 0; i < string.length; ++i) {
+					var bulanhingga = string[0];
+					var tahunhingga = string[1];
+					$("input[name='bulankirahinggaarray']").val(bulanhingga);
+					$("input[name='tahunkirahinggaarray']").val(tahunhingga);
+				}
+			});
+			$("input[name='bulankirahingga']").on("input", function () {
+				var contents = $("input[name='bulankirahingga']").val();
+				var string = contents.split('/');
+				var array = [];
+				var i;
+				for (i = 0; i < string.length; ++i) {
+					var bulanhingga = string[0];
+					var tahunhingga = string[1];
+					$("input[name='bulankirahinggaarray']").val(bulanhingga);
+					$("input[name='tahunkirahinggaarray']").val(tahunhingga);
+				}
+			});
+			$("input[name='tahunbulanbonus']").keypress(function () {
+				var contents = $("input[name='tahunbulanbonus']").val();
+				var string = contents.split('/');
+				var array = [];
+				var i;
+				for (i = 0; i < string.length; ++i) {
+					var bulanbonus = string[0];
+					var tahunbonus = string[1];
+					$("input[name='bulantahunbulanbonusarray']").val(bulanbonus);
+					$("input[name='tahuntahunbulanbonusarray']").val(tahunbonus);
+				}
+			});
+			$("input[name='tahunbulanbonus']").on("input", function () {
+				var contents = $("input[name='tahunbulanbonus']").val();
+				var string = contents.split('/');
+				var array = [];
+				var i;
+				for (i = 0; i < string.length; ++i) {
+					var bulanbonus = string[0];
+					var tahunbonus = string[1];
+					$("input[name='bulantahunbulanbonusarray']").val(bulanbonus);
+					$("input[name='tahuntahunbulanbonusarray']").val(tahunbonus);
+				}
+			});
+		});
+
+		document.onkeydown = function (ev) {
+			var key;
+			ev = ev || event;
+			key = ev.keyCode;
+			if (key == 37 || key == 38 || key == 39 || key == 40) {
+
+				ev.cancelBubble = true;
+				ev.returnValue = false;
+			}
+
+		}
+		$(function () {
+			$("input[name='pilihankwsp']").change(function () {
+				if ($(this).val() == "Y") {
+					$.ajax({
+						url: "../../PengurusanKakitanganSambilan/MaklumatBonus",
+						type: "GET",
+						data: { "HR_PEKERJA": $("#HR_PEKERJA").val(), "tahunbulanbonus": $("input[name='tahunbulanbonus']").val(), "tahunbulannotis": $("input[name='tahunbulannotis']").val(), "bulankiradari": $("input[name='bulankiradari']").val(), "bulankirahingga": $("input[name='bulankirahingga']").val() },
+						dataType: "json",
+						contentType: "application/json; charset=utf-8",
+						success: function (data) {
+							$("#JUMLAHBONUS").val(data.JUMLAHBONUS1)
+						}
+					})
+				}
+				if ($(this).val() == "T") {
+					$.ajax({
+						url: "../../PengurusanKakitanganSambilan/MaklumatBonus",
+						type: "GET",
+						data: { "HR_PEKERJA": $("#HR_PEKERJA").val(), "tahunbulanbonus": $("input[name='tahunbulanbonus']").val(), "tahunbulannotis": $("input[name='tahunbulannotis']").val(), "bulankiradari": $("input[name='bulankiradari']").val(), "bulankirahingga": $("input[name='bulankirahingga']").val() },
+						dataType: "json",
+						contentType: "application/json; charset=utf-8",
+						success: function (data) {
+							$("#JUMLAHBONUS").val(data.TAKTOLAKKWSP)
+						}
+					})
+				}
+			})
+		})
+
+		$(function () {
+			function pageload() {
+				if ($("input[name='HR_PEKERJA']").val().length >= 5) {
+					$.ajax({
+						url: "../../PengurusanKakitanganSambilan/MaklumatBonus",
+						data: { "HR_PEKERJA": $("#HR_PEKERJA").val(), "tahunbulanbonus": $("input[name='tahunbulanbonus']").val(), "tahunbulannotis": $("input[name='tahunbulannotis']").val(), "bulankiradari": $("input[name='bulankiradari']").val(), "bulankirahingga": $("input[name='bulankirahingga']").val() },
+						contentType: "application/json; charset=utf-8",
+						type: 'GET',
+						dataType: "json",
+						success: function (data) {
+							$("#jabatan").val(data.JABATAN)
+							$("#bahagian").val(data.BAHAGIAN)
+							$("#NOKP").val(data.NOKP)
+							$("#BONUS").val(data.BONUS)
+							$("#JUMLAHBONUS").val(data.JUMLAHBONUS1)
+							$("#jawatan").val(data.JAWATAN)
+							$("#gajisehari").val(data.GAJISEHARI)
+							$("#pilihankwsp").val(data.PILIHANKWSP)
+							$("#pilihansocso").val(data.PILIHANSOCSO)
+							$("#pilihanpcb").val(data.PILIHANPCB)
+							if (data.PILIHANKWSP == "Y") {
+								$("input[name='pilihankwsp'][value='" + data.PILIHANKWSP + "']").prop('checked', true);
+								$("#JUMLAHBONUS").val(data.JUMLAHBONUS1)
+							}
+							if (data.PILIHANKWSP == "T") {
+								$("input[name='pilihankwsp'][value='" + data.PILIHANKWSP + "']").prop('checked', true);
+								$("#JUMLAHBONUS").val(data.TAKTOLAKKWSP)
+							}
+							if (data.PILIHANSOCSO == "Y") {
+								$("input[name='pilihansocso'][value='" + data.PILIHANSOCSO + "']").prop('checked', true);
+							}
+							if (data.PILIHANSOCSO == "T") {
+								$("input[name='pilihansocso'][value='" + data.PILIHANSOCSO + "']").prop('checked', true);
+							}
+							if (data.PILIHANPCB == "Y") {
+								$("input[name='pilihanpcb'][value='" + data.PILIHANPCB + "']").prop('checked', true);
+							}
+							if (data.PILIHANPCB == "T") {
+								$("input[name='pilihanpcb'][value='" + data.PILIHANPCB + "']").prop('checked', true);
+							}
+						}
+
+					})
+					$("input[name='HR_PEKERJA']").on("input", function () {
+						$.ajax({
+							url: "../../PengurusanKakitanganSambilan/BonusBekerja",
+							type: "GET",
+							data: { "HR_PEKERJA": $("#HR_PEKERJA").val(), "tahunbulanbonus": $("input[name='tahunbulanbonus']").val(), "tahunbulannotis": $("input[name='tahunbulannotis']").val(), "bulankiradari": $("input[name='bulankiradari']").val(), "bulankirahingga": $("input[name='bulankirahingga']").val() },
+							dataType: "json",
+							contentType: "application/json; charset=utf-8",
+							success: function (data) {
+								var o = 0;
+								$.each(data, function (i, v) {
+									o++;
+									$(".table").append($("<tr><td>" + o + "</td><td>" + v.HR_BULAN_BEKERJA + "</td><td>" + v.HR_TAHUN_BEKERJA + "</td><td>" + v.HR_JAM_HARI + "</td><td>" + v.HR_JUMLAH + "</td></tr>"));
+								})
+							}
+						})
+					})
+				}
+			}
+
+			if ($("input[name='HR_PEKERJA']").val() != null) {
+				pageload()
+			}
+
+			$("input[name='HR_PEKERJA']").on("input", function () {
+				pageload()
+			});
+
+		});
+
+</script>
+
+}

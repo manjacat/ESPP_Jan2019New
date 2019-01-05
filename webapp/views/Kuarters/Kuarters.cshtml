@@ -1,0 +1,236 @@
+﻿
+@{
+    ViewBag.Title = "Kuarters";
+}
+
+
+
+@model eSPP.Models.HR_KUARTERS
+
+<div id="content">
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa-fw fa fa-pencil-square-o"></i>
+                Forms
+                <span>
+                    >
+                    Maklumat Kuarters
+                </span>
+            </h1>
+        </div>
+    </div>
+
+    <section id="widget-grid" class="">
+
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <!-- WIDGET END -->
+
+        </div>
+
+        <!-- end row -->
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <article class="col-sm-12">
+
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-align-justify"></i> </span>
+                        <h2>Kuarters</h2>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body">
+
+
+                            <br />
+
+                            <form class="smart-form">
+
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Kuarters
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-6 col-md-6 col-sm-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.HR_BLOK_KUARTERS, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.HR_BLOK_KUARTERS, "", new { @class = "text-danger" })
+
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Alamat
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-6 col-md-6 col-sm-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.HR_ALAMAT1, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.HR_ALAMAT1, "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                               
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-6 col-md-6 col-sm-12">
+                                            <label class="input">
+
+                                                @Html.EditorFor(model => model.HR_ALAMAT2, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.HR_ALAMAT2, "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-6 col-md-6 col-sm-12">
+                                            <label class="input">
+
+                                                @Html.EditorFor(model => model.HR_ALAMAT3, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.HR_ALAMAT3, "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Bandar
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="input">
+
+                                                @Html.EditorFor(model => model.HR_BANDAR, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.HR_BANDAR, "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Poskod
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="input">
+
+                                                @Html.EditorFor(model => model.HR_POSKOD, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.HR_POSKOD, "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Negeri
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="input">
+
+                                                @Html.EditorFor(model => model.HR_NEGERI, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.HR_NEGERI, "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Status </label>
+                                            <div class="inline-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                                <label class="radio">
+                                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "A", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                    <i></i>Aktif
+                                                </label>
+                                                <label class="radio">
+                                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                    <i></i>Tidak Aktif
+                                                </label>
+                                            </div>
+                                        </section>
+                                    </div>
+                                   
+                                </fieldset>
+
+                                <fieldset>
+
+                                    <div class="">
+                                        <table id="datatable_tabletools" class="table table-striped table-bordered table-hover" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th data-hide="phone">Kod Kuarters</th>
+                                                    <th data-class="expand">Blok Kuarters</th>
+                                                    <th>Bandar</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                   
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                   
+
+
+                                                </tr>
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+</div>

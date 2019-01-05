@@ -1,0 +1,884 @@
+﻿@model eSPP.Models.HR_MAKLUMAT_KEWANGAN8
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" onclick="javascript: history.go(0)">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Kemaskini <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("EditKew8", "Kewangan8", FormMethod.Post, new { @class = "smart-form", id = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_NO_PEKERJA)
+            @Html.HiddenFor(model => model.HR_KOD_PERUBAHAN)
+            @Html.HiddenFor(model => model.HR_TARIKH_MULA)
+            @Html.HiddenFor(model => model.HR_TARIKH_KEYIN)
+            @Html.HiddenFor(model => model.HR_KEW8_ID)
+            @Html.HiddenFor(model => model.HR_NP_FINALISED_HR)
+            @*@Html.HiddenFor(model => model.HR_FINALISED_IND_HR)*@
+            List<HR_MAKLUMAT_PERIBADI> sPegawai = (List<HR_MAKLUMAT_PERIBADI>)ViewBag.sPegawai;
+            <fieldset>
+                <div class="row">
+                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <label class="label col col-4">Jawatan</label>
+                                    <div class="col col-8">
+                                        <label class="input">
+                                            @Html.TextBox("HR_JAWATAN", (string)ViewBag.jawatan, new { @class = "form-control", @readonly = "readonly" })
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <label class="label col col-4">Gred</label>
+                                    <div class="col col-3">
+                                        <label class="input">
+                                            @Html.TextBox("HR_GRED", (string)ViewBag.gred, new { @class = "form-control", @readonly = "readonly" })
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="row">
+                            <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <label class="label col col-4">Gaji Pokok</label>
+                                    <div class="col col-3">
+                                        <label class="input">
+                                            @Html.TextBox("HR_GAJI_POKOK", string.Format("{0:0.00}", (decimal?)ViewBag.gaji), new { @class = "form-control", @readonly = "readonly" })
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <label class="label col col-4">Kod Gaji Berkomputer</label>
+                                    <div class="col col-4">
+                                        <label class="input">
+                                            @Html.TextBox("HR_KOD_GAJI", (string)ViewBag.kodGaji, new { @class = "form-control", @readonly = "readonly" })
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Kategori Perubahan</label>
+                                <div class="col col-8">
+                                    @if (Model.HR_KOD_PERUBAHAN == "kew8")
+                                    {
+                                        <label class="select">
+                                            @Html.DropDownListFor(model => model.HR_KOD_PERUBAHAN, new SelectList(ViewBag.HR_KOD_PERUBAHAN, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label class="input">
+                                            @Html.TextBox("HR_PENERANGAN", (string)ViewBag.HR_PENERANGAN, new { @class = "form-control", @readonly = "readonly" })
+                                        </label>
+                                    }
+
+                                </div>
+                            </div>
+                        </section>
+                        @if (Model.HR_KOD_PERUBAHAN == "00031")
+                        {
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-4">Jenis Perubahan</label>
+                                    <div class="col col-8">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_KOD_PELARASAN", null, String.Empty, htmlAttributes: new { @class = "form-control" })<i></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-4">Jumlah Bulan</label>
+                                    <div class="col col-8">
+                                        <label class="input">
+                                            @Html.TextBox("HR_JUMLAH_BULAN", null, new { @class = "form-control", id = "HR_JUMLAH_BULAN" })
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-4">Nilai EPF</label>
+                                    <div class="col col-8">
+                                        <label class="input">
+                                            @Html.TextBox("HR_NILAI_EPF", null, new { @class = "form-control", id = "HR_NILAI_EPF" })
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-4">Jumlah Perubahan</label>
+                                    <div class="col col-8">
+                                        <label class="input">
+                                            @Html.TextBox("HR_JUMLAH_PERUBAHAN", null, new { @class = "form-control", @readonly = "readonly" })
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        }
+                        @if (Model.HR_KOD_PERUBAHAN == "00025" || Model.HR_KOD_PERUBAHAN == "kew8")
+                        {
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-4">Tarikh Mula</label>
+                                    <div class="col col-4">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-calendar"></i>
+                                            <input type="text" name="HR_TARIKH_MULA" id="HR_TARIKH_MULA" class="form-control" disabled="disabled" />
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Tarikh Akhir</label>
+                                        <div class="col col-4">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-calendar"></i>
+                                                <input type="text" name="HR_TARIKH_AKHIR" id="HR_TARIKH_AKHIR" class="form-control" readonly="readonly" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                        }
+                        @*else
+                        {
+                            <input type="hidden" name="HR_TARIKH_MULA" id="HR_TARIKH_MULA" class="form-control" value="@string.Format("{0:dd/MM/yyyy}",DateTime.Now)" />
+                        }*@
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Butir-Butir Perubahan</label>
+                                <div class="col col-8">
+                                    <label class="textarea textarea-resizable">
+                                        @Html.TextAreaFor(model => model.HR_BUTIR_PERUBAHAN, new { @class = "form-control custom-scroll", rows = "6" })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        @if (Model.HR_KOD_PERUBAHAN != "00030")
+                        {
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-4">No. Surat Kebenaran</label>
+                                    <div class="col col-8">
+                                        <label class="input">
+                                            @Html.EditorFor(model => model.HR_NO_SURAT_KEBENARAN, new { htmlAttributes = new { @class = "form-control" } })
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        }
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Catatan</label>
+                                <div class="col col-8">
+                                    <label class="textarea textarea-resizable">
+                                        @Html.TextAreaFor(model => model.HR_CATATAN, new { @class = "form-control custom-scroll", rows = "6" })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Nama Pegawai Pengesahan</label>
+                                <div class="col col-8">
+                                    <label class="input">
+                                        @Html.TextBox("HR_NAMA_PEGAWAI", null, new { @class = "form-control", list = "list-pegawai", autocomplete = "off" })
+                                        <datalist id="list-pegawai">
+                                            @foreach (var pegawai in sPegawai)
+                                            {
+                                                <option value="@(pegawai.HR_NAMA_PEKERJA) - @(pegawai.HR_NO_PEKERJA)" data-value="@pegawai.HR_NO_PEKERJA"></option>
+                                            }
+                                        </datalist>
+
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                        @if (ViewBag.pengesahan2 == Model.HR_NP_FINALISED_HR)
+                        {
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-4">Pengesahan</label>
+                                    <div class="col col-8">
+                                        <label class="select">
+                                            @Html.DropDownListFor(model => model.HR_FINALISED_IND_HR, new SelectList(ViewBag.pengesahan, "Value", "Text"), new { @class = "form-control" })
+                                            <i></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                        }
+                        else
+                        {
+                            @Html.HiddenFor(model => model.HR_FINALISED_IND_HR)
+                        }
+                    </div>
+                    <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        @if (Model.HR_KOD_PERUBAHAN == "00030")
+                        {
+
+                            <section>
+                                <div class="row">
+                                    <div class="col col-4">
+                                        <label class="radio">
+                                            @Html.RadioButtonFor(model => model.HR_KEW8_IND, "A", new { @class = "form-control" })
+                                            <i></i>Amaun
+                                        </label>
+                                    </div>
+                                    <div class="col col-3">
+                                        <label class="input">
+                                            @Html.EditorFor(model => model.HR_BIL, null, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", id = "HR_BIL2" } })
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <div class="col col-4">
+                                        <label class="radio">
+                                            @Html.RadioButtonFor(model => model.HR_KEW8_IND, "H", new { @class = "form-control" })
+                                            <i></i>Bil. Hari
+                                        </label>
+                                    </div>
+                                    <div class="col col-8">
+                                        <div class="parent">
+                                            <div class="row child">
+                                                <div class="col col-5">
+                                                    <label class="select">
+                                                        @Html.DropDownList("bulan", new SelectList(ViewBag.month, "Value", "Text"), String.Empty, new { @class = "form-control", id = "bulan", disabled = "disabled" })
+                                                        <i></i>
+                                                    </label>
+                                                </div>
+                                                <div class="col col-4">
+                                                    <label class="input">
+                                                        @Html.TextBox("hari", null, new { @class = "form-control", disabled = "disabled" })
+                                                    </label>
+                                                </div>
+                                                <div class="col col-3">
+                                                    <a class="btn btn-default btn-xs tambah" title="tambah" disabled="disabled"><i class="fa fa-plus"></i></a>
+                                                    <a class="btn btn-default btn-xs padam" title="padam" disabled="disabled"><i class="fa fa-minus"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <div class="col col-4">
+
+                                    </div>
+                                    <div class="col col-8">
+                                        <div id="tableBulan"></div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-4">Jumlah Hari</label>
+                                    <div class="col col-3">
+                                        <label class="input">
+                                            @Html.EditorFor(model => model.HR_BIL, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly", id = "HR_BIL3" } })
+                                            @Html.HiddenFor(model => model.HR_BIL)
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-4">Jumlah Potongan Gaji</label>
+                                    <div class="col col-3">
+                                        <label class="input">
+                                            @Html.TextBox("[0].HR_NILAI", string.Format("{0:0.00}", (decimal?)ViewBag.nilaiPGaji), new { @class = "form-control", @readonly = "readonly", id = "HR_JUMLAH_POTONGAN_GAJI" })
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-4">Jumlah Potongan</label>
+                                    <div class="col col-3">
+                                        <label class="input">
+                                            @Html.TextBox("HR_JUMLAH_POTONGAN", string.Format("{0:0.00}", (decimal?)ViewBag.nilaiPotongan), new { @class = "form-control", @readonly = "readonly", id = "HR_JUMLAH_POTONGAN" })
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                        }
+                        <section>
+                            <div class="row">
+                                <label class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">Maklumat Potongan Elaun</label>
+                            </div>
+                            <div class="row">
+
+                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div id="tableElaun">
+                                        <table class="table table-striped table-bordered table-hover" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Kod Elaun</th>
+                                                    <th>Singkatan</th>
+                                                    <th>Jumlah Elaun</th>
+
+                                                    @{ var colspan = 4;}
+                                                    @if (Model.HR_KOD_PERUBAHAN == "00030")
+                                                    {
+                                                        colspan = 6;
+                                                        <th>Kod Pelarasan</th>
+                                                            <th>Jumlah Pelarasan</th>
+                                                    }
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{ var no2 = 0; var num = (List<HR_ELAUN>)ViewBag.elaun3; var potongan3 = (List<HR_POTONGAN>)ViewBag.potongan3;}
+                                                @if (num.Count() <= 0)
+                                                {
+                                                    <tr>
+                                                        <td colspan="@colspan" style="padding:20px" align="center">Tiada Data</td>
+                                                    </tr>
+                                                }
+                                                else
+                                                {
+                                                    foreach (HR_ELAUN item in ViewBag.elaun3)
+                                                    {
+                                                        HR_POTONGAN potongan2 = potongan3.SingleOrDefault(s => s.HR_KOD_POTONGAN == item.HR_KOD_POTONGAN);
+                                                        if(potongan2 == null)
+                                                        {
+                                                            potongan2 = new HR_POTONGAN();
+                                                        }
+                                                        ++no2;
+                                                        <tr>
+                                                            <td align="center">@no2</td>
+                                                            <td>@Html.DisplayFor(model => item.HR_KOD_ELAUN)</td>
+                                                            <td>@Html.DisplayFor(model => item.HR_SINGKATAN)</td>
+                                                            <td>@Html.DisplayFor(model => item.HR_NILAI)</td>
+                                                            @if (Model.HR_KOD_PERUBAHAN == "00030")
+                                                            {
+                                                                <td>@Html.DisplayFor(model => item.HR_KOD_POTONGAN)@Html.Hidden("["+ potongan2.HR_KOD_POTONGAN + "].HR_KOD_POTONGAN")</td>
+                                                                <td id="pelarasan">@Html.DisplayFor(model => potongan2.HR_NILAI)@Html.Hidden("[" + potongan2.HR_NILAI + "].HR_NILAI")</td>
+                                                            }
+
+                                                        </tr>
+                                                    }
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+
+                </div>
+                
+                
+                
+            </fieldset>
+
+            <footer>
+                <button type="submit" id="btn" class="btn btn-primary">
+                    <span class="fa fa-save"></span> Simpan
+                </button>
+                <button type="reset" class="btn btn-default">
+                    Reset
+                </button>
+                <button type="button" class="btn btn-default" onclick="javascript: history.go(0)">
+                    Kembali
+                </button>
+            </footer>
+        }
+
+    </div>
+
+</div><!-- /.modal-content -->
+<script type="text/javascript">
+    //$("form").attr({ "id": "tp", "class": "smart-form" })
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+    $(".modal-dialog").css("min-width", "70%");
+    $(document).ready(function () {
+        var validateform = $("#form").validate({
+
+            // Rules for form validation
+            rules: {
+                HR_KOD_PELARASAN: {
+                    required: true
+                },
+                HR_JUMLAH_BULAN: {
+                    required: true,
+                    number: true
+                },
+                HR_NILAI_EPF: {
+                    required: true,
+                    number: true
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                HR_KOD_PELARASAN: {
+                    required: "Jenis perubahan diperlukan"
+                },
+                HR_JUMLAH_BULAN: {
+                    required: "Jumlah bulan diperlukan",
+                    number: "Sila masukkan hanya nombor sahaja"
+                },
+                HR_NILAI_EPF: {
+                    required: "Nilai EPF diperlukan",
+                    number: "Sila masukkan hanya nombor sahaja"
+                }
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+
+    });
+
+
+    $(document).ready(function () {
+        $("#HR_JUMLAH_BULAN, #HR_NILAI_EPF").on("input", function () {
+            $("#HR_JUMLAH_PERUBAHAN").val("0.00")
+            if ($("#HR_NO_PEKERJA").val() != "" && $("#HR_JUMLAH_BULAN").val() != "" && $("#HR_NILAI_EPF").val() != "") {
+                $.ajax({
+                    url: "../Kewangan8/JumlahPerubahan",
+                    type: "GET",
+                    data: { "HR_NO_PEKERJA": $("#HR_NO_PEKERJA").val(), "HR_JUMLAH_BULAN": $("#HR_JUMLAH_BULAN").val(), "HR_NILAI_EPF": $("#HR_NILAI_EPF").val() },
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        $("#HR_JUMLAH_PERUBAHAN").val(data)
+                    }
+                })
+            }
+        })
+        if ('@Model.HR_KOD_PERUBAHAN' == "kew8") {
+            $('#HR_TARIKH_MULA').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_AKHIR').datepicker('option', 'minDate', selectedDate);
+                }
+            });
+
+            $('#HR_TARIKH_AKHIR').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_MULA').datepicker('option', 'maxDate', selectedDate);
+                }
+            });
+        }
+        else {
+            $('#HR_TARIKH_MULA').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                showButtonPanel: true,
+                currentText: "Bulan Kini",
+                closeText: 'Tutup',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_AKHIR').datepicker('option', 'minDate', selectedDate);
+                },
+                onChangeMonthYear: function (year, month, inst) {
+                    $(this).val($.datepicker.formatDate('dd/mm/yy', new Date(year, month - 1, 1)));
+                },
+                onClose: function (dateText, inst) {
+                    $(this).val($.datepicker.formatDate('dd/mm/yy', new Date(inst.selectedYear, inst.selectedMonth, 1)));
+                }
+            }).focus(function () {
+                $(".ui-datepicker-calendar").hide();
+            });
+
+            $('#HR_TARIKH_AKHIR').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                showButtonPanel: true,
+                currentText: "Bulan Kini",
+                closeText: 'Tutup',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_MULA').datepicker('option', 'maxDate', selectedDate);
+                },
+
+                onChangeMonthYear: function (year, month, inst) {
+                    $(this).val($.datepicker.formatDate('dd/mm/yy', new Date(year, month, 0)));
+                },
+                onClose: function (dateText, inst) {
+                    $(this).val($.datepicker.formatDate('dd/mm/yy', new Date(inst.selectedYear, inst.selectedMonth + 1, 0)));
+                }
+            }).focus(function () {
+                $(".ui-datepicker-calendar").hide();
+            });
+        }
+
+
+        $("#HR_NAMA_PEGAWAI").on('input', function () {
+            var value = $(this).val();
+            var d = value.split(' - ')
+            $(this).val(d[0]);
+            $("#HR_NP_FINALISED_HR").val(d[1]);
+        });
+
+        $('#HR_MAKLUMAT_PEKERJAAN_HR_TARIKH_MASUK_KERAJAAN').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                //$('#HR_TARIKH_TAMAT').datepicker('option', 'minDate', selectedDate);
+
+            }
+        });
+
+        if ('@Model.HR_KEW8_IND' == "A") {
+            $("#HR_BIL2").removeAttr("disabled");
+
+            $("input[name='hari']").attr("disabled", "disabled");
+            $("select[name='bulan']").attr("disabled", "disabled");
+            //$(".tambah").attr("disabled", "disabled");
+            //$(".padam").attr("disabled", "disabled");
+            $("#HR_BIL3").attr("disabled", "disabled");
+            //$("#HR_JUMLAH_POTONGAN_GAJI").attr("disabled", "disabled");
+            //$("#HR_JUMLAH_POTONGAN").attr("disabled", "disabled");
+
+
+
+            $("input[name='hari']").val("");
+            $("select[name='bulan']").val("");
+            $("#HR_BIL3").val("");
+            //$("#HR_JUMLAH_POTONGAN_GAJI").val("");
+            //$("#HR_JUMLAH_POTONGAN").val("");
+
+            $("#tableElaun table tbody").each(function () {
+                $(this).find("td#pelarasan").html("");
+                $(this).find("td").addClass("hide")
+                $(this).append($("<td id='emptyData' align='center' colspan='6' style='padding:20px'>Tiada Data</td>"))
+            })
+        }
+        if ('@Model.HR_KEW8_IND' == "H") {
+            $("#HR_BIL2").attr("disabled", "disabled");
+            $("#HR_BIL2").val("");
+            var HR_BIL3 = $("#HR_BIL3").val();
+            $("#HR_BIL3").val(parseInt(HR_BIL3));
+
+            $("input[name='hari']").removeAttr("disabled");
+            $("select[name='bulan']").removeAttr("disabled");
+            //$(".tambah").removeAttr("disabled");
+            //$(".padam").removeAttr("disabled");
+            $("#HR_BIL3").removeAttr("disabled");
+            //$("#HR_JUMLAH_POTONGAN_GAJI").removeAttr("disabled");
+            //$("#HR_JUMLAH_POTONGAN").removeAttr("disabled");
+
+            $("#tableElaun table tbody").each(function () {
+                $(this).find("td").removeClass("hide")
+                $(this).find("#emptyData").remove();
+            })
+        }
+
+        $("input[name='HR_KEW8_IND']").on("click", function () {
+            $("#HR_BIL").val("");
+            $("#HR_JUMLAH_POTONGAN_GAJI").val("");
+            $("#HR_JUMLAH_POTONGAN").val("");
+            if ($("select[name='bulan']").val() == "" || $("input[name='hari']").val() == "" || $("#HR_KEW8_IND:checked").val() != "H") {
+                $(".tambah").attr("disabled", "disabled");
+                $(".padam").attr("disabled", "disabled");
+                $("#tableBulan").html("");
+                $(".tambah2").removeClass("tambah2").addClass("tambah");
+            }
+            else {
+                $(".tambah").removeAttr("disabled");
+                //$(".padam").removeAttr("disabled");
+            }
+
+            if ($("#HR_KEW8_IND:checked").val() == "A") {
+                $("#HR_BIL2").removeAttr("disabled");
+
+                $("input[name='hari']").attr("disabled", "disabled");
+                $("select[name='bulan']").attr("disabled", "disabled");
+                //$(".tambah").attr("disabled", "disabled");
+                //$(".padam").attr("disabled", "disabled");
+                $("#HR_BIL3").attr("disabled", "disabled");
+                //$("#HR_JUMLAH_POTONGAN_GAJI").attr("disabled", "disabled");
+                //$("#HR_JUMLAH_POTONGAN").attr("disabled", "disabled");
+
+
+
+                $("input[name='hari']").val("");
+                $("select[name='bulan']").val("");
+                $("#HR_BIL3").val("");
+                
+
+                $("#tableElaun table tbody").each(function () {
+                    $(this).find("td#pelarasan").html("");
+                    $(this).find("td").addClass("hide")
+                    $(this).append($("<td id='emptyData' align='center' colspan='6' style='padding:20px'>Tiada Data</td>"))
+                })
+            }
+            if ($("#HR_KEW8_IND:checked").val() == "H") {
+                $("#HR_BIL2").attr("disabled", "disabled");
+                $("#HR_BIL2").val("");
+
+                $("input[name='hari']").removeAttr("disabled");
+                $("select[name='bulan']").removeAttr("disabled");
+                //$(".tambah").removeAttr("disabled");
+                //$(".padam").removeAttr("disabled");
+                $("#HR_BIL3").removeAttr("disabled");
+                //$("#HR_JUMLAH_POTONGAN_GAJI").removeAttr("disabled");
+                //$("#HR_JUMLAH_POTONGAN").removeAttr("disabled");
+
+                $("#tableElaun table tbody").each(function () {
+                    $(this).find("td").removeClass("hide")
+                    $(this).find("#emptyData").remove();
+                })
+            }
+        });
+
+        $("input[name='HR_BIL']").on("input", function () {
+            $("#HR_BIL").val($(this).val())
+            if ($(this).attr('id') == "HR_BIL2") {
+                $("#HR_JUMLAH_POTONGAN_GAJI").val($(this).val());
+                $("#HR_JUMLAH_POTONGAN").val($(this).val());
+            }
+        });
+
+
+        $(document).on('click', '.tambah', function (e) {
+            if ($("select[name='bulan']").val() == "" || $("input[name='hari']").val() == "" || $("#HR_KEW8_IND:checked").val() != "H") {
+                e.preventDefault();
+            }
+            else {
+                $(".tambah").removeClass("tambah").addClass("tambah2");
+                $("#tableBulan").html('<table class="table table-striped table-bordered table-hover" width="100%">' +
+                                        '<tr>' +
+                                            '<th>Bulan</th>' +
+                                            '<th>Hari</th>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                            '<td>' + $("select[name='bulan']").val() + '</td>' +
+                                            '<td id="hari2">' + $("input[name='hari']").val() + '</td>' +
+                                        '</tr>' +
+                                      '</table>');
+
+                tambahHari();
+                $(".padam").removeAttr("disabled");
+            }
+
+        }).on('click', '.tambah2', function (e) {
+
+            $("#tableBulan table").append('<tr>' +
+                                                '<td>' + $("select[name='bulan']").val() + '</td>' +
+                                                '<td id="hari2">' + $("input[name='hari']").val() + '</td>' +
+                                            '</tr>');
+            tambahHari();
+        })
+        $(document).on('click', '.padam', function (e) {
+            if ($("#tableBulan table tr").length > 0) {
+                var value = "";
+                var no = 0;
+                $("#tableBulan table tr:not(:first)").each(function () {
+                    if ($(this).find("td:first").html() == $("select[name='bulan']").val() && $(this).find("td:last").html() == $("input[name='hari']").val()) {
+                        value = $(this).find("td:last").html();
+                        $(this).remove();
+                        tambahHari();
+                        no++
+                    }
+
+
+                })
+                if (no <= 0) {
+                    value = $("#tableBulan table tr:last td:last").html();
+                    $("#tableBulan table tr:last").remove();
+                    tambahHari();
+                }
+
+                if ($("#tableBulan table tr").length <= 1) {
+
+                    $("#tableBulan").html("");
+                    $(".tambah2").removeClass("tambah2").addClass("tambah");
+                    $(".padam").attr("disabled", "disabled");
+                }
+            }
+
+            e.preventDefault();
+            return false;
+        });
+
+        function tambahHari() {
+            var jumHari = 0;
+            var datalist = new Array();
+            $("#tableBulan table tr:not(:first)").each(function () {
+
+                var hari = parseInt($(this).find("td:last").html());
+                var bulan = parseInt($(this).find("td:first").html());
+                jumHari += hari;
+                var data = new Array()
+                data.push(bulan, hari);
+                datalist.push(data);
+
+            })
+            $("#HR_BIL3").val(jumHari);
+            $("#HR_BIL").val(jumHari);
+            jumPotongGji(datalist);
+            jumPelarasan(datalist)
+
+            //alert(jumPotongGji(datalist) + jumPelarasan(datalist));
+
+        }
+
+        function tolakHari(value) {
+            var jumHari = parseInt($("#HR_BIL3").val()) - parseInt(value)
+            $("#HR_BIL3").val(jumHari);
+            $("#HR_BIL").val(jumHari);
+        }
+
+
+        function jumPotongGji(datalist) {
+            var nilai = parseFloat('@ViewBag.gaji');
+            $("#HR_JUMLAH_POTONGAN_GAJI").val(kiraan(nilai, datalist));
+
+            return kiraan(nilai, datalist);
+        }
+
+        function kiraan(nilai, datalist) {
+            var items = {}, base, key;
+            $.each(datalist, function (index, val) {
+                key = val[0];
+                if (!items[key]) {
+                    items[key] = 0;
+                }
+                items[key] += val[1];
+            });
+
+            var jumPotongan = 0;
+            //var outputArr = [];
+            no2 = 0;
+            $.each(items, function (key, val) {
+                //outputArr.push([key, val]);
+                //var gaji = parseFloat('@ViewBag.gaji');
+                var currentDate = new Date();
+                var bilhari = $.datepicker.formatDate('dd', new Date(currentDate.getFullYear(), key, 0));
+                jumPotongan += (nilai / parseInt(bilhari) * val);
+
+                no2++;
+            });
+            return jumPotongan.toFixed(2);
+        }
+
+        function jumPelarasan(datalist) {
+            var table3 = '<table class="table table-striped table-bordered table-hover" width="100%">' +
+                                                '<thead>' +
+                                                    '<tr>' +
+                                                        '<th>#</th>' +
+                                                        '<th>Kod Elaun</th>' +
+                                                        '<th>Singkatan</th>' +
+                                                        '<th>Jumlah Elaun</th>' +
+                                                        '<th>Kod Pelarasan</th>' +
+                                                        '<th>Jumlah Pelarasan</th>' +
+                                                    '</tr>' +
+                                                '</thead>' +
+                                                '<tbody>' +
+                                                '<tr>' +
+                                                    '<td colspan="6" style="padding:20px" align="center">Tiada Data</td>' +
+                                                '</tr>'
+            '</tbody>' +
+        '</table>';
+
+            $("#tableElaun").html(table3)
+
+            $.ajax({
+                url: "../Kewangan8/JumlahPelarasan",
+                type: "GET",
+                data: { "HR_NO_PEKERJA": $("#HR_NO_PEKERJA").val() },
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (elaun) {
+                    var jumPotongan2 = 0;
+                    $("#tableElaun table tbody").html("");
+                    var no2 = 0
+
+                    $.each(elaun, function (key, val) {
+
+                        ++no2;
+                        $("#tableElaun table tbody").append('<tr>' +
+                                        '<td align="center">' + no2 + '</td>' +
+                                        '<td>' + val.HR_KOD_ELAUN + '</td>' +
+                                        '<td>' + val.HR_SINGKATAN + '</td>' +
+                                        '<td>' + val.HR_NILAI + '</td>' +
+                                        '<td>' + val.HR_KOD_POTONGAN + '<input name="[' + no2 + '].HR_KOD_POTONGAN" type="hidden" value="' + val.HR_KOD_POTONGAN + '"</td>' +
+                                        '<td id="pelarasan">' + -Math.abs(kiraan(val.HR_NILAI, datalist)) + '<input name="[' + no2 + '].HR_NILAI" type="hidden" value="' + -Math.abs(kiraan(val.HR_NILAI, datalist)) + '" /></td>' +
+                                    '</tr>');
+                        jumPotongan2 += parseFloat(kiraan(val.HR_NILAI, datalist));
+                    })
+                    jumPotongan2 += parseFloat(jumPotongGji(datalist));
+                    $("#HR_JUMLAH_POTONGAN").val(jumPotongan2.toFixed(2));
+                }
+            })
+
+        }
+
+        $("select[name='bulan'], input[name='hari']").on("input", function () {
+            if ($("select[name='bulan']").val() == "" || $("input[name='hari']").val() == "" || $("#HR_KEW8_IND:checked").val() != "H") {
+                $(".tambah").attr("disabled", "disabled");
+                $(".padam").attr("disabled", "disabled");
+            }
+            else {
+                $(".tambah").removeAttr("disabled");
+            }
+        })
+    });
+</script>
+

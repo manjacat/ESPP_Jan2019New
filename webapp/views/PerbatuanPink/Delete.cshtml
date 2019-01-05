@@ -1,0 +1,96 @@
+﻿@model eSPP.Models.HR_PERBATUAN_PUTIH
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>HR_PERBATUAN_PUTIH</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KELAS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KELAS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_SEBAB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_SEBAB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_AKUAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_AKUAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_SOKONG_KETUA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_SOKONG_KETUA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KELAYAKAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KELAYAKAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_SAH_PTB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_SAH_PTB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_ULASAN_TP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_ULASAN_TP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_TP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_TP)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

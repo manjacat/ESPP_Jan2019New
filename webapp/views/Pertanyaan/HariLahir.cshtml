@@ -1,0 +1,395 @@
+﻿
+
+
+@{
+    ViewBag.Title = "HariLahir";
+}
+
+
+
+
+<div id="content">
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa-fw fa fa-pencil-square-o"></i>
+                Forms
+                <span>
+                    >
+                    Senarai Penerima Kad Ucapan Hari Lahir
+                </span>
+            </h1>
+        </div>
+    </div>
+
+    <section id="widget-grid" class="">
+
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <!-- WIDGET END -->
+
+        </div>
+
+        <!-- end row -->
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <article class="col-sm-12">
+
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-align-justify"></i> </span>
+                        <h2>   Senarai Penerima Kad Ucapan Hari Lahir </h2>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body">
+
+
+                            <br />
+
+                            <form class="smart-form">
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Bulan
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-46 col-sm-12">
+                                            <label class="input">
+
+                                                @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                                <br />
+                               
+                                <fieldset>
+
+                                    <div class="">
+                                        <table id="datatable_tabletools" class="table table-striped table-bordered table-hover" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th data-hide="phone">No Pekerja</th>
+                                                    <th data-class="expand">Nama Pekerja</th>
+                                                    <th>Tarikh Lahir</th>
+                                                    <th data-hide="phone">E-mail</th>
+                                                    <th>Jabatan</th>
+                                                    
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                   
+
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </fieldset>
+                                <br />
+                                <header>
+                                    Butir-butir Maklumat Pekerja
+                                </header>
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Nama
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+
+                                                @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                No. Pekerja
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+
+                                                @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Status
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+
+                                                @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                No. Kad Pengenalan
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+
+                                                @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Umur
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Jawatan
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Tarikh Masuk MBPJ
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Jumlah Tahun Perkhidmatan
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Tarikh Tamat
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-lg-6 col-md-6 col-sm-12">
+                                            <header>
+                                                Kelulusan YDP
+                                            </header>
+                                            <br />
+                                            <div class="row">
+                                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
+                                                    <div class="inline-group col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                        <label class="radio">
+                                                            @Html.RadioButton("a", "L", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                            <i></i>Lulus
+                                                        </label>
+                                                        <label class="radio">
+                                                            @Html.RadioButton("a", "T", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                            <i></i>Tidak Lulus
+                                                        </label>
+
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </section>
+                                        <section class="col col-lg-6 col-md-6 col-sm-12">
+                                            <header>
+                                                Maklumat Anugerah Haji
+                                            </header>
+                                            <br />
+                                            <div class="row">
+                                                <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                    <label class="label">
+                                                        Status
+                                                    </label>
+                                                </section>
+                                                <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                    <label class="input">
+
+                                                        @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                                    </label>
+                                                </section>
+                                                <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                    <label class="label">
+                                                        Tarikh Pemergian
+                                                    </label>
+                                                </section>
+                                                <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                    <label class="input">
+
+                                                        @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                                    </label>
+                                                </section>
+                                            </div>
+                                        </section>
+
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-lg-6 col-md-6 col-sm-12">
+                                            <header>
+                                                Untuk Perhatian
+                                            </header>
+                                            <br />
+                                            <div class="row">
+                                                <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                    <label class="label">
+                                                        No. Pekerja
+                                                    </label>
+                                                </section>
+                                                <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                    <label class="input">
+
+                                                        @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                    <label class="label">
+                                                        Nama
+                                                    </label>
+                                                </section>
+                                                <section class="col col-lg-6 col-md-6 col-sm-12">
+                                                    <label class="input">
+
+                                                        @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                                    </label>
+                                                </section>
+                                            </div>
+                                        </section>
+                                        <section class="col col-lg-6 col-md-6 col-sm-12">
+                                            <header>
+                                                Yang Dipertua MBPJ
+                                            </header>
+                                            <br />
+                                            <div class="row">
+                                                <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                    <label class="label">
+                                                        No. Pekerja
+                                                    </label>
+                                                </section>
+                                                <section class="col col-lg-4 col-md-4 col-sm-12">
+                                                    <label class="input">
+
+                                                        @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                                    </label>
+                                                </section>
+                                            </div>
+                                            <div class="row">
+                                                <section class="col col-lg-2 col-md-2 col-sm-12">
+                                                    <label class="label">
+                                                        Nama
+                                                    </label>
+                                                </section>
+                                                <section class="col col-lg-6 col-md-6 col-sm-12">
+                                                    <label class="input">
+
+                                                        @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                                    </label>
+                                                </section>
+                                            </div>
+                                        </section>
+
+                                    </div>
+                                </fieldset>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+</div>

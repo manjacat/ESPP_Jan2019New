@@ -1,0 +1,155 @@
+﻿@model eSPP.Models.AgreementModels
+<div>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+			&times;
+		</button>
+		<h4 class="modal-title">
+			Info Elaun Potongan
+		</h4>
+	</div>
+	<div class="modal-body no-padding">
+
+		@using (Html.BeginForm("TunggakanModal", "PengurusanKakitanganSambilan", FormMethod.Post, new { @class = "smart-form", enctype = "multipart/form-data" }))
+		{
+			@Html.AntiForgeryToken()
+			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+			<fieldset>
+				<section>
+					<div class="row">
+						<label class="label col col-4">No. Pekerja</label>
+						<div class="col col-8">
+							<label class="input">
+								@Html.EditorFor(model => model.HR_PEKERJA, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+							</label>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="row">
+						<label class="label col col-4">Kod Tunggakan</label>
+						<div class="col col-8">
+							<label class="input">
+								@Html.EditorFor(model => model.HR_KOD, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+							</label>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="row">
+						<label class="label col col-4">Keterangan Kod</label>
+						<div class="col col-8">
+							<label class="input">
+								@Html.EditorFor(model => model.KETERANGAN, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+							</label>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="row">
+						<label class="label col col-4">Tarikh Mula</label>
+						<div class="col col-8">
+							<label class="input">
+								@Html.TextBox("HR_TARIKH_MULA", string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_MULA), new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+							</label>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="row">
+						<label class="label col col-4">Tarikh Akhir</label>
+						<div class="col col-8">
+							<label class="input">
+								@Html.TextBox("HR_TARIKH_AKHIR", string.Format("{0:dd/MM/yyyy}",Model.HR_TARIKH_AKHIR), new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+							</label>
+						</div>
+					</div>
+				</section>
+				<section>
+					<div class="row">
+						<label class="label col col-4">Jumlah (RM)</label>
+						<div class="col col-8">
+							<label class="input">
+								@Html.EditorFor(model => model.HR_JUMLAH_MAKLUMAT, new { htmlAttributes = new { @class = "form-control" } })
+							</label>
+						</div>
+					</div>
+				</section>
+			</fieldset>
+			<footer>
+				<button type="submit" class="btn btn-success" id="Kemaskini" name="Command" value="Kemaskini">
+					Kemaskini
+				</button>
+				<button type="submit" class="btn btn-default" data-dismiss="modal">
+					Kembali
+				</button>
+			</footer>
+		}
+	</div>
+</div><!-- /.modal-content -->
+<script type="text/javascript">
+	//$("form").attr({ "id": "tp", "class": "smart-form" })
+	// DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+	$(document).ready(function () {
+		$("#HR_TARIKH_MULA").attr("disabled", "disabled");
+		$("#HR_TARIKH_AKHIR").attr("disabled", "disabled");
+		var $registerForm = $("#tp").validate({
+
+			// Rules for form validation
+			rules: {
+				cust_name: {
+					required: true
+				},
+				address: {
+					required: true
+				},
+				postcode: {
+					required: true,
+					number: true
+				},
+				city: {
+					required: true
+				},
+				state: {
+					required: true
+				},
+
+				pegawai_1: {
+					required: true
+				}
+
+			},
+
+			// Messages for form validation
+			messages: {
+				cust_name: {
+					required: "Nama syarikat diperlukan"
+				},
+				address: {
+					required: "Alamat diperlukan"
+				},
+				postcode: {
+					required: "Poskod diperlukan",
+					number: "Sila masukkan poskod dengan betul"
+				},
+				city: {
+					required: "Bandar diperlukan"
+				},
+				state: {
+					required: "Negeri diperlukan"
+				},
+
+				pegawai_1: {
+					required: "Pegawai diperlukan"
+				}
+
+			},
+
+			// Do not change code below
+			errorPlacement: function (error, element) {
+				error.insertAfter(element.parent());
+			}
+		})
+	});
+</script>

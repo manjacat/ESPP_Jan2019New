@@ -1,0 +1,430 @@
+﻿
+@model eSPP.Models.HR_TUNTUTAN_INSURAN
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Tambah Tuntutan Insuran <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("TambahTuntutanKemalangan", "TuntutanInsuran", FormMethod.Post, new { id = "order-form", @class = "smart-form", novalidate = "novalidate" }))
+            {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div id="peribadi">
+                @{
+                    List<HR_MAKLUMAT_PERIBADI> senaraiPeribadi = (List<HR_MAKLUMAT_PERIBADI>)ViewBag.senaraiPeribadi;
+                    List<HR_MAKLUMAT_PEKERJAAN> senaraiPekerjaan = (List<HR_MAKLUMAT_PEKERJAAN>)ViewBag.senaraiPekerjaan;
+
+                }
+                @foreach (var HR_MAKLUMAT_PERIBADI in senaraiPeribadi)
+                {
+                    <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                        <div class="row">
+
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Pekerja</label>
+                                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-list-alt"></i>
+                                                @Html.EditorFor(model => model.HR_NO_PEKERJA, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                            </label>
+                                        </div>
+                                    </section>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama Pekerja</label>
+                                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-list-alt"></i>
+                                                @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_NAMA_PEKERJA, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                            </label>
+                                        </div>
+                                    </section>
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. KP</label>
+                                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-list-alt"></i>
+                                                @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_NO_KPBARU, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"> 1. a) No. Polisi</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-list-alt"></i>
+                                                @Html.EditorFor(model => model.HR_NO_POLISI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+                                    </section>
+
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">b) Pelan Kategori</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="select">
+                                                @Html.DropDownListFor(model => model.HR_PELAN_KATEGORI, null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                <i></i>
+                                            </label>
+                                        </div>
+                                    </section>
+                                </div>
+
+                                <div class="row">
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">2. a) Tarikh Mula Bekerja</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+
+                                                @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_MASUK, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+
+                                    </section>
+
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"> b) Tarikh Lahir</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+
+                                                @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_TARIKH_LAHIR, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"> 3.  a) Pesakit adalah</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+
+                                                @Html.EditorFor(model => model.HR_PESAKIT_IND, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                            </label>
+                                        </div>
+
+                                    </section>
+
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"> b) Jantina</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+
+                                                @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_JANTINA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <label class="label">
+                                        Jika pesakit adalah tanggungan, sila berikan maklumat berikut :
+                                    </label>
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">  4.  Nama Pesakit</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+
+                                                @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_NAMA_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+
+                                    </section>
+
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">    No. KP Baru</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+
+                                                @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_NO_KPBARU, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">       5.  Tarikh Lahir Pesakit</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+
+                                                @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_TARIKH_LAHIR, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                            </label>
+                                        </div>
+
+                                    </section>
+
+                                    <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">  6. Jantina</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+
+                                                @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_JANTINA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <br />
+                    <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <legend style="background-color:white">
+                            Jika pesakit adalah tanggungan, sila berikan maklumat berikut :
+                        </legend>
+                        <div class="row">
+
+                            <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="row">
+                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"> 4.  Nama Pesakit<br /> (Jika bukan pemilik Insuran)</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_NAMA_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+
+                                    </section>
+
+                                </div>
+                                <div class="row">
+                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">  No. KP Baru</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_NO_KPBARU, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">     5.  Tarikh Lahir Pesakit</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_TARIKH_LAHIR, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">      6. Jantina</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_JANTINA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <label class="label">
+                                        II. Keterangan Mengenai Penyakit dan Kecederaan
+                                    </label>
+                                    <label class="label">
+                                        Sila isikan 1 atau 2 dan 3
+                                    </label>
+                                    <section>
+                                        <div class="row">
+                                            <div class="col col-2">
+                                                <label class="checkbox state-error"><input type="checkbox" name="checkbox"><i></i>1</label>
+                                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">   a) Jenis Penyakit (atau keterangan jika nama penyakit tidak diketahui)</label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.HR_NAMA_PENYAKIT, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                        </label>
+                                                    </div>
+
+                                                </section>
+                                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">    b) Tarikh mula simptom disedari oleh pesakit</label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.HR_TARIKH_SIMPTOM, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                        </label>
+                                                    </div>
+
+                                                </section>
+                                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">   c) Tarikh nasihat pertama diterima dari pakar untuk penyakit ini</label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.HR_TARIKH_NASIHAT, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                        </label>
+                                                    </div>
+
+                                                </section>
+
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <section>
+                                        <div class="row">
+                                            <div class="col col-2">
+                                                <label class="checkbox state-error"><input type="checkbox" name="checkbox"><i></i>1</label>
+                                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">  a) Terangkan kecederaan dan bagaimana ia berlaku</label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.HR_KECEDERAAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                        </label>
+                                                    </div>
+
+                                                </section>
+                                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">        b) Tarikh dan masa kecederaan berlaku</label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.HR_TARIKH_MASA_CEDERA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                        </label>
+                                                    </div>
+
+                                                </section>
+                                                <section>
+                                                    <div class="row">
+                                                        <label class="label col col-4">Adakah ia berkaitan dengan kerja</label>
+                                                        <div class="col col-8">
+                                                            <div class="inline-group">
+                                                                <label class="radio">
+                                                                    @Html.RadioButtonFor(model => model.HR_KAITAN_RAWATAN_IND, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                                    <i></i>Aktif
+                                                                </label>
+                                                                <label class="radio">
+                                                                    @Html.RadioButtonFor(model => model.HR_KAITAN_RAWATAN_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                                    <i></i>Tidak Aktif
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <section>
+                                        <div class="row">
+                                            <div class="col col-2">
+                                                <label class="checkbox state-error"><input type="checkbox" name="checkbox"><i></i>1</label>
+                                                <section>
+                                                    <div class="row">
+                                                        <label class="label col col-4">Adakah penyakit atau kecederaan pernah dirawat?</label>
+                                                        <div class="col col-8">
+                                                            <div class="inline-group">
+                                                                <label class="radio">
+                                                                    @Html.RadioButtonFor(model => model.HR_RAWATAN_IND, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                                    <i></i>Aktif
+                                                                </label>
+                                                                <label class="radio">
+                                                                    @Html.RadioButtonFor(model => model.HR_RAWATAN_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                                    <i></i>Tidak Aktif
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                <section>
+                                                    <div class="row">
+                                                        <label class="label col col-4">b) Jika rawatan berkaitan dengan mengandung, keguguran, bersalin belum tempoh matang, kemandulan, sub-fertility atau infertility? </label>
+                                                        <div class="col col-8">
+                                                            <div class="inline-group">
+                                                                <label class="radio">
+                                                                    @Html.RadioButtonFor(model => model.HR_KAITAN_RAWATAN_IND, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                                    <i></i>Aktif
+                                                                </label>
+                                                                <label class="radio">
+                                                                    @Html.RadioButtonFor(model => model.HR_KAITAN_RAWATAN_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                                    <i></i>Tidak Aktif
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                <label class="label">
+                                                    Jika Ya bagi salah satu soalan, sila sertakan nama Dr penasihat :
+                                                </label>
+                                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">     Nama</label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.HR_NAMA_DOKTOR, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                        </label>
+                                                    </div>
+
+                                                </section>
+                                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">  Alamat</label>
+                                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                        <label class="input">
+
+                                                            @Html.EditorFor(model => model.HR_KOD_AGENSI_DOKTOR, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                        </label>
+                                                    </div>
+
+                                                </section>
+
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </fieldset>
+                }
+                <footer>
+                    <button type="button" class="btn btn-default" onclick="javascript: history.go(0)">
+                        Kembali
+                    </button>
+                </footer>
+            </div>
+                    }
+
+
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+
+           
+
+
+
+
+
+        })
+</script>

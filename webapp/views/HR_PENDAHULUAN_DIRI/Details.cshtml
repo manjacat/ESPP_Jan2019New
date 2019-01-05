@@ -1,0 +1,114 @@
+﻿@model eSPP.Models.HR_PENDAHULUAN_DIRI
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>HR_PENDAHULUAN_DIRI</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_PERMOHONAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_PERMOHONAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_JABATAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_JABATAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_PENDAHULUAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_PENDAHULUAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KELULUSAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KELULUSAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_JUMLAH_SEKARANG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_JUMLAH_SEKARANG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_JUMLAH_PENUH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_JUMLAH_PENUH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TUJUAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TUJUAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NAMA_PEGAWAI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NAMA_PEGAWAI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NO_IC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NO_IC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NO_GAJI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NO_GAJI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_JAWATAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_JAWATAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_BAYARAN_BALIK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_BAYARAN_BALIK)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

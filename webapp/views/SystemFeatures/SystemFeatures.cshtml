@@ -1,0 +1,222 @@
+﻿@model IEnumerable<eSPP.Models.SystemFeature>
+
+<div id="content">
+
+    <section id="widget-grid" class="">
+
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-3" data-widget-editbutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-cogs"></i> </span>
+                        <h2>Admin</h2>
+                        <h2>
+                            @{
+                                if (ViewBag.ErrorMessage != null || ViewBag.ErrorMessage != "")
+                                {
+                                    @Html.DisplayText(" - ") @ViewBag.ErrorMessage
+                                }
+                            }
+                        </h2>
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+
+                            <table id="datatable_tabletools" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th width="1%">#</th>
+                                        <th>Feature Name</th>
+                                        <th width="10%">Controller Name</th>
+                                        <th width="10%">Action Name</th>
+                                        <th width="15%">Kemaskini Kumpulan Pengguna</th>
+                                        <th width="11%">Tindakan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ var i = 0; }
+                                    @foreach (var item in Model)
+                                    {
+                                        i++;
+                                        ViewBag.icount = i;
+                                        <tr>
+                                            <td>
+                                                @ViewBag.icount
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FeatureName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ControllerName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ActionName)
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Edit", "Edit", new { id = item.SystemFeatureID }) |
+                                                @Html.ActionLink("Details", "Details", new { id = item.SystemFeatureID }) |
+                                                @Html.ActionLink("Delete", "Delete", new { id = item.SystemFeatureID })
+                                            </td>
+                                            <td>
+                                                <div class="btn-group col-12">
+                                                    <a class="btn btn-xs btn-default btn-circle Edit" href="javascript:void(0)" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <a class="btn btn-xs btn-default btn-circle Padam" href="javascript:void(0)" title="Padam"><i class="fa fa-trash-o"></i></a>
+                                                    <a class="btn btn-xs btn-default btn-circle" href="@Url.Action("ManageUser", "UserGroup")" title="Kemaskini Pengguna Role Ini"><i class="fa fa-sitemap"></i></a>
+                                                    <a class="btn btn-xs btn-default btn-circle EditPengguna" href="javascript:void(0)" title="Kemaskini Pengguna"><i class="fa fa-user"></i></a>
+                                                    <a class="btn btn-xs btn-default btn-circle EditKumpulan" href="javascript:void(0)" title="Kemaskini Kumpulan Pengguna"><i class="fa fa-group"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                            <div class="modal fade" id="CreateModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div id='CreateModalContent'></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="EditModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div id='EditModalContent'></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="PadamModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div id='PadamModalContent'></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="EditPenggunaModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div id='EditPenggunaModalContent'></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="EditKumpulanModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div id='EditKumpulanModalContent'></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+
+                </div>
+                <!-- end widget -->
+
+            </article>
+            <!-- WIDGET END -->
+        </div>
+        <a class="btn btn-success Create" href="javascript:void(0)" title="Create"><i class="fa fa-plus"></i> Create</a>
+        <!-- end row -->
+        <!-- end row -->
+
+    </section>
+</div>
+
+@section pagespecific {
+<script>
+
+    var Create = '/SystemFeature/Create';
+    $(function () {
+        $(".Create").click(function () {
+            debugger;
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: Create,
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                datatype: "json",
+                success: function (data) {
+                    debugger;
+                    $('#CreateModalContent').html(data);
+                    $('#CreateModal').modal(options);
+                    $('#CreateModal').modal('show');
+
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        });
+
+        $("#closbtn").click(function () {
+            $('#CreateModal').modal('hide');
+        });
+
+    });
+
+</script>
+    }
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FeatureName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ControllerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActionName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDateTime)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FeatureName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ControllerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActionName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDateTime)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SystemFeatureID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.SystemFeatureID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SystemFeatureID })
+        </td>
+    </tr>
+}
+
+</table>

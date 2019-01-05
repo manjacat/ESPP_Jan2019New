@@ -1,0 +1,544 @@
+﻿@model eSPP.Models.HR_MAKLUMAT_PEKERJAAN
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>HR_MAKLUMAT_PEKERJAAN</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_MAKLUMAT_ELAUN_POTONGAN.HR_KOD_ELAUN_POTONGAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_MAKLUMAT_ELAUN_POTONGAN.HR_KOD_ELAUN_POTONGAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_MAKLUMAT_PERIBADI.HR_NO_KPBARU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_MAKLUMAT_PERIBADI.HR_NO_KPBARU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_PERSARAAN.HR_ALASAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_PERSARAAN.HR_ALASAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_GELARAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_GELARAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_JABATAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_JABATAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_BAHAGIAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_BAHAGIAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_JAWATAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_JAWATAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_GRED)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_GRED)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KATEGORI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KATEGORI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KUMP_PERKHIDMATAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KUMP_PERKHIDMATAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARAF_JAWATAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARAF_JAWATAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_GAJI_POKOK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_GAJI_POKOK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NO_AKAUN_BANK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NO_AKAUN_BANK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_BULAN_KENAIKAN_GAJI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_BULAN_KENAIKAN_GAJI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_MASUK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_MASUK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_SAH_JAWATAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_SAH_JAWATAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_TAMAT_KONTRAK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_TAMAT_KONTRAK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_TAMAT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_TAMAT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_SISTEM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_SISTEM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NO_PENYELIA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NO_PENYELIA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_STATUS_KWSP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_STATUS_KWSP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_STATUS_SOCSO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_STATUS_SOCSO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_STATUS_PCB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_STATUS_PCB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_STATUS_PENCEN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_STATUS_PENCEN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NILAI_KWSP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NILAI_KWSP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NILAI_SOCSO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NILAI_SOCSO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KOD_PCB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KOD_PCB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_GAJI_PRORATA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_GAJI_PRORATA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_MATRIKS_GAJI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_MATRIKS_GAJI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_UNIT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_UNIT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KUMPULAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KUMPULAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KOD_BANK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KOD_BANK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TINGKATAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TINGKATAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KAKITANGAN_IND)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KAKITANGAN_IND)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_FAIL_PERKHIDMATAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_FAIL_PERKHIDMATAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NO_SIRI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NO_SIRI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_BAYARAN_CEK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_BAYARAN_CEK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_KE_JABATAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_KE_JABATAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KOD_GAJI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KOD_GAJI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KELAS_PERJALANAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KELAS_PERJALANAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_LANTIKAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_LANTIKAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_TIDAK_AKTIF)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_TIDAK_AKTIF)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_GAJI_IND)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_GAJI_IND)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_GAJI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_GAJI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_PCB_TARIKH_MULA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_PCB_TARIKH_MULA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_PCB_TARIKH_AKHIR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_PCB_TARIKH_AKHIR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NILAI_PCB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NILAI_PCB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KOD_GELARAN_J)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KOD_GELARAN_J)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TANGGUH_GERAKGAJI_IND)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TANGGUH_GERAKGAJI_IND)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_KEYIN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_KEYIN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NP_KEYIN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NP_KEYIN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_UBAH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_UBAH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NP_UBAH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NP_UBAH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_SKIM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_SKIM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_PERGERAKAN_GAJI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_PERGERAKAN_GAJI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NO_KWSP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NO_KWSP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NO_PENCEN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NO_PENCEN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NO_SOCSO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NO_SOCSO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_NO_PCB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_NO_PCB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_INITIAL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_INITIAL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_AM_YDP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_AM_YDP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_MASUK_KERAJAAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_MASUK_KERAJAAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_UNIFORM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_UNIFORM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TEKNIKAL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TEKNIKAL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_KELUAR_MBPJ)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_KELUAR_MBPJ)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

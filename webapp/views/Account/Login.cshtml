@@ -1,0 +1,141 @@
+﻿@model AccountLoginModel
+@{
+	Layout = "";
+	ViewBag.PageId = "extr-page";
+	ViewBag.PageClass = "animated fadeInDown";
+}
+
+@section topright{
+    <!--<span id="extr-page-header-space"> <span class="hidden-mobile">Need an account?</span> <a href="@Url.Action("register", "account")" class="btn btn-danger">Create account</a> </span>-->
+}
+
+<head>
+    <meta charset="utf-8">
+    <title>eSPP - MBPJ</title>
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="~/Content/css/animate.css">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="~/Content/css/login.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+    <div class="container">
+        <div class="top">
+            <h1 id="title" class="hidden"><span id="logo">eSPP <span>MBPJ</span></span></h1>
+        </div>
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "login-form" }))
+        {
+            @Html.HiddenFor(m => m.ReturnUrl)
+            @Html.AntiForgeryToken()
+            <div class="login-box glass_effect animated fadeInUp">
+                <div class="box-header">
+                    <h2>Log Masuk</h2>
+                </div>
+                <div>
+                    <font color="red">
+						@if (ViewBag.StatusMessage == "Katalaluan Tidak Betul.")
+						{
+							@ViewBag.StatusMessage
+						}
+						@if (ViewBag.StatusMessage == "Sila Daftar ID Terlebih Dahulu.")
+						{
+							@ViewBag.StatusMessage
+						}
+                        @ViewBag.error
+                        <br />
+                        @ViewBag.error1
+                    </font>
+					<font color="green">
+						@if (ViewBag.StatusMessage == "Katalaluan Baru Telah Dihantar Ke Emel")
+						{
+							@ViewBag.StatusMessage
+						}
+						else
+						{
+						}
+					</font>
+                </div>
+                <font color="red">
+                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                </font>
+                <br />
+                @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+                <br />
+                <input type="text" class="user-password" name="UserName" autocomplete="off">
+                <br />
+                <font color="red">
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </font>
+                <br />
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                <br />
+                <input type="password" class="user-password" name="password" autocomplete="off">
+                <br />
+                <button type="submit">Log Masuk</button>
+                <br /><br />
+                <a href="@Url.Action("ForgotPassword", "Account")"><font color="black">Lupa Katalaluan?</font></a>
+            </div>
+        }
+    </div>
+</body>
+
+@section pagespecific {
+    <script type="text/javascript">
+		function PasswordChanged(txt) {
+			$(txt).prev().val($(txt).val());
+		}
+            $(document).ready(function () {
+                $('#logo').addClass('animated fadeInDown');
+                $("input:text:visible:first").focus();
+            });
+            $('#Email').focus(function () {
+                $('label[for="Email"]').addClass('selected');
+            });
+            $('#Email').blur(function () {
+                $('label[for="Email"]').removeClass('selected');
+            });
+            $('#Password').focus(function () {
+                $('label[for="Password"]').addClass('selected');
+            });
+            $('#Password').blur(function () {
+                $('label[for="Password"]').removeClass('selected');
+            });
+			
+            $(function () {
+                // Validation
+                $("#login-form").validate({
+                    // Rules for form validation
+                    rules: {
+                        Email: {
+                            required: true,
+                            email: true
+                        },
+                        Password: {
+                            required: true,
+                            minlength: 8,
+                            maxlength: 20
+                        }
+                    },
+
+                    // Messages for form validation
+                    messages: {
+                        Email: {
+                            required: 'Sila Masukkan Alamat Emel',
+                            email: 'Sila Masukkan Alamat Emel Yang Betul'
+                        },
+                        Password: {
+                            required: 'Sila Masukkan Katalaluan'
+                        }
+                    },
+
+                    // Do not change code below
+                    errorPlacement: function (error, element) {
+                        error.insertAfter(element.parent());
+                    }
+                });
+            });
+    </script>
+
+}

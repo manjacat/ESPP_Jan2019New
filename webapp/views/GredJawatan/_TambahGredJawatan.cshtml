@@ -1,0 +1,150 @@
+﻿
+
+
+@model eSPP.Models.GredJawatanModels
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Tambah Gred Jawatan <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("TambahGredJawatan","GredJawatan", FormMethod.Post,new {@class = "smart-form"}))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_JAWATAN.HR_KOD_JAWATAN)
+            @Html.HiddenFor(model => model.GE_PARAMTABLE.GROUPID)
+            @Html.HiddenFor(model => model.GE_PARAMTABLE.ORDINAL)
+            @Html.HiddenFor(model => model.HR_GELARAN_JAWATAN.HR_KOD_GELARAN)
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Nama Jawatan  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-briefcase"></i>
+                                @Html.EditorFor(model => model.HR_JAWATAN.HR_NAMA_JAWATAN, new { htmlAttributes = new { @class = "form-control"} })
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Gelaran Jawatan  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-briefcase"></i>
+                                @Html.EditorFor(model => model.HR_GELARAN_JAWATAN.HR_PENERANGAN, new { htmlAttributes = new { @class = "form-control" } })
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Gred Jawatan </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-briefcase"></i>
+                                @Html.EditorFor(model => model.GE_PARAMTABLE.SHORT_DESCRIPTION, new { htmlAttributes = new { @class = "form-control" } })
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Sistem Saraan</label>
+                        <div class="col col-8">
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.GE_PARAMTABLE.STRING_PARAM, "SSB", htmlAttributes: new { @class = "form-control" })
+                                    <i></i>SSB
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.GE_PARAMTABLE.STRING_PARAM, "SSM", htmlAttributes: new { @class = "form-control" })
+                                    <i></i>SSM
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+               
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Status</label>
+                        <div class="col col-8">
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_JAWATAN.HR_AKTIF_IND, "Y", htmlAttributes: new { @class = "form-control"})
+                                    <i></i>Aktif
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_JAWATAN.HR_AKTIF_IND, "N", htmlAttributes: new { @class = "form-control" })
+                                    <i></i>Tidak Aktif
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+            </fieldset>
+            <footer>
+                <button type="submit" id="btn" class="btn btn-primary">
+                    <span class="fa fa-send-o"></span> Hantar
+                </button>
+                <a type="button" class="btn btn-default" href="gredjawatan">
+                    Kembali
+                </a>
+            </footer>
+        }
+
+    </div>
+
+</div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+        })
+        $("#HR_JAWATAN_HR_NAMA_JAWATAN").on("input", function () {
+            $.ajax({
+                url: "GredJawatan/cariJawatan",
+                type: "get",
+                dataType: "json",
+                data: { item: $(this).val() },
+                success: function (data) {
+                    $("#HR_JAWATAN_HR_KOD_JAWATAN").val(data);
+                }
+            })
+        });
+        $("#HR_GELARAN_JAWATAN_HR_PENERANGAN").on("input", function () {
+            $.ajax({
+                url: "GredJawatan/cariGelaran",
+                type: "get",
+                dataType: "json",
+                data: { item: $(this).val() },
+                success: function (data) {
+                    $("#HR_GELARAN_JAWATAN_HR_KOD_GELARAN").val(data);
+                }
+            })
+        });
+        $("#GE_PARAMTABLE_SHORT_DESCRIPTION").on("input", function () {
+            $.ajax({
+                url: "GredJawatan/cariGred",
+                type: "get",
+                dataType: "json",
+                data: { item: $(this).val() },
+                success: function (data) {
+                    $("#GE_PARAMTABLE_GROUPID").val(data.GROUPID);
+                    $("#GE_PARAMTABLE_ORDINAL").val(data.ORDINAL);
+                }
+            })
+        });
+    </script> 

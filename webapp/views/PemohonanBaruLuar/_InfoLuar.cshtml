@@ -1,0 +1,256 @@
+﻿
+
+@model eSPP.Models.HR_SEMINAR_LUAR
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Maklumat Permohonan Ke Luar Negeri <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("InfoLuar", "PemohonanBaruLuar", FormMethod.Post, new { @class = "smart-form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_KOD_LAWATAN)
+
+
+            <div id="peribadi">
+
+
+
+                <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <legend style="background-color:white">
+                        Maklumat Pemohon
+                    </legend>
+                    <div class="row">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama Pekerja</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+
+                                            @Html.Editor("HR_NAMA_PEKERJA", null, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                        </label>
+                                    </div>
+
+                                </section>
+
+                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jawatan</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+
+                                            @Html.Editor("HR_JAWATAN", null, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+                            <div class="row">
+                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama Kad Pengenalan</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+
+                                            @Html.Editor("HR_NO_KPBARU", null, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+                            <div class="row">
+                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jabatan</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+
+                                            @Html.Editor("HR_JABATAN", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                        </label>
+                                    </div>
+                                </section>
+                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bahagian</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+
+                                            @Html.Editor("HR_BAHAGIAN", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                        </label>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend style="background-color:white">
+                        Maklumat Perjalanan Ke Luar Negara 
+                    </legend>
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Lawatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input type="text" name="HR_TARIKH_MULA" id="HR_TARIKH_MULA" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_MULA)" readonly='readonly' />
+                                </label>
+                            </div>
+
+                        </section>
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Hingga</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input type="text" name="HR_TARIKH_TAMAT" id="HR_TARIKH_TAMAT" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_TAMAT)" readonly='readonly' />
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Negara yang dilawati</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="textarea textarea-resizable">
+                                    <i class="icon-append fa fa-comment"></i>
+                                    @Html.TextAreaFor(model => model.HR_NAMA_SEMINAR, new { @class = "form-control", rows = 5, disabled = "disabled" })
+
+                                </label>
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tujuan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_TUJUAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                   
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Alamat Semasa Bercuti</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_ALAMAT_CUTI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Telefon</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_ALAMAT_CUTI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                </label>
+                            </div>
+                        </section>
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Email</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_ALAMAT_CUTI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend style="background-color:white">
+                        Maklumat Kelulusan Cuti Rehat ( Sekiranya memerlukan kelulusan cuti rehat)
+                    </legend>
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Mula Cuti</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input type="text" name="HR_TARIKH_CUTI" id="HR_TARIKH_CUTI" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_CUTI)" readonly='readonly' />
+                                </label>
+                            </div>
+
+                        </section>
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Akhir Cuti</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input type="text" name="HR_TARIKH_CUTI_AKH" id="HR_TARIKH_CUTI_AKH" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_CUTI_AKH)" readonly='readonly' />
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jumlah Hari Cuti</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="textarea textarea-resizable">
+                                    <i class="icon-append fa fa-comment"></i>
+                                    @Html.EditorFor(model => model.HR_JUMLAH_CUTI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                </label>
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Kembali Bertugas</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input type="text" name="HR_TARIKH_KEMBALI" id="HR_TARIKH_KEMBALI" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_KEMBALI)" readonly='readonly' />
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                </fieldset>
+
+
+                <footer>
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal" href="pemohonanluarnegara">
+                        Kembali
+                    </button>
+                </footer>
+            </div>
+        }
+
+    </div>
+
+</div>
+@section pagespecific {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+        })
+    </script>
+}

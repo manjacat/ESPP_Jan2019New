@@ -1,0 +1,282 @@
+﻿
+@model eSPP.Models.HR_PENDAHULUAN_DIRI
+
+
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Kelulusan<span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("EditLulusHR","PengesahanPendahuluanDiri", FormMethod.Post, new { id = "order-form", @class = "smart-form", novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_KOD_PENDAHULUAN)
+            @Html.HiddenFor(model => model.HR_NO_PEKERJA)
+
+            
+            <div id="peribadi">
+
+                <fieldset>
+                    <legend>
+                        Pengesahan HR
+                    </legend>
+
+                    <h7>
+                        <pre><code class="xml"> Disahkan bahawa tuntutan diatas adalah kerana urusan rasmi dan disokong</code></pre>
+                    </h7>
+
+                    <br />
+                    <div class="row smart-form">
+
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"> Pengesahan HR </label>
+                                        <div class="inline-group">
+                                            <label class="radio">
+                                                @Html.RadioButtonFor(model => model.HR_IND_HR, "Y", htmlAttributes: new { @class = "form-control" })
+                                                <i></i>Diluluskan
+                                            </label>
+                                            <label class="radio">
+                                                @Html.RadioButtonFor(model => model.HR_IND_HR, "T", htmlAttributes: new { @class = "form-control" })
+                                                <i></i>Tidak Diluluskan
+                                            </label>
+                                            <label class="radio">
+                                                @Html.RadioButtonFor(model => model.HR_IND_HR, "R", htmlAttributes: new { @class = "form-control" })
+                                                <i></i>Hantar Semula
+                                            </label>
+                                        </div>
+                                    </section>
+
+
+                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"> Nama Pegawai  </label>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+                                            <label class="select">
+                                                @Html.DropDownListFor(model => model.HR_NAMA_HR, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                                @Html.HiddenFor(model => model.HR_NAMA_HR)
+
+                                                <i></i>
+                                            </label>
+
+                                        </div>
+
+                                    </section>
+
+                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jawatan</label>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+                                            <label class="select">
+                                                @Html.DropDownList("HR_JAWATAN_PEGAWAI_HR", (SelectList)ViewBag.HR_JAWATAN_PEGAWAI_HR, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+
+                                            </label>  
+
+                                        </div>
+                                    </section>
+                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"> Tarikh </label>
+                                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-calendar"></i>
+                                                <input type="text" name="HR_TARIKH_HR" id="HR_TARIKH_HR" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_HR)" , readonly='readonly' />
+                                            </label>
+                                        </div>
+                                    </section>
+                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12 hide" id="hide">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Ulasan HR</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="textarea textarea-resizable">
+                                                @Html.TextAreaFor(model => model.HR_CATATAN, new { @class = "form-control", rows = 3 })
+                                                <i></i>
+                                            </label>
+                                        </div>
+                                    </section>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <footer>
+                    <button type="submit" id="btn" class="btn btn-primary">
+                        <span class="fa fa-send-o"></span> Hantar
+                    </button>
+
+                    <button type="button" class="btn btn-default" onclick="javascript: history.go(0)">
+                        Kembali
+                    </button>
+                </footer>
+            </div>
+        }
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+        $(document).ready(function () {
+            $(".modal-dialog").css("min-width", "50%");
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+
+
+            $('#HR_TARIKH_MULA').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_TAMAT').datepicker('option', 'minDate', selectedDate);
+
+
+                }
+            });
+
+            $('#HR_TARIKH_TAMAT').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_MULA').datepicker('option', 'maxDate', selectedDate);
+
+
+                }
+            });
+
+
+           
+
+            $("#peribadi #HR_NAMA_HR").on("change", function () {
+                debugger
+                $.ajax({
+                    url: "../PengesahanPendahuluanDiri/CariJawatanPegawai",
+                    data: { "id": $(this).val() },
+                    contentType: "application/json; charset=utf-8",
+                    type: 'GET',
+                    dataType: "json",
+                    success: function (data) {
+                        debugger
+                        $("#HR_JAWATAN_PEGAWAI_HR").val(data);
+                    }
+                })
+            })
+
+
+            var $orderForm = $("#order-form").validate({
+                // Rules for form validation
+                rules: {
+                    HR_SINGKATAN: {
+                        required: true,
+                        remote: {
+                            url: "JenisPeperiksaan/CariEditPeperiksaan",
+                            type: "get",
+                            data: {
+                                singkatan: function () {
+                                    return $("#HR_SINGKATAN").val();
+                                },
+                                kod: function () {
+                                    return $("#HR_KOD_PEPERIKSAAN").val();
+                                }
+
+                            }
+                        }
+                    },
+                    HR_KETERANGAN: {
+                        required: true,
+                        remote: {
+                            url: "JenisPeperiksaan/CariEditPeperiksaan",
+                            type: "get",
+                            data: {
+                                keterangan: function () {
+                                    return $("#HR_KETERANGAN").val();
+                                },
+                                kod: function () {
+                                    return $("#HR_KOD_PEPERIKSAAN").val();
+                                }
+                            }
+                        }
+                    },
+
+
+                },
+
+                // Messages for form validation
+                messages: {
+
+                    HR_SINGKATAN: {
+                        required: 'Singkatan diperlukan'
+                    },
+                    HR_KETERANGAN: {
+                        required: 'Keterangan diperlukan'
+                    },
+
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+
+
+            $('#HR_TARIKH_MULA').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_TAMAT').datepicker('option', 'minDate', selectedDate);
+
+
+                }
+            });
+
+
+            $('#HR_TARIKH_TAMAT').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_MULA').datepicker('option', 'maxDate', selectedDate);
+
+
+                }
+            });
+
+             $("input[type='radio']#HR_IND_HR").on("input", function () {
+                if ($("input[type='radio']#HR_IND_HR:checked").val() == "Y") {
+                    $("#hide").addClass("hide");
+                    $("#HR_CATATAN").val("");
+                }
+                else {
+                    $("#hide").removeClass("hide");
+                }
+            })
+
+
+
+
+
+        })
+</script>

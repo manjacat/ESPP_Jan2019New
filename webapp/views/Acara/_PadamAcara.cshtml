@@ -1,0 +1,146 @@
+﻿@model eSPP.Models.HR_ACARA
+
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Padam Aktiviti <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("PadamAcara", "Acara", FormMethod.Post, new { id = "order-form", @class = "smart-form", novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_KOD_ACARA);
+
+            <fieldset>
+
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Tajuk</label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-briefcase"></i>
+                                @Html.EditorFor(model => model.HR_TAJUK, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="label col col-4">Pilih Icon </label>
+                            <div class="col col-8 btn-group btn-group-sm btn-group-justified" data-toggle="buttons">
+                                <label class="btn btn-default">
+                                    @Html.RadioButtonFor(model => model.HR_ICON, "fa-info", htmlAttributes: new { @class = "form-control" , disabled = "disabled"})
+                                    <i class="fa fa-info text-muted"></i>
+                                </label>
+                                <label class="btn btn-default">
+                                    @Html.RadioButtonFor(model => model.HR_ICON, "fa-warning", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i class="fa fa-warning text-muted"></i>
+                                </label>
+                                <label class="btn btn-default">
+                                    @Html.RadioButtonFor(model => model.HR_ICON, "fa-check", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i class="fa fa-check text-muted"></i>
+                                </label>
+                                <label class="btn btn-default">
+                                    @Html.RadioButtonFor(model => model.HR_ICON, "fa-user", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i class="fa fa-user text-muted"></i>
+                                </label>
+                                <label class="btn btn-default">
+                                    @Html.RadioButtonFor(model => model.HR_ICON, "fa-lock", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i class="fa fa-lock text-muted"></i>
+                                </label>
+                                <label class="btn btn-default">
+                                    @Html.RadioButtonFor(model => model.HR_ICON, "fa-clock-o", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i class="fa fa-clock-o text-muted"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="label col col-4">Pilih Warna</label>
+                            <div class="col col-8 btn-group btn-group-justified btn-select-tick" data-toggle="buttons">
+                                <label class="btn bg-color-darken">
+                                    @Html.RadioButtonFor(model => model.HR_WARNA, "bg-color-darken txt-color-white", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i class="fa fa-check txt-color-white"></i>
+                                </label>
+                                <label class="btn bg-color-blue">
+                                    @Html.RadioButtonFor(model => model.HR_WARNA, "bg-color-blue txt-color-white", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i class="fa fa-check txt-color-white"></i>
+                                </label>
+                                <label class="btn bg-color-orange">
+                                    @Html.RadioButtonFor(model => model.HR_WARNA, "bg-color-orange txt-color-white", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i class="fa fa-check txt-color-white"></i>
+                                </label>
+                                <label class="btn bg-color-greenLight">
+                                    @Html.RadioButtonFor(model => model.HR_WARNA, "bg-color-greenLight txt-color-white", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i class="fa fa-check txt-color-white"></i>
+                                </label>
+                                <label class="btn bg-color-blueLight">
+                                    @Html.RadioButtonFor(model => model.HR_WARNA, "bg-color-blueLight txt-color-white", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i class="fa fa-check txt-color-white"></i>
+                                </label>
+                                <label class="btn bg-color-red">
+                                    @Html.RadioButtonFor(model => model.HR_WARNA, "bg-color-red txt-color-white", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i class="fa fa-check txt-color-white"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Status</label>
+                        <div class="col col-8">
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>Aktif
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>Tidak Aktif
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </fieldset>
+            <footer>
+                <button type="submit" id="btn" class="btn btn-danger">
+                    <span class="fa fa-trash-o"></span> Padam
+                </button>
+                <a type="button" class="btn btn-default" href="senaraiacara">
+                    Kembali
+                </a>
+            </footer>
+        }
+
+    </div>
+
+</div>
+
+<!-- PAGE RELATED PLUGIN(S) -->
+<script src="../scripts/plugin/moment/moment.min.js"></script>
+<script src="../scripts/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>
+<script type="text/javascript">
+
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+    $(document).ready(function () {
+        $("#HR_ICON:checked").parents("label").addClass("active")
+        $("#HR_WARNA:checked").parents("label").addClass("active")
+
+    })
+
+</script>
+

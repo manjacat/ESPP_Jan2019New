@@ -1,0 +1,158 @@
+﻿
+
+@model eSPP.Models.HR_KADAR_ELAUN_LEBIHMASA
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Tambah Elaun Lebih Masa <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("TambahElaunLebihMasa", "ElaunLebihMasa", FormMethod.Post, new { id = "order-form", @class = "smart-form", novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            
+
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Jenis Hari  </label>
+                        <div class="col col-8">
+                            <label class="select">
+                                @Html.DropDownListFor(model => model.HR_JENIS_HARI, null, String.Empty, new { @class = "form-control" })
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Jenis Waktu  </label>
+                        <div class="col col-8">
+                            <label class="select">
+                                @Html.DropDownListFor(model => model.HR_JENIS_WAKTU, null, String.Empty, new { @class = "form-control"})
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Kadar Sejam (RM)  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-check-circle"></i>
+                                @Html.EditorFor(model => model.HR_KADAR_SEJAM, new { htmlAttributes = new { @class = "form-control" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Status</label>
+                        <div class="col col-8">
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "Y", htmlAttributes: new { @checked = "checked" })
+                                    <i></i>Aktif
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "T", htmlAttributes: new { @class = "form-control" })
+                                    <i></i>Tidak Aktif
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </fieldset>
+            <footer>
+                <button type="submit" id="btn" class="btn btn-primary">
+                    <span class="fa fa-send-o"></span> Hantar
+                </button>
+                <a type="button" class="btn btn-default" href="SenaraiLebihMasa">
+                    Kembali
+                </a>
+            </footer>
+        }
+
+    </div>
+
+</div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+
+            var $orderForm = $("#order-form").validate({
+                // Rules for form validation
+                rules: {
+                    HR_JENIS_HARI: {
+                        required: true,
+                        remote: {
+                            url: "../ElaunLebihMasa/CariElaun",
+                            type: "get",
+                            data: {
+                                hari: function () {
+                                    return $("#HR_JENIS_HARI").val();
+                                },
+                                waktu: function () {
+                                    return $("#HR_JENIS_WAKTU").val();
+                                }
+                            }
+                        }
+                        
+                    },
+                    HR_JENIS_WAKTU: {
+                        required: true,
+                        remote: {
+                            url: "../ElaunLebihMasa/CariElaun",
+                            type: "get",
+                            data: {
+                                waktu: function () {
+                                    return $("#HR_JENIS_WAKTU").val();
+                                },
+                                hari: function () {
+                                    return $("#HR_JENIS_HARI").val();
+                                }
+                            }
+                        }
+                       
+                    },
+                    HR_KADAR_SEJAM: {
+                        required: true
+                    }
+
+                },
+
+                // Messages for form validation
+                messages: {
+                    HR_JENIS_HARI: {
+                        required: 'Hari diperlukan'
+                    },
+                    HR_JENIS_WAKTU: {
+                        required: 'Waktu Agensi',
+
+                    },
+                    HR_KADAR_SEJAM: {
+                        required: 'Kadar Sejam diperlukan',
+
+                    },
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+            
+        })
+    </script> 

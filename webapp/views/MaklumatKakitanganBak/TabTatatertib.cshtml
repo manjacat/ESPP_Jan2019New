@@ -1,0 +1,96 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+<div class="tab-pane" id="Tatatertib">
+    <div class="row">
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Senarai Kesalahan Disiplin
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <table id="datatable_Tatatertib" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Jenis Kesalahan</th>
+                                <th>Tarikh Mula Tindakan</th>
+                                <th>Jenis Hukuman</th>
+                                <th>Tarikh Hukuman</th>
+                                <th>Tarikh Tamat</th>
+                                <th>Tambah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @for (var item = 0; item < Model.HR_TINDAKAN_DISIPLIN.Count(); item++)
+                            {
+
+                                <tr id="no1">
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td class="smart-form">
+
+                                        <label class="textarea textarea-resizable">
+                                            @Html.Hidden("HR_TINDAKAN_DISIPLIN[" + item + "].HR_NO_PEKERJA", Model.HR_TINDAKAN_DISIPLIN.ElementAt(item).HR_NO_PEKERJA, new { @class = "form-control", disabled = "disabled" })
+                                            @Html.TextArea("HR_TINDAKAN_DISIPLIN[" + item + "].HR_KESALAHAN", Model.HR_TINDAKAN_DISIPLIN.ElementAt(item).HR_KESALAHAN, htmlAttributes: new { @class = "form-control", disabled = "disabled", rows = 5 })
+
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_TINDAKAN_DISIPLIN[" + item + "].HR_TARIKH_KESALAHAN", string.Format("{0:dd/MM/yyyy}", Model.HR_TINDAKAN_DISIPLIN.ElementAt(item).HR_TARIKH_KESALAHAN), new { @class = "form-control HR_TARIKH_KESALAHAN", disabled = "disabled", size = 9 })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_TINDAKAN_DISIPLIN[" + item + "].HR_KOD_TINDAKAN", new SelectList(ViewBag.HR_TINDAKAN, "Value", "Text", Model.HR_TINDAKAN_DISIPLIN.ElementAt(item).HR_KOD_TINDAKAN), string.Empty, new { @class = "form-control", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_TINDAKAN_DISIPLIN[" + item + "].HR_TARIKH_MULA", string.Format("{0:dd/MM/yyyy}", Model.HR_TINDAKAN_DISIPLIN.ElementAt(item).HR_TARIKH_MULA), new { @class = "form-control HR_TARIKH_MULA_TINDAKAN", disabled = "disabled", size = 9 })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_TINDAKAN_DISIPLIN[" + item + "].HR_TARIKH_AKHIR", string.Format("{0:dd/MM/yyyy}", Model.HR_TINDAKAN_DISIPLIN.ElementAt(item).HR_TARIKH_AKHIR), new { @class = "form-control HR_TARIKH_AKHIR_TINDAKAN", disabled = "disabled", size = 9 })
+                                        </label>
+                                    </td>
+
+                                    <td align="center">
+                                        <button class="btn btn-success btn-add-Tatatertib" name="Tambah_Tatatertib" type="button" disabled="disabled">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+
+
+
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <label class="">Kemaskini : </label>
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mTatatertib-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mTatatertib-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" name="kemaskini" class="form-control" value="off">
+            </div>
+        </div>
+    </div>
+</div>

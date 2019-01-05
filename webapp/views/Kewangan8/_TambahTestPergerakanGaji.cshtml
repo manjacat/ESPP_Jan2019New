@@ -1,0 +1,897 @@
+﻿@model IEnumerable<eSPP.Models.PergerakanGajiModels>
+<fieldset>
+    <legend>
+        Senarai Pekerja
+    </legend>
+
+
+
+    <table id="datatable_tabletools" class="table table-striped table-bordered table-hover" width="100%">
+        <thead class="smart-form">
+            <tr>
+                <th>
+                    <label class="checkbox">
+                        <input type="checkbox" name="pilihPekerja" checked="checked">
+                        <i></i>
+                    </label>
+                </th>
+                <th data-class="expand" width="30%">Nama Pekerja</th>
+                <th data-hide="phone,tablet">Jenis Pergerakan Gaji</th>
+                <th data-hide="phone,tablet">Gred</th>
+                <th data-hide="phone,tablet">Gaji Min/Max</th>
+
+                <th data-hide="phone,tablet">Pergerakan Gaji Pokok</th>
+                <th data-hide="phone,tablet">Matriks Gaji</th>
+                <th data-hide="phone,tablet">Perubahan Gaji Pokok</th>
+            </tr>
+        </thead>
+        <tbody class="smart-form">
+            @for (var item = 0; item < Model.Count(); item++)
+            {
+                <tr>
+                    <td valign="middle">
+                        <label class="checkbox">
+                            @if (Model.ElementAt(item).CHECKED == 1)
+                            {
+                                <input type="checkbox" name="[@item].HR_NO_PEKERJA2" class="form-control HR_NO_PEKERJA2" id="@(item)__HR_NO_PEKERJA2" value="@Model.ElementAt(item).HR_NO_PEKERJA" checked="checked">
+                            }
+                            else
+                            {
+                                <input type="checkbox" name="[@item].HR_NO_PEKERJA2" class="form-control HR_NO_PEKERJA2" id="@(item)__HR_NO_PEKERJA2" value="@Model.ElementAt(item).HR_NO_PEKERJA" disabled="disabled">
+                            }
+
+                            <i></i>
+                        </label>
+
+                    </td>
+                    <td valign="middle">
+                        @Html.DisplayFor(model => Model.ElementAt(item).HR_NAMA_PEKERJA)
+                        <br />
+                        <strong>No KP :</strong> @Html.DisplayFor(model => Model.ElementAt(item).HR_NO_KPBARU)
+                        <br />
+                        <strong>No Pekerja :</strong> @Html.DisplayFor(model => Model.ElementAt(item).HR_NO_PEKERJA)
+                    </td>
+                    <td valign="middle">
+                        @if (Model.ElementAt(item).CHECKED == 1)
+                        {
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButton("[" + item + "].HR_JENIS_PERGERAKAN2", "D", isChecked: (Model.ElementAt(item).HR_JENIS_PERGERAKAN == "D") ? true : false, htmlAttributes: new { @class = "form-control HR_JENIS_PERGERAKAN2" })
+                                    <i></i>Mendatar
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButton("[" + item + "].HR_JENIS_PERGERAKAN2", "S", isChecked: (Model.ElementAt(item).HR_JENIS_PERGERAKAN == "S") ? true : false, htmlAttributes: new { @class = "form-control HR_JENIS_PERGERAKAN2" })
+                                    <i></i>Statik
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButton("[" + item + "].HR_JENIS_PERGERAKAN2", "J", isChecked: (Model.ElementAt(item).HR_JENIS_PERGERAKAN == "J") ? true : false, htmlAttributes: new { @class = "form-control HR_JENIS_PERGERAKAN2" })
+                                    <i></i>Anjakan
+                                </label>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButton("[" + item + "].HR_JENIS_PERGERAKAN2", "D", isChecked: (Model.ElementAt(item).HR_JENIS_PERGERAKAN == "D") ? true : false, htmlAttributes: new { @class = "form-control HR_JENIS_PERGERAKAN2", @readonly = "readonly" })
+                                    <i></i>Mendatar
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButton("[" + item + "].HR_JENIS_PERGERAKAN2", "S", isChecked: (Model.ElementAt(item).HR_JENIS_PERGERAKAN == "S") ? true : false, htmlAttributes: new { @class = "form-control HR_JENIS_PERGERAKAN2", @readonly = "readonly" })
+                                    <i></i>Statik
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButton("[" + item + "].HR_JENIS_PERGERAKAN2", "J", isChecked: (Model.ElementAt(item).HR_JENIS_PERGERAKAN == "J") ? true : false, htmlAttributes: new { @class = "form-control HR_JENIS_PERGERAKAN2", @readonly = "readonly" })
+                                    <i></i>Anjakan
+                                </label>
+                            </div>
+                        }
+                    </td>
+                    <td valign="middle">
+                        <strong>Lama :</strong>
+                        <br />
+                        <label class="input">
+                            @Html.TextBox("[" + item + "].HR_GRED_LAMA2", Model.ElementAt(item).HR_GRED_LAMA, new { @class = "form-control HR_GRED_LAMA2", list = "list-gred", disabled = "disabled" })
+                        </label>
+                        <br />
+                        <strong>Baru :</strong>
+                        <br />
+                        <label class="input">
+                            @Html.TextBox("[" + item + "].HR_GRED2", Model.ElementAt(item).HR_GRED, new { @class = "form-control HR_GRED2", list = "list-gred", @readonly = "readonly" })
+                            <datalist id="list-gred">
+                                @foreach (GE_PARAMTABLE gred in ViewBag.gred)
+                                {
+                                    <option value="@gred.SHORT_DESCRIPTION" data-value="@gred.ORDINAL">@gred.ORDINAL</option>
+                                }
+                            </datalist>
+                        </label>
+                    </td>
+                    <td valign="middle">
+                        <strong>Min Baru:</strong>
+                        <br />
+                        <label class="input">
+                            @Html.TextBox("[" + item + "].HR_GAJI_MIN2", Model.ElementAt(item).HR_GAJI_MIN, new { @class = "form-control HR_GAJI_MIN2", list = "list-min", @readonly = "readonly" })
+                            <datalist id="list-min"></datalist>
+                        </label>
+                        <br />
+                        <strong>Max Baru:</strong>
+                        <br />
+                        <label class="input">
+                            @Html.TextBox("[" + item + "].HR_GAJI_MAX2", Model.ElementAt(item).HR_GAJI_MAX, new { @class = "form-control HR_GAJI_MAX2", list = "list-max", @readonly = "readonly" })
+                            <datalist id="list-max"></datalist>
+                        </label>
+                    </td>
+                    <td valign="middle">
+                        <strong>Lama :</strong>
+                        <br />
+                        <label class="input">
+                            @Html.TextBox("[" + item + "].HR_GAJI_LAMA2", Model.ElementAt(item).HR_GAJI_LAMA, new { @class = "form-control HR_GAJI_LAMA2", disabled = "disabled" })
+                            <datalist id="list-gaji"></datalist>
+                        </label>
+                        <br />
+                        <strong>Baru :</strong>
+                        <br />
+                        <label class="input">
+                            @Html.TextBox("[" + item + "].HR_GAJI_BARU2", Model.ElementAt(item).HR_GAJI_BARU, new { @class = "form-control HR_GAJI_BARU2", id = "HR_GAJI_BARU", list = "list-gaji", @readonly = "readonly" })
+                            <datalist id="list-gaji"></datalist>
+                        </label>
+                    </td>
+                    <td valign="middle">
+                        <strong>Lama :</strong>
+                        <br />
+                        <label class="input">
+                            @Html.TextBox("[" + item + "].HR_MATRIKS_GAJI_LAMA2", Model.ElementAt(item).HR_MATRIKS_GAJI_LAMA, new { @class = "form-control HR_MATRIKS_GAJI_LAMA2", disabled = "disabled" })
+                        </label>
+                        <br />
+                        <strong>Baru :</strong>
+                        <br />
+                        <label class="input">
+                            @Html.TextBox("[" + item + "].HR_MATRIKS_GAJI2", Model.ElementAt(item).HR_MATRIKS_GAJI, new { @class = "form-control HR_MATRIKS_GAJI2", @readonly = "readonly" })
+                        </label>
+                    </td>
+                    <td valign="bottom" style="vertical-align:bottom">
+                        <label class="input">
+                            @Html.TextBox("[" + item + "].HR_JUMLAH_PERUBAHAN2", Model.ElementAt(item).HR_JUMLAH_PERUBAHAN, new { @class = "form-control HR_JUMLAH_PERUBAHAN2", @readonly = "readonly" })
+                        </label>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @using (Html.BeginForm("TestPergerakanGaji", "Kewangan8", FormMethod.Post, new { id = "form-pergerakangaji" }))
+    {
+        List<HR_MAKLUMAT_PERIBADI> sPegawai = (List<HR_MAKLUMAT_PERIBADI>)ViewBag.sPegawai;
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.Hidden("key2", (string)ViewBag.key)
+        @Html.Hidden("value2", (string)ViewBag.value)
+        @Html.Hidden("bulan2", (int?)ViewBag.bulan)
+        <div class="modal fade" id="Modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='ModalContent'>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                Tambah Pergerakan Gaji <span class="error"></span>
+                            </h4>
+                        </div>
+                        <div class="modal-body no-padding smart-form">
+                            <div id="getChecked"></div>
+                            <fieldset>
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Jenis Perubahan</label>
+                                        <div class="col col-8">
+                                            <label class="input">
+                                                @Html.Hidden("HR_KOD_PERUBAHAN", null)
+                                                @Html.TextBox("HR_PENERANGAN", null, new { @class = "form-control", disabled = "disabled" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">No. Surat Kebenaran</label>
+                                        <div class="col col-8">
+                                            <label class="input">
+                                                @Html.TextBox("HR_NO_SURAT_KEBENARAN", null, new { @class = "form-control" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Butir-Butir Perubahan</label>
+                                        <div class="col col-8">
+                                            <label class="textarea textarea-resizable">
+                                                @Html.TextArea("HR_BUTIR_PERUBAHAN", null, new { @class = "form -control custom-scroll", rows = "5" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Nama Pegawai Pengesahan</label>
+                                        <div class="col col-8">
+                                            <label class="input">
+                                                @Html.Hidden("HR_NP_FINALISED_HR", null)
+                                                @Html.TextBox("HR_NAMA_PEGAWAI", (string)ViewBag.HR_NAMA_PEGAWAI, new { @class = "form-control", list = "list-pegawai", autocomplete = "off" })
+                                                <datalist id="list-pegawai">
+                                                    @foreach (var pegawai in sPegawai)
+                                                    {
+                                                        <option value="@(pegawai.HR_NAMA_PEKERJA)" data-value="@pegawai.HR_NO_PEKERJA"></option>
+                                                    }
+                                                </datalist>
+
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <div id="statusdata">
+                                    <section>
+                                        <div class="row">
+                                            <label class="label col col-4">Status Data</label>
+                                            <div class="col col-8">
+                                                <label class="select">
+                                                    @Html.DropDownList("HR_FINALISED_IND_HR", new SelectList(ViewBag.pengesahan, "Value", "Text"), new { @class = "form-control" })
+                                                    <i></i>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+
+                            </fieldset>
+
+                            <footer>
+                                <button type="submit" id="btn" class="btn btn-primary">
+                                    <span class="fa fa-save"></span> Simpan
+                                </button>
+                                <button type="reset" class="btn btn-default">
+                                    Reset
+                                </button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    Kembali
+                                </button>
+                            </footer>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</fieldset>
+
+<script type="text/javascript">
+
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+        $(document).ready(function () {
+
+            /* // DOM Position key index //
+
+            l - Length changing (dropdown)
+            f - Filtering input (search)
+            t - The Table! (datatable)
+            i - Information (records)
+            p - Pagination (paging)
+            r - pRocessing
+            < and > - div elements
+            <"#id" and > - div with an id
+            <"class" and > - div with a class
+            <"#id.class" and > - div with an id and class
+
+            Also see: http://legacy.datatables.net/usage/features
+            */
+
+            /* BASIC ;*/
+            var responsiveHelper_dt_basic = undefined;
+            var responsiveHelper_datatable_fixed_column = undefined;
+            var responsiveHelper_datatable_col_reorder = undefined;
+            var responsiveHelper_datatable_tabletools = undefined;
+
+            var breakpointDefinition = {
+                desktop: Infinity,
+                tablet: 1024,
+                phone: 480
+            };
+
+            $('#dt_basic').dataTable({
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>" +
+                    "t" +
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+                "autoWidth": true,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_dt_basic) {
+                        responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_dt_basic.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_dt_basic.respond();
+                }
+            });
+
+            /* END BASIC */
+
+            /* COLUMN FILTER  */
+            var otable = $('#datatable_fixed_column').DataTable({
+                //"bFilter": false,
+                //"bInfo": false,
+                //"bLengthChange": false
+                //"bAutoWidth": false,
+                //"bPaginate": false,
+                //"bStateSave": true // saves sort state using localStorage
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+                "autoWidth": true,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_datatable_fixed_column) {
+                        responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_datatable_fixed_column.respond();
+                }
+
+            });
+
+            // custom toolbar
+            $("div.toolbar").html('<div class="text-right"><img src="/Content/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+
+            // Apply the filter
+            $("#datatable_fixed_column thead th input[type=text]").on('keyup change', function () {
+
+                otable
+                    .column($(this).parent().index() + ':visible')
+                    .search(this.value)
+                    .draw();
+
+            });
+            /* END COLUMN FILTER */
+
+            /* COLUMN SHOW - HIDE */
+            $('#datatable_col_reorder').dataTable({
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'C>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                "autoWidth": true,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_datatable_col_reorder) {
+                        responsiveHelper_datatable_col_reorder = new ResponsiveDatatablesHelper($('#datatable_col_reorder'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_datatable_col_reorder.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_datatable_col_reorder.respond();
+                }
+            });
+
+            /* END COLUMN SHOW - HIDE */
+
+            /* TABLETOOLS */
+            var table4 = $('#datatable_tabletools').dataTable({
+
+                // Tabletools options:
+                //   https://datatables.net/extensions/tabletools/button_options
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-4'f><'col-xs-12 col-sm-4'<'btn-jenis'>><'col-sm-4 col-xs-12 hidden-xs'l<'btn-add'>>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                /*"oTableTools": {
+                    "aButtons": [
+                    "copy",
+                    "csv",
+                    "xls",
+                       {
+                           "sExtends": "pdf",
+                           "sTitle": "SmartAdmin_PDF",
+                           "sPdfMessage": "SmartAdmin PDF Export",
+                           "sPdfSize": "letter"
+                       },
+                       {
+                           "sExtends": "print",
+                           "sMessage": "Generated by SmartAdmin <i>(press Esc to close)</i>"
+                       }
+                    ],
+                    "sSwfPath": "/Scripts/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+                },*/
+                "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "Semua"]],
+                'iDisplayLength': -1,
+                //"bSortClasses": false,
+                "scrollY": "700px",
+                "scrollCollapse": true,
+                "paging": false,
+                "autoWidth": false,
+                "preDrawCallback": function () {
+                    // Initialize the responsive datatables helper once.
+                    if (!responsiveHelper_datatable_tabletools) {
+                        responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#datatable_tabletools'), breakpointDefinition);
+                    }
+                },
+                "rowCallback": function (nRow) {
+                    responsiveHelper_datatable_tabletools.createExpandIcon(nRow);
+                },
+                "drawCallback": function (oSettings) {
+                    responsiveHelper_datatable_tabletools.respond();
+                }
+            });
+
+            $("div.btn-add").html('<div class="text-right">' +
+                '<button type = "button" name = "Tambah" id = "btn-tambah" class = "btn btn-default btn-success" title = "Tambah Pergerakan Gaji"><i class = "fa fa-plus"></i></button>' +
+                '</div>');
+
+            $("div.btn-jenis").html('<div class = "smart-form"><div class="inline-group">' +
+                                        '<label class="radio">' +
+                                            '<input type="radio" name="jenisPergerakan" value="D" checked="checked">' +
+                                            '<i></i>Mendatar' +
+                                        '</label>' +
+                                        '<label class="radio">' +
+                                            '<input type="radio" name="jenisPergerakan" value="S">' +
+                                            '<i></i>Statik' +
+                                        '</label>' +
+                                        '<label class="radio">' +
+                                            '<input type="radio" name="jenisPergerakan" value="J">' +
+                                            '<i></i>Anjakan' +
+                                        '</label>' +
+                                    '</div></div>');
+
+            /* END TABLETOOLS */
+
+            @*if('@ViewBag.key' == "1")
+            {
+                $.ajax({
+                    type: "GET",
+                    url: "../Kewangan8/TableKew8",
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": '@ViewBag.value', "key": '@ViewBag.key', "value": '@ViewBag.value', "kod" : "00025" },
+                    //datatype: "html",
+                    success: function (data) {
+                        //view.css({ "display": "none" });
+                        $("#lihatInfo").removeClass("lihatInfo").addClass("tutupInfo");
+                        $("#lihatInfo").text("Tutup Info");
+                        //view.parents(".parentView").find("#formpergerakangaji").addClass("hide");
+                        $("#showTable").html(data)
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            }*@
+
+            @*$(document).on("click", ".lihatInfo", function () {
+                var view = $(this);
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+
+                if ('@ViewBag.key' == "2") {
+                    window.location = "../Kewangan8/TahanGaji?key=1&value=" + id + "&kod=00025";
+                }
+                else {
+                    $.ajax({
+                        type: "GET",
+                        url: "../Kewangan8/TableKew8",
+                        contentType: "application/json; charset=utf-8",
+                        data: { "Id": id, "key": '@ViewBag.key', "value": '@ViewBag.value', "kod" : "00025" },
+                        //datatype: "html",
+                        success: function (data) {
+                            //view.css({ "display": "none" });
+                            view.removeClass("lihatInfo").addClass("tutupInfo");
+                            view.text("Tutup Info");
+                            //view.parents(".parentView").find("#formpergerakangaji").addClass("hide");
+                            $("#showTable").html(data)
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+                }
+
+            }).on("click", ".tutupInfo", function () {
+                $(this).removeClass("tutupInfo").addClass("lihatInfo");
+                $(this).text("Lihat Info");
+                //$(this).parents(".parentView").find("#formpergerakangaji").removeClass("hide");
+                $("#showTable").html("")
+
+
+            });*@
+
+
+
+            $("#HR_NAMA_PEGAWAI").on('input', function () {
+                $("#statusdata").html("");
+                if ($(this).val().length >= 4) {
+                    $.get("../Kewangan8/CariPegawai2", { HR_NP_FINALISED_HR: $("#HR_NAMA_PEGAWAI").val() }, function (data) {
+                        if (data != false) {
+                            $("#HR_NAMA_PEGAWAI").val(data.HR_NAMA_PEKERJA);
+                            $("#HR_NP_FINALISED_HR").val(data.HR_NO_PEKERJA);
+
+                            if ('@ViewBag.HR_NAMA_PEGAWAI' == data.HR_NAMA_PEKERJA) {
+                                var html = '<section>' +
+                                                '<div class="row">' +
+                                                    '<label class="label col col-4">Status Data</label>' +
+                                                    '<div class="col col-8">' +
+                                                        '<label class="select">' +
+                                                            '<select class="form-control" id="HR_FINALISED_IND_HR" name="HR_FINALISED_IND_HR">' +
+                                                                '<option value="T">Baru</option>' +
+                                                                '<option value="P">Proses</option>' +
+                                                                '<option value="Y">Muktamad</option>' +
+                                                            '<select>' +
+                                                        '</label>' +
+                                                    '</div>' +
+                                                '</div>' +
+                                            '</section>';
+                                $("#statusdata").html(html);
+                            }
+                            else {
+                                $("#statusdata").html("");
+                            }
+                        }
+                    })
+                }
+
+            });
+
+            $("#HR_NAMA_PEGAWAI").on("click", function () {
+                $(this).focus(function () { $(this).select(); });
+            })
+
+            $(".HR_NO_PEKERJA2").on("click", this, function () {
+                var VIEW = $(this).parents("tr");
+                if ($(this).is(':checked') == true) {
+                    VIEW.find("td .HR_JENIS_PERGERAKAN2").removeAttr("disabled");
+                    VIEW.find("td .HR_GRED2").removeAttr("disabled");
+                    VIEW.find("td .HR_GAJI_MIN2").removeAttr("disabled");
+                    VIEW.find("td .HR_GAJI_MAX2").removeAttr("disabled");
+                    VIEW.find("td .HR_GAJI_BARU2").removeAttr("disabled");
+                    VIEW.find("td .HR_MATRIKS_GAJI2").removeAttr("disabled").attr("readonly", "readonly");
+                    VIEW.find("td .HR_JUMLAH_PERUBAHAN2").removeAttr("disabled").attr("readonly", "readonly");
+                    if (VIEW.find("td .HR_JENIS_PERGERAKAN2:checked").val() != "J") {
+                        VIEW.find("td .HR_GRED2").attr("readonly", "readonly");
+                        VIEW.find("td .HR_GAJI_MIN2").attr("readonly", "readonly");
+                        VIEW.find("td .HR_GAJI_MAX2").attr("readonly", "readonly");
+                        VIEW.find("td .HR_GAJI_BARU2").attr("readonly", "readonly");
+                    }
+                }
+                else {
+                    VIEW.find("td .HR_JENIS_PERGERAKAN2").attr("disabled", "disabled");
+                    VIEW.find("td .HR_GRED2").attr("disabled", "disabled");
+                    VIEW.find("td .HR_GAJI_MIN2").attr("disabled", "disabled");
+                    VIEW.find("td .HR_GAJI_MAX2").attr("disabled", "disabled");
+                    VIEW.find("td .HR_GAJI_BARU2").attr("disabled", "disabled");
+                    VIEW.find("td .HR_MATRIKS_GAJI2").attr("disabled", "disabled");
+                    VIEW.find("td .HR_JUMLAH_PERUBAHAN2").attr("disabled", "disabled");
+                }
+            });
+
+            function JenisPergerakanBtn(VIEW, VALUE) {
+                VIEW.find("td .HR_GAJI_MIN2").val("");
+                VIEW.find("td .HR_GAJI_MAX2").val("");
+                VIEW.find("td .HR_GAJI_BARU2").val("");
+                VIEW.find("td .HR_MATRIKS_GAJI2").val("");
+                VIEW.find("td .HR_JUMLAH_PERUBAHAN2").val("");
+
+                VIEW.find("td #list-min").html('<option></option>');
+                VIEW.find("td #list-max").html('<option></option>');
+                if (VALUE == "J") {
+                    VIEW.find("td .HR_GRED2").removeAttr("readonly");
+                    VIEW.find("td .HR_GAJI_MIN2").removeAttr("readonly");
+                    VIEW.find("td .HR_GAJI_MAX2").removeAttr("readonly");
+                    VIEW.find("td .HR_GAJI_BARU2").removeAttr("readonly");
+                    VIEW.find("td .HR_JUMLAH_PERUBAHAN2").removeAttr("readonly");
+
+                    $.ajax({
+                        url: "../Kewangan8/GajiMin",
+                        type: "GET",
+                        data: { HR_GRED: VIEW.find("td .HR_GRED2").val() },
+                        dataType: "Json",
+                        success: function (data) {
+                            $.each(data, function (i, v) {
+                                VIEW.find("td #list-min").append($("<option></option>").val(v.HR_GAJI_MIN).attr("data-value", v.HR_PERINGKAT))
+                            })
+                        }
+                    });
+                }
+                else if (VALUE == "S" || VALUE == "D") {
+                    VIEW.find("td .HR_GRED2").attr("readonly", "readonly");
+                    VIEW.find("td .HR_GAJI_MIN2").attr("readonly", "readonly");
+                    VIEW.find("td .HR_GAJI_MAX2").attr("readonly", "readonly");
+                    VIEW.find("td .HR_GAJI_BARU2").attr("readonly", "readonly");
+                    VIEW.find("td .HR_JUMLAH_PERUBAHAN2").attr("readonly", "readonly");
+
+                    $.ajax({
+                        url: "../Kewangan8/JenisPergerakan",
+                        type: "GET",
+                        data: { HR_NO_PEKERJA: VIEW.find("td .HR_NO_PEKERJA2").val(), HR_JENIS_PERGERAKAN: VALUE },
+                        dataType: "Json",
+                        success: function (data) {
+                            VIEW.find("td .HR_GRED2").val(data.HR_GRED);
+                            VIEW.find("td .HR_GAJI_MIN2").val((parseFloat(data.HR_GAJI_MIN)).toFixed(2));
+                            VIEW.find("td .HR_GAJI_MAX2").val((parseFloat(data.HR_GAJI_MAX)).toFixed(2));
+                            VIEW.find("td .HR_GAJI_BARU2").val((parseFloat(data.HR_GAJI_BARU)).toFixed(2));
+                            VIEW.find("td .HR_MATRIKS_GAJI2").val(data.HR_MATRIKS_GAJI);
+                            VIEW.find("td .HR_JUMLAH_PERUBAHAN2").val((parseFloat(data.HR_JUMLAH_PERUBAHAN)).toFixed(2));
+                        }
+                    })
+                }
+            }
+
+            $(".HR_JENIS_PERGERAKAN2").on("click", this, function () {
+                var VIEW = $(this).parents("tr");
+                var VALUE = $(this).val();
+                JenisPergerakanBtn(VIEW, VALUE);
+                //VIEW.find(".HR_GRED").val("");
+
+            });
+            var gred = {};
+            $("#list-gred option").each(function (i, el) {
+                gred[$(el).data("value")] = $(el).val();
+            });
+
+            $(".HR_GRED2, .HR_GAJI_MIN2, .HR_GAJI_MAX2, #HR_GAJI_BARU2").on("input", function () {
+                var VIEW = $(this).parents("tr");
+                VIEW.find("td .HR_MATRIKS_GAJI2").val("");
+                debugger;
+                if ($(this).attr("id") != "HR_GAJI_BARU2") {
+                    VIEW.find("td .HR_GAJI_BARU2").val("");
+                    VIEW.find("td #list-gaji").html('<option></option>');
+
+                    if (VIEW.find("td .HR_GRED2").val() != "" && VIEW.find("td .HR_GAJI_MIN2").val() != "" && VIEW.find("td .HR_GAJI_MAX2").val() != "") {
+                        $.ajax({
+                            url: "../Kewangan8/GajiPokok",
+                            type: "GET",
+                            data: { HR_GRED: VIEW.find("td .HR_GRED2").val(), HR_GAJI_MIN: VIEW.find("td .HR_GAJI_MIN2").val(), HR_GAJI_MAX: VIEW.find("td .HR_GAJI_MAX2").val() },
+                            dataType: "Json",
+                            success: function (data) {
+                                $.each(data, function (i, v) {
+                                    VIEW.find("td #list-gaji").append($("<option></option>").val((parseFloat(v.HR_GAJI_POKOK)).toFixed(2)))
+                                })
+                            }
+                        })
+                    }
+                }
+                if (VIEW.find("td .HR_GRED2").val() != "" && VIEW.find("td .HR_GAJI_BARU2").val() != "") {
+                    $.ajax({
+                        url: "../Kewangan8/KodMatriks",
+                        type: "GET",
+                        data: { HR_GRED: VIEW.find("td .HR_GRED2").val(), HR_GAJI_POKOK: VIEW.find("td .HR_GAJI_BARU2").val() },
+                        dataType: "Json",
+                        success: function (data) {
+                            var tahap = parseFloat(data.HR_TAHAP);
+                            VIEW.find("td .HR_MATRIKS_GAJI2").val("P" + data.HR_PERINGKAT + "T" + (parseFloat(tahap)).toFixed(2))
+                        }
+                    })
+                }
+
+            })
+
+            $(".HR_GRED2").on('input', function () {
+                var VIEW = $(this).parents("tr");
+                VIEW.find("td .HR_GAJI_MIN2").val("");
+                VIEW.find("td .HR_GAJI_MAX2").val("");
+                VIEW.find("td .HR_JUMLAH_PERUBAHAN2").val("");
+                VIEW.find("td .HR_GAJI_BARU2").val("");
+                VIEW.find("td .HR_MATRIKS_GAJI2").val("");
+
+                VIEW.find("td #list-min").html('<option></option>');
+                VIEW.find("td #list-max").html('<option></option>');
+                VIEW.find("td #list-gaji").html('<option></option>');
+                var value = $(this).val();
+                $.ajax({
+                    url: "../Kewangan8/GajiMin",
+                    type: "GET",
+                    data: { HR_GRED: value },
+                    dataType: "Json",
+                    success: function (data) {
+                        $.each(data, function (i, v) {
+                            VIEW.find("td #list-min").append($("<option></option>").val((parseFloat(v.HR_GAJI_MIN)).toFixed(2)).attr("data-value", v.HR_PERINGKAT))
+                        })
+
+                    }
+                })
+            });
+
+
+            $(".HR_GAJI_MIN2").on('input', function () {
+                var VIEW = $(this).parents("tr");
+                VIEW.find("td .HR_GAJI_MAX2").val("");
+                VIEW.find("td .HR_JUMLAH_PERUBAHAN2").val("");
+                VIEW.find("td .HR_GAJI_BARU2").val("");
+
+                VIEW.find("td #list-max").html('<option></option>');
+                VIEW.find("td #list-gaji").html('<option></option>');
+                var value = $(this).val();
+                $.ajax({
+                    url: "../Kewangan8/GajiMax",
+                    type: "GET",
+                    data: { HR_GAJI_MIN: $(this).val(), HR_GRED: VIEW.find('td .HR_GRED2').val() },
+                    dataType: "Json",
+                    success: function (data) {
+                        $.each(data, function (i, v) {
+                            VIEW.find("td #list-max").append($("<option></option>").val((parseFloat(v.HR_GAJI_MAX)).toFixed(2)).attr("data-value", v.HR_TAHAP))
+                        })
+
+                    }
+                })
+            });
+
+            $(".HR_GAJI_BARU2").on('input', function () {
+                var VIEW = $(this).parents("tr");
+                VIEW.find(".HR_JUMLAH_PERUBAHAN2").val("");
+                VIEW.find("td .HR_MATRIKS_GAJI2").val("");
+                var value = $(this).val();
+                $.ajax({
+                    url: "../Kewangan8/PerubahanGaji",
+                    type: "GET",
+                    data: { HR_NO_PEKERJA: VIEW.find("td .HR_NO_PEKERJA2").val(), HR_GAJI_BARU: $(this).val() },
+                    dataType: "Json",
+                    success: function (data) {
+                        VIEW.find("td .HR_JUMLAH_PERUBAHAN2").val((parseFloat(data)).toFixed(2))
+
+                    }
+                })
+            });
+            $("input[name='pilihPekerja']").on("click", function () {
+                $(".HR_NO_PEKERJA2:not([disabled = 'disabled'])").prop('checked', this.checked);
+                if (this.checked == true)
+                {
+                    $(".HR_NO_PEKERJA2:not([disabled = 'disabled'])").attr("checked", "checked")
+                    $("#datatable_tabletools tr").each(function () {
+                        var VIEW = $(this);
+                        VIEW.find("td .HR_JENIS_PERGERAKAN2").removeAttr("disabled");
+                        VIEW.find("td .HR_GRED2").removeAttr("disabled");
+                        VIEW.find("td .HR_GAJI_MIN2").removeAttr("disabled");
+                        VIEW.find("td .HR_GAJI_MAX2").removeAttr("disabled");
+                        VIEW.find("td .HR_GAJI_BARU2").removeAttr("disabled");
+                        VIEW.find("td .HR_MATRIKS_GAJI2").removeAttr("disabled").attr("readonly", "readonly");
+                        VIEW.find("td .HR_JUMLAH_PERUBAHAN2").removeAttr("disabled").attr("readonly", "readonly");
+                        if (VIEW.find("td .HR_JENIS_PERGERAKAN2:checked").val() != "J") {
+                            VIEW.find("td .HR_GRED2").attr("readonly", "readonly");
+                            VIEW.find("td .HR_GAJI_MIN2").attr("readonly", "readonly");
+                            VIEW.find("td .HR_GAJI_MAX2").attr("readonly", "readonly");
+                            VIEW.find("td .HR_GAJI_BARU2").attr("readonly", "readonly");
+                        }
+                    })
+                }
+                else
+                {
+                    $(".HR_NO_PEKERJA2:not([disabled = 'disabled'])").removeAttr("checked")
+                    $("#datatable_tabletools tr").each(function () {
+                        var VIEW = $(this);
+                        VIEW.find("td .HR_JENIS_PERGERAKAN2").attr("disabled", "disabled");
+                        VIEW.find("td .HR_GRED2").attr("disabled", "disabled");
+                        VIEW.find("td .HR_GAJI_MIN2").attr("disabled", "disabled");
+                        VIEW.find("td .HR_GAJI_MAX2").attr("disabled", "disabled");
+                        VIEW.find("td .HR_GAJI_BARU2").attr("disabled", "disabled");
+                        VIEW.find("td .HR_MATRIKS_GAJI2").attr("disabled", "disabled");
+                        VIEW.find("td .HR_JUMLAH_PERUBAHAN2").attr("disabled", "disabled");
+                    })
+                }
+                $("#jumPilih").html($(".HR_NO_PEKERJA2:checked").length);
+
+                if ($(".HR_NO_PEKERJA2:checked").length <= 0) {
+                    $("#btn-tambah").attr("disabled", "disabled")
+                }
+                else {
+                    $("#btn-tambah").removeAttr("disabled")
+                }
+
+            });
+            $(".HR_NO_PEKERJA2").on("click", function () {
+                if ($(this).is("checked") == false) {
+                    $("input[name='pilihPekerja']").prop('checked', false);
+                }
+                if ($(".HR_NO_PEKERJA2:checked").length >= '@ViewBag.countKew8') {
+                    $("input[name='pilihPekerja']").prop('checked', true);
+                }
+
+                if ($(".HR_NO_PEKERJA2:checked").length <= 0) {
+                    $("#btn-tambah").attr("disabled", "disabled")
+                }
+                else {
+                    $("#btn-tambah").removeAttr("disabled")
+                }
+
+                if (this.checked == true)
+                {
+                    $(this).attr("checked", "checked");
+                }
+                else
+                {
+                    $(this).removeAttr("checked");
+                }
+                $("#jumPilih").html($(".HR_NO_PEKERJA2:checked").length)
+
+            });
+            $("input[name='jenisPergerakan']").on("click", function () {
+                //$("input[type='radio'].HR_JENIS_PERGERAKAN").val();
+
+                $("#datatable_tabletools tbody tr").each(function () {
+                    $(this).find("td:eq(2) input[type='radio']:checked").removeAttr("checked");
+                })
+
+                var VALUE = $(this).val();
+                $("input[value=" + $(this).val() + "].HR_JENIS_PERGERAKAN2").prop('checked', true).attr("checked", "checked");
+                $("#datatable_tabletools tr").each(function () {
+                    var VIEW = $(this);
+
+                    JenisPergerakanBtn(VIEW, VALUE);
+                })
+            });
+
+            //$("#datatable_tabletools input[type='search']").on("keyup", function () {
+            //    alert(table4.data().count())
+            //    var item = $("input[value='" + $(this).val() + "'].noPekerja").parents(".parentView");
+            //    if (item.length > 0) {
+            //        $("#kepala").removeAttr("style");
+            //        item.addClass("viewItem");
+            //        var notItem = $(".parentView").not(".viewItem");
+            //        notItem.each(function () {
+            //            $(this).addClass("hide")
+            //        })
+            //    }
+            //    else {
+            //        $("#kepala").css({ "overflow-y": "scroll", "height": "3000px" })
+            //        $(".parentView").each(function () {
+            //            $(this).removeClass("viewItem");
+            //            $(this).removeClass("hide")
+            //        });
+            //    }
+
+            //});
+            //$("#btn-approve").on("click", function (e) {
+            //    e.preventDefault();
+            //    $("#form-tambah").attr("action", "../Kewangan8/PengesahanPergerakanGaji")
+            //    $("#form-tambah").submit();
+            //})
+
+            $("#btn-tambah").on("click", function () {
+                $("#getChecked").html("");
+                var no = 0;
+                $("#datatable_tabletools tbody tr").each(function () {
+                    if ($(this).find("td:eq(0) input[type='checkbox']").is(":checked") == true) {
+                        var data1 = $(this).find("td:eq(0) input[type='checkbox']");
+                        var data2 = $(this).find("td:eq(2) input:checked");
+                        var data3 = $(this).find("td:eq(3) input:eq(1)");
+                        var data4 = $(this).find("td:eq(4) input:eq(0)");
+                        var data5 = $(this).find("td:eq(4) input:eq(1)");
+                        var data6 = $(this).find("td:eq(5) input:eq(1)");
+                        var data7 = $(this).find("td:eq(6) input:eq(1)");
+                        var data8 = $(this).find("td:eq(7) input:eq(1)");
+                        $("#getChecked").append("<input type='hidden' name='[" + no + "].HR_NO_PEKERJA' class='HR_NO_PEKERJA' id='" + no + "__HR_NO_PEKERJA' value='" + data1.val() + "' />"+
+                                                "<input type='hidden' name='[" + no + "].HR_JENIS_PERGERAKAN' class='HR_JENIS_PERGERAKAN' id='" + no + "__HR_JENIS_PERGERAKAN' value='" + data2.val() + "' />" +
+                                                "<input type='hidden' name='[" + no + "].HR_GRED' class='HR_GRED' id='" + no + "__HR_GRED' value='" + data3.val() + "' />"+
+                                                "<input type='hidden' name='[" + no + "].HR_GAJI_MIN' class='HR_GAJI_MIN' id='" + no + "__HR_GAJI_MIN' value='" + data4.val() + "' />"+
+                                                "<input type='hidden' name='[" + no + "].HR_GAJI_MAX' class='HR_GAJI_MAX' id='" + no + "__HR_GAJI_MAX' value='" + data5.val() + "' />"+
+                                                "<input type='hidden' name='[" + no + "].HR_GAJI_BARU' class='HR_GAJI_BARU' id='" + no + "__HR_GAJI_BARU' value='" + data6.val() + "' />"+
+                                                "<input type='hidden' name='[" + no + "].HR_MATRIKS_GAJI' class='HR_MATRIKS_GAJI' id='" + no + "__HR_MATRIKS_GAJI' value='" + data7.val() + "' />"+
+                                                "<input type='hidden' name='[" + no + "].HR_JUMLAH_PERUBAHAN' class='HR_JUMLAH_PERUBAHAN' id='" + no + "__HR_JUMLAH_PERUBAHAN' value='" + data7.val() + "' />");
+                        no++;
+                    }
+
+                })
+                $('#Modal').modal('show');
+            })
+
+        });
+</script>

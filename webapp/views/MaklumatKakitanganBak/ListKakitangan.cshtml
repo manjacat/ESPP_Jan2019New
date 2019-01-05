@@ -1,0 +1,138 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+
+@if (Model.HR_SENARAI_PERIBADI != null)
+{
+    var style = "";
+    if (Model.HR_SENARAI_PERIBADI.Count > 4)
+    { 
+        style = "overflow-y:scroll; height:750px";
+    }
+    <div style="@style">
+        @foreach (var HR_MAKLUMAT_PERIBADI in Model.HR_SENARAI_PERIBADI)
+        {
+            <div class="well">
+                <fieldset>
+                    <div class="row" id="infoKakitangan">
+                        <div class="col col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <div class="row">
+                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    @if (Model.HR_GAMBAR_PENGGUNA.HR_NO_PEKERJA == null)
+                                    {
+
+                                        if (Model.HR_MAKLUMAT_PERIBADI.HR_JANTINA == "P")
+                                        {
+                                            <img id="img" src="~/content/img/avatars/female.png" alt="" width="120" height="120" />
+                                        }
+                                        else
+                                        {
+                                            <img id="img" src="~/content/img/avatars/male.png" alt="" width="120" height="120" />
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        var gambar = Model.HR_GAMBAR_PENGGUNA.HR_PHOTO + Model.HR_GAMBAR_PENGGUNA.HR_FORMAT_TYPE;
+                                        if (ViewBag.photo == "")
+                                        {
+                                            <img id="img" src="~/content/uploads/@gambar" alt="" width="120" height="120" />
+                                        }
+                                        else
+                                        {
+                                            <img id="img" src="~/content/img/avatars/male.png" alt="" width="120" height="120" />
+                                        }
+                                    }
+
+                                </div>
+                                @if (ViewBag.key == "4")
+                                {
+                                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <button type="button" name="upload-image" id="upload-image" class="btn btn-default" style="width:120px" disabled="disabled">Tukar Gambar</button>
+                                        <input type="file" name="file" id="file" style="display:none" />
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+                        <div class="col col-lg-8 col-md-8 col-sm-10 col-xs-12 smart-form">
+                            <div class="row">
+                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="label col-lg-2 col-md-2 col-sm-2">Nama Pekerja</label>
+                                    <div class="col-lg-6 col-md-8 col-sm-8">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-user"></i>
+                                            @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_NAMA_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+                            <div class="row">
+                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="label col-lg-2 col-md-2  col-sm-2">No. KP (Baru)</label>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-list-alt"></i>
+                                            @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_NO_KPBARU, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = "12" } })
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+                            <div class="row">
+                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="label col-lg-2 col-md-2 col-sm-2">No. Pekerja</label>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-list-alt"></i>
+                                            @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = "5" } })
+
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+                        </div>
+                        @if (ViewBag.key != "4")
+                        {
+                            <div class="col col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <section>
+                                    <a class="btn btn-default btn-primary" href="@Url.Action("Index", "MaklumatKakitangan", new { key = "4", value = HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA })" title="Profil Kakitangan">
+                                        Lihat Info
+                                    </a>
+                                </section>
+                            </div>
+                        }
+                        @if (ViewBag.key == "4")
+                        {
+                            <br />
+                            <br />
+                            <br />
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                <div class="text-right">
+                                    <label class="">Kemaskini : </label>
+                                    <span class="onoffswitch">
+                                        <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mKakitangan-btn" value="off">
+                                        <label class="onoffswitch-label" for="mKakitangan-btn">
+                                            <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+
+                                    </span>
+                                    <input type="hidden" name="kemaskini" class="form-control" value="off">
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </fieldset>
+
+            </div>
+        }
+    </div>
+    @Html.HiddenFor(model => model.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA)
+    @Html.HiddenFor(model => model.HR_MAKLUMAT_PERIBADI.HR_NAMA_PEKERJA)
+    @Html.HiddenFor(model => model.HR_MAKLUMAT_PERIBADI.HR_NO_KPBARU)
+    <br/>
+}

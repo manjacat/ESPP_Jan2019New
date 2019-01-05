@@ -1,0 +1,119 @@
+﻿
+
+@model eSPP.Models.HR_KUMPULAN_PENSYARAH
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Info Kategori Latihan <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("InfoMaklumat", "MaklumatPensyarah", FormMethod.Post,new {@class = "smart-form"}))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_KOD_KUMPULAN);
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4"> Singkatan  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                             <i class="icon-append fa fa-user"></i>
+                            @Html.EditorFor(model => model.HR_SINGKATAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Penerangan  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-briefcase"></i>
+                                @Html.EditorFor(model => model.HR_PENERANGAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4"> Jenis Pensyarah  </label>
+                        <div class="col col-8">
+                            <label class="select">
+                                @Html.DropDownListFor(model => model.HR_JENIS_IND, null, String.Empty, new { @class = "form-control", disabled = "disabled" })
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4"> Kadar RM  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-clock-o"></i>
+                                @Html.EditorFor(model => model.HR_KADAR_JAM, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                            <label class="label">
+                                per jam
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">  Nilai Maksima   </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-plus-circle"></i>
+                                @Html.EditorFor(model => model.HR_PERATUS, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                            <label class="label">
+                                % dari gaji pokok
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Nilai Maksima RM  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-plus-circle"></i>
+                                @Html.EditorFor(model => model.HR_NILAI_MAKSIMA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </fieldset>
+            <footer>
+               
+                <a type="button" class="btn btn-default" href="SenaraiPensyarah">
+                    Kembali
+                </a>
+            </footer>
+        }
+
+    </div>
+
+</div>
+@section pagespecific { 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+        })
+    </script> 
+}

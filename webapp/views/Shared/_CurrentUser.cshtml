@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNet.Identity;
+<div class="login-info">
+	<span>
+		@{
+
+			ApplicationDbContext db = new ApplicationDbContext();
+
+			var username = User.Identity.Name;
+			HR_MAKLUMAT_PERIBADI name = db.HR_MAKLUMAT_PERIBADI.FirstOrDefault(s => s.HR_NO_KPBARU == username);
+			var namaPekerja = "";
+			if (name != null)
+			{
+				namaPekerja = name.HR_NAMA_PEKERJA.ToLower();
+			}
+			else
+			{
+				var user = db.Users.FirstOrDefault(s => s.UserName == username);
+				namaPekerja = user.Email.ToLower();
+			}
+			<a href="@Url.Action("UserProfile", "Admin", new { id = name.HR_NO_PEKERJA })">
+				<span>@namaPekerja</span>
+			</a>
+
+		}
+	</span>
+</div>
+
+<!--<div class="login-info">
+	<span>
+		<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+			<img src="~/content/img/avatars/sunny.png" alt="me" class="online" />
+			<span>@User.Identity.Name.ToLower()</span>
+			<i class="fa fa-angle-down"></i>
+		</a>
+	</span>
+</div>-->

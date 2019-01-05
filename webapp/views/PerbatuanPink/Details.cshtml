@@ -1,0 +1,90 @@
+﻿@model eSPP.Models.HR_PERBATUAN_PUTIH
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>HR_PERBATUAN_PUTIH</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KELAS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KELAS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_SEBAB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_SEBAB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_AKUAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_AKUAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_SOKONG_KETUA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_SOKONG_KETUA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_KELAYAKAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_KELAYAKAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_SAH_PTB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_SAH_PTB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_ULASAN_TP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_ULASAN_TP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_TP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_TARIKH_TP)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.HR_KOD_PERBATUAN }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

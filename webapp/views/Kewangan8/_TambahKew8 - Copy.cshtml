@@ -1,0 +1,2180 @@
+﻿@model eSPP.Models.HR_MAKLUMAT_KEWANGAN8
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" onclick="javascript: var command = confirm('Adakah anda pasti tidak ingin meneruskannya?'); if (command == true) { history.go(0); }">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Tambah <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+        
+            @using (Html.BeginForm("TambahKew8", "Kewangan8", FormMethod.Post, new { @class = "smart-form", id = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.HR_NO_PEKERJA)
+                @Html.HiddenFor(model => model.HR_TARIKH_KEYIN)
+                @Html.Hidden("Kod", (string)ViewBag.Kod)
+                @Html.HiddenFor(model => model.HR_NP_FINALISED_HR)
+                @Html.Hidden("HR_KOD_JAWATAN", null)
+                @Html.Hidden("HR_MATRIKS_GAJI_LAMA", null)
+                List<HR_MAKLUMAT_PERIBADI> sPegawai = (List<HR_MAKLUMAT_PERIBADI>)ViewBag.sPegawai;
+
+                <fieldset>
+                    <div class="row">
+                        @if (ViewBag.Kod == "00036")
+                        {
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="row">
+                                            <label class="label col col-4">Jawatan</label>
+                                            <div class="col col-8">
+                                                <label class="input">
+                                                    @Html.TextBox("HR_JAWATAN", (string)ViewBag.jawatan, new { @class = "form-control", @readonly = "readonly" })
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="row">
+                                            <label class="label col col-4">Kod Gaji Berkomputer</label>
+                                            <div class="col col-4">
+                                                <label class="input">
+                                                    @Html.TextBox("HR_KOD_GAJI", (string)ViewBag.kodGaji, new { @class = "form-control", @readonly = "readonly" })
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="row">
+                                            <label class="label col col-4">Kategori Perubahan</label>
+                                            <div class="col col-8">
+                                                
+                                                <label class="select">
+                                                    @Html.HiddenFor(model => model.HR_KOD_PERUBAHAN)
+                                                    @Html.DropDownListFor(model => model.HR_KOD_PERUBAHAN, new SelectList(ViewBag.HR_KOD_PERUBAHAN, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                    <i></i>
+                                                </label>
+
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="row">
+                                            <label class="label col col-4" id="txtTarikhMula">Tarikh Mula</label>
+                                            <div class="col col-4">
+                                                <label class="input">
+                                                    <i class="icon-append fa fa-calendar"></i>
+                                                    <input type="text" name="HR_TARIKH_MULA" id="HR_TARIKH_MULA" class="form-control" readonly="readonly" value="@string.Format("{0:dd/MM/yyyy}", DateTime.Now)" />
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Gred (Lama)</label>
+                                        <div class="col col-3">
+                                            <label class="input">
+                                                @Html.TextBox("HR_GRED_LAMA", (string)ViewBag.HR_GRED_LAMA, new { @class = "form-control", @readonly = "readonly" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Gaji Min (Lama)</label>
+                                        <div class="col col-3">
+                                            <label class="input">
+                                                @Html.TextBox("HR_GAJI_MIN_LAMA", string.Format("{0:0.00}", (decimal?)ViewBag.HR_GAJI_MIN_LAMA), new { @class = "form-control", @readonly = "readonly" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Gaji Max (Lama)</label>
+                                        <div class="col col-3">
+                                            <label class="input">
+                                                @Html.TextBox("HR_GAJI_MAX_LAMA", string.Format("{0:0.00}", (decimal?)ViewBag.HR_GAJI_MAX_LAMA), new { @class = "form-control", @readonly = "readonly" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Gaji Pokok (Lama)</label>
+                                        <div class="col col-3">
+                                            <label class="input">
+                                                @Html.TextBox("HR_GAJI_LAMA", string.Format("{0:0.00}", (decimal?)ViewBag.HR_GAJI_LAMA), new { @class = "form-control", @readonly = "readonly" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Gred (Baru)</label>
+                                        <div class="col col-3">
+                                            <label class="input">
+                                                @Html.TextBox("HR_GRED", (string)ViewBag.HR_GRED_LAMA, new { @class = "form-control", autocomplete = "off", list = "list-gred" })
+                                                <datalist id="list-gred">
+                                                    @foreach (GE_PARAMTABLE gred in ViewBag.gredList)
+                                                    {
+                                                        <option value="@gred.SHORT_DESCRIPTION" data-value="@gred.ORDINAL">@gred.ORDINAL</option>
+                                                    }
+                                                </datalist>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Gaji Min (Baru)</label>
+                                        <div class="col col-3">
+                                            <label class="input">
+                                                @Html.TextBox("HR_GAJI_MIN_BARU", string.Format("{0:0.00}", (decimal?)ViewBag.HR_GAJI_MIN_LAMA), new { @class = "form-control", list = "list-min", autocomplete = "off" })
+                                                <datalist id="list-min"></datalist>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Gaji Max (Baru)</label>
+                                        <div class="col col-3">
+                                            <label class="input">
+                                                @Html.TextBox("HR_GAJI_MAX_BARU", string.Format("{0:0.00}", (decimal?)ViewBag.HR_GAJI_MAX_LAMA), new { @class = "form-control", list = "list-max", autocomplete = "off" })
+                                                <datalist id="list-max"></datalist>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Gaji Pokok (Baru)</label>
+                                        <div class="col col-3">
+                                            <label class="input">
+                                                @Html.TextBox("HR_GAJI_BARU", string.Format("{0:0.00}", (decimal?)ViewBag.HR_GAJI_BARU), new { @class = "form-control", list = "list-gaji", autocomplete = "off" })
+                                                <datalist id="list-gaji"></datalist>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                
+                            </div>
+
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="row">
+                                            <label class="label col col-4">Jumlah Pindaan Gaji</label>
+                                            <div class="col col-3">
+                                                <label class="input">
+                                                    @Html.Hidden("HR_MATRIKS_GAJI", null, new { @class = "form-control" })
+                                                    @Html.TextBox("[0].HR_NILAI", null, new { @class = "form-control", @readonly = "readonly", id = "HR_JUMLAH_PERUBAHAN" })
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="row">
+                                            <label class="label col col-4">Jawatan</label>
+                                            <div class="col col-8">
+                                                <label class="input">
+                                                    @Html.TextBox("HR_JAWATAN", (string)ViewBag.jawatan, new { @class = "form-control", @readonly = "readonly" })
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="row">
+                                            <label class="label col col-4">Gred</label>
+                                            <div class="col col-3">
+                                                <label class="input">
+                                                    @Html.TextBox("HR_GRED_LAMA", (string)ViewBag.HR_GRED_LAMA, new { @class = "form-control", @readonly = "readonly" })
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="row">
+                                            <label class="label col col-4">Gaji Pokok</label>
+                                            <div class="col col-3">
+                                                <label class="input">
+                                                    @Html.TextBox("HR_GAJI_LAMA", string.Format("{0:0.00}", (decimal?)ViewBag.HR_GAJI_LAMA), new { @class = "form-control", @readonly = "readonly" })
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="row">
+                                            <label class="label col col-4">Kod Gaji Berkomputer</label>
+                                            <div class="col col-4">
+                                                <label class="input">
+                                                    @Html.TextBox("HR_KOD_GAJI", (string)ViewBag.kodGaji, new { @class = "form-control", @readonly = "readonly" })
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        }
+                        
+                        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            @if (ViewBag.Kod != "00036" && ViewBag.Kod != "CUTI")
+                            {
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Kategori Perubahan</label>
+                                        <div class="col col-8">
+                                            @if (ViewBag.Kod == "kew8")
+                                            {
+                                                <label class="select">
+                                                    @Html.DropDownListFor(model => model.HR_KOD_PERUBAHAN, new SelectList(ViewBag.HR_KOD_PERUBAHAN, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control" })
+                                                    <i></i>
+                                                </label>
+                                            }
+                                            else if (ViewBag.Kod == "TP")
+                                            {
+                                                <label class="input">
+                                                    @Html.TextBox("HR_PENERANGAN", null, new { @class = "form-control", id = "HR_PENERANGAN", @readonly = "readonly" })
+                                                </label>
+                                            }
+                                            else
+                                            {
+                                                <label class="select">
+                                                    @Html.HiddenFor(model => model.HR_KOD_PERUBAHAN)
+                                                    @Html.DropDownListFor(model => model.HR_KOD_PERUBAHAN, new SelectList(ViewBag.HR_KOD_PERUBAHAN, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                    <i></i>
+                                                </label>
+                                            }
+
+                                        </div>
+                                    </div>
+                                </section>
+                            }
+                            
+                            @if (ViewBag.Kod == "00031" || ViewBag.Kod == "TP" || ViewBag.Kod == "CUTI" || ViewBag.Kod == "00039" || ViewBag.Kod == "00024")
+                            {
+                                var jPelarasan = "Jenis Perubahan";
+                                if(ViewBag.Kod == "00039" || ViewBag.Kod == "00024")
+                                {
+                                    jPelarasan = "Jenis Elaun";
+                                }
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">@jPelarasan</label>
+                                        <div class="col col-8">
+                                            @if (ViewBag.Kod == "00031" || ViewBag.Kod == "00039" || ViewBag.Kod == "00024")
+                                            {
+                                                <label class="select">
+                                                    @Html.DropDownList("HR_KOD_PELARASAN", null, String.Empty, htmlAttributes: new { @class = "form-control" })<i></i>
+                                                </label>
+                                            }
+                                            @if (ViewBag.Kod == "TP" || ViewBag.Kod == "CUTI")
+                                            {
+                                                <label class="select">
+                                                    @Html.DropDownListFor(model => model.HR_KOD_PERUBAHAN, new SelectList(ViewBag.HR_KOD_PERUBAHAN, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control" })
+                                                    <i></i>
+                                                </label>
+                                            }
+                                        </div>
+                                    </div>
+                                </section>
+                            }
+                            @if (ViewBag.Kod == "00031")
+                            {
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Jumlah Bulan</label>
+                                        <div class="col col-8">
+                                            <label class="input">
+                                                @Html.TextBox("HR_JUMLAH_BULAN", null, new { @class = "form-control", id = "HR_JUMLAH_BULAN" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Nilai EPF</label>
+                                        <div class="col col-8">
+                                            <label class="input">
+                                                @Html.TextBox("HR_NILAI_EPF", null, new { @class = "form-control", id = "HR_NILAI_EPF" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Jumlah Perubahan</label>
+                                        <div class="col col-8">
+                                            <label class="input">
+                                                @Html.TextBox("[0].HR_NILAI", null, new { @class = "form-control", @readonly = "readonly", id = "HR_JUMLAH_PERUBAHAN" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            }
+                            @if (ViewBag.Kod == "00026")
+                            {
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Jenis Tindakan</label>
+                                        <div class="col col-8">
+                                            <div class="inline-group">
+                                                <label class="radio">
+                                                    @Html.RadioButtonFor(model => model.HR_KEW8_IND, "B", htmlAttributes: new { @class = "form-control", @checked = "checked" })
+                                                    <i></i>Bayaran Gaji Semasa
+                                                </label>
+                                                <label class="radio">
+                                                    @Html.RadioButtonFor(model => model.HR_KEW8_IND, "T", htmlAttributes: new { @class = "form-control" })
+                                                    <i></i>Tunggakan Gaji
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                @*<section>
+                                    <div class="row">
+                                        <label class="label col col-4">Tarikh Jenis Perubahan</label>
+                                        <div class="col col-4">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-calendar"></i>
+                                                @Html.HiddenFor(model => model.HR_TARIKH_KEYIN)
+                                                <input type="text" name="HR_TARIKH_KEYIN" id="HR_TARIKH_KEYIN" class="form-control" disabled="disabled" value="@string.Format("{0:dd/MM/yyyy}",Model.HR_TARIKH_KEYIN)" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>*@
+                            }
+                            @if (ViewBag.Kod == "00026" || ViewBag.Kod == "00025" || ViewBag.Kod == "kew8" || ViewBag.Kod == "00022" || ViewBag.Kod == "00037" || ViewBag.Kod == "CUTI" || ViewBag.Kod == "00039" || ViewBag.Kod == "00024")
+                            {
+                                var textTarikhMula = "Tarikh Mula";
+                                if(ViewBag.Kod == "00026")
+                                {
+                                    textTarikhMula = "Tarikh Mula Bayar Gaji";
+                                }
+                                if (ViewBag.Kod == "00022")
+                                {
+                                    textTarikhMula = "Tarikh Mula Ditangguh Pergerakan Gaji";
+                                }
+                                if (ViewBag.Kod == "00037")
+                                {
+                                    textTarikhMula = "Tarikh Mula Pergerakan Gaji";
+                                }
+                                if (ViewBag.Kod == "CUTI")
+                                {
+                                    textTarikhMula = "Tarikh Mula Bercuti";
+                                }
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4" id="txtTarikhMula">@(textTarikhMula)</label>
+                                        <div class="col col-4">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-calendar"></i>
+                                                <input type="text" name="HR_TARIKH_MULA" id="HR_TARIKH_MULA" class="form-control" readonly="readonly"/>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            }
+                            @if (ViewBag.Kod == "00026" || ViewBag.Kod == "00025" || ViewBag.Kod == "kew8" || ViewBag.Kod == "00022" || ViewBag.Kod == "CUTI" || ViewBag.Kod == "00039" || ViewBag.Kod == "00024")
+                            {
+                                var textTarikhAkhir = "Tarikh Akhir";
+                                if (ViewBag.Kod == "00026")
+                                {
+                                    textTarikhAkhir = "Tarikh Akhir Bayar Gaji";
+                                }
+                                if (ViewBag.Kod == "00022")
+                                {
+                                    textTarikhAkhir = "Tarikh Akhir Ditangguh Pergerakan Gaji";
+                                }
+                                if (ViewBag.Kod == "CUTI")
+                                {
+                                    textTarikhAkhir = "Tarikh Lapor Diri";
+                                }
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4" id="txtTarikhAkhir">@(textTarikhAkhir)</label>
+                                        <div class="col col-4">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-calendar"></i>
+                                                <input type="text" name="HR_TARIKH_AKHIR" id="HR_TARIKH_AKHIR" class="form-control" readonly="readonly"/>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            }
+                            else if (ViewBag.Kod == "TP")
+                            {
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Tarikh</label>
+                                        <div class="col col-4">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-calendar"></i>
+                                                <input type="text" name="HR_TARIKH_KEYIN" id="HR_TARIKH_KEYIN" class="form-control" readonly="readonly" value="@string.Format("{0:dd/MM/yyyy}",DateTime.Now)" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Tarikh Tamat Perkhidmatan</label>
+                                        <div class="col col-4">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-calendar"></i>
+                                                <input type="text" name="HR_TARIKH_TAMAT" id="HR_TARIKH_TAMAT" class="form-control" readonly="readonly" value="@ViewBag.HR_TARIKH_TAMAT" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            }
+                            else
+                            {
+                                <input type="hidden" name="HR_TARIKH_MULA" id="HR_TARIKH_MULA" class="form-control" value="@string.Format("{0:dd/MM/yyyy}",DateTime.Now)" />
+                            }
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-4">Butir-Butir Perubahan</label>
+                                    <div class="col col-8">
+                                        <label class="textarea textarea-resizable">
+                                            @Html.TextAreaFor(model => model.HR_BUTIR_PERUBAHAN, new { @class = "form-control custom-scroll", rows = "6" })
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            @if(ViewBag.Kod != "00030" && ViewBag.Kod != "00015")
+                            { 
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-4">No. Surat Kebenaran</label>
+                                    <div class="col col-8">
+                                        <label class="input">
+                                            @Html.EditorFor(model => model.HR_NO_SURAT_KEBENARAN, new { htmlAttributes = new { @class = "form-control" } })
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                            }
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-4">Catatan</label>
+                                    <div class="col col-8">
+                                        <label class="textarea textarea-resizable">
+                                            @Html.TextAreaFor(model => model.HR_CATATAN, new { @class = "form-control custom-scroll", rows = "6" })
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-4">Nama Pegawai Pengesahan</label>
+                                    <div class="col col-8">
+                                        <label class="input">
+                                            @Html.TextBox("HR_NAMA_PEGAWAI", (string)ViewBag.HR_NAMA_PEGAWAI, new { @class = "form-control", list = "list-pegawai", autocomplete = "off" })
+                                            <datalist id="list-pegawai">
+                                                @foreach (var pegawai in sPegawai)
+                                                {
+                                                    <option value="@(pegawai.HR_NAMA_PEKERJA)" data-value="@pegawai.HR_NO_PEKERJA">@(pegawai.HR_NO_PEKERJA)</option>
+                                                }
+                                            </datalist>
+
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                            
+                            <div id="statusdata">
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Status Data</label>
+                                        <div class="col col-8">
+                                            <label class="select">
+                                                @Html.DropDownListFor(model => model.HR_FINALISED_IND_HR, new SelectList(ViewBag.pengesahan, "Value", "Text"), new { @class = "form-control" })
+                                                <i></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            
+                            
+                        </div>
+                        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            @if (ViewBag.Kod == "00030" || ViewBag.Kod == "00015")
+                            {
+                                if (ViewBag.Kod != "00015")
+                                {
+                                    <section>
+                                        <div class="row">
+                                            <div class="col col-4">
+                                                <label class="radio">
+                                                    @Html.RadioButtonFor(model => model.HR_KEW8_IND, "A", new { @class = "form-control" })
+                                                    <i></i>Amaun
+                                                </label>
+                                            </div>
+                                            <div class="col col-3">
+                                                <label class="input">
+                                                    @Html.EditorFor(model => model.HR_BIL, null, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", id = "HR_BIL2" } })
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </section>
+                                }
+
+                                <section>
+                                    <div class="row">
+                                        <div class="col col-4">
+                                            <label class="radio">
+                                                @Html.RadioButtonFor(model => model.HR_KEW8_IND, "H", new { @class = "form-control" })
+                                                <i></i>Bil. Hari
+                                            </label>
+                                        </div>
+                                        <div class="col col-8">
+                                            <div class="parent">
+                                                <div class="row child">
+                                                    <div class="col col-5">
+                                                        <label class="select">
+                                                            @Html.DropDownList("bulan", new SelectList(ViewBag.month, "Value", "Text"), String.Empty, new { @class = "form-control", id = "bulan", disabled = "disabled" })
+                                                            <i></i>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col col-4">
+                                                        <label class="input">
+                                                            @Html.TextBox("hari", null, new { @class = "form-control", disabled = "disabled" })
+                                                        </label>
+                                                    </div>
+                                                    <div class="col col-3">
+                                                        <a class="btn btn-default btn-xs tambah" title="tambah" disabled="disabled"><i class="fa fa-plus"></i></a>
+                                                        <a class="btn btn-default btn-xs padam" title="padam" disabled="disabled"><i class="fa fa-minus"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="row">
+                                        <div class="col col-4">
+
+                                        </div>
+                                        <div class="col col-8">
+                                            <div id="tableBulan"></div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Jumlah Hari</label>
+                                        <div class="col col-3">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.HR_BIL, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly", id = "HR_BIL3" } })
+                                                @Html.HiddenFor(model => model.HR_BIL)
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            }
+                            @if (ViewBag.Kod == "00030" || ViewBag.Kod == "00026" || ViewBag.Kod == "TP" || ViewBag.Kod == "CUTI" || ViewBag.Kod == "00015")
+                            {
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Jumlah Potongan Gaji</label>
+                                        <div class="col col-3">
+                                            <label class="input">
+                                                @Html.TextBox("[0].HR_NILAI", null, new { @class = "form-control", @readonly = "readonly", id= "HR_JUMLAH_POTONGAN_GAJI" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            }
+                            @if (ViewBag.Kod == "00030" || ViewBag.Kod == "CUTI" || ViewBag.Kod == "00015")
+                            {
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Jumlah Potongan</label>
+                                        <div class="col col-3">
+                                            <label class="input">
+                                                @Html.TextBox("HR_JUMLAH_POTONGAN", null, new { @class = "form-control", @readonly = "readonly", id = "HR_JUMLAH_POTONGAN" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                            }
+                            @if (ViewBag.Kod == "00039" || ViewBag.Kod == "00024")
+                            {
+                                var tindakanTxt = "Elaun";
+                                if(ViewBag.Kod == "00039")
+                                {
+                                    tindakanTxt = "Potongan";
+                                }
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Jenis Tindakan</label>
+                                        <div class="col col-8">
+                                            <div class="inline-group">
+                                                <label class="radio">
+                                                    @Html.RadioButtonFor(model => model.HR_KEW8_IND, "E", htmlAttributes: new { @class = "form-control", @checked = "checked" })
+                                                    <i></i>@(tindakanTxt) Baru
+                                                </label>
+                                                <label class="radio">
+                                                    @Html.RadioButtonFor(model => model.HR_KEW8_IND, "P", htmlAttributes: new { @class = "form-control" })
+                                                    <i></i>Pemberhentian @(tindakanTxt)
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Jumlah Perubahan (RM)</label>
+                                        <div class="col col-8">
+                                            <label class="input">
+                                                @Html.TextBox("HR_JUMLAH_PERUBAHAN_ELAUN", null, new { @class = "form-control", @readonly = "readonly" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Jumlah <span id="jumTxt">Tunggakan</span> (RM)</label>
+                                        <div class="col col-8">
+                                            <label class="input">
+                                                @Html.TextBox("[0].HR_NILAI", null, new { @class = "form-control", @readonly = "readonly", id = "HR_JUMLAH_PERUBAHAN" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            }
+
+                            @if (ViewBag.Kod != "00036" && ViewBag.Kod != "00039" && ViewBag.Kod != "00024")
+                            {
+                                <section>
+                                    <div class="row">
+                                        @{ var tajuk = "Maklumat Potongan Elaun";}
+                                        @if (ViewBag.Kod == "kew8" || ViewBag.Kod == "00022" || ViewBag.Kod == "00037" || ViewBag.Kod == "00031" || ViewBag.Kod == "00025")
+                                        {
+                                            tajuk = "Maklumat Elaun";
+                                        }
+                                        <label class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">@tajuk</label>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div id="tableElaun">
+                                                <table class="table table-striped table-bordered table-hover" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            @*<th>Kod Elaun</th>*@
+                                                            <th>Elaun</th>
+                                                            <th>Jumlah Elaun</th>
+
+                                                            @{ var colspan = 3;}
+                                                            @if (ViewBag.Kod == "00030" || ViewBag.Kod == "00026" || ViewBag.Kod == "TP" || ViewBag.Kod == "CUTI" || ViewBag.Kod == "00015")
+                                                            {
+                                                                colspan = 5;
+                                                                <th>Pelarasan</th>
+                                                                <th>Jumlah Pelarasan</th>
+                                                            }
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @{ var no2 = 0; var num = (List<HR_ELAUN>)ViewBag.elaun3; var potongan = (List<HR_POTONGAN>)ViewBag.potongan6;}
+                                                        @if (num.Count() <= 0)
+                                                        {
+                                                            <tr>
+                                                                <td colspan="@colspan" style="padding:20px" align="center">Tiada Data</td>
+                                                            </tr>
+                                                        }
+                                                        else
+                                                        {
+                                                            foreach (HR_ELAUN item in ViewBag.elaun3)
+                                                            {
+                                                                ++no2;
+                                                                <tr>
+                                                                    <td align="center">@no2</td>
+                                                                    @*<td>@Html.DisplayFor(model => item.HR_KOD_ELAUN)</td>*@
+                                                                    <td>@Html.DisplayFor(model => item.HR_PENERANGAN_ELAUN)</td>
+                                                                    <td>@Html.DisplayFor(model => item.HR_NILAI)</td>
+                                                                    @if (ViewBag.Kod == "00030" || ViewBag.Kod == "00026" || ViewBag.Kod == "TP" || ViewBag.Kod == "CUTI" || ViewBag.Kod == "00015")
+                                                                    {
+                                                                        HR_POTONGAN p = potongan.FirstOrDefault(s => s.HR_KOD_POTONGAN == item.HR_KOD_POTONGAN);
+                                                                        if(p == null)
+                                                                        {
+                                                                            p = new HR_POTONGAN();
+                                                                        }
+                                                                        <td>@(p.HR_PENERANGAN_POTONGAN)<input name="[' + no2 + '].HR_KOD_POTONGAN" type="hidden" value="' + item.HR_KOD_POTONGAN + '" /></td>
+                                                                        <td id="pelarasan"><label class="input"><input name="[' + no2 + '].HR_NILAI" type="text" class="form-control" value="0.00" id="HR_NILAI_PELARASAN" readonly="readonly" /></label></td>
+                                                                    }
+
+                                                                </tr>
+                                                            }
+                                                        }
+
+                                                    </tbody>
+                                                    @if (num.Count() > 0 && (ViewBag.Kod == "00030" || ViewBag.Kod == "00026" || ViewBag.Kod == "TP" || ViewBag.Kod == "CUTI" || ViewBag.Kod == "00015"))
+                                                    {
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="4" align="right"><strong>Jumlah (RM)</strong></td>
+                                                                <td><label class="input"><input name="TotalPelarasan" type="text" class="form-control" value="0.00" readonly = "readonly" id="TotalPelarasan" /></label></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    }
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </section>
+                            }
+                        </div>
+                    </div>
+                </fieldset>
+                    
+                <footer>
+                    <button type="button" id="btn" class="btn btn-primary">
+                        <span class="fa fa-save"></span> Simpan
+                    </button>
+                    <button type="reset" class="btn btn-default">
+                        Reset
+                    </button>
+                    <button type="button" class="btn btn-default" onclick="javascript: var command = confirm('Adakah anda pasti tidak ingin meneruskannya?'); if (command == true) { history.go(0); }">
+                        Kembali
+                    </button>
+                </footer>
+            }
+        
+        
+
+    </div>
+
+</div><!-- /.modal-content -->
+<script type="text/javascript">
+    //$("form").attr({ "id": "tp", "class": "smart-form" })
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+    $(".modal-dialog").css("min-width", "70%");
+    $(document).ready(function () {
+        var validateform = $("#form").validate({
+
+            // Rules for form validation
+            rules: {
+                HR_KOD_PERUBAHAN: {
+                    required: function (element) {
+                        if ('@ViewBag.Kod' == "kew8") {
+                            return true;
+                        }
+                    }
+                },
+                HR_TARIKH_MULA: {
+                    required: function (element) {
+                        if('@ViewBag.Kod' == "kew8")
+                        {
+                            return true;
+                        }
+                    }
+                },
+                HR_KOD_PELARASAN: {
+                    required: true
+                },
+                HR_JUMLAH_BULAN: {
+                    required: true,
+                    number: true
+                },
+                HR_NILAI_EPF: {
+                    required: true,
+                    number: true
+                },
+                HR_NAMA_PEGAWAI: {
+                    required: true,
+                    remote: {
+                        url: "../Kewangan8/CariPegawai",
+                        type: "get",
+                        data: {
+                            HR_NP_FINALISED_HR: function () {
+                                return $("#HR_NAMA_PEGAWAI").val();
+                            }
+                        }
+                    }
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                HR_KOD_PERUBAHAN: {
+                    required: "Diperlukan"
+                },
+                HR_TARIKH_MULA: {
+                    required: "Diperlukan"
+                },
+                HR_KOD_PELARASAN: {
+                    required: "Diperlukan"
+                },
+                HR_JUMLAH_BULAN: {
+                    required: "Diperlukan",
+                    number: "Sila masukkan hanya nombor sahaja"
+                },
+                HR_NILAI_EPF: {
+                    required: "Diperlukan",
+                    number: "Sila masukkan hanya nombor sahaja"
+                },
+                HR_NAMA_PEGAWAI: {
+                    required: "Diperlukan",
+                    remote: "Pegawai tidak wujud"
+                }
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+
+        /* // DOM Position key index //
+
+        l - Length changing (dropdown)
+        f - Filtering input (search)
+        t - The Table! (datatable)
+        i - Information (records)
+        p - Pagination (paging)
+        r - pRocessing
+        < and > - div elements
+        <"#id" and > - div with an id
+        <"class" and > - div with a class
+        <"#id.class" and > - div with an id and class
+
+        Also see: http://legacy.datatables.net/usage/features
+        */
+
+        /* BASIC ;*/
+        var responsiveHelper_datatable_elaun = undefined;
+
+        var breakpointDefinition = {
+            tablet: 1024,
+            phone: 480
+        };
+
+        $('#datatable_elaun').dataTable({
+
+            // Tabletools options:
+            //   https://datatables.net/extensions/tabletools/button_options
+            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'l>r>" +
+                    "t" +
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            /*"oTableTools": {
+                "aButtons": [
+                "copy",
+                "csv",
+                "xls",
+                   {
+                       "sExtends": "pdf",
+                       "sTitle": "SmartAdmin_PDF",
+                       "sPdfMessage": "SmartAdmin PDF Export",
+                       "sPdfSize": "letter"
+                   },
+                   {
+                       "sExtends": "print",
+                       "sMessage": "Generated by SmartAdmin <i>(press Esc to close)</i>"
+                   }
+                ],
+                "sSwfPath": "/Scripts/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+            },*/
+            "autoWidth": false,
+            "preDrawCallback": function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelper_datatable_elaun) {
+                    responsiveHelper_datatable_elaun = new ResponsiveDatatablesHelper($('#datatable_elaun'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_datatable_elaun.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_datatable_elaun.respond();
+            }
+        });
+
+    });
+
+    $("#btn").on("click", function (e) {
+        e.preventDefault;
+        $.ajax({
+            type: "POST",
+            url: $("#form").attr('action'),
+            data: $("#form").serialize(),
+            success: function (data) {
+                alert(data.msg);
+                debugger;
+                if (data.error == false) {
+                    window.location = data.location;
+                }
+            }
+        });
+    })
+
+    $(document).ready(function () {
+        if ('@ViewBag.Kod' == "00031")
+        {
+            nilaiPerubahan();
+            function nilaiPerubahan()
+            {
+                $("#HR_JUMLAH_PERUBAHAN").val("0.00")
+                if ($("#HR_NO_PEKERJA").val() != "" && $("#HR_JUMLAH_BULAN").val() != "" && $("#HR_NILAI_EPF").val() != "") {
+                    $.ajax({
+                        url: "../Kewangan8/JumlahPerubahan",
+                        type: "GET",
+                        data: { "HR_NO_PEKERJA": $("#HR_NO_PEKERJA").val(), "HR_JUMLAH_BULAN": $("#HR_JUMLAH_BULAN").val(), "HR_NILAI_EPF": $("#HR_NILAI_EPF").val() },
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+
+                            $("#HR_JUMLAH_PERUBAHAN").val(data)
+                        }
+                    })
+                }
+            }
+            $("#HR_JUMLAH_BULAN, #HR_NILAI_EPF").on("input", function () {
+                nilaiPerubahan();
+            });
+        }
+
+        if ('@ViewBag.Kod' == "kew8") {
+            $('#HR_TARIKH_MULA').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_AKHIR').datepicker('option', 'minDate', selectedDate);
+                }
+            });
+
+            $('#HR_TARIKH_AKHIR').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_MULA').datepicker('option', 'maxDate', selectedDate);
+                }
+            });
+        }
+        else if ('@ViewBag.Kod' == "00031" || '@ViewBag.Kod' == "00030" || '@ViewBag.Kod' == "00025" || '@ViewBag.Kod' == "00015") {
+            $('#HR_TARIKH_MULA').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                showButtonPanel: true,
+                currentText: "Bulan Kini",
+                closeText: 'Tutup',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_AKHIR').datepicker('option', 'minDate', selectedDate);
+                },
+                onChangeMonthYear: function (year, month, inst) {
+                    $(this).val($.datepicker.formatDate('dd/mm/yy', new Date(year, month - 1, 1)));
+                },
+                onClose: function (dateText, inst) {
+                    $(this).val($.datepicker.formatDate('dd/mm/yy', new Date(inst.selectedYear, inst.selectedMonth, 1)));
+                }
+            }).focus(function () {
+                $(".ui-datepicker-calendar").hide();
+            });
+
+            $('#HR_TARIKH_AKHIR').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                showButtonPanel: true,
+                currentText: "Bulan Kini",
+                closeText: 'Tutup',
+                onSelect: function (selectedDate) {
+                    $('#HR_TARIKH_MULA').datepicker('option', 'maxDate', selectedDate);
+                },
+
+                onChangeMonthYear: function (year, month, inst) {
+                    $(this).val($.datepicker.formatDate('dd/mm/yy', new Date(year, month, 0)));
+                },
+                onClose: function (dateText, inst) {
+                    $(this).val($.datepicker.formatDate('dd/mm/yy', new Date(inst.selectedYear, inst.selectedMonth + 1, 0)));
+                }
+            }).focus(function () {
+                $(".ui-datepicker-calendar").hide();
+            });
+        }
+        else if ('@ViewBag.Kod' == "TP") {
+            $('#HR_TARIKH_TAMAT').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+
+                    //$('#HR_TARIKH_AKHIR').datepicker('option', 'minDate', selectedDate);
+                    if ($('#HR_TARIKH_MULA').val() != "" && $('#HR_KOD_PERUBAHAN').val() != "") {
+                        //var endDate = $('#HR_TARIKH_TAMAT').datepicker("getDate");
+                        //var startDate = new Date();
+
+                        var startDate = $('#HR_TARIKH_TAMAT').datepicker("getDate");
+                        var endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0)
+
+                        HasilKiraan(startDate, endDate);
+                    }
+
+                }
+            });
+        }
+        else if ('@ViewBag.Kod' != "00039" && '@ViewBag.Kod' != "00024") {
+            getDP()
+        }
+
+        function getDP()
+        {
+            $('#HR_TARIKH_MULA').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    if ('@ViewBag.Kod' != "CUTI") {
+                        $('#HR_TARIKH_AKHIR').datepicker('option', 'minDate', selectedDate);
+                    }
+
+                    if ('@ViewBag.Kod' == "00026") {
+                        if ($('#HR_TARIKH_AKHIR').val() != "" && $('#HR_TARIKH_MULA').val() != "") {
+                            var endDate = $('#HR_TARIKH_AKHIR').datepicker("getDate");
+                            var startDate = $('#HR_TARIKH_MULA').datepicker("getDate");
+
+                            HasilKiraan(startDate, endDate);
+                        }
+                    }
+                    if (('@ViewBag.Kod' == "00036" && $('#HR_TARIKH_MULA').val() != "" && $('#HR_GAJI_BARU').val() != "") || ('@ViewBag.Kod' == "CUTI" && $('#HR_KOD_PERUBAHAN').val() == "00017")) {
+                        //var crrDate = new Date();
+                        var startDate = $('#HR_TARIKH_MULA').datepicker("getDate");
+                        var endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0)
+
+                        HasilKiraan(startDate, endDate);
+                    }
+                    if ('@ViewBag.Kod' == "00039" || '@ViewBag.Kod' == "00024" && $("#HR_KEW8_IND:checked").val() == "E") {
+                        ajaxPelarasan($("#HR_KOD_PELARASAN").val(), parseFloat($("#HR_JUMLAH_PERUBAHAN_ELAUN").val()), $('#HR_TARIKH_MULA').datepicker("getDate"), 0)
+                    }
+                }
+            });
+
+
+            $('#HR_TARIKH_AKHIR').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                prevText: '<i class="fa fa-chevron-left"></i>',
+                nextText: '<i class="fa fa-chevron-right"></i>',
+                onSelect: function (selectedDate) {
+                    if ('@ViewBag.Kod' != "CUTI") {
+                        $('#HR_TARIKH_MULA').datepicker('option', 'maxDate', selectedDate);
+                    }
+
+                    if ('@ViewBag.Kod' == "00026") {
+                        if ($('#HR_TARIKH_AKHIR').val() != "" && $('#HR_TARIKH_MULA').val() != "") {
+                            var endDate = $('#HR_TARIKH_AKHIR').datepicker("getDate");
+                            var startDate = $('#HR_TARIKH_MULA').datepicker("getDate");
+
+                            HasilKiraan(startDate, endDate);
+                        }
+                    }
+                    if ('@ViewBag.Kod' == "00024" && $("#HR_KEW8_IND:checked").val() == "P") {
+                        ajaxPelarasan($("#HR_KOD_PELARASAN").val(), parseFloat($("#HR_JUMLAH_PERUBAHAN_ELAUN").val()), $('#HR_TARIKH_AKHIR').datepicker("getDate"), 0)
+                    }
+                }
+            });
+        }
+
+        if ('@ViewBag.Kod' == "00039" || '@ViewBag.Kod' == "00024")
+        {
+            function KodPelarasan(Value) {
+                $("#HR_KOD_PELARASAN").html("<option></option>");
+                $.ajax({
+                    url: "../Kewangan8/KodPelarasan",
+                    type: "GET",
+                    data: { "HR_NO_PEKERJA": $("#HR_NO_PEKERJA").val(), "Kod": '@ViewBag.Kod', "Value": Value },
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        $.each(data, function (i, v) {
+                            if ('@ViewBag.Kod' == "00024") {
+                                $("#HR_KOD_PELARASAN").append($("<option></option>").val(v.HR_KOD_ELAUN).html(v.HR_PENERANGAN_ELAUN));
+                            }
+                            if ('@ViewBag.Kod' == "00039") {
+                                $("#HR_KOD_PELARASAN").append($("<option></option>").val(v.HR_KOD_POTONGAN).html(v.HR_PENERANGAN_POTONGAN));
+                            }
+                        })
+                    }
+                })
+            }
+
+            function JumlahBulan2(startDate, endDate)
+            {
+                var currentDate = new Date(startDate);
+                var currentDate2 = new Date(startDate);
+                var totalMonth = 0;
+                if (currentDate < endDate) {
+                    while (currentDate < endDate) {
+
+                        currentDate.setMonth(currentDate.getMonth() + 1);
+                        totalMonth++;
+                    }
+                }
+                if (currentDate2 > endDate && $("#HR_KEW8_IND:checked").val() == "P") {
+                    while (currentDate2 > endDate) {
+                        currentDate2.setMonth(currentDate2.getMonth() - 1);
+                        totalMonth--;
+                    }
+                }
+                return totalMonth;
+            }
+
+            function JumlahBulan(startDate, endDate)
+            {
+                var currentDate = new Date(startDate);
+                var currentDate2 = new Date(startDate);
+                var totalMonth = 0;
+                if (currentDate < endDate)
+                {
+                    while (currentDate < endDate) {
+
+                        currentDate.setDate(currentDate.getDate() + 1);
+                        totalMonth++;
+                    }
+                }
+                if (currentDate2 > endDate && $("#HR_KEW8_IND:checked").val() == "P") {
+                    while (currentDate2 > endDate) {
+                        currentDate2.setDate(currentDate2.getDate() - 1);
+                        totalMonth--;
+                    }
+                }
+
+                return totalMonth;
+            }
+
+            function jumPerubahan(nilai, startDate)
+            {
+                //var endDate = tarikh;
+                var date = '@string.Format("{0:MM/dd/yyyy}", Model.HR_TARIKH_KEYIN)';
+                var endDate = new Date(date);
+
+                var endDate2 = new Date(endDate.getFullYear(), endDate.getMonth(), 1);
+                var bilHari = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
+                var nilai2 = 0;
+
+                if (startDate.getDate() == 1 || (startDate.getDate() == 2 && $("#HR_KEW8_IND:checked").val() == "E"))
+                {
+
+                    nilai2 = nilai * JumlahBulan2(startDate, endDate2);
+                }
+                else
+                {
+                    var nilai3 = Math.abs(nilai * JumlahBulan2(new Date(startDate.getFullYear(), startDate.getMonth(), 1), endDate2)) - Math.abs(nilai * JumlahBulan(new Date(startDate.getFullYear(), startDate.getMonth(), 1), endDate2) / bilHari.getDate());
+                    nilai2 = (nilai * JumlahBulan(startDate, endDate2) / bilHari.getDate()) + nilai3;
+                }
+
+                //'jika totalMonth lebih kecil daripada 0' atau boleh juga buat 'jika $("#HR_KEW8_IND:checked").val() == "P"'
+                if (JumlahBulan(startDate, endDate2) < 0)
+                {
+                    nilai2 = nilai + nilai2;
+                }
+
+                if (isNaN(nilai2))
+                {
+                    nilai2 = 0;
+                }
+
+                if ($("#HR_KEW8_IND:checked").val() == "P" || '@ViewBag.Kod' == "00039")
+                {
+                    nilai2 = -Math.abs(nilai2);
+                }
+
+                $("#HR_JUMLAH_PERUBAHAN").val(nilai2.toFixed(2));
+            }
+
+            function ajaxPelarasan(KodElaun, nilai, tarikhMula, kod)
+            {
+                if (nilai == null) {
+                    nilai = 0
+                }
+                $.ajax({
+                    url: "../Kewangan8/CariJumlahPotonganElaun",
+                    type: "GET",
+                    data: { "HR_NO_PEKERJA": $("#HR_NO_PEKERJA").val(), "Kod": '@ViewBag.Kod', "KodElaun": KodElaun },
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        getDP();
+                        var mula = new Date();
+
+                        if (kod == 1 && data.HR_TARIKH_AKHIR != null) {
+                            var akhir = new Date(parseInt(data.HR_TARIKH_AKHIR.substr(6)));
+                            $('#HR_TARIKH_AKHIR').val(akhir.toLocaleDateString('en-GB'));
+                        }
+
+                        if (kod == 1) {
+                            var mula = new Date(parseInt(data.HR_TARIKH_MULA.substr(6)));
+                            $('#HR_TARIKH_MULA').val(mula.toLocaleDateString('en-GB'));
+                            $("#HR_JUMLAH_PERUBAHAN_ELAUN").val(data.HR_JUMLAH.toFixed(2));
+                            if ($("#HR_KEW8_IND:checked").val() == "P")
+                            {
+
+                                if (data.HR_TARIKH_AKHIR != null && '@ViewBag.Kod' == "00024")
+                                {
+                                    jumPerubahan(parseFloat(data.HR_JUMLAH), akhir)
+                                }
+                                else {
+                                    $("#HR_JUMLAH_PERUBAHAN").val("0.00");
+                                }
+
+                            }
+                            else
+                            {
+                                jumPerubahan(parseFloat(data.HR_JUMLAH), mula)
+                            }
+                        }
+                        else {
+                            jumPerubahan(parseFloat(nilai), tarikhMula)
+                        }
+
+                        if (data.HR_KOD_ELAUN_POTONGAN == null && '@ViewBag.Kod' == "00039") {
+                            $('#HR_TARIKH_MULA').datepicker("destroy");
+                        }
+
+                    }
+                });
+            }
+
+            function ConvertTarikhMula(nilai, tarikh)
+            {
+                $.ajax({
+                    url: "../Kewangan8/ConvertTarikhMula",
+                    type: "GET",
+                    data: { "tarikh": tarikh },
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        ajaxPelarasan($("#HR_KOD_PELARASAN").val(), nilai, new Date(data), 0)
+                    }
+                });
+            }
+
+            $("#HR_KOD_PELARASAN").on("input", function () {
+
+                if ($(this).val() != "")
+                {
+                    getDP()
+                }
+                else
+                {
+                    $('#HR_TARIKH_MULA').datepicker("destroy");
+                    $('#HR_TARIKH_AKHIR').datepicker("destroy");
+                }
+
+                $("#HR_JUMLAH_PERUBAHAN_ELAUN").val("");
+                $("#HR_JUMLAH_PERUBAHAN").val("");
+                $('#HR_TARIKH_MULA').val("");
+                $('#HR_TARIKH_AKHIR').val("");
+                $('#HR_BUTIR_PERUBAHAN').val("");
+                $('#HR_NO_SURAT_KEBENARAN').val("");
+                $('#HR_CATATAN').val("");
+
+                ajaxPelarasan($(this).val(), null, null, 1)
+
+                if ($("#HR_KEW8_IND:checked").val() != "P") {
+                    $("#HR_JUMLAH_PERUBAHAN_ELAUN").removeAttr("readonly");
+                    $("#HR_JUMLAH_PERUBAHAN").attr("readonly", "readonly");
+                }
+                else {
+                    if ('@ViewBag.Kod' == "00039")
+                    {
+                        $("#HR_JUMLAH_PERUBAHAN_ELAUN").attr("readonly", "readonly");
+                        $("#HR_JUMLAH_PERUBAHAN").removeAttr("readonly");
+                    }
+                    else {
+                        $("#HR_JUMLAH_PERUBAHAN_ELAUN").removeAttr("readonly");
+                        $("#HR_JUMLAH_PERUBAHAN").attr("readonly", "readonly");
+                    }
+                }
+            })
+
+            $("#HR_JUMLAH_PERUBAHAN_ELAUN").on("input", function () {
+                if ($("#HR_KEW8_IND:checked").val() == "P")
+                {
+                    if ($("#HR_TARIKH_AKHIR").val() != "")
+                    {
+                        ConvertTarikhMula(parseFloat($(this).val()), $("#HR_TARIKH_AKHIR").val())
+                    }
+
+                }
+                else
+                {
+                    if ($("#HR_TARIKH_MULA").val() != "")
+                    {
+                        ConvertTarikhMula(parseFloat($(this).val()), $("#HR_TARIKH_MULA").val())
+                    }
+
+                }
+            })
+        }
+
+
+
+        @*if ('@ViewBag.Kod' == "00039" || '@ViewBag.Kod' == "00024")
+        {
+            KodPelarasan($("#HR_KEW8_IND:checked").val());
+        }*@
+
+        $("#HR_NAMA_PEGAWAI").on('input', function () {
+            $("#statusdata").html("");
+            if ($(this).val().length >= 4)
+            {
+                $.get("../Kewangan8/CariPegawai2", { HR_NP_FINALISED_HR: $("#HR_NAMA_PEGAWAI").val() }, function (data) {
+                    if(data != false)
+                    {
+                        $("#HR_NAMA_PEGAWAI").val(data.HR_NAMA_PEKERJA);
+                        $("#HR_NP_FINALISED_HR").val(data.HR_NO_PEKERJA);
+
+                        if ('@ViewBag.HR_NAMA_PEGAWAI' == data.HR_NAMA_PEKERJA) {
+                            var html = '<section>' +
+                                            '<div class="row">' +
+                                                '<label class="label col col-4">Status Data</label>' +
+                                                '<div class="col col-8">' +
+                                                    '<label class="input">' +
+                                                        '<select class="form-control" id="HR_FINALISED_IND_HR" name="HR_FINALISED_IND_HR">' +
+                                                            '<option value="T">Baru</option>' +
+                                                            '<option value="P">Proses</option>' +
+                                                            '<option value="Y">Muktamad</option>' +
+                                                        '<select>' +
+                                                    '</label>' +
+                                                '</div>' +
+                                            '</div>' +
+                                        '</section>';
+                            $("#statusdata").html(html);
+                        }
+                        else {
+                            $("#statusdata").html("");
+                        }
+                    }
+                })
+
+                //$.ajax({
+                //    url: "../Kewangan8/CariPegawai2",
+                //    type: "GET",
+                //    data: { "HR_NP_FINALISED_HR": $("#HR_NAMA_PEGAWAI").val() },
+                //    dataType: "json",
+                //    contentType: "application/json; charset=utf-8",
+                //    success: function (data) {
+                //        if(data != false)
+                //        {
+                //            $("#HR_NAMA_PEGAWAI").val(data.HR_NAMA_PEKERJA);
+                //            $("#HR_NP_FINALISED_HR").val(data.HR_NO_PEKERJA);
+                //        }
+                //    }
+                //})
+            }
+            //var value = $(this).val();
+            //var d = value.split(' - ')
+            //$(this).val(d[0]);
+            //$("#HR_NP_FINALISED_HR").val(d[1]);
+
+
+            
+        });
+
+        $("#HR_NAMA_PEGAWAI").on("click", function () {
+            $(this).focus(function () { $(this).select(); });
+        })
+
+
+        if ('@ViewBag.Kod' == "00030" || '@ViewBag.Kod' == "00015" || '@ViewBag.Kod' == "00039" || '@ViewBag.Kod' == "00024" || '@ViewBag.Kod' == "00026")
+        {
+            $("input[name='HR_KEW8_IND']").on("click", function () {
+                if ('@ViewBag.Kod' != "00039" && '@ViewBag.Kod' != "00024")
+                {
+                    $("#HR_JUMLAH_POTONGAN_GAJI").val("");
+                    $("#HR_JUMLAH_POTONGAN").val("");
+                    $("#HR_BIL").val("");
+                    if ($("select[name='bulan']").val() == "" || $("input[name='hari']").val() == "" || $("#HR_KEW8_IND:checked").val() != "H") {
+                        $(".tambah").attr("disabled", "disabled");
+                        $(".padam").attr("disabled", "disabled");
+                        $("#tableBulan").html("");
+                        $(".tambah2").removeClass("tambah2").addClass("tambah");
+                    }
+                    else {
+                        $(".tambah").removeAttr("disabled");
+                        //$(".padam").removeAttr("disabled");
+                    }
+
+                    if ($("#HR_KEW8_IND:checked").val() == "A") {
+                        $("#HR_BIL2").removeAttr("disabled");
+
+                        $("input[name='hari']").attr("disabled", "disabled");
+                        $("select[name='bulan']").attr("disabled", "disabled");
+                        //$(".tambah").attr("disabled", "disabled");
+                        //$(".padam").attr("disabled", "disabled");
+                        $("#HR_BIL3").attr("disabled", "disabled");
+                        //$("#HR_JUMLAH_POTONGAN_GAJI").attr("disabled", "disabled");
+                        //$("#HR_JUMLAH_POTONGAN").attr("disabled", "disabled");
+
+                        $("input[name='hari']").val("");
+                        $("select[name='bulan']").val("");
+                        $("#HR_BIL3").val("");
+                        //var kosong = 0;
+                        //$("#HR_JUMLAH_POTONGAN_GAJI").val(kosong.toFixed(2));
+                        //$("#HR_JUMLAH_POTONGAN").val(kosong.toFixed(2));
+
+                        //$("#tableElaun table tbody").html("<tr><td id='emptyData' align='center' colspan='6' style='padding:20px'>Tiada Data</td></tr>")
+
+                        jumPelarasan(new Array())
+
+                    }
+                    if ($("#HR_KEW8_IND:checked").val() == "H") {
+                        $("#HR_BIL2").attr("disabled", "disabled");
+                        $("#HR_BIL2").val("");
+
+                        $("input[name='hari']").removeAttr("disabled");
+                        $("select[name='bulan']").removeAttr("disabled");
+                        //$(".tambah").removeAttr("disabled");
+                        //$(".padam").removeAttr("disabled");
+                        $("#HR_BIL3").removeAttr("disabled");
+                        $("#HR_BIL3").val("");
+                        //$("#HR_JUMLAH_POTONGAN_GAJI").removeAttr("disabled");
+                        //$("#HR_JUMLAH_POTONGAN").removeAttr("disabled");
+
+
+
+
+
+
+                        if ($("#tableBulan table tr:not(:first)").length > 0) {
+                            tambahHari();
+                        }
+                        else {
+                            jumPelarasan(new Array())
+                        }
+                    }
+                    if ($("#HR_KEW8_IND:checked").val() == "B") {
+                        $("#tableElaun table tbody").each(function () {
+                            $(this).find("td#pelarasan").html("");
+                            //$(this).find("td").addClass("hide");
+                            $("#txtTarikhMula").text("Tarikh Mula Bayar Gaji");
+                            $("#txtTarikhAkhir").text("Tarikh Akhir Bayar Gaji");
+                            $("#HR_TARIKH_MULA").val("");
+                            $("#HR_TARIKH_AKHIR").val("");
+
+                            jumPelarasan(new Array())
+                        })
+                    }
+                    if ($("#HR_KEW8_IND:checked").val() == "T") {
+                        $("#tableElaun table tbody").each(function () {
+                            $(this).find("td#pelarasan").html("");
+                            //$(this).find("td").addClass("hide");
+                            $("#txtTarikhMula").text("Tarikh Mula Tunggakan Gaji");
+                            $("#txtTarikhAkhir").text("Tarikh Akhir Tunggakan Gaji");
+                            $("#HR_TARIKH_MULA").val("");
+                            $("#HR_TARIKH_AKHIR").val("");
+
+                            jumPelarasan(new Array())
+                        })
+                    }
+                }
+                else
+                {
+                    KodPelarasan($("#HR_KEW8_IND:checked").val());
+                    $('#HR_TARIKH_MULA').datepicker("destroy");
+                    $('#HR_TARIKH_AKHIR').datepicker("destroy");
+
+                    $("#HR_JUMLAH_PERUBAHAN_ELAUN").val("");
+                    $("#HR_JUMLAH_PERUBAHAN").val("");
+                    $('#HR_TARIKH_MULA').val("");
+                    $('#HR_TARIKH_AKHIR').val("");
+                    $('#HR_BUTIR_PERUBAHAN').val("");
+                    $('#HR_NO_SURAT_KEBENARAN').val("");
+                    $('#HR_CATATAN').val("");
+                    $("#HR_KOD_PELARASAN").val("");
+                    $("#HR_JUMLAH_PERUBAHAN").attr("readonly", "readonly");
+                    $("#HR_JUMLAH_PERUBAHAN_ELAUN").attr("readonly", "readonly");
+                    if ($("#HR_KEW8_IND:checked").val() != "P")
+                    {
+                        $("#jumTxt").html("Tunggakan");
+                    }
+                    else
+                    {
+                        $("#jumTxt").html("Potongan");
+                    }
+                }
+
+            });
+            if ('@ViewBag.Kod' == "00030" || '@ViewBag.Kod' == "00015")
+            {
+                $("input[name='HR_BIL']").on("input", function () {
+                    $("#HR_BIL").val($(this).val())
+                    if ($(this).attr('id') == "HR_BIL2") {
+
+                        var totalElaun = 0;
+                        var gaji = parseFloat($(this).val());
+                        $('#HR_NILAI_PELARASAN').each(function () {
+                            totalElaun += parseFloat($(this).val());
+                        })
+                        var total = parseFloat(totalElaun) + gaji;
+                        $("#HR_JUMLAH_POTONGAN_GAJI").val($(this).val());
+                        $('#HR_JUMLAH_POTONGAN').val(total.toFixed(2));
+                    }
+                });
+            }
+
+        }
+
+        $(document).on('click', '.tambah', function (e) {
+            if ($("select[name='bulan']").val() == "" || $("input[name='hari']").val() == "" || $("#HR_KEW8_IND:checked").val() != "H") {
+                e.preventDefault();
+            }
+            else {
+                $(".tambah").removeClass("tambah").addClass("tambah2");
+                $.ajax({
+                    url: "../Kewangan8/CariGajiBulanan",
+                    type: "GET",
+                    data: { "HR_NO_PEKERJA": $("#HR_NO_PEKERJA").val(), "BULAN": $("select[name='bulan']").val() },
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (gajiPokok) {
+                        //var datalist = new Array();
+                        var bulan = parseInt($("select[name='bulan']").val());
+                        var hari = parseInt($("input[name='hari']").val());
+                        //var data = new Array()
+                        //data.push(bulan, hari);
+                        //datalist.push(data);
+
+                        var noHari = 0;
+                        $("#tableBulan table tr:not(:first)").each(function () {
+                            if ($(this).find("td#tBulan").html() == $("select[name='bulan']").val())
+                            {
+                                noHari++;
+                                var tHari = parseInt($(this).find("td#tHari").html());
+                                var totalDay = tHari + hari;
+                                $(this).find("td#tHari").html(totalDay);
+                            }
+                        })
+
+                        if (noHari <= 0)
+                        {
+                            $("#tableBulan").html('<table class="table table-striped table-bordered table-hover" width="100%">' +
+                                                '<tr>' +
+                                                    '<th>Bulan</th>' +
+                                                    '<th>Hari</th>' +
+                                                    '<th>Gaji</th>' +
+                                                    '<th>Potongan</th>' +
+                                                '</tr>' +
+                                                '<tr>' +
+                                                    '<td id="tBulan">' + $("select[name='bulan']").val() + '</td>' +
+                                                    '<td id="tHari">' + $("input[name='hari']").val() + '</td>' +
+                                                    '<td id="tGaji">' + gajiPokok + '</td>' +
+                                                    '<td id="tPotongan"></td>' +
+                                                '</tr>' +
+                                              '</table>');
+                        }
+                        tambahHari();
+                        $(".padam").removeAttr("disabled");
+                    }
+                });
+                
+            }
+
+        }).on('click', '.tambah2', function (e) {
+            $.ajax({
+                url: "../Kewangan8/CariGajiBulanan",
+                type: "GET",
+                data: { "HR_NO_PEKERJA": $("#HR_NO_PEKERJA").val(), "BULAN": $("select[name='bulan']").val() },
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (gajiPokok) {
+                    var bulan = parseInt($("select[name='bulan']").val());
+                    var hari = parseInt($("input[name='hari']").val());
+                    var noHari = 0;
+                    $("#tableBulan table tr:not(:first)").each(function () {
+                        if ($(this).find("td#tBulan").html() == $("select[name='bulan']").val()) {
+                            noHari++;
+                            var tHari = parseInt($(this).find("td#tHari").html());
+                            var totalDay = tHari + hari;
+                            $(this).find("td#tHari").html(totalDay);
+                        }
+                    })
+
+                    if (noHari <= 0)
+                    {
+                        $("#tableBulan table").append('<tr>' +
+                                                '<td id="tBulan">' + $("select[name='bulan']").val() + '</td>' +
+                                                '<td id="tHari">' + $("input[name='hari']").val() + '</td>' +
+                                                '<td id="tGaji">' + gajiPokok + '</td>' +
+                                                '<td id="tPotongan"></td>' +
+                                            '</tr>');
+                    }
+                    tambahHari();
+                }
+            });
+            
+            
+        })
+        $(document).on('click', '.padam', function (e) {
+            if ($("#tableBulan table tr").length > 0) {
+                var value = "";
+                var no = 0;
+                $("#tableBulan table tr:not(:first)").each(function () {
+                    if ($(this).find("td#tBulan").html() == $("select[name='bulan']").val() && $(this).find("td#tHari").html() == $("input[name='hari']").val()) {
+                        //value = $(this).find("td:last").html();
+                        $(this).remove();
+                        tambahHari();
+                        no++
+                    }
+                })
+                if (no <= 0) {
+                    //value = $("#tableBulan table tr:last td:last").html();
+                    $("#tableBulan table tr:last").remove();
+                    tambahHari();
+                }
+
+                if ($("#tableBulan table tr").length <= 1) {
+
+                    $("#tableBulan").html("");
+                    $(".tambah2").removeClass("tambah2").addClass("tambah");
+                    $(".padam").attr("disabled", "disabled");
+                }
+            }
+
+            e.preventDefault();
+            return false;
+        });
+
+        function HasilKiraan(startDate, endDate) {
+            var currentDate = new Date(startDate);
+            var currentDate2 = new Date(startDate);
+            //var between = [];
+            var totalDay = 0;
+            var datalist = new Array();
+            var data = new Array();
+            $("#HR_JUMLAH_POTONGAN_GAJI").val(totalDay.toFixed(2));
+            $("#HR_JUMLAH_POTONGAN").val(totalDay.toFixed(2));
+            $("#HR_JUMLAH_PERUBAHAN").val(totalDay.toFixed(2));
+
+            if (currentDate <= endDate) {
+                while (currentDate <= endDate) {
+                    //between.push(new Date(currentDate));
+                    currentDate.setDate(currentDate.getDate() + 1);
+                    totalDay++;
+                }
+                var date = new Date(endDate);
+                var hari = totalDay;
+                var bulan = $.datepicker.formatDate('dd', new Date(date.getFullYear(), date.getMonth() + 1, 0));
+                data.push(bulan, hari);
+                datalist.push(data);
+
+                if ('@ViewBag.Kod' == "CUTI" || '@ViewBag.Kod' == "TP" || '@ViewBag.Kod' == "00026") {
+                    jumPotongGji(datalist);
+                    jumPelarasan(datalist);
+                }
+                else if ('@ViewBag.Kod' == "00036")
+                {
+                    nilaiPindaanGaji(datalist);
+                }
+                else {
+                    jumPotongGji(totalDay);
+                    jumPelarasan(totalDay);
+                }
+
+            }
+            if (currentDate2 > endDate) {
+                while (currentDate2 > endDate) {
+                    //between.push(new Date(currentDate));
+                    currentDate2.setDate(currentDate2.getDate() - 1);
+                    totalDay--;
+                }
+                var date = new Date(endDate);
+                var hari = totalDay;
+                var bulan = $.datepicker.formatDate('dd', new Date(date.getFullYear(), date.getMonth() + 1, 0));
+                data.push(bulan, hari);
+                datalist.push(data);
+
+                if ('@ViewBag.Kod' == "CUTI" || '@ViewBag.Kod' == "00026") {
+                    jumPotongGji(datalist);
+                    jumPelarasan(datalist);
+                }
+                else {
+                    jumPotongGji(totalDay);
+                    jumPelarasan(totalDay);
+                }
+            }
+
+            //$.each(between, function (i, v) {
+            //        totalDay++;
+            //})
+        }
+
+        function tambahHari() {
+            var jumHari = 0;
+            var datalist = new Array();
+            $("#tableBulan table tr:not(:first)").each(function () {
+
+                var hari = parseInt($(this).find("td#tHari").html());
+                var bulan = parseInt($(this).find("td#tBulan").html());
+                var gaji = parseInt($(this).find("td#tGaji").html());
+                jumHari += hari;
+                var data = new Array()
+                data.push(bulan, hari);
+                datalist.push(data);
+
+            })
+            $("#HR_BIL3").val(jumHari);
+            $("#HR_BIL").val(jumHari);
+            jumPotongGji(datalist);
+            jumPelarasan(datalist)
+
+            //alert(jumPotongGji(datalist) + jumPelarasan(datalist));
+
+        }
+
+        function tolakHari(value) {
+            var jumHari = parseInt($("#HR_BIL3").val()) - parseInt(value)
+            $("#HR_BIL3").val(jumHari);
+            $("#HR_BIL").val(jumHari);
+        }
+
+
+        function jumPotongGji(datalist) {
+            var nilai = parseFloat('@ViewBag.HR_GAJI_LAMA');
+            var nilai2 = 0;
+            if ('@ViewBag.Kod' == "CUTI" && $("#HR_KOD_PERUBAHAN").val() == "00017" && $("#HR_TARIKH_MULA").val() != "")
+            {
+                var nilai2 = kiraan(nilai, datalist) / 2;
+            }
+            else
+            {
+                var nilai2 = kiraan(nilai, datalist);
+            }
+            $("#HR_JUMLAH_POTONGAN_GAJI").val(nilai2.toFixed(2));
+            return nilai2;
+        }
+
+        function nilaiPindaanGaji(datalist) {
+            var nilai = parseFloat($("#HR_GAJI_BARU").val()) - parseFloat('@ViewBag.HR_GAJI_LAMA');
+            var pindaan = kiraan(nilai, datalist)
+            $("#HR_JUMLAH_PERUBAHAN").val(pindaan.toFixed(2));
+        }
+
+        @*function nilaiPindaanGaji2(datalist) {
+            var nilai = parseFloat($("#HR_GAJI_BARU").val()) - parseFloat('@ViewBag.HR_GAJI_LAMA');
+            var pindaan = kiraan(nilai, datalist)
+            $("#HR_JUMLAH_PERUBAHAN").val(pindaan.toFixed(2));
+        }*@
+
+
+        function kiraan(nilai, datalist) {
+            var jumPotongan = 0;
+            //00026
+            if ('@ViewBag.Kod' == "") {
+                var currentDate = new Date();
+                var bilhari = $.datepicker.formatDate('dd', new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0));
+                jumPotongan += (nilai / parseInt(bilhari) * datalist);
+            }
+            else {
+                var items = {}, base, key;
+                $.each(datalist, function (index, val) {
+                    debugger;
+                    key = val[0];
+                    if (!items[key]) {
+                        items[key] = 0;
+                    }
+                    items[key] += val[1];
+                });
+
+
+                //var outputArr = [];
+                no2 = 0;
+                $.each(items, function (key, val) {
+                    //outputArr.push([key, val]);
+                    //var gaji = parseFloat('@ViewBag.HR_GAJI_LAMA');
+                    var currentDate = new Date(new Date().getFullYear(), key, 0);
+                    var bilhari = $.datepicker.formatDate('dd', new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0));
+                    jumPotongan += (nilai / parseInt(bilhari) * val);
+
+                    no2++;
+                });
+            }
+
+
+            return jumPotongan;
+        }
+
+        function jumPelarasan(datalist) {
+            var table3 = '<table class="table table-striped table-bordered table-hover" width="100%">' +
+                                                '<thead>' +
+                                                    '<tr>' +
+                                                        '<th>#</th>' +
+                                                        '<th>Elaun</th>' +
+                                                        '<th>Jumlah Elaun</th>';
+            var colspan = 3;
+
+            if ('@ViewBag.Kod' == "00030" || '@ViewBag.Kod' == "00026" || '@ViewBag.Kod' == "TP" || '@ViewBag.Kod' == "CUTI" || '@ViewBag.Kod' == "00015")
+            {
+
+                colspan = 5
+                table3 +=
+                                                        '<th>Pelarasan</th>' +
+                                                        '<th>Jumlah Pelarasan</th>';
+            }
+            table3 +=
+                                                    '</tr>' +
+                                                '</thead>' +
+                                                '<tbody>' +
+                                                '<tr>' +
+                                                    '<td colspan="' + colspan + '" style="padding:20px" align="center">Tiada Data</td>' +
+                                                '</tr>'
+                                                '</tbody>' +
+                                            '</table>';
+
+            $("#tableElaun").html(table3)
+
+            $.ajax({
+                url: "../Kewangan8/JumlahPelarasan",
+                type: "GET",
+                data: { "HR_NO_PEKERJA": $("#HR_NO_PEKERJA").val() },
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (elaun) {
+                    var jumPotongan2 = 0; var jumPotongan3 = 0;
+                    $("#tableElaun table tbody").html("");
+                    $("#tableElaun table tfoot").remove();
+                    var no2 = 0
+
+                    $.each(elaun, function (key, val) {
+                        var nilaiPelarasan = 0;
+                        if ('@ViewBag.Kod' == "CUTI" && $("#HR_KOD_PERUBAHAN").val() == "00017" && $("#HR_TARIKH_MULA").val() != "")
+                        {
+                            nilaiPelarasan = kiraan(val.ELAUN.HR_NILAI, datalist) / 2;
+                        }
+                        else
+                        {
+                            nilaiPelarasan = kiraan(val.ELAUN.HR_NILAI, datalist);
+                        }
+                        ++no2;
+                        $("#tableElaun table tbody").append('<tr>' +
+                                        '<td align="center">' + no2 + '</td>' +
+                                        '<td>' + val.ELAUN.HR_PENERANGAN_ELAUN + '</td>' +
+                                        '<td>' + val.ELAUN.HR_NILAI + '</td>' +
+                                        '<td>' + val.POTONGAN.HR_PENERANGAN_POTONGAN + '<input name="[' + no2 + '].HR_KOD_POTONGAN" type="hidden" value="' + val.ELAUN.HR_KOD_POTONGAN + '" /></td>' +
+                                        '<td id="pelarasan"><label class="input"><input name="[' + no2 + '].HR_NILAI" type="text" class="form-control" value="' + +Math.abs(nilaiPelarasan).toFixed(2) + '" id="HR_NILAI_PELARASAN" /></label></td>' +
+                                    '</tr>');
+                        jumPotongan2 += parseFloat(nilaiPelarasan.toFixed(2));
+                    })
+                    if (elaun.length > 0 && ('@ViewBag.Kod' == "00030" || '@ViewBag.Kod' == "00026" || '@ViewBag.Kod' == "TP" || '@ViewBag.Kod' == "CUTI" || '@ViewBag.Kod' == "00015"))
+                    {
+                        $("#tableElaun table").append('<tfoot><tr>' +
+                                        '<td colspan="4" align="right"><strong>Jumlah (RM)</strong></td>' +
+                                        '<td><label class="input"><input name="TotalPelarasan" type="text" class="form-control" value="' + Math.abs(jumPotongan2).toFixed(2) + '" readonly = "readonly" id="TotalPelarasan" /></label></td>' +
+                                    '</tr></tfoot>');
+                    }
+                    jumPotongan3 = jumPotongan2 + parseFloat(jumPotongGji(datalist));
+                    $("#HR_JUMLAH_POTONGAN").val(jumPotongan3.toFixed(2));
+
+                    $('#HR_NILAI_PELARASAN').on("input", function () {
+                        var totalElaun = 0;
+                        var gaji = parseFloat($('#HR_JUMLAH_POTONGAN_GAJI').val());
+                        $('#HR_NILAI_PELARASAN').each(function () {
+                            totalElaun += parseFloat($(this).val());
+                        })
+                        var total = parseFloat(totalElaun) + gaji;
+                        $('#HR_JUMLAH_POTONGAN').val(total.toFixed(2));
+                        $('#TotalPelarasan').val(totalElaun.toFixed(2));
+                    })
+                }
+            })
+
+        }
+
+        $("select[name='bulan'], input[name='hari']").on("input", function () {
+            if ($("select[name='bulan']").val() == "" || $("input[name='hari']").val() == "" || $("#HR_KEW8_IND:checked").val() != "H") {
+                $(".tambah").attr("disabled", "disabled");
+                $(".padam").attr("disabled", "disabled");
+            }
+            else {
+                $(".tambah").removeAttr("disabled");
+            }
+        })
+
+        //$(document).on('click', '.tambah', function (e) {
+        //    if ($("select[name='bulan']").val() == "" || $("input[name='hari']").val() == "" || $("#HR_KEW8_IND:checked").val() != "H")
+        //    {
+        //        $(".tambah").attr("disabled", "disabled");
+        //        $(".padam").attr("disabled", "disabled");
+        //        e.preventDefault();
+        //    }
+        //    else
+        //    {
+        //        e.preventDefault();
+
+        //        var controlForm = $('.parent'),
+        //            currentEntry = $(this).parents('.child:first'),
+        //            newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+        //        newEntry.find('input').val('');
+        //        newEntry.find('select').val('');
+        //        newEntry.find('select').removeClass('valid');
+        //        newEntry.find('input').removeClass('valid');
+        //        newEntry.find('.select').removeClass('state-success');
+        //        newEntry.find('.input').removeClass('state-success');
+
+
+        //        controlForm.find('.child:not(:last) .tambah')
+        //            .removeClass('tambah').addClass('padam')
+        //            //.removeClass('btn-success').addClass('btn-danger')
+        //            .html('<span class="fa fa-minus"></span>');
+
+        //    }
+        //}).on('click', '.padam', function (e) {
+        //    $(this).parents('.child:first').remove();
+
+        //    e.preventDefault();
+        //    return false;
+        //})
+
+        if ('@ViewBag.Kod' == "00036") {
+            var gred = {};
+            $("#list-gred option").each(function (i, el) {
+                gred[$(el).data("value")] = $(el).val();
+            });
+
+            $("#HR_GRED").on("input", function () {
+                $("#HR_GAJI_MIN_BARU").val("");
+                $("#HR_GAJI_MAX_BARU").val("");
+                $("#HR_GAJI_BARU").val("");
+
+                $("#list-min").html('<option></option>');
+                $("#list-max").html('<option></option>');
+                $("#list-gaji").html('<option></option>');
+                $.ajax({
+                    url: "../Kewangan8/GajiMin",
+                    type: "GET",
+                    data: { "HR_GRED": $(this).val() },
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        $.each(data, function (i, v) {
+                            $("#list-min").append($("<option></option>").val(v.HR_GAJI_MIN.toFixed(2)))
+                        })
+                    }
+                })
+            });
+            $("#HR_GAJI_MIN_BARU").on("input", function () {
+                $("#HR_GAJI_MAX_BARU").val("");
+                $("#HR_GAJI_BARU").val("");
+
+                $("#list-max").html('<option></option>');
+                $("#list-gaji").html('<option></option>');
+                $.ajax({
+                    url: "../Kewangan8/GajiMax",
+                    type: "GET",
+                    data: { HR_GAJI_MIN: $(this).val(), HR_GRED: $('#HR_GRED').val() },
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        $.each(data, function (i, v) {
+                            $("#list-max").append($("<option></option>").val(v.HR_GAJI_MAX.toFixed(2)))
+                        })
+                    }
+                })
+            });
+            $("#HR_GRED, #HR_GAJI_MIN_BARU, #HR_GAJI_MAX_BARU, #HR_GAJI_BARU").on("input", function () {
+                $("#HR_MATRIKS_GAJI").val("");
+                if ($(this).attr("id") != "HR_GAJI_BARU") {
+                    $("#HR_GAJI_BARU").val("");
+                    $("#list-gaji").html('<option></option>');
+
+                    if ($("#HR_GRED").val() != "" && $("#HR_GAJI_MIN_BARU").val() != "" && $("#HR_GAJI_MAX_BARU").val() != "") {
+                        $.ajax({
+                            url: "../Kewangan8/GajiPokok",
+                            type: "GET",
+                            data: { HR_GRED: $("#HR_GRED").val(), HR_GAJI_MIN: $("#HR_GAJI_MIN_BARU").val(), HR_GAJI_MAX: $("#HR_GAJI_MAX_BARU").val() },
+                            dataType: "Json",
+                            success: function (data) {
+
+                                $.each(data, function (i, v) {
+                                    $("#list-gaji").append($("<option></option>").val(v.HR_GAJI_POKOK.toFixed(2)))
+                                })
+                            }
+                        })
+                    }
+                }
+                if ($("#HR_GRED").val() != "" && $("#HR_GAJI_BARU").val() != "") {
+                    $.ajax({
+                        url: "../Kewangan8/KodMatriks",
+                        type: "GET",
+                        data: { HR_GRED: $("#HR_GRED").val(), HR_GAJI_POKOK: $("#HR_GAJI_BARU").val() },
+                        dataType: "Json",
+                        success: function (data) {
+                            var tahap = parseFloat(data.HR_TAHAP);
+                            $("#HR_MATRIKS_GAJI").val("P" + data.HR_PERINGKAT + "T" + tahap.toFixed(2))
+                        }
+                    })
+                }
+            });
+
+            $.ajax({
+                url: "../Kewangan8/GajiMin",
+                type: "GET",
+                data: { "HR_GRED": '@ViewBag.HR_GRED_LAMA' },
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $.each(data, function (i, v) {
+                        $("#list-min").append($("<option></option>").val(v.HR_GAJI_MIN.toFixed(2)))
+                    })
+                }
+            });
+
+            $.ajax({
+                url: "../Kewangan8/GajiMax",
+                type: "GET",
+                data: { HR_GAJI_MIN: '@ViewBag.HR_GAJI_MIN_LAMA', HR_GRED: '@ViewBag.HR_GRED_LAMA' },
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $.each(data, function (i, v) {
+                        $("#list-max").append($("<option></option>").val(v.HR_GAJI_MAX.toFixed(2)))
+                    })
+                }
+            });
+            if ($("#HR_GRED").val() != "" && $("#HR_GAJI_MIN_BARU").val() != "" && $("#HR_GAJI_MAX_BARU").val() != "") {
+                $.ajax({
+                    url: "../Kewangan8/GajiPokok",
+                    type: "GET",
+                    data: { HR_GRED: '@ViewBag.HR_GRED_LAMA', HR_GAJI_MIN: '@ViewBag.HR_GAJI_MIN_LAMA', HR_GAJI_MAX: '@ViewBag.HR_GAJI_MAX_LAMA' },
+                    dataType: "Json",
+                    success: function (data) {
+
+                        $.each(data, function (i, v) {
+                            $("#list-gaji").append($("<option></option>").val(v.HR_GAJI_POKOK.toFixed(2)))
+                        })
+                    }
+                })
+            }
+            $("#HR_GAJI_BARU").on("input", function () {
+                var totalDay = 0;
+                $("#HR_JUMLAH_PERUBAHAN").val(totalDay.toFixed(2));
+                if ($('#HR_TARIKH_MULA').val() != "" && $('#HR_GAJI_BARU').val() != "") {
+                    //var crrDate = new Date();
+                    var startDate = $('#HR_TARIKH_MULA').datepicker("getDate");
+                    var endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0)
+
+                    HasilKiraan(startDate, endDate);
+                }
+            });
+        }
+
+        if ('@ViewBag.Kod' != "kew8")
+        {
+            $("#HR_KOD_PERUBAHAN").on("input", function () {
+                $('#HR_TARIKH_MULA').val("");
+                $('#HR_TARIKH_AKHIR').val("");
+                $('#HR_BUTIR_PERUBAHAN').val("");
+                $('#HR_NO_SURAT_KEBENARAN').val("");
+                $('#HR_CATATAN').val("");
+                $('#HR_JUMLAH_POTONGAN_GAJI').val("");
+                $('#HR_JUMLAH_POTONGAN').val("");
+
+                if ($(this).val() == "00017") {
+                    $('#HR_TARIKH_MULA').val('@ViewBag.HR_TARIKH_MULA');
+                    $('#HR_TARIKH_AKHIR').val('@ViewBag.HR_TARIKH_AKHIR');
+
+                    var crrDate = new Date();
+                    var startDate = $('#HR_TARIKH_MULA').datepicker("getDate");
+                    var endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0)
+
+                    HasilKiraan(startDate, endDate);
+                }
+                else if ('@ViewBag.Kod' == "TP" && $('#HR_TARIKH_TAMAT').val() != "") {
+                    var crrDate = new Date();
+                    var startDate = $('#HR_TARIKH_TAMAT').datepicker("getDate");
+                    var endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0)
+
+                    HasilKiraan(startDate, endDate);
+                }
+                else {
+                    jumPelarasan(new Array())
+                }
+
+            })
+        }
+
+        $('#HR_NILAI_PELARASAN').on("input", function () {
+            var totalElaun = 0;
+            var gaji = parseFloat($('#HR_JUMLAH_POTONGAN_GAJI').val());
+            $('#HR_NILAI_PELARASAN').each(function () {
+                totalElaun += parseFloat($(this).val());
+            })
+            var total = parseFloat(totalElaun) + gaji;
+            $('#HR_JUMLAH_POTONGAN').val(total.toFixed(2));
+            $('#TotalPelarasan').val(totalElaun.toFixed(2));
+        })
+
+    });
+</script>
+

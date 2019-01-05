@@ -1,0 +1,269 @@
+﻿@model eSPP.Models.PergerakanGajiModels
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Tambah Kewangan8 <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("TambahKewangan8", "Kewangan8", FormMethod.Post, new { @class = "smart-form", id = "formKewangan8" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_NO_PEKERJA)
+            <fieldset>
+                <legend>Penyata Perubahan Mengenai Pendapatan Seseorang Pegawai</legend>
+                <div class="row">
+                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <section>
+                            <div class="row">
+                                <label class="label col col-2">Jawatan</label>
+                                <div class="col col-10">
+                                    <label class="input">
+                                        @Html.Editor("HR_JAWATAN", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Gred</label>
+                                        <div class="col col-8">
+                                            <label class="input">
+                                                @Html.Editor("HR_GRED", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Kod Gaji</label>
+                                        <div class="col col-8">
+                                            <label class="input">
+                                                @Html.Editor("HR_KOD_GAJI", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Gaji Bulanan</legend>
+                <div class="row">
+                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Gaji</label>
+                                        <div class="col col-8">
+                                            <label class="input">
+                                                @Html.Editor("HR_GAJI_POKOK", null, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Imbuhan Tetap Perumahan</label>
+                                        <div class="col col-8">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.HR_ITP, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Elaun Khidmat Awam</label>
+                                        <div class="col col-8">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.HR_EKA, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Maklumat Kewangan8</legend>
+                <div class="row">
+                    
+                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <section>
+                            <div class="row">
+                                <label class="label col col-2">Jenis Perubahan</label>
+                                <div class="col col-10">
+                                    <label class="select">
+                                        @Html.DropDownListFor(model => model.HR_KOD_PERUBAHAN, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                        <i></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <section>
+                            <div class="row">
+                                <label class="label col col-2">No. Surat Kebenaran</label>
+                                <div class="col col-10">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_NO_SURAT_KEBENARAN, new { htmlAttributes = new { @class = "form-control" } })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <section>
+                            <div class="row">
+                                <label class="label col col-2">Butir-Butir Perubahan</label>
+                                <div class="col col-10">
+                                    <label class="textarea textarea-resizable">
+                                        @Html.TextAreaFor(model => model.HR_BUTIR_PERUBAHAN, new { @class = "form-control custom-scroll", rows = "5" })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <section>
+                            <div class="row">
+                                <label class="label col col-2">Cacatan</label>
+                                <div class="col col-10">
+                                    <label class="textarea textarea-resizable">
+                                        @Html.TextAreaFor(model => model.HR_CATATAN, new { @class = "form-control custom-scroll", rows = "5" })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Tarikh Mula</label>
+                                        <div class="col col-8">
+                                            <label class="input">
+                                                @Html.TextBox("HR_TARIKH_MULA", string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_MULA), new { @class = "form-control", @readonly = "readonly" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Tarikh Akhir</label>
+                                        <div class="col col-8">
+                                            <label class="input">
+                                                @Html.TextBox("HR_TARIKH_AKHIR", string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_AKHIR), new { @class = "form-control", @readonly = "readonly" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </fieldset>
+            <footer>
+                <button type="submit" id="btn" class="btn btn-primary">
+                    <span class="fa fa-save"></span> Simpan
+                </button>
+                <button type="reset" class="btn btn-default">
+                    Reset
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Kembali
+                </button>
+            </footer>
+        }
+
+    </div>
+
+</div><!-- /.modal-content -->
+<script type="text/javascript">
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+    $(document).ready(function () {
+
+        var validateform = $("#formKewangan8").validate({
+            // Rules for form validation
+            rules: {
+                HR_KOD_PERUBAHAN: {
+                    required: true
+                },
+                HR_TARIKH_MULA: {
+                    required: true
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                HR_KOD_PERUBAHAN: {
+                    required: "Jenis perubahan diperlukan"
+                },
+                HR_TARIKH_MULA: {
+                    required: "Tarikh mula diperlukan"
+                }
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+        $("#HR_TARIKH_MULA").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#HR_TARIKH_AKHIR').datepicker('option', 'minDate', selectedDate);
+            }
+        });
+
+        $("#HR_TARIKH_AKHIR").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#HR_TARIKH_MULA').datepicker('option', 'maxDate', selectedDate);
+            }
+        });
+
+    });
+</script>

@@ -1,0 +1,158 @@
+﻿
+
+
+@model eSPP.Models.HR_PCB
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Skrin Jadual PCB<span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("EditPCB", "PCB", FormMethod.Post, new { id = "order-form", @class = "smart-form", novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_KATEGORI);
+            @Html.HiddenFor(model => model.HR_PCB_KOD);
+            @Html.HiddenFor(model => model.HR_GAJI_DARI);
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Kategori  </label>
+                        <div class="col col-8">
+                            <label class="select">
+                                @Html.DropDownListFor(model => model.HR_KATEGORI, null, String.Empty, new { @class = "form-control", disabled = "disabled" })
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Kod PCB  </label>
+                        <div class="col col-8">
+                            <label class="select">
+                                @Html.DropDownListFor(model => model.HR_PCB_KOD, null, String.Empty, new { @class = "form-control", disabled = "disabled" })
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Gaji Dari  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_GAJI_DARI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Gaji Hingga </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_GAJI_HINGGA, new { htmlAttributes = new { @class = "form-control" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Jumlah  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_NILAI, new { htmlAttributes = new { @class = "form-control" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+            </fieldset>
+
+            <footer>
+                <button type="submit" id="btn" class="btn btn-primary">
+                    <span class="fa fa-send-o"></span> Hantar
+                </button>
+                <a type="button" class="btn btn-default" href="SenaraiPCB">
+                    Kembali
+                </a>
+            </footer>
+                                    }
+
+    </div>
+
+</div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+
+            var $orderForm = $("#order-form").validate({
+                // Rules for form validation
+                rules: {
+                    
+                    HR_GAJI_HINGGA: {
+                        required: true,
+                        remote: {
+                            url: "../PCB/CariEditPCB",
+                            type: "get",
+                            data: {
+                                hingga: function () {
+                                    return $("#HR_GAJI_HINGGA").val();
+                                },
+                                kod: function () {
+                                    return $("#HR_PCB_KOD").val();
+                                }
+                            }
+                        }
+                    },
+                    HR_NILAI: {
+                        required: true,
+                        remote: {
+                            url: "../PCB/CariEditPCB",
+                            type: "get",
+                            data: {
+                                nilai: function () {
+                                    return $("#HR_NILAI").val();
+                                },
+                                kod: function () {
+                                    return $("#HR_PCB_KOD").val();
+                                }
+                            }
+                        }
+                    }
+
+                },
+
+                // Messages for form validation
+                messages: {
+                    
+                    HR_GAJI_HINGGA: {
+                        required: 'Gaji Hingga diperlukan'
+                    },
+                    HR_NILAI: {
+                        required: 'Jumlah diperlukan'
+                    }
+
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+        })
+    </script> 

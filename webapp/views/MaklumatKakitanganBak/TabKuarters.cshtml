@@ -1,0 +1,217 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+<div class="tab-pane fade" id="Kuarters">
+    <div class="row">
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Maklumat Kuarters
+            </legend>
+            <div class="row smart-form">
+
+                <div class="col col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <div class="row">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Kuarters</label>
+                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                        <label class="select">
+                                            @Html.HiddenFor(model => model.HR_MAKLUMAT_KUARTERS.HR_NO_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            @Html.DropDownListFor(model => model.HR_MAKLUMAT_KUARTERS.HR_KOD_KUARTERS, new SelectList(ViewBag.HR_KUARTERS, "Value", "Text"), string.Empty, new { @class = "form-control", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </div>
+
+                                </section>
+
+                                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Status</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="select">
+                                            @Html.DropDownListFor(model => model.HR_MAKLUMAT_KUARTERS.HR_AKTIF_IND, new SelectList(ViewBag.HR_MAKLUMAT_KUARTERS_HR_AKTIF_IND, "Value", "Text"), string.Empty, new { @class = "form-control", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-7 form-inline">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Unit</label>
+                                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4 form-group">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-list-alt"></i>
+                                            @Html.EditorFor(model => model.HR_MAKLUMAT_KUARTERS.HR_NO_UNIT, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })
+                                            <b class="tooltip tooltip-top-right">
+                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                Sila masukkan hanya nombor sahaja
+                                            </b>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-5 col-sm-8 col-xs-8 form-group">
+                                        <label class="input">
+                                            @Html.EditorFor(model => model.HR_MAKLUMAT_KUARTERS.HR_KUARTERS.HR_BLOK_KUARTERS, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">ALamat Kuarters</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_MAKLUMAT_KUARTERS.HR_KUARTERS.HR_ALAMAT1, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                </label>
+                            </div>
+
+                        </section>
+
+
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+
+                                    @Html.EditorFor(model => model.HR_MAKLUMAT_KUARTERS.HR_KUARTERS.HR_ALAMAT2, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    @Html.HiddenFor(model => model.HR_MAKLUMAT_KUARTERS.HR_KUARTERS.HR_POSKOD, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    @Html.HiddenFor(model => model.HR_MAKLUMAT_KUARTERS.HR_KUARTERS.HR_BANDAR, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    @Html.HiddenFor(model => model.HR_MAKLUMAT_KUARTERS.HR_KUARTERS.HR_NEGERI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                            <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Tarikh Masuk Kuarters</label>
+                            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    @Html.TextBox("HR_MAKLUMAT_KUARTERS.HR_TARIKH_MASUK", string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_KUARTERS.HR_TARIKH_MASUK), new { @class = "form-control", disabled = "disabled" })
+                                </label>
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Keluar Kuarters</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    @Html.TextBox("HR_MAKLUMAT_KUARTERS.HR_TARIKH_KELUAR", string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_KUARTERS.HR_TARIKH_KELUAR), new { @class = "form-control", disabled = "disabled" })
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Catatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="textarea textarea-resizable">
+                                    <i class="icon-append fa fa-comment"></i>
+                                    @Html.TextAreaFor(model => model.HR_MAKLUMAT_KUARTERS.HR_CATATAN, new { @class = "form-control", disabled = "disabled", rows = 5 })
+
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="col col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-12 col-md-12 col-sm-12 col-xs-12">Pemotongan</label>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="inline-group">
+                                    <label class="checkbox">
+                                        @{ var HR_ITP = false;
+                                            if (Model.HR_MAKLUMAT_KUARTERS.HR_IDP == "Y")
+                                            {
+                                                HR_ITP = true;
+                                            }
+                                        }
+                                        @Html.CheckBox("HR_MAKLUMAT_KUARTERS.HR_IDP", isChecked: HR_ITP, htmlAttributes: new { @class = "form-control", disabled = "disabled", value = "Y" })
+                                        <i></i>Elaun Perumahan (ITP)
+                                    </label>
+                                    <label class="checkbox">
+                                        @{ var HR_GERAI = false;
+                                            if (Model.HR_MAKLUMAT_KUARTERS.HR_IDP == "Y")
+                                            {
+                                                HR_GERAI = true;
+                                            }
+                                        }
+                                        @Html.CheckBox("HR_MAKLUMAT_KUARTERS.HR_GERAI", isChecked: HR_GERAI, htmlAttributes: new { @class = "form-control", disabled = "disabled", value = "Y" })
+                                        <i></i>Gerai
+                                    </label>
+                                </div>
+                            </div>
+
+                        </section>
+
+
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-12 col-md-12 col-sm-12 col-xs-12">Lain-Lain</label>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="inline-group">
+                                    <label class="checkbox">
+                                        @{ var HR_GANDAAN2X = false;
+                                            if (Model.HR_MAKLUMAT_KUARTERS.HR_GANDAAN2X == "Y")
+                                            {
+                                                HR_GANDAAN2X = true;
+                                            }
+                                        }
+                                        @Html.CheckBox("HR_MAKLUMAT_KUARTERS.HR_GANDAAN2X", isChecked: HR_GANDAAN2X, htmlAttributes: new { @class = "form-control", disabled = "disabled", value = "Y" })
+                                        <i></i>Gandaan 2x
+                                    </label>
+                                    <label class="checkbox">
+                                        @{ var HR_GANDAAN5X = false;
+                                            if (Model.HR_MAKLUMAT_KUARTERS.HR_GANDAAN5X == "Y")
+                                            {
+                                                HR_GANDAAN5X = true;
+                                            }
+                                        }
+                                        @Html.CheckBox("HR_MAKLUMAT_KUARTERS.HR_GANDAAN5X", isChecked: HR_GANDAAN5X, htmlAttributes: new { @class = "form-control", disabled = "disabled", value = "Y" })
+                                        <i></i>Gandaan 5x
+                                    </label>
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <label class="">Kemaskini : </label>
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mKuarters-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mKuarters-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" name="kemaskini" class="form-control" value="off">
+            </div>
+        </div>
+    </div>
+</div>

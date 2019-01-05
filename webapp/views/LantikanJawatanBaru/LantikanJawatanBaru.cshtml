@@ -1,0 +1,281 @@
+﻿<div id="content">
+	<div class="row">
+		<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+			<h1 class="page-title txt-color-blueDark">
+				<i class="fa fa-table fa-fw "></i>
+				Maklumat Kakitangan
+				<span>
+					>
+					Maklumat Kakitangan
+				</span>
+			</h1>
+		</div>
+	</div>
+	@if (ViewBag.StatusMessage == "Maklumat Calon Telah Wujud.")
+	{
+		<div class="row">
+			<article class="col-sm-12">
+				<div class="alert alert-danger fade in">
+					<button class="close" data-dismiss="alert">
+						×
+					</button>
+					<i class="fa-fw fa fa-warning"></i>
+					<strong>Tidak Berjaya</strong> @ViewBag.StatusMessage <strong>@ViewBag.emel</strong>
+				</div>
+			</article>
+		</div>
+	}
+	<div class="row" id="alert">
+	</div>
+	<section id="widget-grid" class="">
+		<div class="row">
+			<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="jarviswidget" id="wid-id-3" data-widget-editbutton="false">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+						<h2>Maklumat Kakitangan</h2>
+					</header>
+					<div>
+						<div class="jarviswidget-editbox">
+						</div>
+						<div class="widget-body">
+							<div class="row">
+								<div class="col col-lg-8 col-md-10 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-1">
+									<div class="well">
+										@using (Html.BeginForm("LantikanJawatanBaru", "LantikanJawatanBaru", FormMethod.Post, new { id = "smart-form-register", onkeypress = "return event.keyCode != 13;" }))
+										{
+											<input type="hidden" name="gambar" id="gambar" value="" />
+											<input type="hidden" name="HR_NAMA_PEKERJA" id="HR_NAMA_PEKERJA" value="" />
+											<input type="hidden" name="HR_NO_KPBARU" id="HR_NO_KPBARU" value="" />
+											<input type="hidden" name="HR_TALAMAT1" id="HR_TALAMAT1" value="" />
+											<input type="hidden" name="HR_EMAIL" id="HR_EMAIL" value="" />
+											<input type="hidden" name="HR_TELBIMBIT" id="HR_TELBIMBIT" value="" />
+											<input type="hidden" name="HR_TARIKH_LAHIR" id="HR_TARIKH_LAHIR" value="" />
+											<input type="hidden" name="HR_JANTINA" id="HR_JANTINA" value="" />
+											<input type="hidden" name="HR_KETURUNAN" id="HR_KETURUNAN" value="" />
+											<input type="hidden" name="HR_AGAMA" id="HR_AGAMA" value="" />
+											<input type="hidden" name="HR_TARAF_PERKAHWINAN" id="HR_TARAF_PERKAHWINAN" value="" />
+											<input type="hidden" name="HR_WARGANEGARA" id="HR_WARGANEGARA" value="" />
+											<input type="hidden" name="HR_NO_PEKERJA" id="HR_NO_PEKERJA" value="@ViewBag.HR_NO_PEKERJA" />
+											@Html.AntiForgeryToken()
+											<div id="hiddendata">
+											</div>
+											<div id="hiddendata1">
+											</div>
+											<div class="row">
+												<div class="col smart-form col-lg-6 col-md-6 col-sm-6 col-xs-12">
+													<div class="input">
+														<input type="text" name="value" id="value" class="form-control" placeholder="No. Kad Pengenalan Baru" />
+													</div>
+												</div>
+												<div class="col col-lg-2 col-md-2 col-sm-2 col-xs-12">
+													<div class="button">
+														<button class="btn btn-default btn-primary" type="button" id="button">
+															<i class="fa fa-search"></i> Cari
+														</button>
+													</div>
+												</div>
+												<div class="col col-lg-2 col-md-2 col-sm-2 col-xs-12">
+													<div class="button">
+														<button class="btn btn-default btn-success" type="submit" id="kemaskini" name="Command" onclick="location.href='@Url.Action("LantikanJawatanBaru", "LantikanJawatanBaru")'" value="kemaskini">
+															Kemaskini
+														</button>
+													</div>
+												</div>
+											</div>
+										}
+									</div>
+								</div>
+							</div>
+						</div>
+							<table class="table table-bordered table-striped">
+								<thead>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+					</div>
+				</div>
+			</article>
+		</div>
+	</section>
+</div>
+@section pagespecific {
+	<script type="text/javascript">
+
+		// DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+		$(document).ready(function () {
+			$('#kemaskini').hide();
+			/* // DOM Position key index //
+
+			l - Length changing (dropdown)
+			f - Filtering input (search)
+			t - The Table! (datatable)
+			i - Information (records)
+			p - Pagination (paging)
+			r - pRocessing
+			< and > - div elements
+			<"#id" and > - div with an id
+			<"class" and > - div with a class
+			<"#id.class" and > - div with an id and class
+
+			Also see: http://legacy.datatables.net/usage/features
+			*/
+
+			/* BASIC ;*/
+			var responsiveHelper_dt_basic = undefined;
+			var responsiveHelper_datatable_fixed_column = undefined;
+			var responsiveHelper_datatable_col_reorder = undefined;
+			var responsiveHelper_datatable_tabletools = undefined;
+
+			var breakpointDefinition = {
+				tablet: 1024,
+				phone: 480
+			};
+
+			/* END BASIC */
+
+
+			/* TABLETOOLS */
+			$('#datatable_tabletools').dataTable({
+
+				// Tabletools options:
+				//   https://datatables.net/extensions/tabletools/button_options
+				"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T>r>" +
+				"t" +
+				"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+				"oTableTools": {
+					"aButtons": [
+						"copy",
+						"csv",
+						"xls",
+						{
+							"sExtends": "pdf",
+							"sTitle": "SmartAdmin_PDF",
+							"sPdfMessage": "SmartAdmin PDF Export",
+							"sPdfSize": "letter"
+						},
+						{
+							"sExtends": "print",
+							"sMessage": "Generated by SmartAdmin <i>(press Esc to close)</i>"
+						}
+					],
+					"sSwfPath": "/Scripts/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+				},
+				"autoWidth": true,
+				"preDrawCallback": function () {
+					// Initialize the responsive datatables helper once.
+					if (!responsiveHelper_datatable_tabletools) {
+						responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#datatable_tabletools'), breakpointDefinition);
+					}
+				},
+				"rowCallback": function (nRow) {
+					responsiveHelper_datatable_tabletools.createExpandIcon(nRow);
+				},
+				"drawCallback": function (oSettings) {
+					responsiveHelper_datatable_tabletools.respond();
+				}
+			});
+
+			$("#value").keyup(function (event) {
+				if (event.keyCode === 13) {
+					$("#button").click();
+				}
+			});
+
+			/* END TABLETOOLS */
+			$('#button').click(function () {
+				$.ajax({
+					url: '../lantikanjawatanbaru/search?value=' + $("#value").val(),
+					data: { value: $('#value').val() },
+					contentType: "application/json; charset=utf-8",
+					type: 'GET',
+					dataType: "json",
+					success: function (data) {
+						obj = data.toString();
+						$.getJSON(data, function (json) {
+							var info = json;
+							var no = 0;
+							var no1 = 0;
+							var i = 0;
+							$.each(info.sekolah, function () {
+								var res = info.sekolah[no].tarikh_mula.substring(0, 4);
+								var res1 = info.sekolah[no].tarikh_tamat.substring(0, 4);
+								$("#hiddendata").append($("<input name='[" + no + "].HR_SEKOLAH_INSTITUSI' type='hidden' value='" + info.sekolah[no].nama + "'><input name='[" + no + "].HR_TAHUN_MULA' type='hidden' value='" + res + "'><input name='[" + no + "].HR_PANGKAT' type='hidden' value='LULUS'><input name='[" + no + "].HR_TAHUN_TAMAT' type='hidden' value='" + res1 + "'><input name='[" + no + "].HR_SEQ_NO' type='hidden' value='" + i + "'>"));
+								++no;
+								i++;
+							})
+							$.each(info.pengajian_tinggi, function () {
+								var res2 = info.pengajian_tinggi[no1].tarikh_lulus.substring(0, 4);
+								$("#hiddendata1").append($("<input name='[" + no + "].HR_SEKOLAH_INSTITUSI' type='hidden' value='" + info.pengajian_tinggi[no1].nama + "'><input name='[" + no + "].HR_TAHUN_MULA' type='hidden' value='-'><input name='[" + no + "].HR_TAHUN_TAMAT' type='hidden' value='" + res2 + "'><input name='[" + no + "].HR_KEPUTUSAN' type='hidden' value='" + info.pengajian_tinggi[no1].kelulusan + ' ' + info.pengajian_tinggi[no1].bidang + "'><input name='[" + no + "].HR_PANGKAT' type='hidden' value='" + info.pengajian_tinggi[no1].cgpa + "'><input name='[" + no + "].HR_SEQ_NO' type='hidden' value='" + no + "'>"));
+								++no;
+								++no1;
+							})
+							$("#gambar").val(info.peribadi.gambar)
+							$("#HR_NAMA_PEKERJA").val(info.peribadi.nama)
+							$("#HR_NO_KPBARU").val(info.peribadi.no_kad_pengenalan)
+							$("#HR_TALAMAT1").val(info.peribadi.alamat)
+							$("#HR_EMAIL").val(info.peribadi.emel)
+							$("#HR_TELBIMBIT").val(info.peribadi.no_telefon)
+							$("#HR_TARIKH_LAHIR").val(info.peribadi.tarikh_lahir)
+							if(info.peribadi.jantina == "Lelaki") {
+								$("#HR_JANTINA").val("L")
+							}
+							if(info.peribadi.jantina == "Perempuan") {
+								$("#HR_JANTINA").val("P")
+							}
+							if(info.peribadi.agama == "Islam") {
+								$("#HR_AGAMA").val("I")
+							}
+							if(info.peribadi.agama == "Buddha") {
+								$("#HR_AGAMA").val("B")
+							}
+							if(info.peribadi.agama == "Hindu" || info.peribadi.agama == "India") {
+								$("#HR_AGAMA").val("H")
+							}
+							if(info.peribadi.agama == "Kristian") {
+								$("#HR_AGAMA").val("K")
+							}
+							if(info.peribadi.bangsa == "Melayu") {
+								$("#HR_KETURUNAN").val("1")
+							}
+							else if(info.peribadi.bangsa == "Cina") {
+								$("#HR_KETURUNAN").val("2")
+							}
+							else if(info.peribadi.bangsa == "India") {
+								$("#HR_KETURUNAN").val("3")
+							}
+							else {
+								$("#HR_KETURUNAN").val("4")
+							}
+							if(info.peribadi.taraf_perkahwinan == "Bujang") {
+								$("#HR_TARAF_KAHWIN").val("1")
+							}
+							if(info.peribadi.taraf_perkahwinan == "Kahwin") {
+								$("#HR_TARAF_KAHWIN").val("2")
+							}
+							if(info.peribadi.taraf_perkahwinan == "Bercerai") {
+								$("#HR_TARAF_KAHWIN").val("3")
+							}
+							if(info.peribadi.taraf_perkahwinan == "Berpisah") {
+								$("#HR_TARAF_KAHWIN").val("4")
+							}
+							if(info.peribadi.warganegara == "Warganegara" || info.peribadi.warganegara == "Malaysia") {
+								$("#HR_WARGANEGARA").val("1")
+							}
+							if(info.peribadi.warganegara != "Warganegara" || info.peribadi.warganegara != "Malaysia") {
+								$("#HR_WARGANEGARA").val("0")
+							}
+							$(".table").empty().append($("<tr><th>No. Kad Pengenalan</th><th>Nama</th><th>No. Telefon</th><th>Alamat Emel</th></tr><tr><td>" + info.peribadi.no_kad_pengenalan + "</td><td>" + info.peribadi.nama + "</td><td>" + info.peribadi.no_telefon + "</td><td>" + info.peribadi.emel + "</td></tr>"));
+							$('#kemaskini').show();
+							$("#alert").empty().append($("<article class='col-sm-12'><div class='alert alert-success fade in'><button class='close' data-dismiss='alert'>×</button><i class='fa-fw fa fa-check'></i><strong>Berjaya</strong></div></article>"));
+							//document.getElementById("#kemaskini").disabled = false;
+						})
+					}
+				})
+			})
+		})
+
+	</script>
+}

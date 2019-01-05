@@ -1,0 +1,81 @@
+﻿@model IEnumerable<eSPP.Models.HR_PERBATUAN_PUTIH>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KELAS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_SEBAB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_AKUAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_SOKONG_KETUA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KELAYAKAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_SAH_PTB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_ULASAN_TP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_TP)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KELAS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_SEBAB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_AKUAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_SOKONG_KETUA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KELAYAKAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_SAH_PTB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_ULASAN_TP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_TP)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.HR_KOD_PERBATUAN }) |
+            @Html.ActionLink("Details", "Details", new { id=item.HR_KOD_PERBATUAN }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.HR_KOD_PERBATUAN })
+        </td>
+    </tr>
+}
+
+</table>

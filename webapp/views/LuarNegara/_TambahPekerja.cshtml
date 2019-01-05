@@ -1,0 +1,203 @@
+﻿
+
+@model eSPP.Models.HR_SEMINAR_LUAR_DETAIL
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Tambah Senarai Pemohon<span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("TambahPekerja", "LuarNegara", FormMethod.Post, new { id = "order-form", @class = "", novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_KOD_LAWATAN)
+
+            <div class = "smart-form">
+                <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="label">
+                        Peringatan : Bahagian yang bertanda (<font color="red">*</font>) adalah wajib di isi.
+                    </label>
+                    <br />
+
+                    <div class="row">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Pekerja <font color="red">*</font></label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            @Html.EditorFor(model => model.HR_NO_PEKERJA, new { htmlAttributes = new { @class = "form-control" } })
+                                        </label>
+                                    </div>
+                                </section>
+                                <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kekerapan Ke Luar Negeri<font color="red">*</font></label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="select">
+                                            @Html.DropDownListFor(model => model.HR_KERAP_IND, new SelectList(ViewBag.kerap, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control" })
+                                            <i></i>
+                                        </label>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div id="peribadi">
+                        <div class="row">
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama Pekerja</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.Editor("HR_BAHAGIAN", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </section>
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jawatan</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.Editor("HR_BAHAGIAN", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="row">
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jabatan</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.Editor("HR_BAHAGIAN", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </section>
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bahagian</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.Editor("HR_BAHAGIAN", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </section>
+                        </div>
+                        <br />
+                    </div>
+                </fieldset>
+            </div>
+                <div id="tablepekerja" style="padding: 15px">
+                </div>   
+        }
+         
+    </div>
+
+</div>
+
+    <script type="text/javascript">
+        $(".modal-dialog").css("min-width", "60%");
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+
+            var $orderForm = $("#order-form").validate({
+                // Rules for form validation
+                rules: {
+                    HR_NO_PEKERJA: {
+                        required: true,
+                        remote: {
+                            url: "LuarNegara/CariPekerja",
+                            type: "get",
+                            data: {
+                                no: function () {
+                                    return $("#HR_NO_PEKERJA").val();
+                                },
+                                kod: function () {
+                                    return $("#HR_KOD_LAWATAN").val();
+                                }
+                            }
+                        }
+                    },
+                    HR_KERAP_IND: {
+                        required: true
+
+                    }
+
+                },
+
+                // Messages for form validation
+                messages: {
+                    HR_NO_PEKERJA: {
+                        required: 'No. Pekerja diperlukan'
+                    },
+                    HR_KERAP_IND: {
+                        required: 'Maklumat diperlukan',
+
+                    }
+
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+
+
+
+
+
+
+
+            $("#HR_NO_PEKERJA").on("input", function () {
+                debugger;
+                $.ajax({
+                    url: "LuarNegara/CariTanggungan",
+
+                    data: { "HR_NO_PEKERJA": $("#HR_NO_PEKERJA").val() },
+
+                    contentType: "application/json; charset=utf-8",
+                    type: 'GET',
+                    dataType: "json",
+                    success: function (data) {
+                        $("#HR_NAMA_PEKERJA").val(data.HR_MAKLUMAT_PERIBADI.HR_NAMA_PEKERJA);
+                        $("#HR_JAWATAN").val(data.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
+                        $("#HR_JABATAN").val(data.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN);
+                        $("#HR_BAHAGIAN").val(data.HR_MAKLUMAT_PEKERJAAN.HR_BAHAGIAN);
+                        var o = 0;
+                        $.each(data, function (i, v) {
+                            o++;
+                            $(".table").append($("<tr><td>" + o + "</td><td>" + v.HR_TARIKH_PERMOHONAN + "</td><td>" + v.HR_NAMA_SEMINAR + "</td><td>" + v.HR_TARIKH_MULA + "</td><td>" + v.HR_TARIKH_TAMAT + "</td><td>" + v.HR_TEMPAT + "</td></tr>"));
+                        })
+
+                    }
+                });
+
+                var Add = "LuarNegara/InfoSenaraiPekerja";
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: Add,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": $(this).val() },
+                    datatype: "json",
+                    success: function (data) {
+                        $("#tablepekerja").html(data)
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+                
+
+            })
+
+        })
+    </script> 

@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="12.1" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="SP_SAMBILAN_SALARY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SPP">
+          <Parameter Name="BULAN" Type="number" Mode="In" />
+          <Parameter Name="TAHUN" Type="number" Mode="In" />
+          <Parameter Name="TEXT" Type="clob" Mode="Out" />
+        </Function>
+        <Function Name="SP_SAMBILAN_SALARY_TEST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SPP">
+          <Parameter Name="BULAN" Type="number" Mode="In" />
+          <Parameter Name="TAHUN" Type="number" Mode="In" />
+          <Parameter Name="TEXT" Type="clob" Mode="Out" />
+        </Function>
+        <Function Name="ZATUL_INSERT_KEW_GERAK_GAJI2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SPP">
+          <Parameter Name="PI_BULAN" Type="number" Mode="In" />
+          <Parameter Name="PI_TAHUN" Type="number" Mode="In" />
+          <Parameter Name="PI_NO_PEKERJA" Type="varchar2" Mode="In" />
+          <Parameter Name="PI_BUTIR" Type="varchar2" Mode="In" />
+          <Parameter Name="PI_JENIS" Type="varchar2" Mode="In" />
+          <Parameter Name="PI_PERINGKAT" Type="varchar2" Mode="In" />
+          <Parameter Name="PI_TAHAP" Type="varchar2" Mode="In" />
+          <Parameter Name="PI_NP_FINALISED_HR" Type="varchar2" Mode="In" />
+          <Parameter Name="PI_NO_SURAT" Type="varchar2" Mode="In" />
+          <Parameter Name="PI_NP_UBAH_HR" Type="varchar2" Mode="In" />
+          <Parameter Name="PI_GRED" Type="varchar2" Mode="In" />
+        </Function>
+        <Function Name="ZATUL_UPDATE_KEW_GERAK_GAJI2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="SPP">
+          <Parameter Name="PI_BULAN" Type="number" Mode="In" />
+          <Parameter Name="PI_TAHUN" Type="number" Mode="In" />
+          <Parameter Name="PI_NO_PEKERJA" Type="varchar2" Mode="In" />
+          <Parameter Name="PI_BUTIR" Type="varchar2" Mode="In" />
+          <Parameter Name="PI_JENIS" Type="varchar2" Mode="In" />
+          <Parameter Name="PI_PERINGKAT" Type="varchar2" Mode="In" />
+          <Parameter Name="PI_TAHAP" Type="varchar2" Mode="In" />
+          <Parameter Name="PI_NP_FINALISED_HR" Type="varchar2" Mode="In" />
+          <Parameter Name="PI_NP_FINALISED_IND_HR" Type="varchar2" Mode="In" />
+          <Parameter Name="PI_NO_SURAT" Type="varchar2" Mode="In" />
+          <Parameter Name="PI_NP_UBAH_HR" Type="varchar2" Mode="In" />
+          <Parameter Name="PI_GRED" Type="varchar2" Mode="In" />
+          <Parameter Name="KEW8ID" Type="number" Mode="In" />
+          <Parameter Name="PI_TARIKH_MULA" Type="date" Mode="In" />
+          <Parameter Name="PI_KOD_PELARASAN" Type="varchar2" Mode="In" />
+        </Function>
+        <EntityContainer Name="ModelStoreContainer" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="SP_SAMBILAN_SALARY">
+            <Parameter Name="BULAN" Mode="In" Type="Decimal" />
+            <Parameter Name="TAHUN" Mode="In" Type="Decimal" />
+            <Parameter Name="TEXT" Mode="Out" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ZATUL_INSERT_KEW_GERAK_GAJI2">
+            <Parameter Name="PI_BULAN" Mode="In" Type="Decimal" />
+            <Parameter Name="PI_TAHUN" Mode="In" Type="Decimal" />
+            <Parameter Name="PI_NO_PEKERJA" Mode="In" Type="String" />
+            <Parameter Name="PI_BUTIR" Mode="In" Type="String" />
+            <Parameter Name="PI_JENIS" Mode="In" Type="String" />
+            <Parameter Name="PI_PERINGKAT" Mode="In" Type="String" />
+            <Parameter Name="PI_TAHAP" Mode="In" Type="String" />
+            <Parameter Name="PI_NP_FINALISED_HR" Mode="In" Type="String" />
+            <Parameter Name="PI_NO_SURAT" Mode="In" Type="String" />
+            <Parameter Name="PI_NP_UBAH_HR" Mode="In" Type="String" />
+            <Parameter Name="PI_GRED" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ZATUL_UPDATE_KEW_GERAK_GAJI2">
+            <Parameter Name="PI_BULAN" Mode="In" Type="Decimal" />
+            <Parameter Name="PI_TAHUN" Mode="In" Type="Decimal" />
+            <Parameter Name="PI_NO_PEKERJA" Mode="In" Type="String" />
+            <Parameter Name="PI_BUTIR" Mode="In" Type="String" />
+            <Parameter Name="PI_JENIS" Mode="In" Type="String" />
+            <Parameter Name="PI_PERINGKAT" Mode="In" Type="String" />
+            <Parameter Name="PI_TAHAP" Mode="In" Type="String" />
+            <Parameter Name="PI_NP_FINALISED_HR" Mode="In" Type="String" />
+            <Parameter Name="PI_NP_FINALISED_IND_HR" Mode="In" Type="String" />
+            <Parameter Name="PI_NO_SURAT" Mode="In" Type="String" />
+            <Parameter Name="PI_NP_UBAH_HR" Mode="In" Type="String" />
+            <Parameter Name="PI_GRED" Mode="In" Type="String" />
+            <Parameter Name="KEW8ID" Mode="In" Type="Decimal" />
+            <Parameter Name="PI_TARIKH_MULA" Mode="In" Type="DateTime" />
+            <Parameter Name="PI_KOD_PELARASAN" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SAMBILAN_SALARY_TEST">
+            <Parameter Name="BULAN" Mode="In" Type="Decimal" />
+            <Parameter Name="TAHUN" Mode="In" Type="Decimal" />
+            <Parameter Name="TEXT" Mode="Out" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities" >
+          <FunctionImportMapping FunctionImportName="SP_SAMBILAN_SALARY" FunctionName="Model.Store.SP_SAMBILAN_SALARY" />
+          <FunctionImportMapping FunctionImportName="ZATUL_INSERT_KEW_GERAK_GAJI2" FunctionName="Model.Store.ZATUL_INSERT_KEW_GERAK_GAJI2" />
+          <FunctionImportMapping FunctionImportName="ZATUL_UPDATE_KEW_GERAK_GAJI2" FunctionName="Model.Store.ZATUL_UPDATE_KEW_GERAK_GAJI2" />
+          <FunctionImportMapping FunctionImportName="SP_SAMBILAN_SALARY_TEST" FunctionName="Model.Store.SP_SAMBILAN_SALARY_TEST" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

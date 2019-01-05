@@ -1,0 +1,111 @@
+﻿@model eSPP.Models.AccountViewRegistrationModel
+@{
+	Layout = "";
+	ViewBag.PageId = "extr-page";
+	ViewBag.PageClass = "animated fadeInDown";
+}
+
+<head>
+	<meta charset="utf-8">
+	<title>eSPP - LPKtn</title>
+	<!-- Google Fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="~/Content/css/animate.css">
+	<!-- Custom Stylesheet -->
+	<link rel="stylesheet" href="~/Content/css/login.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+	<div class="container">
+		<div class="top">
+			<h1 id="title" class="hidden"><span id="logo">eSPP <span>MBPJ</span></span></h1>
+		</div>
+		@using (Html.BeginForm("Test", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "ForgotPassword" }))
+		{
+			@Html.AntiForgeryToken()
+			@(ViewContext.ClientValidationEnabled = true)
+			<div class="login-box glass_effect1 animated fadeInUp">
+				<div class="box-header">
+					<h2>Log In</h2>
+				</div>
+				<div>
+					<font color="red">
+						@Html.ValidationSummary("", new { @class = "text-danger" })
+					</font>
+				</div>
+				<label class="col-md-2 control-label">No. KP</label>
+				<br />
+				@Html.TextBoxFor(m => m.Username, new { @class = "form-control user-password", autocomplete = "off" })
+				<br />
+				<button type="submit" id="Reset" name="Command" value="Reset">Hantar</button>
+				<br /><br />
+				<a href="@Url.Action("Login", "Account")"><font color="white">Log Masuk</font></a>
+			</div>
+		}
+	</div>
+</body>
+
+
+
+@section pagespecific {
+	<script type="text/javascript">
+		$("#Reset").click(function () {
+			$("#ForgotPassword").submit();
+			Console.log("#Reset");
+			alert();
+		});
+
+		$(document).ready(function () {
+			$('#logo').addClass('animated fadeInDown');
+			$("input:text:visible:first").focus();
+		});
+		$('#username').focus(function () {
+			$('label[for="username"]').addClass('selected');
+		});
+		$('#username').blur(function () {
+			$('label[for="username"]').removeClass('selected');
+		});
+		$('#password').focus(function () {
+			$('label[for="password"]').addClass('selected');
+		});
+		$('#password').blur(function () {
+			$('label[for="password"]').removeClass('selected');
+		});
+
+		$(function () {
+			// Validation
+			$("#login-form").validate({
+				// Rules for form validation
+				rules: {
+					email: {
+						required: true,
+						email: true
+					},
+					password: {
+						required: true,
+						minlength: 8,
+						maxlength: 20
+					}
+				},
+
+				// Messages for form validation
+				/*messages: {
+					email: {
+						required: 'Sila Masukkan Alamat Emel',
+						email: 'Sila Masukkan Alamat Emel Yang Betul'
+					},
+					password: {
+						required: 'Sila Masukkan Katalaluan'
+					}
+				},*/
+
+				// Do not change code below
+				errorPlacement: function (error, element) {
+					error.insertAfter(element.parent());
+				}
+			});
+		});
+	</script>
+
+}

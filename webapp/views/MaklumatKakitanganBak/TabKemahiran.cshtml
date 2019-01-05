@@ -1,0 +1,214 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+<div class="tab-pane fade" id="Kemahiran">
+    <div class="row">
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Pengalaman Bekerja
+            </legend>
+            <div class="row">
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <table id="datatable_PengalamanKerja" class="table table-striped table-bordered table-hover " width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Syarikat</th>
+                                <th>Jawatan</th>
+                                <th>Tarikh Mula</th>
+                                <th>Tarikh Tamat</th>
+                                <th>Alasan Berhenti</th>
+                                <th>Tambah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_PENGALAMAN_KERJA.Count(); item++)
+                            {
+                                <tr id="no1">
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.Hidden("HR_MAKLUMAT_PENGALAMAN_KERJA[" + item + "].HR_NO_PEKERJA", Model.HR_MAKLUMAT_PENGALAMAN_KERJA.ElementAt(item).HR_NO_PEKERJA, new { @class = "form-control", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_PENGALAMAN_KERJA[" + item + "].HR_NAMA_SYARIKAT", Model.HR_MAKLUMAT_PENGALAMAN_KERJA.ElementAt(item).HR_NAMA_SYARIKAT, new { @class = "form-control", disabled = "disabled" })
+
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_PENGALAMAN_KERJA[" + item + "].HR_JAWATAN", Model.HR_MAKLUMAT_PENGALAMAN_KERJA.ElementAt(item).HR_JAWATAN, new { @class = "form-control", disabled = "disabled" })
+                                        </label>
+
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_PENGALAMAN_KERJA[" + item + "].HR_TARIKH_MULA", string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_PENGALAMAN_KERJA.ElementAt(item).HR_TARIKH_MULA), new { @class = "form-control HR_MAKLUMAT_PENGALAMAN_KERJA_HR_TARIKH_MULA", disabled = "disabled" })
+
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_PENGALAMAN_KERJA[" + item + "].HR_TARIKH_TAMAT", string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_PENGALAMAN_KERJA.ElementAt(item).HR_TARIKH_TAMAT), new { @class = "form-control HR_MAKLUMAT_PENGALAMAN_KERJA_HR_TARIKH_TAMAT", disabled = "disabled" })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="textarea textarea-resizable">
+                                            @Html.TextArea("HR_MAKLUMAT_PENGALAMAN_KERJA[" + item + "].HR_ALASAN_BERHENTI", Model.HR_MAKLUMAT_PENGALAMAN_KERJA.ElementAt(item).HR_ALASAN_BERHENTI, new { @class = "form-control", disabled = "disabled", row = 5, style = "width:'% 100'" })
+
+                                        </label>
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-success btn-add-PengalamanKerja" id="btn-add-PengalamanKerja@(item)" name="Tambah_Pengalaman" type="button" disabled="disabled">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </fieldset>
+
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Kemahiran Bahasa
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <table id="datatable_KemahiranBahasa" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Bahasa</th>
+                                <th>Pembacaan</th>
+                                <th>Penulisan</th>
+                                <th>Pertuturan</th>
+
+                                <th>Tambah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.Count(); item++)
+                            {
+                                <tr id="no1">
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.Hidden("HR_MAKLUMAT_KEMAHIRAN_BAHASA[" + item + "].HR_NO_PEKERJA", Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.ElementAt(item).HR_NO_PEKERJA, new { @class = "form-control", disabled = "disabled" })
+                                            @Html.DropDownList("HR_MAKLUMAT_KEMAHIRAN_BAHASA[" + item + "].HR_BAHASA", new SelectList(ViewBag.HR_BAHASA, "Value", "Text", Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.ElementAt(item).HR_BAHASA), String.Empty, new { @class = "form-control", disabled = "disabled", id = "HR_BAHASA" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_KEMAHIRAN_BAHASA[" + item + "].HR_PEMBACAAN", new SelectList(ViewBag.P_TAHAP_KEMAHIRAN, "Value", "Text", Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.ElementAt(item).HR_PEMBACAAN), String.Empty, new { @class = "form-control", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_KEMAHIRAN_BAHASA[" + item + "].HR_PENULISAN", new SelectList(ViewBag.P_TAHAP_KEMAHIRAN, "Value", "Text", Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.ElementAt(item).HR_PENULISAN), String.Empty, new { @class = "form-control", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_KEMAHIRAN_BAHASA[" + item + "].HR_PERTUTURAN", new SelectList(ViewBag.P_TAHAP_KEMAHIRAN, "Value", "Text", Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.ElementAt(item).HR_PERTUTURAN), String.Empty, new { @class = "form-control", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-success btn-add-KemahiranBahasa" id="btn-add-KemahiranBahasa@(item)" name="Tambah_Pengalaman" type="button" disabled="disabled">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </fieldset>
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Kemahiran Teknikal
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <table id="datatable_KemahiranTeknikal" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kemahiran</th>
+                                <th>Tahap</th>
+
+
+                                <th>Tambah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL.Count(); item++)
+                            {
+                                <tr id="no1">
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.Hidden("HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL[" + item + "].HR_NO_PEKERJA", Model.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL.ElementAt(item).HR_NO_PEKERJA, new { @class = "form-control", disabled = "disabled" })
+                                            @Html.Hidden("HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL[" + item + "].HR_SEQ_NO", Model.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL.ElementAt(item).HR_SEQ_NO, new { @class = "form-control", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL[" + item + "].HR_KEMAHIRAN", Model.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL.ElementAt(item).HR_KEMAHIRAN, new { @class = "form-control", disabled = "disabled" })
+
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL[" + item + "].HR_TAHAP", new SelectList(ViewBag.P_TAHAP_KEMAHIRAN, "Value", "Text", Model.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL.ElementAt(item).HR_TAHAP), String.Empty, new { @class = "form-control", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-success btn-add-KemahiranTeknikal" id="btn-add-KemahiranTeknikal@(item)" name="Tambah_Kemahiran_Teknikal" type="button" disabled="disabled">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </fieldset>
+
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <label class="">Kemaskini : </label>
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mKemahiran-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mKemahiran-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" name="kemaskini" class="form-control" value="off">
+            </div>
+        </div>
+    </div>
+</div>

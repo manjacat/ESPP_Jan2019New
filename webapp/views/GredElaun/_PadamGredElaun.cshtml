@@ -1,0 +1,91 @@
+﻿
+
+@model eSPP.Models.HR_GRED_ELAUN
+
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Padam Gred Elaun  <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("PadamGredElaun", "GredElaun", FormMethod.Post, new { @class = "smart-form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_GRED)
+            @Html.HiddenFor(model => model.HR_KOD_ELAUN)
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <label class="label col col-2">Gred Jawatan</label>
+                        <div class="col col-10">
+                            <label class="select">
+                                @Html.Hidden("gred", Model.HR_GRED)
+                                @Html.DropDownListFor(model => model.HR_GRED, null, String.Empty, new { @class = "form-control", disabled = "disabled" })
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-2">Elaun</label>
+                        <div class="col col-10">
+                            <label class="select">
+                                @Html.Hidden("kod_elaun", Model.HR_KOD_ELAUN)
+                                @Html.DropDownListFor(model => model.HR_KOD_ELAUN, null, String.Empty, new { @class = "form-control", disabled = "disabled" })
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="row">
+                        <label class="label col col-2">Status</label>
+                        <div class="col col-10">
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>Aktif
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>Tidak Aktif
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+            </fieldset>
+
+            <footer>
+                <button type="submit" id="btn" class="btn btn-danger">
+                    <span class="fa fa-trash-o"></span> Padam
+                </button>
+                <a type="button" class="btn btn-default" href="SenaraiGredElaun">
+                    Kembali
+                </a>
+            </footer>
+        }
+
+    </div>
+
+</div>
+@section pagespecific { 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#TambahModal').modal('hide');
+            });
+        })
+    </script> 
+}

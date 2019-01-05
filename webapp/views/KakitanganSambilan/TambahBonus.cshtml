@@ -1,0 +1,570 @@
+﻿@model IEnumerable<eSPP.Models.BonusSambilanDetailModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- MAIN CONTENT -->
+<div id="content">
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa fa-table fa-fw "></i>
+                Transaksi Sambilan
+                <span>
+                    >
+                    Bonus Sambilan Detail
+                </span>
+            </h1>
+        </div>
+    </div>
+    @if (ViewBag.StatusMessage == "Data Berjaya Dimuktamadkan. Tiada Lagi Sebarang Perubahan Boleh Dilakukan.")
+    {
+        <div class="alert adjusted alert-success fade in">
+            <button class="close" data-dismiss="alert">
+                ×
+            </button>
+            <i class="fa-fw fa-lg fa fa-warning"></i>
+            <strong>Muktamad</strong> @ViewBag.StatusMessage
+        </div>
+    }
+
+
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-3" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Maklumat Transaksi</h2>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body">
+
+                            <div class="row">
+
+                                <div class="col col-lg-8 col-md-10 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-1">
+                                    <div class="well">
+                                        @using (Html.BeginForm())
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <fieldset>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3" for="prepend">Bulan Bekerja (Dari)<font color="red">*</font></label>
+                                                    <div class="col-md-9">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <label class="input">
+                                                                    <input class="form-control" name="bulanBekerja" maxlength="2" placeholder="--">
+                                                                    <label class="note">
+                                                                        Bulan mula bekerja
+                                                                    </label>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3" for="prepend">Bulan Bekerja (hingga)<font color="red">*</font></label>
+                                                    <div class="col-md-9">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <label class="input">
+                                                                    <input class="form-control" name="bulanBekerjaHingga" maxlength="2" placeholder="--">
+                                                                    <label class="note">
+                                                                        Bulan tamat bekerja
+                                                                    </label>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3" for="prepend">Bulan Dibayar<font color="red">*</font></label>
+                                                    <div class="col-md-9">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <label class="input">
+                                                                    <input class="form-control" name="bulanDibayar" maxlength="2" placeholder="--">
+                                                                    <label class="note">
+                                                                        Bulan bonus dibayar
+                                                                    </label>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <input type="hidden" class="form-control" name="tahunDibayar" maxlength="4">
+                                                </div>
+                                            </fieldset>
+
+                                            <div class="form-actions">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <button type="submit" class="btn btn-primary" name="Command" value="Pratonton" id="btn">
+                                                            Pratonton
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div id="divDropdown" class="pull-right">
+                                @if (Model.Count() > 0)
+                                {
+                                    <div class="form-group col-sm-offset-9">
+                                        @using (Html.BeginForm("TambahGandaan", "KakitanganSambilan"))
+                                        {
+                                            <input id="bulanDialog1" type="hidden" name="bulanBonus" value="@ViewBag.BulanBonus" />
+                                            <input id="tahunDialog1" type="hidden" name="tahunBonus" value="@ViewBag.MaxTahun" />
+                                            <input type="hidden" name="isTemp" value="yes" />
+                                            <div class="input-group">
+                                                <select id="gandaan" name="gandaan" class="form-control">
+                                                    <option value="0.5">1/2 Bulan</option>
+                                                    <option value="1" selected="selected">1 Bulan</option>
+                                                    <option value="1.5">1 1/2 Bulan</option>
+                                                    <option value="2">2 Bulan</option>
+                                                </select>
+                                                <span class="input-group-btn">
+                                                    <input type="submit" value="Gandaan" class="btn btn-default" />
+                                                </span>
+
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                            <div id="showtable">
+                                <!-- TODO -->
+                                @if (Model.Count() > 0)
+                                {
+                                    <table id="datatable_tabletools" class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Nama</th>
+                                                <th>No Pekerja</th>
+                                                <th>No Kad Pengenalan</th>
+                                                <th>No Akaun Bank</th>
+                                                <th>No KWSP</th>
+                                                <th>Tarikh Lantikan</th>
+                                                @for (int m = ViewBag.MinBulan; m <= ViewBag.MaxBulan; m++)
+                                                {
+                                                    BonusSambilanMonthModel monthModel =
+                                                        new BonusSambilanMonthModel
+                                                        {
+                                                            MonthNumber = m,
+                                                            Nombor = m,
+                                                            MonthValue = 0
+                                                        };
+                                                    <th>@monthModel.MonthName</th>
+                                                }
+                                                <th>Jumlah</th>
+                                                <th>Purata</th>
+                                                <th>Bonus Layak</th>
+                                                <th>Bonus Diterima</th>
+                                                <th>Catatan</th>
+                                                @*<th>Muktamad</th>*@
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (BonusSambilanDetailModel x in Model)
+                                            {
+                                                <tr>
+                                                    <td>@x.Nama</td>
+                                                    <td>@x.NoPekerja</td>
+                                                    <td>@x.NoKadPengenalan</td>
+                                                    <td>@x.NoAkaunBank</td>
+                                                    <td>@x.NoKWSP</td>
+                                                    <td>@x.TarikhLantikanString</td>
+                                                    @for (int m = ViewBag.MinBulan; m <= ViewBag.MaxBulan; m++)
+                                                    {
+                                                        BonusSambilanMonthModel monthModel =
+                                                            new BonusSambilanMonthModel
+                                                            {
+                                                                MonthNumber = m,
+                                                                Nombor = m
+                                                            };
+                                                        switch (monthModel.MonthNumber)
+                                                        {
+                                                            case (1):
+                                                                <td>@x.Jan</td>
+                                                                break;
+                                                            case (2):
+                                                                <td>@x.Feb</td>
+                                                                break;
+                                                            case (3):
+                                                                <td>@x.Mac</td>
+                                                                break;
+                                                            case (4):
+                                                                <td>@x.April</td>
+                                                                break;
+                                                            case (5):
+                                                                <td>@x.Mei</td>
+                                                                break;
+                                                            case (6):
+                                                                <td>@x.Jun</td>
+                                                                break;
+                                                            case (7):
+                                                                <td>@x.Julai</td>
+                                                                break;
+                                                            case (8):
+                                                                <td>@x.Ogos</td>
+                                                                break;
+                                                            case (9):
+                                                                <td>@x.September</td>
+                                                                break;
+                                                            case (10):
+                                                                <td>@x.Oktober</td>
+                                                                break;
+                                                            case (11):
+                                                                <td>@x.November</td>
+                                                                break;
+                                                            case (12):
+                                                                <td>@x.Disember</td>
+                                                                break;
+                                                        }
+                                                    }
+                                                    <td>@x.JumlahGaji</td>
+                                                    <td>@x.GajiPurata</td>
+                                                    <td>
+                                                        <span>
+                                                            @x.BonusLayak.Value.ToString("0.00")
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span>
+                                                            @x.BonusDiterima.Value.ToString("0.00")
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        @if (string.IsNullOrEmpty(x.Catatan))
+                                                        {
+                                                            <!-- catatan-->
+                                                            <a name="btnCatatan"
+                                                               href='#'
+                                                               data-month="@x.BulanBonus.ToString("D2")"
+                                                               data-year="@x.TahunBonus.ToString()"
+                                                               data-pekerja="@x.NoPekerja"
+                                                               data-catatan="@x.Catatan"
+                                                               title="Catatan">Klik</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <!-- catatan-->
+                                                            <a name="btnCatatan"
+                                                               href='#'
+                                                               data-month="@x.BulanBonus.ToString("D2")"
+                                                               data-year="@x.TahunBonus.ToString()"
+                                                               data-pekerja="@x.NoPekerja"
+                                                               data-catatan="@x.Catatan"
+                                                               title="Catatan">@x.Catatan</a>
+                                                        }
+                                                    </td>
+                                                    @*<td>
+                                                            @if (x.IsMuktamad)
+                                                            {
+                                                                <button class="btn btn-xs btn-default btn-circle" disabled title="Transaksi Sambilan"><i class="fa fa-money"></i></button>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a class="btn btn-xs btn-default btn-circle" title="Muktamad"
+                                                                   href='@Url.Action("UpdateMuktamad", "KakitanganSambilan",
+                                                            new { noPekerja = x.NoPekerja,
+                                                                tahunBonus = x.TahunBonus,
+                                                                bulanBonus = x.BulanBonus})'>
+                                                                    <i class="fa fa-money"></i>
+                                                                </a>
+                                                            }
+
+                                                        </td>*@
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                            </div>
+
+                        </div>
+                        <!-- end widget content -->
+                        @if (Model.Count() > 0)
+                        {
+                            <footer>
+                                @using (Html.BeginForm()) //call TambahBonus
+                                {
+                                    <input type="hidden" name="bulanBekerja" value="@ViewBag.MinBulan" />
+                                    <input type="hidden" name="bulanDibayar" value="@ViewBag.MaxBulan" />
+                                    <input type="hidden" name="tahunDibayar" value="@ViewBag.MaxTahun" />
+                                    <p>
+                                        <button type="submit" class="btn btn-warning pull-right" id="Batal" name="Command" value="Batal">
+                                            <i class="fa fa-minus"></i> Batal
+                                        </button>
+                                        <button type="submit" class="btn btn-success pull-right" id="Tambah" name="Command" value="Tambah">
+                                            <i class="fa fa-plus"></i> Tambah
+                                        </button>
+                                        <br />
+                                        <br />
+                                    </p>
+                                }
+                            </footer>
+                        }
+                    </div>
+                    <!-- end widget div -->
+
+                </div>
+                <!-- end widget -->
+
+            </article>
+            <!-- WIDGET END -->
+
+        </div>
+
+
+
+        <!-- end row -->
+        <!-- end row -->
+
+    </section>
+    <!-- end widget grid -->
+    <div class="">
+
+    </div>
+</div>
+<div id="dmessage1" style="display:none" title="Bonus Diterima">
+    <!-- dah tak pakai, sebab update bonus generate dari dropdown -->
+    @using (Html.BeginForm("UpdateBonus", "KakitanganSambilan", FormMethod.Post))
+    {
+        <fieldset>
+            <div class="form-group">
+                <input id="bonusDialog1" type="text" name="bonusDiterima" class="form-control" />
+                <input id="bulanDialog1" type="hidden" name="bulanBonus" />
+                <input id="tahunDialog1" type="hidden" name="tahunBonus" />
+                <input id="pekerjaDialog1" type="hidden" name="noPekerja" />
+                <input type="hidden" name="isTemp" value="yes" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Kemaskini" class="btn btn-primary pull-right" />
+            </div>
+        </fieldset>
+    }
+</div>
+
+<div id="dmessage2" style="display:none" title="Catatan">
+    @using (Html.BeginForm("UpdateCatatan", "KakitanganSambilan", FormMethod.Post))
+    {
+        <fieldset>
+            <div class="form-group">
+                @Html.TextArea("catatan", new { id = "catatanDialog2", @class = "form-control" })
+                <input id="bulanDialog2" type="hidden" name="bulanBonus" />
+                <input id="tahunDialog2" type="hidden" name="tahunBonus" />
+                <input id="pekerjaDialog2" type="hidden" name="noPekerja" />
+                <input type="hidden" name="isTemp" value="yes" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Kemaskini" class="btn btn-primary pull-right" />
+            </div>
+        </fieldset>
+    }
+</div>
+<!-- END MAIN CONTENT -->
+@section pagespecific {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            UpdateInput();
+            //KlikBonus();
+            KlikCatatan();
+        });
+
+        function UpdateInput() {
+            var bulanBekerja = $("input[name='bulanBekerja']");
+            var bulanDibayar = $("input[name='bulanDibayar']");
+            var tahunDibayar = $("input[name='tahunDibayar']");
+            var bulan = getParameterByName("month");
+            var tahun = getParameterByName("year");
+            var startMonth = getParameterByName("startmonth");
+            if (bulan != null) {
+                bulanDibayar.val(bulan);
+            }
+            if (tahun != null) {
+                tahunDibayar.val(tahun);
+            }
+            if (startMonth != null) {
+                bulanBekerja.val(startMonth);
+            }
+        }
+
+        function KlikBonus() {
+            var bonusDialog = $('#dmessage1').dialog({
+                autoOpen: false
+            });
+
+            $("[name=btnBonus]").button().on("click", function () {
+                $('#bonusDialog1').val($(this).val());
+                $('#bulanDialog1').val($(this).attr('data-month'));
+                $('#tahunDialog1').val($(this).attr('data-year'));
+                $('#pekerjaDialog1').val($(this).attr('data-pekerja'));
+                bonusDialog.dialog("open");
+            });
+        }
+
+        function KlikCatatan() {
+            var bonusDialog2 = $('#dmessage2').dialog({
+                autoOpen: false
+            });
+
+            $("[name=btnCatatan]").button().on("click", function () {
+                $('#catatanDialog2').val($(this).attr('data-catatan'));
+                $('#bulanDialog2').val($(this).attr('data-month'));
+                $('#tahunDialog2').val($(this).attr('data-year'));
+                $('#pekerjaDialog2').val($(this).attr('data-pekerja'));
+                bonusDialog2.dialog("open");
+            });
+        }
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+    </script>
+
+    <script type="text/javascript">
+
+		// DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+		$(document).ready(function () {
+
+			/* // DOM Position key index //
+
+			l - Length changing (dropdown)
+			f - Filtering input (search)
+			t - The Table! (datatable)
+			i - Information (records)
+			p - Pagination (paging)
+			r - pRocessing
+			< and > - div elements
+			<"#id" and > - div with an id
+			<"class" and > - div with a class
+			<"#id.class" and > - div with an id and class
+
+			Also see: http://legacy.datatables.net/usage/features
+			*/
+
+			/* BASIC ;*/
+			var responsiveHelper_dt_basic = undefined;
+			var responsiveHelper_datatable_fixed_column = undefined;
+			var responsiveHelper_datatable_col_reorder = undefined;
+			var responsiveHelper_datatable_tabletools = undefined;
+
+			var breakpointDefinition = {
+				tablet: 1024,
+				phone: 480
+			};
+
+			/* END BASIC */
+
+
+			/* TABLETOOLS */
+			$('#datatable_tabletools').dataTable({
+
+				// Tabletools options:
+				//   https://datatables.net/extensions/tabletools/button_options
+				"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'muktamad'><'tambah'>>r>" +
+				"t" +
+				"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+				"oTableTools": {
+					"aButtons": [
+						"copy",
+						"csv",
+						"xls",
+						{
+							"sExtends": "pdf",
+							"sTitle": "SmartAdmin_PDF",
+							"sPdfMessage": "SmartAdmin PDF Export",
+							"sPdfSize": "letter"
+                        }
+                        //,
+						//{
+						//	"sExtends": "print",
+						//	"sMessage": "Generated by SmartAdmin <i>(press Esc to close)</i>"
+						//}
+					],
+					"sSwfPath": "/Scripts/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+				},
+				"autoWidth": true,
+				"preDrawCallback": function () {
+					// Initialize the responsive datatables helper once.
+					if (!responsiveHelper_datatable_tabletools) {
+						responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#datatable_tabletools'), breakpointDefinition);
+					}
+				},
+				"rowCallback": function (nRow) {
+					responsiveHelper_datatable_tabletools.createExpandIcon(nRow);
+				},
+				"drawCallback": function (oSettings) {
+					responsiveHelper_datatable_tabletools.respond();
+				}
+			});
+
+			/* END TABLETOOLS */
+			//$('div.tambah').after('<a name="btn_add" class="btn btn-success pull-right hidden-mobile" href=@Url.Action("TransaksiSambilan", "PengurusanKakitanganSambilan") ><span style="color:#FFF"><span class="fa fa-plus"></span> Tambah</span></a>');
+			//$('div.muktamad').after('<a name="btn_add" id="MuktamadAll" name="Command" value="MuktamadAll" class="btn btn-success pull-right hidden-mobile" href=@Url.Action("TransaksiSambilan", "PengurusanKakitanganSambilan") ><span style="color:#FFF"><span class="fa fa-plus"></span> Muktamad</span></a>');
+		})
+
+		$(function () {
+			function pageload() {
+				//$.ajax({
+				//	url: "../PengurusanKakitanganSambilan/ListTransaksiPartial",
+				//	data: { "bulantahunbekerja": $("input[name='bulantahunbekerja']").val(), "bulantahundibayar": $("input[name='bulantahundibayar']").val() },
+				//	contentType: "application/json; charset=utf-8",
+				//	type: 'GET',
+				//	success: function (data) {
+				//		$("#showtable").html(data)
+				//	}
+				//})
+			}
+
+			$("#btn").on("click", function () {
+				pageload()
+			});
+		})
+
+    </script>
+}

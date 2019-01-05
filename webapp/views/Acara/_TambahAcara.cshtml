@@ -1,0 +1,149 @@
+﻿
+
+@model eSPP.Models.HR_ACARA
+
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Tambah Aktiviti <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("TambahAcara", "Acara", FormMethod.Post, new { id = "order-form", @class = "smart-form", novalidate = "novalidate" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_KOD_ACARA);
+
+            <fieldset>
+
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Tajuk</label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-briefcase"></i>
+                                @Html.EditorFor(model => model.HR_TAJUK, new { htmlAttributes = new { @class = "form-control" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">        
+                        <div class="form-group">
+                            <label class="label col col-4">Pilih Icon </label>
+                            <div class="col col-8 btn-group btn-group-sm btn-group-justified" data-toggle="buttons">
+                                <label class="btn btn-default active">
+                                    <input type="radio" name="HR_ICON" id="HR_ICON" value="fa-info" checked>
+                                    <i class="fa fa-info text-muted"></i>
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="radio" name="HR_ICON" id="HR_ICON" value="fa-warning">
+                                    <i class="fa fa-warning text-muted"></i>
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="radio" name="HR_ICON" id="HR_ICON" value="fa-check">
+                                    <i class="fa fa-check text-muted"></i>
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="radio" name="HR_ICON" id="HR_ICON" value="fa-user">
+                                    <i class="fa fa-user text-muted"></i>
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="radio" name="HR_ICON" id="HR_ICON" value="fa-lock">
+                                    <i class="fa fa-lock text-muted"></i>
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="radio" name="HR_ICON" id="HR_ICON" value="fa-clock-o">
+                                    <i class="fa fa-clock-o text-muted"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="label col col-4">Pilih Warna</label>
+                            <div class="col col-8 btn-group btn-group-justified btn-select-tick" data-toggle="buttons">
+                                <label class="btn bg-color-darken active">
+                                    <input type="radio" name="HR_WARNA" id="HR_WARNA" value="bg-color-darken txt-color-white" checked>
+                                    <i class="fa fa-check txt-color-white"></i>
+                                </label>
+                                <label class="btn bg-color-blue">
+                                    <input type="radio" name="HR_WARNA" id="HR_WARNA" value="bg-color-blue txt-color-white">
+                                    <i class="fa fa-check txt-color-white"></i>
+                                </label>
+                                <label class="btn bg-color-orange">
+                                    <input type="radio" name="HR_WARNA" id="HR_WARNA" value="bg-color-orange txt-color-white">
+                                    <i class="fa fa-check txt-color-white"></i>
+                                </label>
+                                <label class="btn bg-color-greenLight">
+                                    <input type="radio" name="HR_WARNA" id="HR_WARNA" value="bg-color-greenLight txt-color-white">
+                                    <i class="fa fa-check txt-color-white"></i>
+                                </label>
+                                <label class="btn bg-color-blueLight">
+                                    <input type="radio" name="HR_WARNA" id="HR_WARNA" value="bg-color-blueLight txt-color-white">
+                                    <i class="fa fa-check txt-color-white"></i>
+                                </label>
+                                <label class="btn bg-color-red">
+                                    <input type="radio" name="HR_WARNA" id="HR_WARNA" value="bg-color-red txt-color-white">
+                                    <i class="fa fa-check txt-color-white"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Status</label>
+                        <div class="col col-8">
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "Y", htmlAttributes: new { @checked = "checked" })
+                                    <i></i>Aktif
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "T", htmlAttributes: new { @class = "form-control" })
+                                    <i></i>Tidak Aktif
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </fieldset>
+            <footer>
+                <button type="submit" id="btn" class="btn btn-primary">
+                    <span class="fa fa-send-o"></span> Hantar
+                </button>
+                <a type="button" class="btn btn-default" href="senaraiacara">
+                    Kembali
+                </a>
+            </footer>
+        }
+
+    </div>
+
+</div>
+
+@section pagespecific {
+    <!-- PAGE RELATED PLUGIN(S) -->
+    <script src="../scripts/plugin/moment/moment.min.js"></script>
+    <script src="../scripts/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>
+
+
+
+    <script type="text/javascript">
+
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+    $(document).ready(function () {
+    })
+
+    </script>
+}

@@ -1,0 +1,99 @@
+﻿@model IEnumerable<eSPP.Models.HR_PENDAHULUAN_DIRI>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TARIKH_PERMOHONAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_JABATAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_PENDAHULUAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_KELULUSAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_JUMLAH_SEKARANG)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_JUMLAH_PENUH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_TUJUAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NAMA_PEGAWAI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NO_IC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_NO_GAJI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_JAWATAN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HR_BAYARAN_BALIK)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TARIKH_PERMOHONAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_JABATAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_PENDAHULUAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_KELULUSAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_JUMLAH_SEKARANG)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_JUMLAH_PENUH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_TUJUAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NAMA_PEGAWAI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NO_IC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_NO_GAJI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_JAWATAN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HR_BAYARAN_BALIK)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

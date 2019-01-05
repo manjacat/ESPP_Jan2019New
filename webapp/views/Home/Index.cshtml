@@ -1,0 +1,734 @@
+﻿<!-- MAIN CONTENT -->
+@{ 
+    List<EventsModels> Activity = ViewBag.Activity;
+}
+<div id="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-home"></i> Dashboard <span>> My Dashboard</span></h1>
+        </div>
+    </div>
+	@if (ViewBag.StatusMessage == "Katalaluan Telah Berjaya Ditukar. Katalaluan Baru Telah Ditukar Dan Dihantar Ke Emel")
+	{
+		<div class="row">
+			<article class="col-sm-12">
+				<div class="alert alert-success fade in">
+					<button class="close" data-dismiss="alert">
+						×
+					</button>
+					<i class="fa-fw fa fa-check"></i>
+					<strong>Berjaya</strong> @ViewBag.StatusMessage <strong>@ViewBag.emel</strong>
+				</div>
+			</article>
+		</div>
+	}
+	@if (ViewBag.StatusMessage == "Katalaluan Anda Telah Berjaya Ditukar.")
+	{
+		<div class="row">
+			<article class="col-sm-12">
+				<div class="alert alert-success fade in">
+					<button class="close" data-dismiss="alert">
+						×
+					</button>
+					<i class="fa-fw fa fa-check"></i>
+					<strong>Berjaya</strong> @ViewBag.StatusMessage
+				</div>
+			</article>
+		</div>
+	}
+	@if (ViewBag.StatusMessage == "Profil Anda Telah Berjaya Dikemaskini.")
+	{
+		<div class="row">
+			<article class="col-sm-12">
+				<div class="alert alert-success fade in">
+					<button class="close" data-dismiss="alert">
+						×
+					</button>
+					<i class="fa-fw fa fa-check"></i>
+					<strong>Berjaya</strong> @ViewBag.StatusMessage
+				</div>
+			</article>
+		</div>
+	}
+	else
+	{
+        <!-- NEW WIDGET START -->
+        <!-- WIDGET END -->
+	}
+
+
+    <!-- row -->
+
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-3">
+            <!-- new widget -->
+            <div class="jarviswidget jarviswidget-color-blueDark">
+                <header>
+                    <h2> Tambah Perkara </h2>
+                </header>
+
+                <!-- widget div-->
+                <div>
+
+                    <div class="widget-body">
+                        <!-- content goes here -->
+
+                        <form id="add-event-form">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label>Kategori</label>
+                                    <select name="category" class="form-control" id="category">
+                                        <option value="A">ACARA</option>
+                                        <option value="C">CUTI</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Perkara</label>
+                                    <select name="title" class="form-control" id="title">
+                                        @foreach (EventsModels activity in Activity)
+                                        {
+                                            <option value="@activity.kod">@activity.title</option>
+                                        }
+                                        
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Keterangan</label>
+                                    <textarea class="form-control" placeholder="Keterangan" rows="3" maxlength="40" id="description"></textarea>
+                                    <p class="note">Terhad kepada 40 patah perkataan</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Pilih Icon </label>
+                                    <div class="btn-group btn-group-sm btn-group-justified" data-toggle="buttons">
+                                        <label class="btn btn-default active">
+                                            <input type="radio" name="iconselect" id="icon-1" value="fa-info" checked>
+                                            <i class="fa fa-info text-muted"></i>
+                                        </label>
+                                        <label class="btn btn-default">
+                                            <input type="radio" name="iconselect" id="icon-2" value="fa-warning">
+                                            <i class="fa fa-warning text-muted"></i>
+                                        </label>
+                                        <label class="btn btn-default">
+                                            <input type="radio" name="iconselect" id="icon-3" value="fa-check">
+                                            <i class="fa fa-check text-muted"></i>
+                                        </label>
+                                        <label class="btn btn-default">
+                                            <input type="radio" name="iconselect" id="icon-4" value="fa-user">
+                                            <i class="fa fa-user text-muted"></i>
+                                        </label>
+                                        <label class="btn btn-default">
+                                            <input type="radio" name="iconselect" id="icon-5" value="fa-lock">
+                                            <i class="fa fa-lock text-muted"></i>
+                                        </label>
+                                        <label class="btn btn-default">
+                                            <input type="radio" name="iconselect" id="icon-6" value="fa-clock-o">
+                                            <i class="fa fa-clock-o text-muted"></i>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Pilih Warna</label>
+                                    <div class="btn-group btn-group-justified btn-select-tick" data-toggle="buttons">
+                                        <label class="btn bg-color-darken active">
+                                            <input type="radio" name="priority" id="option1" value="bg-color-darken txt-color-white" checked>
+                                            <i class="fa fa-check txt-color-white"></i>
+                                        </label>
+                                        <label class="btn bg-color-blue">
+                                            <input type="radio" name="priority" id="option2" value="bg-color-blue txt-color-white">
+                                            <i class="fa fa-check txt-color-white"></i>
+                                        </label>
+                                        <label class="btn bg-color-orange">
+                                            <input type="radio" name="priority" id="option3" value="bg-color-orange txt-color-white">
+                                            <i class="fa fa-check txt-color-white"></i>
+                                        </label>
+                                        <label class="btn bg-color-greenLight">
+                                            <input type="radio" name="priority" id="option4" value="bg-color-greenLight txt-color-white">
+                                            <i class="fa fa-check txt-color-white"></i>
+                                        </label>
+                                        <label class="btn bg-color-blueLight">
+                                            <input type="radio" name="priority" id="option5" value="bg-color-blueLight txt-color-white">
+                                            <i class="fa fa-check txt-color-white"></i>
+                                        </label>
+                                        <label class="btn bg-color-red">
+                                            <input type="radio" name="priority" id="option6" value="bg-color-red txt-color-white">
+                                            <i class="fa fa-check txt-color-white"></i>
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-default" type="button" id="add-event">
+                                            Tambah Perkara
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- end content -->
+                    </div>
+
+                </div>
+                <!-- end widget div -->
+            </div>
+            <!-- end widget -->
+
+            <div class="well well-sm" id="event-container">
+                <form>
+                    <fieldset>
+                        <legend>
+                            Tarik Perkara
+                        </legend>
+                        <ul id='external-events' class="list-unstyled">
+                            @*@{ List<HR_CUTI> sCuti = ViewBag.sCuti;}
+                            @foreach (HR_CUTI cuti in sCuti)
+                            {
+                                if (cuti.HR_COLOR == null)
+                                {
+                                    cuti.HR_COLOR = "bg-color-yellow";
+                                }
+
+                                <li>
+                                    <span class="@cuti.HR_COLOR txt-color-white" data-description="@cuti.HR_CATATAN" data-icon="@cuti.HR_ICON" id="@cuti.HR_KOD_CUTI">@cuti.HR_KETERANGAN</span>
+                                </li>
+                            }*@
+                        </ul>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="drop-remove" class="checkbox style-0" checked="checked">
+                                <span>Buang selepas tarik</span>
+                            </label>
+
+                        </div>
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-9">
+
+            <!-- new widget -->
+            <div class="jarviswidget jarviswidget-color-blueDark">
+
+                <!-- widget options:
+                usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                data-widget-colorbutton="false"
+                data-widget-editbutton="false"
+                data-widget-togglebutton="false"
+                data-widget-deletebutton="false"
+                data-widget-fullscreenbutton="false"
+                data-widget-custombutton="false"
+                data-widget-collapsed="true"
+                data-widget-sortable="false"
+
+                -->
+                <header>
+                    <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
+                    <h2> Kalendar </h2>
+                    <div class="widget-toolbar">
+                        <!-- add: non-hidden - to disable auto hide -->
+                        <div class="btn-group">
+                            <button class="btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown">
+                                Paparan <i class="fa fa-caret-down"></i>
+                            </button>
+                            <ul class="dropdown-menu js-status-update pull-right">
+                                <li>
+                                    <a href="javascript:void(0);" id="mt">Bulan</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" id="ag">Agenda</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" id="td">Hari</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- widget div-->
+                <div>
+
+                    <div class="widget-body no-padding">
+                        <!-- content goes here -->
+                        <div class="widget-body-toolbar">
+
+                            <div id="calendar-buttons">
+
+                                <div class="btn-group">
+                                    <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-prev"><i class="fa fa-chevron-left"></i></a>
+                                    <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-next"><i class="fa fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="calendar"></div>
+
+                        <!-- end content -->
+                    </div>
+
+                    <div class="hide">
+                    @using (Html.BeginForm("Aktiviti", "Home", FormMethod.Post, new { @class = "smart-form", id = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="hide" id="formAktiviti">
+
+                        </div>
+                    }
+                    </div>
+
+                </div>
+                <!-- end widget div -->
+            </div>
+            <!-- end widget -->
+
+        </div>
+
+    </div>
+
+    <!-- end row -->
+
+</div>
+<!-- END MAIN CONTENT -->
+@section pagespecific {
+    <!-- PAGE RELATED PLUGIN(S) -->
+    <script src="scripts/plugin/moment/moment.min.js"></script>
+    <script src="scripts/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>
+
+
+
+    <script type="text/javascript">
+
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+    $(document).ready(function () {
+
+        "use strict";
+
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+
+        var hdr = {
+            left: 'title',
+            center: 'month,agendaWeek,agendaDay',
+            right: 'prev,today,next'
+        };
+
+        var initDrag = function (e) {
+            // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+            // it doesn't need to have a start or end
+            var eventObject = {
+                title: $.trim(e.children().text()), // use the element's text as the event title
+                description: $.trim(e.children('span').attr('data-description')),
+                icon: $.trim(e.children('span').attr('data-icon')),
+                className: $.trim(e.children('span').attr('class')),
+                category: $.trim(e.children('span').attr('data-category')),
+                kod: $.trim(e.children('span').attr('data-kod'))// use the element's children as the event class
+            };
+            // store the Event Object in the DOM element so we can get to it later
+            e.data('eventObject', eventObject);
+
+            // make the event draggable using jQuery UI
+            e.draggable({
+                zIndex: 999,
+                revert: true, // will cause the event to go back to its
+                revertDuration: 0 //  original position after the drag
+            });
+        };
+
+        var addEvent = function (title, priority, description, icon, category, kod) {
+            title = title.length === 0 ? "Untitled Event" : title;
+            description = description.length === 0 ? "No Description" : description;
+            icon = icon.length === 0 ? " " : icon;
+            priority = priority.length === 0 ? "label label-default" : priority;
+            category = category;
+            kod = kod;
+
+            var html = $('<li><span class="' + priority + '" data-description="' + description + '" data-icon="' +
+                icon + '" data-category="' + category + '" data-kod="' + kod + '">' + title + '</span></li>').prependTo('ul#external-events').hide().fadeIn();
+
+            $("#event-container").effect("highlight", 800);
+
+            initDrag(html);
+        };
+
+        /* initialize the external events
+         -----------------------------------------------------------------*/
+
+        $('#external-events > li').each(function () {
+            initDrag($(this));
+        });
+
+        $('#add-event').click(function () {
+            var title = $('#title option:selected').text(),
+                priority = $('input:radio[name=priority]:checked').val(),
+                description = $('#description').val(),
+                icon = $('input:radio[name=iconselect]:checked').val(),
+                category = $('#category').val(),
+                kod = $('#title').val();
+
+            addEvent(title, priority, description, icon, category, kod);
+        });
+
+        /* initialize the calendar
+         -----------------------------------------------------------------*/
+
+        $('#calendar').fullCalendar({
+
+            header: hdr,
+            buttonText: {
+                prev: '<i class="fa fa-chevron-left"></i>',
+                next: '<i class="fa fa-chevron-right"></i>'
+            },
+
+            editable: true,
+            droppable: true, // this allows things to be dropped onto the calendar !!!
+            eventClick: function (event) {
+                $(".closon").click(function () {
+
+                    var defaultDuration = moment.duration($('#calendar').fullCalendar('option', 'defaultTimedEventDuration')); // get the default and convert it to proper type
+                    var end = event.end || event.start.clone().add(defaultDuration); // If there is no end, compute it
+
+                    var HR_KOD_ACARA = event.kod;
+                    var HR_KOD_TARIKH_ACARA = event.id;
+                    var HR_TAJUK = event.title;
+                    var HR_KETERANGAN = event.description;
+                    var HR_ICON = event.icon;
+                    var HR_WARNA = event.className;
+                    var HR_TARIKH = event.start.format("DD/MM/YYYY");
+                    var HR_WAKTU_MULA = event.start.format("HH:mm");
+                    var HR_WAKTU_AKHIR = end.format("HH:mm");
+                    var HR_KATEGORI = event.category;
+                    var HR_JENIS = "Padam";
+
+                    $.post("Home/Aktiviti", { HR_KOD_ACARA: HR_KOD_ACARA, HR_KOD_TARIKH_ACARA: HR_KOD_TARIKH_ACARA, HR_TAJUK: HR_TAJUK, HR_KETERANGAN: HR_KETERANGAN, HR_ICON: HR_ICON, HR_WARNA: HR_WARNA, HR_TARIKH: HR_TARIKH, HR_WAKTU_MULA: HR_WAKTU_MULA, HR_WAKTU_AKHIR: HR_WAKTU_AKHIR, HR_KATEGORI: HR_KATEGORI, HR_JENIS: HR_JENIS }, function (json) {
+                        if(json.error == false) {
+                            $('#calendar').fullCalendar('removeEvents', event._id);
+                            alert(json.msg)
+                        }
+                        else {
+                            alert(json.msg)
+                        }
+                    }, "json");
+
+                    
+                });
+            },
+            drop: function (date, allDay) { // this function is called when something is dropped
+                //Call when you drop any red/green/blue class to the week table.....first time runs only.....
+
+                // retrieve the dropped element's stored Event Object
+                var originalEventObject = $(this).data('eventObject');
+
+                // we need to copy it, so that multiple events don't have a reference to the same object
+                var copiedEventObject = $.extend({}, originalEventObject);
+
+                // assign it the date that was reported
+                copiedEventObject.start = date;
+                copiedEventObject.allDay = allDay;
+
+                // render the event on the calendar
+                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                //$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+                var defaultDuration = moment.duration($('#calendar').fullCalendar('option', 'defaultTimedEventDuration'));
+                var end = date.clone().add(defaultDuration); // on drop we only have date given to us
+
+                var HR_KOD_ACARA = $(this).find("span").attr('data-kod');
+                var HR_TAJUK = $(this).find("span").html();
+                var HR_KETERANGAN = $(this).find("span").attr('data-description');
+                var HR_ICON = $(this).find("span").attr("data-icon");
+                var HR_WARNA = $(this).find("span").attr("class");
+                var HR_TARIKH = date.format("DD/MM/YYYY");
+                var HR_WAKTU_MULA = date.format("HH:mm");
+                var HR_WAKTU_AKHIR = end.format("HH:mm");
+                var HR_KATEGORI = $(this).find("span").attr("data-category");
+                var HR_JENIS = "Tambah";
+
+                $('#calendar').fullCalendar('renderEvent', copiedEventObject, false);
+
+                $.get("Home/CariCuti", { HR_KOD_ACARA: HR_KOD_ACARA, HR_TAJUK: HR_TAJUK, HR_KETERANGAN: HR_KETERANGAN, HR_ICON: HR_ICON, HR_WARNA: HR_WARNA, HR_TARIKH: HR_TARIKH, HR_WAKTU_MULA: HR_WAKTU_MULA, HR_WAKTU_AKHIR: HR_WAKTU_AKHIR, HR_KATEGORI: HR_KATEGORI, HR_JENIS: HR_JENIS }, function (json) {
+                    if (json.error == true) {
+                        //$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+                        alert(json.msg)
+                    }
+                    else {
+                        $.post("Home/Aktiviti", { HR_KOD_ACARA: HR_KOD_ACARA, HR_TAJUK: HR_TAJUK, HR_KETERANGAN: HR_KETERANGAN, HR_ICON: HR_ICON, HR_WARNA: HR_WARNA, HR_TARIKH: HR_TARIKH, HR_WAKTU_MULA: HR_WAKTU_MULA, HR_WAKTU_AKHIR: HR_WAKTU_AKHIR, HR_KATEGORI: HR_KATEGORI, HR_JENIS: HR_JENIS }, function (json) {
+                            if (json.error == false) {
+                                //$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+                                alert(json.msg)
+                            }
+                            else {
+                                alert(json.msg)
+                            }
+                            $('#calendar').fullCalendar('rerenderEvents');
+                            $('#calendar').fullCalendar('refetchEvents');
+                        }, "json");
+                    }
+                }, "json");
+
+                
+
+                // is the "remove after drop" checkbox checked?
+                if ($('#drop-remove').is(':checked')) {
+                    // if so, remove the element from the "Draggable Events" list
+                    $(this).remove();
+                }
+
+            },
+
+            eventDrop: function (event, delta, revertFunc) {
+                //inner column movement drop so get start and call the ajax function......
+                var defaultDuration = moment.duration($('#calendar').fullCalendar('option', 'defaultTimedEventDuration')); // get the default and convert it to proper type
+                var end = event.end || event.start.clone().add(defaultDuration); // If there is no end, compute it
+                $.get("Home/CariCuti", { HR_KOD_ACARA: event.kod, HR_TAJUK: event.title, HR_KETERANGAN: event.description, HR_ICON: event.icon, HR_WARNA: event.className[1], HR_TARIKH: event.start.format("DD/MM/YYYY"), HR_WAKTU_MULA: event.start.format("HH:mm:ss"), HR_WAKTU_AKHIR: end.format("HH:mm:ss"), HR_KATEGORI: event.category, HR_JENIS: "Edit" }, function (json) {
+                    if (json.error == true) {
+                        //$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+                        alert(json.msg)
+                    }
+                    else {
+                        if (!confirm("Adakah anda pasti untuk mengubah ini?")) {
+                            revertFunc();
+                        }
+                        else {
+                            var HR_KOD_ACARA = event.kod;
+                            var HR_KOD_TARIKH_ACARA = event.id;
+                            var HR_TAJUK = event.title;
+                            var HR_KETERANGAN = event.description;
+                            var HR_ICON = event.icon;
+                            var HR_WARNA = event.className[1];
+                            var HR_TARIKH = event.start.format("DD/MM/YYYY");
+                            var HR_WAKTU_MULA = event.start.format("HH:mm");
+                            var HR_WAKTU_AKHIR = end.format("HH:mm");
+                            var HR_KATEGORI = event.category;
+                            var HR_JENIS = "Edit";
+
+                            $.post("Home/Aktiviti", { HR_KOD_ACARA: HR_KOD_ACARA, HR_KOD_TARIKH_ACARA: HR_KOD_TARIKH_ACARA, HR_TAJUK: HR_TAJUK, HR_KETERANGAN: HR_KETERANGAN, HR_ICON: HR_ICON, HR_WARNA: HR_WARNA, HR_TARIKH: HR_TARIKH, HR_WAKTU_MULA: HR_WAKTU_MULA, HR_WAKTU_AKHIR: HR_WAKTU_AKHIR, HR_KATEGORI: HR_KATEGORI, HR_JENIS: HR_JENIS }, function (json) {
+                                if (json.error == false) {
+                                    alert(json.msg)
+                                }
+                                else {
+                                    alert(json.msg)
+                                }
+                                $('#calendar').fullCalendar('rerenderEvents');
+                                $('#calendar').fullCalendar('refetchEvents');
+                            }, "json");
+                        }
+                    }
+                },"json")
+                
+            },
+
+            eventResize: function (event, delta, revertFunc) {
+
+                if (!confirm("Adakah anda pasti untuk mengubah ini?")) {
+                    revertFunc();
+                }
+                else {
+                    //inner column movement drop so get start and call the ajax function......
+                    var defaultDuration = moment.duration($('#calendar').fullCalendar('option', 'defaultTimedEventDuration')); // get the default and convert it to proper type
+                    var end = event.end || event.start.clone().add(defaultDuration); // If there is no end, compute it
+
+                    var HR_KOD_ACARA = event.kod;
+                    var HR_KOD_TARIKH_ACARA = event.id;
+                    var HR_TAJUK = event.title;
+                    var HR_KETERANGAN = event.description;
+                    var HR_ICON = event.icon;
+                    var HR_WARNA = event.className[1];
+                    var HR_TARIKH = event.start.format("DD/MM/YYYY");
+                    var HR_WAKTU_MULA = event.start.format("HH:mm");
+                    var HR_WAKTU_AKHIR = end.format("HH:mm");
+                    var HR_KATEGORI = event.category;
+                    var HR_JENIS = "Edit";
+
+                    $.post("Home/Aktiviti", { HR_KOD_ACARA: HR_KOD_ACARA, HR_KOD_TARIKH_ACARA: HR_KOD_TARIKH_ACARA, HR_TAJUK: HR_TAJUK, HR_KETERANGAN: HR_KETERANGAN, HR_ICON: HR_ICON, HR_WARNA: HR_WARNA, HR_TARIKH: HR_TARIKH, HR_WAKTU_MULA: HR_WAKTU_MULA, HR_WAKTU_AKHIR: HR_WAKTU_AKHIR, HR_KATEGORI: HR_KATEGORI, HR_JENIS: HR_JENIS }, function (json) {
+                        if (json.error == false) {
+                            alert(json.msg)
+                        }
+                        else {
+                            alert(json.msg)
+                        }
+                        $('#calendar').fullCalendar('rerenderEvents');
+                        $('#calendar').fullCalendar('refetchEvents');
+                    }, "json");
+                }
+
+            },
+
+            select: function (start, end, allDay) {
+                var title = prompt('Event Title:');
+                if (title) {
+                    calendar.fullCalendar('renderEvent', {
+                        title: title,
+                        start: start,
+                        end: end,
+                        allDay: allDay
+                    }, true // make the event "stick"
+                    );
+                }
+                calendar.fullCalendar('unselect');
+            },
+
+            events: function (start, end, timezone, callback) {
+                $.ajax({
+                    url: "Home/ViewEvent",
+                    data:{category:"ALL"},
+                    contentType: "application/json; charset=utf-8",
+                    type: 'GET',
+                    dataType: "json",
+                    success: function (data) {
+                        var obj = JSON.stringify(data);
+                        var events = [];
+                        $.each(data, function (i, v) {
+                            var start = new Date(parseInt(v.start.substr(6)))
+                            var start2 = new Date(start.getFullYear(), start.getMonth(), start.getDate(), v.startHour, v.startMinute)
+                            var end = new Date(parseInt(v.end.substr(6)))
+                            var end2 = new Date(end.getFullYear(), end.getMonth(), end.getDate(), v.endHour, v.endMinute)
+                            events.push({
+                                id: v.id,
+                                title: v.title,
+                                description: v.description,
+                                start: start2,
+                                end: end2,
+                                allDay: v.allDay,
+                                className: ["event", v.className],
+                                icon: v.icon,
+                                category: v.category,
+                                kod: v.kod
+                            })
+                        })
+                        callback(events);
+                    }
+                })
+            },
+            eventRender: function (event, element, icon) {
+                if (!event.description == "") {
+                    element.find('.fc-event-title').append("<br/><span class='ultra-light'>" + event.description +
+                        "</span>");
+                }
+                if (!event.icon == "") {
+                    element.find('.fc-event-title').append("<i class='air air-top-right fa " + event.icon +
+                        " '></i>");
+                }
+
+                element.append("<span class='hidden-mobile hidden-tablet' id='activity2'><b class='badge bg-color-white bounceIn animated closeon' title = 'Padam'><i class='glyphicon glyphicon-remove-circle text-danger'></i></b> </span>");
+                element.find("#activity2 b.badge").css({ "position": "absolute", "bottom": "-5px", "right": "-5px", "cursor": "pointer", "background": "white", "display": "inline-block", "size-font": "20px", "box-shadow": "inset 1px 1px 0 rgba(0,0,0,.1), inset 0 -1px 0 rgba(0,0,0,.07)", "color": "red", "font-weight": "700", "padding": "2px 4px 3px", "text-align": "center", "line-height": "normal" })
+                
+                element.find(".closeon").click(function () {
+                    if (confirm("Adakah anda pasti untuk padam ini?")) {
+                        var defaultDuration = moment.duration($('#calendar').fullCalendar('option', 'defaultTimedEventDuration')); // get the default and convert it to proper type
+                        var end = event.end || event.start.clone().add(defaultDuration); // If there is no end, compute it
+
+                        var HR_KOD_ACARA = event.kod;
+                        var HR_KOD_TARIKH_ACARA = event.id;
+                        var HR_TAJUK = event.title;
+                        var HR_KETERANGAN = event.description;
+                        var HR_ICON = event.icon;
+                        var HR_WARNA = event.className;
+                        var HR_TARIKH = event.start.format("DD/MM/YYYY");
+                        var HR_WAKTU_MULA = event.start.format("HH:mm");
+                        var HR_WAKTU_AKHIR = end.format("HH:mm");
+                        var HR_KATEGORI = event.category;
+                        var HR_JENIS = "Padam";
+
+                        $.post("Home/Aktiviti", { HR_KOD_ACARA: HR_KOD_ACARA, HR_KOD_TARIKH_ACARA: HR_KOD_TARIKH_ACARA, HR_TAJUK: HR_TAJUK, HR_KETERANGAN: HR_KETERANGAN, HR_ICON: HR_ICON, HR_WARNA: HR_WARNA, HR_TARIKH: HR_TARIKH, HR_WAKTU_MULA: HR_WAKTU_MULA, HR_WAKTU_AKHIR: HR_WAKTU_AKHIR, HR_KATEGORI: HR_KATEGORI, HR_JENIS: HR_JENIS }, function (json) {
+                            if (json.error == false) {
+                                $('#calendar').fullCalendar('removeEvents', event._id);
+                                alert(json.msg)
+                            }
+                            else {
+                                alert(json.msg)
+                            }
+                            $('#calendar').fullCalendar('rerenderEvents');
+                            $('#calendar').fullCalendar('refetchEvents');
+                        }, "json");
+                    }
+                });
+            },
+
+            windowResize: function (event, ui) {
+                $('#calendar').fullCalendar('render');
+            }
+        });
+
+
+
+        /* hide default buttons */
+        $('.fc-header-right, .fc-header-center').hide();
+
+
+        $('#calendar-buttons #btn-prev').click(function () {
+            $('.fc-button-prev').click();
+            return false;
+        });
+
+        $('#calendar-buttons #btn-next').click(function () {
+            $('.fc-button-next').click();
+            return false;
+        });
+
+        $('#calendar-buttons #btn-today').click(function () {
+            $('.fc-button-today').click();
+            return false;
+        });
+
+        $('#mt').click(function () {
+            $('#calendar').fullCalendar('changeView', 'month');
+        });
+
+        $('#ag').click(function () {
+            $('#calendar').fullCalendar('changeView', 'agendaWeek');
+        });
+
+        $('#td').click(function () {
+            $('#calendar').fullCalendar('changeView', 'agendaDay');
+        });
+
+        $("#category").on("change", function () {
+            $.ajax({
+                url: "Home/ViewEvent",
+                type:"GET",
+                data: { category: $(this).val() },
+                dataType: "Json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("#title").html("")
+                    $.each(data, function (i,v) {
+                        $("#title").append($("<option></option>").val(v.kod).text(v.title))
+                    })
+                }
+            })
+        })
+        $("#title").on("change", function () {
+            getIconColor($("#category").val(), $(this).val())
+        })
+
+        function getIconColor(category,kod) {
+            $.ajax({
+                url: "Home/ViewEventKod",
+                type: "GET",
+                data: { category: category, kod: kod },
+                dataType: "Json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $("input[name='iconselect']:checked").parents("label.active").removeClass("active");
+                    $("input[name='iconselect'][value='" + data.icon + "']").prop("checked", true).parents("label").addClass("active");
+
+                    $("input[name='priority']:checked").parents("label.active").removeClass("active");
+                    $("input[name='priority'][value='" + data.className + "']").prop("checked", true).parents("label").addClass("active");
+                }
+            })
+        }
+        getIconColor($("#category").val(), $("#title").val());
+    })
+
+    </script>
+}

@@ -1,0 +1,515 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+<div class="tab-pane fade" id="Gaji">
+    <div class="row">
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Maklumat Pengguna
+            </legend>
+            <div class="row smart-form">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jawatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-briefcase"></i>
+                                    <input type="text" name="HR_JAWATAN_EP" id="HR_JAWATAN_EP" class="form-control" value="@ViewBag.jawatan" disabled="disabled" />
+                                </label>
+                            </div>
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kumpulan/Gred</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <input type="text" name="HR_KUMPULAN_EP" id="HR_KUMPULAN_EP" class="form-control" value="@ViewBag.KumpulanGred" disabled="disabled" />
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jabatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-building"></i>
+                                    <input type="text" name="HR_JABATAN_EP" id="HR_JABATAN_EP" class="form-control" value="@ViewBag.jabatan" disabled="disabled" />
+                                </label>
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bahagian</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-building"></i>
+                                    <input type="text" name="HR_BAHAGIAN_EP" id="HR_BAHAGIAN_EP" class="form-control" value="@ViewBag.bahagian" disabled="disabled" />
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tahun</label>
+                            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4">
+                                <label class="input">
+                                    <input type="text" name="HR_TAHUN_EP" id="HR_TAHUN_EP" class="form-control" disabled="disabled" value="@DateTime.Now.Year" maxlength="4" size="4" />
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Gaji
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <table id="datatable_Gaji" class="table table-striped table-bordered table-hover" width="160%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kod</th>
+                                <th>Penerangan</th>
+                                <th>No. Rujukan / No. Akaun</th>
+                                <th>Tarikh Mula</th>
+                                <th>Tarikh Akhir</th>
+                                <th>Mod Bayaran</th>
+                                <th>Status</th>
+                                <th>Auto</th>
+                                @*<th>Tambah</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.Count(); item++)
+                            {
+
+                                <tr id="no1">
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_NP_UBAH", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_NP_UBAH, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_NP_KEYIN", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_NP_KEYIN, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_MATRIKS_GAJI_PT", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_MATRIKS_GAJI_PT, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_GRED_PT", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_GRED_PT, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_UBAH_IND", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_UBAH_IND, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_TARIKH_UBAH", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_TARIKH_UBAH, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_TARIKH_KEYIN", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_TARIKH_KEYIN, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_NO_PEKERJA_PT", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_NO_PEKERJA_PT, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_HARI_BEKERJA", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_HARI_BEKERJA, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_BAKI", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_BAKI, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_TUNTUTAN_MAKSIMA", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_TUNTUTAN_MAKSIMA, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_PENERANGAN", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_PENERANGAN, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_JUMLAH", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_JUMLAH, new { @class = "form-control hide", disabled = "disabled" })
+                                            @*@Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_AKTIF_IND", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_AKTIF_IND, new { @class = "form-control hide", disabled = "disabled" })*@
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_NO_PEKERJA", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_NO_PEKERJA, new { @class = "form-control hide", disabled = "disabled" })
+
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGANHR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_KOD", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_KOD_ELAUN_POTONGAN, new { @class = "form-control", disabled = "disabled", id = "HR_KOD", size = 5, maxlength = '5' })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_KOD_ELAUN_POTONGAN", new SelectList(ViewBag.Gaji, "HR_KOD_UPAH", "HR_PENERANGAN_UPAH", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_KOD_ELAUN_POTONGAN), string.Empty, new { @class = "form-control", disabled = "disabled", id = "HR_KOD_ELAUN_POTONGAN" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_NO_FAIL", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_NO_FAIL, new { @class = "form-control", disabled = "disabled" })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_TARIKH_MULA", string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_TARIKH_MULA), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_G_HR_TARIKH_MULA", disabled = "disabled", size = 9 })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_TARIKH_AKHIR", string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_TARIKH_AKHIR), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_G_HR_TARIKH_AKHIR", disabled = "disabled", size = 9 })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_MOD_BAYARAN", new SelectList(ViewBag.HR_MOD_BAYARAN, "Value", "Text", Convert.ToInt32(Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_MOD_BAYARAN)), string.Empty, new { @class = "form-control", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_AKTIF_IND", new SelectList(ViewBag.HR_AKTIF_IND_PEKERJAAN, "Value", "Text", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_AKTIF_IND), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_G_HR_AKTIF_IND", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_G[" + item + "].HR_AUTO_IND", new SelectList(ViewBag.HR_AUTO_IND, "Value", "Text", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_AUTO_IND), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_G_HR_AUTO_IND", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    @*<td align="center">
+                                            <button class="btn btn-success btn-add-Gaji" id="btn-add-Gaji@(item)" name="Tambah_Gaji" type="button" disabled="disabled">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </td>*@
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Elaun
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <table id="datatable_Elaun" class="table table-striped table-bordered table-hover" width="200%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kod</th>
+                                <th>Penerangan</th>
+                                <th>No. Rujukan / No. Akaun</th>
+                                <th>Tuntutan Maksima</th>
+                                <th>Nilai</th>
+                                <th>Tarikh Mula</th>
+                                <th>Tarikh Akhir</th>
+                                <th>Mod Bayaran</th>
+                                <th>Status</th>
+                                <th>Auto</th>
+                                <th>Tambah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.Count(); item++)
+                            {
+
+                                <tr id="no1">
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_NP_UBAH", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_NP_UBAH, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_NP_KEYIN", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_NP_KEYIN, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_MATRIKS_GAJI_PT", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_MATRIKS_GAJI_PT, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_GRED_PT", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_GRED_PT, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_UBAH_IND", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_UBAH_IND, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_TARIKH_UBAH", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_TARIKH_UBAH, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_TARIKH_KEYIN", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_TARIKH_KEYIN, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_NO_PEKERJA_PT", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_NO_PEKERJA_PT, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_HARI_BEKERJA", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_HARI_BEKERJA, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_BAKI", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_BAKI, new { @class = "form-control hide", disabled = "disabled" })
+                                            @*@Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_TUNTUTAN_MAKSIMA", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_TUNTUTAN_MAKSIMA, new { @class = "form-control hide", disabled = "disabled" })*@
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_PENERANGAN", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_PENERANGAN, new { @class = "form-control hide", disabled = "disabled" })
+                                            @*@Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_AKTIF_IND", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_AKTIF_IND, new { @class = "form-control hide", disabled = "disabled" })*@
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_NO_PEKERJA", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_NO_PEKERJA, new { @class = "form-control hide", disabled = "disabled" })
+
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_KOD", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_KOD_ELAUN_POTONGAN, new { @class = "form-control", disabled = "disabled", id = "HR_KOD", size = 5, maxlength = '5' })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_KOD_ELAUN_POTONGAN", new SelectList(ViewBag.Elaun, "HR_KOD_ELAUN", "HR_PENERANGAN_ELAUN", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_KOD_ELAUN_POTONGAN), string.Empty, new { @class = "form-control", disabled = "disabled", id = "HR_KOD_ELAUN_POTONGAN" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_NO_FAIL", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_NO_FAIL, new { @class = "form-control", disabled = "disabled" })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_TUNTUTAN_MAKSIMA", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_TUNTUTAN_MAKSIMA, new { @class = "form-control", disabled = "disabled" })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_JUMLAH", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_JUMLAH, new { @class = "form-control", disabled = "disabled", @readonly = "readonly", size = 5 })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_TARIKH_MULA", string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_TARIKH_MULA), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_TARIKH_MULA", disabled = "disabled", size = 9 })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_TARIKH_AKHIR", string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_TARIKH_AKHIR), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_TARIKH_AKHIR", disabled = "disabled", size = 9 })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_MOD_BAYARAN", new SelectList(ViewBag.HR_MOD_BAYARAN, "Value", "Text", Convert.ToInt32(Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_MOD_BAYARAN)), string.Empty, new { @class = "form-control", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_AKTIF_IND", new SelectList(ViewBag.HR_AKTIF_IND_PEKERJAAN, "Value", "Text", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_AKTIF_IND), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_AKTIF_IND", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_E[" + item + "].HR_AUTO_IND", new SelectList(ViewBag.HR_AUTO_IND, "Value", "Text", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_AUTO_IND), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_AUTO_IND", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-success btn-add-Elaun" id="btn-add-Elaun@(item)" name="Tambah_Elaun" type="button" disabled="disabled">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Potongan
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <table id="datatable_Potongan" class="table table-striped table-bordered table-hover" width="160%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kod</th>
+                                <th>Penerangan</th>
+                                <th>No. Rujukan / No. Akaun</th>
+                                <th>Nilai</th>
+                                <th>Tarikh Mula</th>
+                                <th>Tarikh Akhir</th>
+                                <th>Mod Bayaran</th>
+                                <th>Status</th>
+                                <th>Auto</th>
+                                <th>Tambah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.Count(); item++)
+                            {
+                                <tr id="no1">
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_NP_UBAH", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_NP_UBAH, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_NP_KEYIN", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_NP_KEYIN, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_MATRIKS_GAJI_PT", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_MATRIKS_GAJI_PT, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_GRED_PT", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_GRED_PT, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_UBAH_IND", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_UBAH_IND, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_TARIKH_UBAH", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_TARIKH_UBAH, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_TARIKH_KEYIN", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_TARIKH_KEYIN, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_NO_PEKERJA_PT", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_NO_PEKERJA_PT, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_HARI_BEKERJA", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_HARI_BEKERJA, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_BAKI", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_BAKI, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_TUNTUTAN_MAKSIMA", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_TUNTUTAN_MAKSIMA, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_PENERANGAN", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_PENERANGAN, new { @class = "form-control hide", disabled = "disabled" })
+                                            @*@Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_AKTIF_IND", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_AKTIF_IND, new { @class = "form-control hide", disabled = "disabled" })*@
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_NO_PEKERJA", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_NO_PEKERJA, new { @class = "form-control hide", disabled = "disabled" })
+
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_KOD", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_KOD_ELAUN_POTONGAN, new { @class = "form-control", disabled = "disabled", id = "HR_KOD", size = 5, maxlength = '5' })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_KOD_ELAUN_POTONGAN", new SelectList(ViewBag.Potongan, "HR_KOD_POTONGAN", "HR_PENERANGAN_POTONGAN", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_KOD_ELAUN_POTONGAN), string.Empty, new { @class = "form-control", disabled = "disabled", id = "HR_KOD_ELAUN_POTONGAN" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_NO_FAIL", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_NO_FAIL, new { @class = "form-control", disabled = "disabled" })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_JUMLAH", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_JUMLAH, new { @class = "form-control", disabled = "disabled", size = 5 })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_TARIKH_MULA", string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_TARIKH_MULA), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_P_HR_TARIKH_MULA", disabled = "disabled", size = 9 })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_TARIKH_AKHIR", string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_TARIKH_AKHIR), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_P_HR_TARIKH_AKHIR", disabled = "disabled", size = 9 })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_MOD_BAYARAN", new SelectList(ViewBag.HR_MOD_BAYARAN, "Value", "Text", Convert.ToInt32(Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_MOD_BAYARAN)), string.Empty, new { @class = "form-control", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_AKTIF_IND", new SelectList(ViewBag.HR_AKTIF_IND_PEKERJAAN, "Value", "Text", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_AKTIF_IND), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_P_HR_AKTIF_IND", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_P[" + item + "].HR_AUTO_IND", new SelectList(ViewBag.HR_AUTO_IND, "Value", "Text", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_AUTO_IND), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_P_HR_AUTO_IND", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-success btn-add-Potongan" id="btn-add-Potongan@(item)" name="Tambah_Potongan" type="button" disabled="disabled">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Caruman
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <table id="datatable_Caruman" class="table table-striped table-bordered table-hover" width="160%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kod</th>
+                                <th>Penerangan</th>
+                                <th>No. Rujukan / No. Akaun</th>
+                                <th>Tarikh Mula</th>
+                                <th>Tarikh Akhir</th>
+                                <th>Mod Bayaran</th>
+                                <th>Status</th>
+                                <th>Auto</th>
+                                <th>Tambah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.Count(); item++)
+                            {
+
+
+                                <tr id="no1">
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_NP_UBAH", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_NP_UBAH, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_c[" + item + "].HR_NP_KEYIN", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_NP_KEYIN, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_MATRIKS_GAJI_PT", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_MATRIKS_GAJI_PT, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_GRED_PT", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_GRED_PT, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_UBAH_IND", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_UBAH_IND, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_TARIKH_UBAH", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_TARIKH_UBAH, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_TARIKH_KEYIN", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_TARIKH_KEYIN, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_NO_PEKERJA_PT", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_NO_PEKERJA_PT, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_HARI_BEKERJA", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_HARI_BEKERJA, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_BAKI", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_BAKI, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_TUNTUTAN_MAKSIMA", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_TUNTUTAN_MAKSIMA, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_PENERANGAN", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_PENERANGAN, new { @class = "form-control hide", disabled = "disabled" })
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_JUMLAH", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_JUMLAH, new { @class = "form-control hide", disabled = "disabled" })
+                                            @*@Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_AKTIF_IND", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_AKTIF_IND, new { @class = "form-control hide", disabled = "disabled" })*@
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_NO_PEKERJA", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_NO_PEKERJA, new { @class = "form-control hide", disabled = "disabled" })
+
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_KOD", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_KOD_ELAUN_POTONGAN, new { @class = "form-control", disabled = "disabled", id = "HR_KOD", size = 5, maxlength = '5' })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_KOD_ELAUN_POTONGAN", new SelectList(ViewBag.Caruman, "HR_KOD_CARUMAN", "HR_PENERANGAN_CARUMAN", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_KOD_ELAUN_POTONGAN), string.Empty, new { @class = "form-control", disabled = "disabled", id = "HR_KOD_ELAUN_POTONGAN" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_NO_FAIL", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_NO_FAIL, new { @class = "form-control", disabled = "disabled" })
+                                        </label>
+                                    </td>
+
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_TARIKH_MULA", string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_TARIKH_MULA), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_TARIKH_MULA", disabled = "disabled", size = 9 })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_TARIKH_AKHIR", string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_TARIKH_AKHIR), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_TARIKH_AKHIR", disabled = "disabled", size = 9 })
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_MOD_BAYARAN", new SelectList(ViewBag.HR_MOD_BAYARAN, "Value", "Text", Convert.ToInt32(Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_MOD_BAYARAN)), string.Empty, new { @class = "form-control", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_AKTIF_IND", new SelectList(ViewBag.HR_AKTIF_IND_PEKERJAAN, "Value", "Text", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_AKTIF_IND), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_AKTIF_IND", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_C[" + item + "].HR_AUTO_IND", new SelectList(ViewBag.HR_AUTO_IND, "Value", "Text", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_AUTO_IND), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_AUTO_IND", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-success btn-add-Caruman" id="btn-add-Caruman@(item)" name="Tambah_Cagaran" type="button" disabled="disabled">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <label class="">Kemaskini : </label>
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mGaji-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mGaji-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" name="kemaskini" class="form-control" value="off">
+            </div>
+        </div>
+    </div>
+</div>

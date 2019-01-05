@@ -1,0 +1,459 @@
+﻿@model eSPP.Models.PergerakanGajiModels
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Tambah Lot <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding smart-form">
+
+        
+
+            @{ 
+                //List<HR_MAKLUMAT_PERIBADI> sPekerja = (List<HR_MAKLUMAT_PERIBADI>)ViewBag.sPekerja;
+                List<HR_MAKLUMAT_PERIBADI> sPegawai = (List<HR_MAKLUMAT_PERIBADI>)ViewBag.sPegawai;
+            }
+            
+            
+            <fieldset>
+                <div class="row">
+                    <div class="col col-12">
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Jenis Pergerakan Gaji</label>
+                                <div class="col col-8">
+                                    <div class="inline-group">
+                                        <label class="radio">
+                                            @Html.RadioButtonFor(model => model.HR_JENIS_PERGERAKAN, "D", htmlAttributes: new { @class = "form-control" })
+                                            <i></i>Mendatar
+                                        </label>
+                                        <label class="radio">
+                                            @Html.RadioButtonFor(model => model.HR_JENIS_PERGERAKAN, "S", htmlAttributes: new { @class = "form-control" })
+                                            <i></i>Statik
+                                        </label>
+                                        <label class="radio">
+                                            @Html.RadioButtonFor(model => model.HR_JENIS_PERGERAKAN, "J", htmlAttributes: new { @class = "form-control" })
+                                            <i></i>Anjakan
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Gred</label>
+                                <div class="col col-8">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_GRED, new { htmlAttributes = new { @class = "form-control", list = "list-min" } })
+                                        <datalist id="list-max">
+                                            <option></option>
+                                        </datalist>
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Gaji Min</label>
+                                <div class="col col-8">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_GAJI_MIN, new { htmlAttributes = new { @class = "form-control", list = "list-min" } })
+                                        <datalist id="list-max">
+                                            <option></option>
+                                        </datalist>
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Gaji Max</label>
+                                <div class="col col-8">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_GAJI_MAX, new { htmlAttributes = new { @class = "form-control", list = "list-max" } })
+                                        <datalist id="list-max">
+                                            <option></option>
+                                        </datalist>
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Pergerakan Gaji Pokok</label>
+                                <div class="col col-8">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_GAJI_BARU, new { htmlAttributes = new { @class = "form-control", list = "list-gaji" } })
+                                        <datalist id="list-gaji">
+                                            <option></option>
+                                        </datalist>
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Perubahan Gaji Pokok</label>
+                                <div class="col col-8">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_GAJI_BARU, new { htmlAttributes = new { @class = "form-control", list = "list-gaji" } })
+                                        <datalist id="list-gaji">
+                                            <option></option>
+                                        </datalist>
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">No. Surat Kebenaran</label>
+                                <div class="col col-8">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_NO_SURAT_KEBENARAN, new { htmlAttributes = new { @class = "form-control" } })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Butir-Butir Perubahan</label>
+                                <div class="col col-8">
+                                    <label class="textarea textarea-resizable">
+                                        @Html.TextAreaFor(model => model.HR_BUTIR_PERUBAHAN, new { @class = "form-control custom-scroll", rows = "5" })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Nama Pegawai Pengesahan</label>
+                                <div class="col col-8">
+                                    <label class="input">
+                                        @Html.Editor("HR_NAMA_PEGAWAI", new { htmlAttributes = new { @class = "form-control", list = "list-pegawai" } })
+                                        <datalist id="list-pegawai">
+                                            @foreach (var pegawai in sPegawai)
+                                            {
+                                                <option value="@pegawai.HR_NAMA_PEKERJA" data-value="@pegawai.HR_NO_PEKERJA">@pegawai.HR_NO_PEKERJA</option>
+                                            }
+                                        </datalist>
+                                        @Html.HiddenFor(model => model.HR_NP_FINALISED_HR)
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+            </fieldset>
+
+            <footer>
+                <button type="submit" id="btn" class="btn btn-primary">
+                    <span class="fa fa-save"></span> Simpan
+                </button>
+                <button type="reset" class="btn btn-default">
+                    Reset
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Kembali
+                </button>
+                <button type="button" class="btn btn-default" id="btn_coordinate">
+                    <span class="fa fa-map-marker"></span> Koordinat
+                </button>
+            </footer>
+        
+
+    </div>
+
+</div><!-- /.modal-content -->
+<script type="text/javascript">
+    //$("form").attr({ "id": "tp", "class": "smart-form" })
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+    $(document).ready(function () {
+
+        /* // DOM Position key index //
+
+        l - Length changing (dropdown)
+        f - Filtering input (search)
+        t - The Table! (datatable)
+        i - Information (records)
+        p - Pagination (paging)
+        r - pRocessing
+        < and > - div elements
+        <"#id" and > - div with an id
+        <"class" and > - div with a class
+        <"#id.class" and > - div with an id and class
+
+        Also see: http://legacy.datatables.net/usage/features
+        */
+
+        /* BASIC ;*/
+        var responsiveHelper_dt_basic = undefined;
+        var responsiveHelper_datatable_fixed_column = undefined;
+        var responsiveHelper_datatable_col_reorder = undefined;
+        var responsiveHelper_datatable_tabletools = undefined;
+
+        var breakpointDefinition = {
+            tablet: 1024,
+            phone: 480
+        };
+
+        $('#dt_basic').dataTable({
+            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>" +
+                "t" +
+                "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+            "autoWidth": true,
+            "preDrawCallback": function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelper_dt_basic) {
+                    responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_dt_basic.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_dt_basic.respond();
+            }
+        });
+
+        /* END BASIC */
+
+        /* COLUMN FILTER  */
+        var otable = $('#datatable_fixed_column').DataTable({
+            //"bFilter": false,
+            //"bInfo": false,
+            //"bLengthChange": false
+            //"bAutoWidth": false,
+            //"bPaginate": false,
+            //"bStateSave": true // saves sort state using localStorage
+            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>" +
+                    "t" +
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+            "autoWidth": true,
+            "preDrawCallback": function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelper_datatable_fixed_column) {
+                    responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_datatable_fixed_column.respond();
+            }
+
+        });
+
+        // custom toolbar
+        $("div.toolbar").html('<div class="text-right"><img src="/Content/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+
+        // Apply the filter
+        $("#datatable_fixed_column thead th input[type=text]").on('keyup change', function () {
+
+            otable
+                .column($(this).parent().index() + ':visible')
+                .search(this.value)
+                .draw();
+
+        });
+        /* END COLUMN FILTER */
+
+        /* COLUMN SHOW - HIDE */
+        $('#datatable_col_reorder').dataTable({
+            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'C>r>" +
+                    "t" +
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "autoWidth": true,
+            "preDrawCallback": function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelper_datatable_col_reorder) {
+                    responsiveHelper_datatable_col_reorder = new ResponsiveDatatablesHelper($('#datatable_col_reorder'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_datatable_col_reorder.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_datatable_col_reorder.respond();
+            }
+        });
+
+        /* END COLUMN SHOW - HIDE */
+
+        /* TABLETOOLS */
+        $('#datatable_tabletools').dataTable({
+
+            // Tabletools options:
+            //   https://datatables.net/extensions/tabletools/button_options
+            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'lT<'.btn-add'>>r>" +
+                    "t" +
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "oTableTools": {
+                "aButtons": [
+                "copy",
+                "csv",
+                "xls",
+                   {
+                       "sExtends": "pdf",
+                       "sTitle": "SmartAdmin_PDF",
+                       "sPdfMessage": "SmartAdmin PDF Export",
+                       "sPdfSize": "letter"
+                   },
+                   {
+                       "sExtends": "print",
+                       "sMessage": "Generated by SmartAdmin <i>(press Esc to close)</i>"
+                   }
+                ],
+                "sSwfPath": "/Scripts/plugin/datatables/swf/copy_csv_xls_pdf.swf"
+            },
+            "autoWidth": true,
+            "preDrawCallback": function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelper_datatable_tabletools) {
+                    responsiveHelper_datatable_tabletools = new ResponsiveDatatablesHelper($('#datatable_tabletools'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelper_datatable_tabletools.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelper_datatable_tabletools.respond();
+            }
+        });
+
+        $("div.btn-add").html('<div class="text-right"><button type = "button" name = "Tambah" id = "Tambah" class = "btn btn-success Tambah"><i class = "fa fa-plus"></i></button></div>');
+        /* END TABLETOOLS */
+
+    });
+
+    $(document).ready(function () {
+
+        var validateform = $("#form-tambah").validate({
+
+            // Rules for form validation
+            rules: {
+                land_lot_name: {
+                    required: true,
+                    remote: {
+                        url: "../Tanah/CariNamaLot",
+                        type: "get",
+                        data: {
+                            lot_name: function(){
+                                return $("#land_lot_name").val();
+                            }
+                        }
+                    }
+                },
+                state: {
+                    required: true
+                },
+                city: {
+                    required: true
+                },
+                hak_milik: {
+                    required: true
+                },
+                immensity: {
+                    required: true,
+                    number: true
+                },
+                category: {
+                    required: true
+                },
+                mukim: {
+                    required: true
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                land_lot_name: {
+                    required: "Nama Lot diperlukan"
+                },
+                state: {
+                    required: "Negeri diperlukan"
+                },
+                city: {
+                    required: "Bandar diperlukan"
+                },
+                hak_milik: {
+                    required: "No. hak milik diperlukan"
+                },
+                immensity: {
+                    required: "Luas diperlukan",
+                    number: "Sila masukkan hanya nombor sahaja"
+                },
+                category: {
+                    required: "Kategori diperlukan"
+                },
+                mukim: {
+                    required: "Mukim diperlukan"
+                }
+
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+        var popup;
+        $("#btn_coordinate").click(function () {
+            debugger
+            popup = window.open("@Url.Action("GetCoordinate", "Tanah")", "Coordinate", "toolbar=yes,scrollbars=yes,resizable=yes,top=250,left=1000,width=800,height=650");
+            popup.focus();
+        })
+    });
+    /*$(document).ready(function () {
+        $("#main_asset_name").on("input", function () {
+            debugger;
+            $(".error").html("");
+            $("#btn").removeAttr("disabled");
+            var name = $(this).val();
+            $.ajax({
+                url: "/Tanah/ValidationAsset",
+                type: "GET",
+                data: { "name": name },
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    debugger;
+                    if (data == "ada")
+                    {
+                        $(".error").html("Nama Tanah Teleh Wujud").css({ "color": "red" });
+                        $("#btn").attr({ "disabled": "disabled" });
+                    }
+
+                }
+            })
+        })
+    });*/
+
+    $(document).ready(function () {
+        var data = {};
+        $("#list-pegawai option").each(function(i,el) {  
+            data[$(el).data("value")] = $(el).val();
+        });
+        console.log(data, $("#list-pegawai option").val());
+
+
+        $("input[name='HR_NAMA_PEGAWAI']").on('input',function()
+        {
+            var value = $(this).val();
+            $("#HR_NP_FINALISED_HR").val($('#list-pegawai [value="' + value + '"]').data('value'));
+        });
+    });
+</script>

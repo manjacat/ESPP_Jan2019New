@@ -1,0 +1,1058 @@
+﻿@model eSPP.Models.AgreementModels
+<div id="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa-fw fa fa-pencil-square-o"></i>
+                Pengurusan Kakitangan Sambilan
+                <span>
+                    >
+                    Transaksi Sambilan
+                </span>
+            </h1>
+        </div>
+    </div>
+    @if (ViewBag.StatusMessage == "Permohonan Telah Berjaya Disimpan.")
+    {
+        <div class="row">
+            <article class="col-sm-12">
+                <div class="alert alert-success fade in">
+                    <button class="close" data-dismiss="alert">
+                        ×
+                    </button>
+                    <i class="fa-fw fa fa-check"></i>
+                    <strong>Berjaya</strong> @ViewBag.StatusMessage <strong>@ViewBag.emel</strong>
+                </div>
+            </article>
+        </div>
+    }
+    @if (ViewBag.StatusMessage == "Permohonan Telah Berjaya Dikemaskini.")
+    {
+        <div class="row">
+            <article class="col-sm-12">
+                <div class="alert alert-success fade in">
+                    <button class="close" data-dismiss="alert">
+                        ×
+                    </button>
+                    <i class="fa-fw fa fa-check"></i>
+                    <strong>Berjaya</strong> @ViewBag.StatusMessage <strong>@ViewBag.emel</strong>
+                </div>
+            </article>
+        </div>
+    }
+    <section id="widget-grid" class="">
+        <div class="row">
+        </div>
+        <div class="row">
+            <article class="col-sm-12">
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-align-justify"></i> </span>
+                        <h2>Transaksi Sambilan</h2>
+                    </header>
+                    <div>
+                        <div class="jarviswidget-editbox"></div>
+                        <div class="modal fade" id="InfoModal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div id='InfoModalContent'></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-body no-padding">
+                            @using (Html.BeginForm("TransaksiSambilan", "PengurusanKakitanganSambilan", FormMethod.Post, new { @class = "smart-form", id = "smart-form-register", enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-lg-4 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Peringatan : Bahagian yang bertanda (<font color="red">*</font>) adalah wajib di isi.
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                No. Pekerja<font color="red">*</font>
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-6 col-md-6 col-sm-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.HR_PEKERJA, new { htmlAttributes = new { @class = "form-control", list = "list", autocomplete = "off" } })
+                                            </label>
+                                            <datalist id="list">
+                                                @{var pekerja = (List<HR_MAKLUMAT_PERIBADI>)ViewBag.PEKERJA;}
+                                                @foreach (var item in ViewBag.HR_PEKERJA)
+                                                {
+                                                    <option value=@item.HR_NO_PEKERJA>
+                                                        @{
+                                                            var info = pekerja.Where(s => s.HR_NO_PEKERJA == item.HR_NO_PEKERJA).SingleOrDefault();
+                                                            if (info == null)
+                                                            {
+                                                                info.HR_NAMA_PEKERJA = "";
+                                                            }
+                                                        }
+                                                        @info.HR_NAMA_PEKERJA
+                                                    </option>
+                                                }
+                                            </datalist>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Tahun Bekerja<font color="red">*</font>
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="input">
+                                                <input class="form-control" value="@ViewBag.tahunbekerja" name="tahunbekerja" id="tahunbekerja">
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Bahagian
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-6 col-md-6 col-sm-12">
+                                            <label class="input">
+
+                                                @Html.Editor("bahagian", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Bulan Bekerja<font color="red">*</font>
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="input">
+
+                                                @Html.DropDownList("bulanbekerja", null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Jabatan
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-6 col-md-6 col-sm-12">
+                                            <label class="input">
+
+                                                @Html.Editor("jabatan", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Tahun Dibayar<font color="red">*</font>
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="input">
+                                                @{
+                                                    if (ViewBag.tahundibayar == null)
+                                                    {
+                                                        <input class="form-control" value="@DateTime.Now.Year" name="tahundibayar" id="tahundibayar">
+                                                    }
+                                                    if (ViewBag.tahundibayar != null)
+                                                    {
+                                                        <input class="form-control" value="@ViewBag.tahundibayar" name="tahundibayar" id="tahundibayar">
+                                                    }
+                                                }
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Tunggakan
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-6 col-md-6 col-sm-12">
+                                            <div class="inline-group col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                <div class="col col-4">
+                                                    <label class="radio"><input type="radio" name="tunggakan" value='Y'><i></i>Ya</label>
+                                                    <div class="col col-4">
+                                                        <label class="radio"><input type="radio" name="tunggakan" value='T' checked="checked"><i></i>Tidak</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Bulan Dibayar
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="input">
+                                                <input type="hidden" name="bulandibayar" value="" />
+                                                @Html.DropDownList("bulandibayar", null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Gaji Pokok (RM)
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("gajipokok", "{0:n2}", new { htmlAttributes = new { @class = "form-control", disabled = "disabled", id = "gajipokok" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Jumlah Hari <font color="red">*</font>
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("jumlahhari", new { htmlAttributes = new { @class = "form-control", id = "jumlahhari" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Elaun Khidmat Awam
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("elaunkhidmatawam", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Jumlah OT (Jam) <font color="red">*</font>
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("jumlahot", new { htmlAttributes = new { @class = "form-control", id = "jumlahot" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Lain - Lain Elaun
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("elaunlain", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Jumlah Bayaran OT (RM)
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("jumlahbayaranot", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Potongan KSDK
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("potonganksdk", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                1/3 Gaji Pokok
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("gajiper3", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Potongan KWSP
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("potongankwsp", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                SOCSO
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("socso", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Lain-lain Potongan
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("potonganlain", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Gaji Sebelum Potongan KWSP
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("gajisebelumkwsp", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Gaji Kasar Bulan Semasa
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("gajikasar", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Gaji Bersih
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("gajibersih", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                                <header>
+                                    Kelulusan Datuk Bandar
+                                </header>
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                            <div class="inline-group col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                <label class="radio">
+                                                    @Html.RadioButton("kelulusanydp", "Y", htmlAttributes: new { @class = "form-control" })
+                                                    <i></i>Lulus
+                                                </label>
+                                                <label class="radio">
+                                                    @Html.RadioButton("kelulusanydp", "T", htmlAttributes: new { @class = "form-control" })
+                                                    <i></i>Tidak Lulus
+                                                </label>
+                                                <label class="radio">
+                                                    @Html.RadioButton("kelulusanydp", "P", htmlAttributes: new { @class = "form-control", @checked = "checked" })
+                                                    <i></i>Tidak Perlu Kelulusan
+                                                </label>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                                <fieldset name="tunggakanfield">
+                                    <!-- khairil-->
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Tahun Bekerja<font color="red">*</font>
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="input">
+                                                @{int prevYear = DateTime.Now.Year;
+                                                    if (ViewBag.tahunbekerja != null)
+                                                    {
+                                                        if(Model.BULANBEKERJAPREV == 12)
+                                                        {
+                                                            prevYear = Convert.ToInt32(ViewBag.tahunbekerja) - 1;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        prevYear = DateTime.Now.AddMonths(-1).Year;
+                                                    }
+                                                }
+                                                <input class="form-control" value="@prevYear" name="tahunbekerja" id="tahunbekerja">
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Bulan Bekerja<font color="red">*</font>
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="input">
+                                                @Html.DropDownList("tunggakanbulanbekerja", null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Tahun Dibayar<font color="red">*</font>
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="input">
+                                                @{int paidYear = DateTime.Now.Year;
+                                                    if (ViewBag.tahundibayar != null)
+                                                    {
+                                                        paidYear = ViewBag.tahundibayar;
+                                                    }
+                                                    <input class="form-control" value="@paidYear" name="tunggakantahundibayar" id="tunggakantahundibayar">
+                                                }
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Bulan Dibayar
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="input">
+                                                <input type="hidden" name="bulandibayar" value="" />
+                                                @Html.DropDownList("tunggakanbulandibayar", null, String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <!-- end header (tunggakan) -->
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Gaji Pokok (RM)
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("tunggakangajipokok", "{0:n2}", new { htmlAttributes = new { @class = "form-control", disabled = "disabled", id = "gajipokok" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Jumlah Hari <font color="red">*</font>
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("tunggakanjumlahhari", new { htmlAttributes = new { @class = "form-control", id = "jumlahhari" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Elaun Khidmat Awam
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("tunggakanelaunkhidmatawam", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Jumlah OT (Jam) <font color="red">*</font>
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("tunggakanjumlahot", new { htmlAttributes = new { @class = "form-control", id = "jumlahot" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Lain - Lain Elaun
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("tunggakanelaunlain", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Jumlah Bayaran OT (RM)
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("tunggakanjumlahbayaranot", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Potongan KSDK
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("tunggakanpotonganksdk", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                1/3 Gaji Pokok
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("tunggakangajiper3", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Potongan KWSP
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("tunggakanpotongankwsp", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                SOCSO
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("tunggakansocso", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Lain-lain Potongan
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("tunggakanpotonganlain", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Gaji Sebelum Potongan KWSP
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("tunggakangajisebelumkwsp", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Gaji Kasar Bulan Semasa
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("tunggakangajikasar", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Gaji Bersih
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <label class="input">
+                                                @Html.Editor("tunggakangajibersih", new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                                <header name="tunggakanfield">
+                                    Kelulusan Datuk Bandar
+                                </header>
+                                <fieldset name="tunggakanfield">
+                                    <div class="row">
+                                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                            <div class="inline-group col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                <label class="radio">
+                                                    @Html.RadioButton("kelulusanydptunggakan", "Y", htmlAttributes: new { @class = "form-control" })
+                                                    <i></i>Lulus
+                                                </label>
+                                                <label class="radio">
+                                                    @Html.RadioButton("kelulusanydptunggakan", "T", htmlAttributes: new { @class = "form-control" })
+                                                    <i></i>Tidak Lulus
+                                                </label>
+                                                <label class="radio">
+                                                    @Html.RadioButton("kelulusanydptunggakan", "P", htmlAttributes: new { @class = "form-control", @checked = "checked" })
+                                                    <i></i>Tidak Perlu Kelulusan
+                                                </label>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                                <header>
+                                    Sejarah Pembayaran
+                                </header>
+                                <fieldset>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Kod</th>
+                                                <th>Keterangan</th>
+                                                <th>Tunggakan</th>
+                                                <th>Jumlah (RM)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </fieldset>
+                                <br />
+                                <footer>
+                                    <button type="submit" class="btn btn-warning" id="Muktamad" name="Command" value="Muktamad"><i class="fa fa-send"></i> Muktamad</button>
+                                    <button type="submit" class="btn btn-success" id="Hantar" name="Command" value="Hantar"><i class="fa fa-plus"></i> Simpan</button>
+                                    <button type="submit" class="btn btn-primary" id="Kemaskini" name="Command" value="Kemaskini"><i class="fa fa-pencil-square"></i> Kemaskini</button>
+                                    <button type="submit" class="btn btn-default" onclick="window.location.href('@Url.Action("transaksisambilan","transaksisambilan")')" id="Kembali" name="Command" value="Kembali"><i class="fa fa-refresh"></i> Kembali</button>
+                                </footer>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+    <div id="dialog-message" style="display:none" title="Dialog Simple Title">
+        <p>
+            Jumlah Jam OT melebihi 59.6 jam dan memerlukan kelulusan dari YDP atau Dato' Bandar
+        </p>
+    </div>
+</div>
+@section pagespecific {
+    <script type="text/javascript">
+
+        document.onkeydown = function (ev) {
+            var key;
+            ev = ev || event;
+            key = ev.keyCode;
+            if (key == 37 || key == 38 || key == 39 || key == 40) {
+
+                ev.cancelBubble = true;
+                ev.returnValue = false;
+            }
+        }
+        $("fieldset[name=tunggakanfield]").hide();
+        $("header[name=tunggakanfield]").hide();
+        $("input[name=tunggakan]").click(function () {
+            if ($(this).val() == "Y") {
+                $("fieldset[name=tunggakanfield]").show();
+                $("header[name=tunggakanfield]").show();
+            } else {
+                $("header[name=tunggakanfield]").hide();
+                $("fieldset[name=tunggakanfield]").hide();
+            }
+        });
+
+        $("input[name='sah[]']").on("change", function () {
+            if ($(this).attr("id") == "mKakitangan-btn") {
+                if ($(this).is(':checked') == true) {
+                    $(this).val('on')
+                    $("#jumlahot").removeAttr('disabled');
+                    $("#jumlahhari").removeAttr('disabled');
+                }
+                else {
+                    $(this).val('off')
+
+                    $("input[type='text']").each(function () {
+                        $(this).val(function () {
+                            return this.defaultValue;
+                        });
+                    })
+                    $("#jumlahhari").attr('disabled', 'disabled').val('');
+                    $("#jumlahot").attr('disabled', 'disabled').val('');
+                }
+            }
+        })
+
+        $(function () {
+            window.invalidate_input1 = function () {
+                $('input[name=HR_PEKERJA]').change(function () {
+                    $(".table").replaceWith("<table class='table table-hover'><thead><tr><th>#</th><th>Kod</th><th>Keterangan</th><th>Tunggakan</th><th>Jumlah (RM)</th></tr></thead><tbody></tbody></table>");
+                }
+                )
+            };
+
+            $("input[name=HR_PEKERJA]").change(invalidate_input1);
+
+            invalidate_input1();
+        });
+
+        $(function () {
+            window.invalidate_input = function () {
+                if ($('input[name=tunggakan]:checked').val() == "Y") {
+                    $('#tunggakanjumlahhari').removeAttr('disabled');
+                    $('#tunggakanjumlahot').removeAttr('disabled');
+                }
+                else {
+                    $('#tunggakanjumlahhari').attr('disabled', 'disabled').val('');
+                    $('#tunggakanjumlahot').attr('disabled', 'disabled').val('');
+                }
+            };
+
+            $("input[name=tunggakan]").change(invalidate_input);
+
+            invalidate_input();
+        });
+
+
+
+        $(function () {
+            var selectedValue = parseInt($("select[name = 'bulanbekerja']").val()) + 1;
+            $('input[name="bulandibayar"]').val(selectedValue);
+            $("select[name='bulanbekerja']").change(function () {
+                var selectedValue = parseInt($(this).val()) + 1;
+                $('select[name="bulandibayar"]').val("");
+                if (parseInt($(this).val()) == 12) {
+                    $('select[name="bulandibayar"]').find('option[value="1"]').attr("selected", true);
+                }
+                else {
+                    $('select[name="bulandibayar"]').find('option[value="' + selectedValue + '"]').attr("selected", true);
+                    $('input[name="bulandibayar"]').val(selectedValue);
+                }
+            });
+            function pageload() {
+                $.ajax({
+                    url: "../PengurusanKakitanganSambilan/Maklumat",
+                    data: { "HR_PEKERJA": $("#HR_PEKERJA").val(), "tahunbekerja": $("#tahunbekerja").val(), "bulanbekerja": $("#bulanbekerja").val(), "tahundibayar": $("#tahundibayar").val(), "bulandibayar": $("#bulandibayar").val(), "jumlahhari": $("#jumlahhari").val() },
+                    contentType: "application/json; charset=utf-8",
+                    type: 'GET',
+                    dataType: "json",
+                    success: function (data) {
+                        $("#elaunkhidmatawam").val(data.ELAUNKA)
+                        $("#jumlahhari").val(data.HARIBEKERJA)
+                        $("#jumlahot").val(data.JAMBEKERJA)
+                        $("#potonganksdk").val(data.POTONGANKSDK)
+                        $("#elaunlain").val(data.ELAUNLAIN)
+                        $("#potonganlain").val(data.POTONGLAIN)
+                        $("#jabatan").val(data.JABATAN)
+                        $("#bahagian").val(data.BAHAGIAN)
+                        $("#jumlahbayaranot").val(data.JUMLAHBAYARANOT)
+                        if ($("input[name='jumlahot']").val() != "" && $("input[name='jumlahhari']").val() != "") {
+                            $.ajax({
+                                url: "../PengurusanKakitanganSambilan/Overtime",
+                                data: { "HR_PEKERJA": $("#HR_PEKERJA").val(), "jumlahhari": $("#jumlahhari").val(), "jumlahot": $("#jumlahot").val() },
+                                contentType: "application/json; charset=utf-8",
+                                type: 'GET',
+                                dataType: "json",
+                                success: function (data1) {
+                                    $("#jumlahbayaranot").val(data1.JUMLAHBAYARANOT)
+                                    $("#gajiper3").val(data1.GAJIPER3)
+                                    $("#gajikasar").val(data1.GAJIKASAR)
+                                    $("#gajisebelumkwsp").val(data1.GAJISEBELUMKWSP)
+                                    $("#gajisebelumpotongankwspbersamatunggakan").val(data1.KIRATUNGGAKAN)
+                                    $("#gajipokok").val(data.GAJIPOKOK)
+                                    $("#potongankwsp").val(data1.POTONGANKWSP)
+                                    $("#socso").val(data1.POTONGANSOCSO)
+                                    $("#gajibersih").val(data.GAJIBERSIH)
+                                    if (data.TUNGGAKANIND == "Y") {
+                                        $("input[name='tunggakan'][value='" + data.TUNGGAKANIND + "']").prop('checked', true);
+                                    }
+                                    if (data.TUNGGAKANIND == "T") {
+                                        $("input[name='tunggakan'][value='" + data.TUNGGAKANIND + "']").prop('checked', true);
+                                    }
+                                    if (data.MUKTAMAD == "0") {
+                                        document.getElementById("Muktamad").disabled = false;
+                                        document.getElementById("Kemaskini").disabled = false;
+                                    }
+                                    if (data.MUKTAMAD == "1") {
+                                        document.getElementById("Muktamad").disabled = true;
+                                        document.getElementById("Kemaskini").disabled = true;
+                                    }
+                                    $('#Hantar').attr('disabled', 'disabled').val('');
+                                }
+                            })
+                        }
+                    }
+                })
+                $.ajax({
+                    url: "../PengurusanKakitanganSambilan/SejarahPembayaran",
+                    data: { "HR_PEKERJA": $("#HR_PEKERJA").val(), "tahunbekerja": $("#tahunbekerja").val(), "bulanbekerja": $("#bulanbekerja").val(), "tahundibayar": $("#tahundibayar").val(), "bulandibayar": $("#bulandibayar").val(), "bulantahuntunggakan": $("#bulantahuntunggakan").val() },
+                    contentType: "application/json; charset=utf-8",
+                    type: 'GET',
+                    dataType: "json",
+                    success: function (data) {
+                        var o = 0;
+                        $.each(data, function (i, v) {
+                            o++;
+                            $(".table").empty().append($("<tr><td>" + o + "</td><td><a class='Info' href='javascript:void(0)' HR_PEKERJA='" + $("#HR_PEKERJA").val() + "' HR_KOD='" + v.KOD + "'>" + v.KOD + "</a></td><td>" + v.KETERANGAN + "</td><td>" + v.TUNGGAKANIND + "</td><td>" + v.JUMLAH + "</td></tr>"));
+                        })
+                    }
+                })
+                $("input[name='jumlahot'], input[name='jumlahhari']").on("input", function () {
+                    if ($("input[name='jumlahot']").val() != "" && $("input[name='jumlahhari']").val() != "") {
+                        $.ajax({
+                            url: "../PengurusanKakitanganSambilan/Overtime",
+                            data: { "HR_PEKERJA": $("#HR_PEKERJA").val(), "jumlahhari": $("#jumlahhari").val(), "jumlahot": $("#jumlahot").val() },
+                            contentType: "application/json; charset=utf-8",
+                            type: 'GET',
+                            dataType: "json",
+                            success: function (data) {
+                                $("#jumlahbayaranot").val(data.JUMLAHBAYARANOT)
+                                $("#gajiper3").val(data.GAJIPER3)
+                                $("#gajikasar").val(data.GAJIKASAR)
+                                $("#gajisebelumkwsp").val(data.GAJISEBELUMKWSP)
+                                $("#gajisebelumpotongankwspbersamatunggakan").val(data.KIRATUNGGAKAN)
+                                $("#gajipokok").val(data.GAJIBASIC)
+                                $("#potongankwsp").val(data.POTONGANKWSP)
+                                $("#socso").val(data.POTONGANSOCSO)
+                                $("#gajibersih").val(data.GAJIBERSIH)
+                                if ($("input[name='jumlahot']").val() > 59.6) {
+                                    $("#dialog-message").dialog({
+                                        autoOpen: true,
+                                        modal: true,
+                                        title: "Kelulusan YDP",
+                                        buttons: [{
+                                            html: "Ya",
+                                            "class": "btn btn-primary",
+                                            click: function () {
+                                                $(this).dialog("close");
+                                                $("input[name='kelulusanydp'][value='Y']").prop('checked', true);
+                                            }
+                                        }, {
+                                            html: "Tidak",
+                                            "class": "btn btn-danger",
+                                            click: function () {
+                                                $(this).dialog("close");
+                                                $("input[name='kelulusanydp'][value='T']").prop('checked', true);
+                                            }
+                                        }, {
+                                            html: "Kembali",
+                                            "class": "btn btn-default",
+                                            click: function () {
+                                                $(this).dialog("close");
+                                                $("input[name='kelulusanydp'][value='P']").prop('checked', true);
+                                            }
+                                        }]
+                                    });
+                                }
+                            }
+                        })
+                    }
+                })
+                //Khairil: javascript utk populate bulan sebelum
+                $("input[name='tunggakanjumlahot'], input[name='tunggakanjumlahhari']").on("input", function () {
+
+                    //input
+                    var tunggakanJumlahOT = $("input[name='tunggakanjumlahot']");
+                    var tunggakanJumlahHari = $("input[name='tunggakanjumlahhari']");
+                    var elaunKhidmatAwam = $("#elaunkhidmatawam");
+                    var potonganKsdk = $("#potonganksdk");
+                    var elaunLain = $("#elaunlain");
+                    var potonganLain = $("#potonganlain");
+
+                    //output
+                    var tunggakanjumlahbayaranot = $("#tunggakanjumlahbayaranot");
+                    var tunggakangajiper3 = $('#tunggakangajiper3');
+                    var tunggakangajikasar = $('#tunggakangajikasar');
+                    var tunggakangajisebelumkwsp = $('#tunggakangajisebelumkwsp');
+                    var tunggakangajipokok = $("input[name='tunggakangajipokok']");
+                    var tunggakanpotongankwsp = $("#tunggakanpotongankwsp");
+                    var tunggakansocso = $("#tunggakansocso");
+                    var tunggakangajibersih = $("#tunggakangajibersih");
+
+                    //output2
+                    var tunggakanelaunkhidmatawam = $("#tunggakanelaunkhidmatawam");
+                    var tunggakanelaunlain = $("#tunggakanelaunlain");
+                    var tunggakanpotonganksdk = $("#tunggakanpotonganksdk");
+                    var tunggakanpotonganlain = $("#tunggakanpotonganlain");
+
+
+                    if (tunggakanJumlahOT.val() != "" && tunggakanJumlahHari.val() != "") {
+                        $.ajax({
+                            url: "../PengurusanKakitanganSambilan/Overtime",
+                            data: { "HR_PEKERJA": $("#HR_PEKERJA").val(), "jumlahhari": tunggakanJumlahHari.val(), "jumlahot": tunggakanJumlahOT.val() },
+                            contentType: "application/json; charset=utf-8",
+                            type: 'GET',
+                            dataType: "json",
+                            success: function (data) {
+                                tunggakanjumlahbayaranot.val(data.JUMLAHBAYARANOT)
+                                tunggakangajiper3.val(data.GAJIPER3)
+                                tunggakangajikasar.val(data.GAJIKASAR)
+                                tunggakangajisebelumkwsp.val(data.GAJISEBELUMKWSP)
+                                $("#gajisebelumpotongankwspbersamatunggakan").val(data.KIRATUNGGAKAN)
+                                tunggakangajipokok.val(data.GAJIBASIC)
+                                tunggakanpotongankwsp.val(data.POTONGANKWSP)
+                                tunggakansocso.val(data.POTONGANSOCSO)
+                                tunggakangajibersih.val(data.GAJIBERSIH)
+
+                                tunggakanelaunkhidmatawam.val(elaunKhidmatAwam.val())
+                                tunggakanelaunlain.val(elaunLain.val())
+                                tunggakanpotonganksdk.val(potonganKsdk.val())
+                                tunggakanpotonganlain.val(potonganLain.val())
+
+                                //kalau jumlah OT > 60 jam, kena dapat kelulusan YDP, auto tick
+                                if (tunggakanJumlahOT.val() > 59.6) {
+                                    $("#dialog-message").dialog({
+                                        autoOpen: true,
+                                        modal: true,
+                                        title: "Kelulusan YDP",
+                                        buttons: [{
+                                            html: "Ya",
+                                            "class": "btn btn-primary",
+                                            click: function () {
+                                                $(this).dialog("close");
+                                                $("input[name='kelulusanydptunggakan'][value='Y']").prop('checked', true);
+                                            }
+                                        }, {
+                                            html: "Tidak",
+                                            "class": "btn btn-danger",
+                                            click: function () {
+                                                $(this).dialog("close");
+                                                $("input[name='kelulusanydptunggakan'][value='T']").prop('checked', true);
+                                            }
+                                        }, {
+                                            html: "Kembali",
+                                            "class": "btn btn-default",
+                                            click: function () {
+                                                $(this).dialog("close");
+                                                $("input[name='kelulusanydptunggakan'][value='P']").prop('checked', true);
+                                            }
+                                        }]
+                                    });
+                                }
+                            }
+                        })
+                    }
+                })
+
+                $("#list1").html("<option></option>")
+                $.ajax({
+                    url: "../PengurusanKakitanganSambilan/ElaunPotongan",
+                    data: { "HR_PEKERJA": $("#HR_PEKERJA").val() },
+                    contentType: "application/json; charset=utf-8",
+                    type: 'GET',
+                    dataType: "json",
+                    success: function (data) {
+                        var o = 0;
+                        $.each(data, function (i, v) {
+                            $("#list1").empty().append($("<option value='" + v.KOD + "'>" + v.KETERANGAN + "</option>"));
+                        })
+                    }
+                })
+                /*$.ajax({
+                    url: "PengurusanKakitanganSambilan/Tunggakan",
+                    type: "GET",
+                    data: { "HR_PEKERJA": $("#HR_PEKERJA").val() },
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        var o = 0;
+                        $.each(data, function (i, v) {
+                            o++;
+                            $(".table").append($("<tr><td>" + o + "</td><td><a class='Info' href='javascript:void(0)' HR_PEKERJA='" + $("#HR_PEKERJA").val() + "' hrkod='" + v.HR_KOD + "' bulandibayar='" + v.HR_BULAN_DIBAYAR + "' bulanbekerja='" + v.HR_BULAN_BEKERJA + "' tahunbekerja='" + v.HR_TAHUN_BEKERJA + "' title='Info Tunggakan'>" + v.HR_KOD + "</a></td><td>" + v.HR_BULAN_DIBAYAR + "</td><td>" + v.HR_BULAN_BEKERJA + "</td><td>" + v.HR_TAHUN_BEKERJA + "</td><td>" + v.HR_JUMLAH + "</td></tr>"));
+                        })
+                    }
+                })*/
+            }
+
+            if ($("input[name='HR_PEKERJA']").val() != null) {
+                pageload()
+            }
+
+            $(document).on("input", "input[name='HR_PEKERJA']", function () {
+                pageload()
+            }).on("click", ".table .Info", function () {
+                var Info = '../PengurusanKakiTanganSambilan/TunggakanModal';
+                var $buttonClicked = $(this);
+                var HR_KOD = $buttonClicked.attr('HR_KOD');
+                var HR_PEKERJA = $buttonClicked.attr('HR_PEKERJA');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: Info,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "HR_KOD": HR_KOD, "HR_PEKERJA": HR_PEKERJA },
+                    datatype: "json",
+                    success: function (data) {
+                        $('#InfoModalContent').html(data);
+                        $('#InfoModal').modal(options);
+                        $('#InfoModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+            $("#closbtn").click(function () {
+                $('#InfoModal').modal('hide');
+            });
+        });
+
+    </script>
+
+}
