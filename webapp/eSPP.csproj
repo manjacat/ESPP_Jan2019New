@@ -1891,8 +1891,10 @@
     <Compile Include="Models\AcaraModels.cs" />
     <Compile Include="Models\BonusSambilanDetailModel.cs" />
     <Compile Include="Models\EventsModels.cs" />
+    <Compile Include="Models\Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Models\GredElaunPekelilingModels.cs" />
     <Compile Include="Models\HR_Bonus_Sambilan_Detail.cs" />
+    <Compile Include="Models\ModelsView\RoleAccess_MaklumatKakitangan.cs" />
     <Compile Include="Models\MonthModel.cs" />
     <Compile Include="Models\PageSejarahModel.cs" />
     <Compile Include="Models\PanelHospitalModels.cs" />
@@ -1910,6 +1912,9 @@
     <Compile Include="Models\PinkTuntutanDetailModels.cs" />
     <Compile Include="Models\PinkTuntutanModels.cs" />
     <Compile Include="Models\ReportBorangAModel.cs" />
+    <Compile Include="Models\RoleManagement\Enums.cs" />
+    <Compile Include="Models\RoleManagement\HtmlRole.cs" />
+    <Compile Include="Models\RoleManagement\RoleManager.cs" />
     <Compile Include="Models\SejarahElaunPotongan.cs" />
     <Compile Include="Models\SejarahPekerjaanModels.cs" />
     <Compile Include="Models\TarikhAcaraModels.cs" />

@@ -1,7 +1,5 @@
 ﻿@model eSPP.Models.MaklumatKakitanganModels
-
 <div id="content">
-
     <div class="row">
         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
             <h1 class="page-title txt-color-blueDark">
@@ -19,7 +17,7 @@
     <section id="widget-grid" class="">
         <!-- row -->
         <div class="row">
-            @Html.Partial("SearchKakitangan")
+            @Html.Partial("SearchKakitangan", Model)
         </div>
         @using (Html.BeginForm("Index", "MaklumatKakitanganBak", FormMethod.Post, new { id = "mKakitangan", enctype = "multipart/form-data" }))
         {
@@ -65,6 +63,7 @@
     </section>
 </div>
 <!-- END MAIN CONTENT (Khairil) -->
+
 @section pagespecific {
     <script type="text/javascript">
 

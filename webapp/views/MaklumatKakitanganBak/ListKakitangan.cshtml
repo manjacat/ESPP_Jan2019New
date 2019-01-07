@@ -1,10 +1,17 @@
-﻿@model eSPP.Models.MaklumatKakitanganModels
+﻿@using eSPP.Models.RoleManagement
+@model eSPP.Models.MaklumatKakitanganModels
+
+@{
+    //pass role punya class dari ViewBag
+    RoleManager manager = (RoleManager)ViewBag.RoleManager;
+}
+
 
 @if (Model.HR_SENARAI_PERIBADI != null)
 {
     var style = "";
     if (Model.HR_SENARAI_PERIBADI.Count > 4)
-    { 
+    {
         style = "overflow-y:scroll; height:750px";
     }
     <div style="@style">
@@ -61,8 +68,8 @@
                                     <div class="col-lg-6 col-md-8 col-sm-8">
                                         <label class="input">
                                             <i class="icon-append fa fa-user"></i>
-                                            @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_NAMA_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
-
+                                            @Html.EditorFor(model => HR_MAKLUMAT_PERIBADI.HR_NAMA_PEKERJA,
+                                           new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
                                         </label>
                                     </div>
 
@@ -98,7 +105,7 @@
                         {
                             <div class="col col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <section>
-                                    <a class="btn btn-default btn-primary" href="@Url.Action("Index", "MaklumatKakitangan", new { key = "4", value = HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA })" title="Profil Kakitangan">
+                                    <a class="btn btn-default btn-primary" href="@Url.Action("Index", "MaklumatKakitanganBak", new { key = "4", value = HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA })" title="Profil Kakitangan">
                                         Lihat Info
                                     </a>
                                 </section>
@@ -134,5 +141,5 @@
     @Html.HiddenFor(model => model.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA)
     @Html.HiddenFor(model => model.HR_MAKLUMAT_PERIBADI.HR_NAMA_PEKERJA)
     @Html.HiddenFor(model => model.HR_MAKLUMAT_PERIBADI.HR_NO_KPBARU)
-    <br/>
+    <br />
 }

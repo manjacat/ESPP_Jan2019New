@@ -1,4 +1,5 @@
 ﻿using eSPP.Models;
+using eSPP.Models.RoleManagement;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -17,6 +18,10 @@ namespace eSPP.Controllers
         // GET: MaklumatKakitangan
         public ActionResult Index(string key, string value)
         {
+            //Add this ViewBag to get RoleManager
+            RoleManager roleManager = new RoleManager();
+            ViewBag.RoleManager = roleManager.GetSample();
+            
             ViewBag.photo = "";
             MaklumatKakitanganModels mKakitangan = new MaklumatKakitanganModels();
             ViewBag.key = "";
