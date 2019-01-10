@@ -58,10 +58,33 @@ namespace eSPP.Models.RoleManagement
                     EditLevel.Edit
                 }
             };
+
+            HtmlRole role4 = new HtmlRole
+            {
+                ModuleName = ModuleConstant.MaklumatKakiTangan,
+                PropertyName = "HR_NAMA_PEKERJA",
+                ViewLevel = ViewLevel.Edit,
+                EditLevels = new List<EditLevel>
+                {
+                    EditLevel.Add,
+                    EditLevel.Edit
+                }
+            };
+
+            HtmlRole role5 = new HtmlRole
+            {
+                ModuleName = ModuleConstant.MaklumatKakiTangan,
+                PropertyName = "HR_NO_KPBARU",
+                ViewLevel = ViewLevel.View,
+                EditLevels = new List<EditLevel>()
+            };
+
             List<HtmlRole> htmlRoles = new List<HtmlRole>();
             htmlRoles.Add(role1);
             htmlRoles.Add(role2);
             htmlRoles.Add(role3);
+            htmlRoles.Add(role4);
+            htmlRoles.Add(role5);
             return htmlRoles;
         }
     }

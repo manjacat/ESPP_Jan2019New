@@ -45,4 +45,9 @@ namespace eSPP.Models.RoleManagement
             return rm;
         }
     }
+
+    public class RoleKakitangan : RoleManager
+    {
+
+    }
 }
