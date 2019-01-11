@@ -18,9 +18,12 @@ namespace eSPP.Models.RoleManagement
 
         public HtmlRole GetHtmlRole(string htmlName, string moduleName)
         {
+            if(htmlName == "Gaji")
+            {
+                Console.Write("gaji");
+            }
             HtmlRole role = HtmlRoles
-                .Where(s => s.EditLevels.Contains(EditLevel.Add)
-                && s.ModuleName == moduleName
+                .Where(s => s.ModuleName == moduleName
                 && s.PropertyName == htmlName).FirstOrDefault();
             if(role == null)
             {

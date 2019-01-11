@@ -1,44 +1,45 @@
-﻿<ul class="nav nav-tabs bordered">
+﻿@using eSPP.Models.RoleManagement
+@{
+    //pass role dari ViewBag
+    RoleManager manager = (RoleManager)ViewBag.RoleManager;
+}
+<!-- Helper -->
+@helper CustomTab(RoleManager rl, string propertyName, string displayName = "")
+{
+    HtmlRole role = rl.GetHtmlRole(propertyName, ModuleConstant.MaklumatKakiTangan);
+    if (displayName == "")
+    {
+        displayName = propertyName;
+    }
+    if (role.ViewLevel == ViewLevel.View) //kalau View, tab jadi ReadOnly (tak bole klik)
+    {
+        <li>
+            <a href="#@propertyName">@displayName</a>
+        </li>
+    }
+    else if (role.ViewLevel == ViewLevel.Edit) //Kalau Edit, Boleh Klik
+    {
+        <li>
+            <a href="#@propertyName" data-toggle="tab">@displayName</a>
+        </li>
+    }
+    //kalau ViewLevel.NoAccess, tab tu tak nampak langsung
+}
+<ul class="nav nav-tabs bordered">
     <li class="active">
         <a href="#Peribadi" data-toggle="tab">Peribadi</a>
     </li>
-    <li>
-        <a href="#Pekerjaan" data-toggle="tab">Pekerjaan</a>
-    </li>
-    <li>
-        <a href="#Kemahiran" data-toggle="tab">Kemahiran</a>
-    </li>
-    <li>
-        <a href="#Akademik" data-toggle="tab">Akademik</a>
-    </li>
-    <li>
-        <a href="#Pewaris" data-toggle="tab">Pewaris</a>
-    </li>
-    <li>
-        <a href="#Tanggungan" data-toggle="tab">Tanggungan</a>
-    </li>
-    <li>
-        <a href="#Kuarters" data-toggle="tab">Kuarters</a>
-    </li>
-    <li>
-        <a href="#Gaji" data-toggle="tab">Gaji/Elaun/Potongan/Caruman</a>
-    </li>
-    <li>
-        <a href="#Anugerah" data-toggle="tab">Anugerah</a>
-    </li>
-    <li>
-        <a href="#Persaraan" data-toggle="tab">Persaraan</a>
-    </li>
-    <li>
-        <a href="#Tatatertib" data-toggle="tab">Tatatertib</a>
-    </li>
-    <li>
-        <a href="#Kematian" data-toggle="tab">Kematian</a>
-    </li>
-    <li>
-        <a href="#Prestasi" data-toggle="tab">Prestasi</a>
-    </li>
-    <li>
-        <a href="#Cuti" data-toggle="tab">Cuti</a>
-    </li>
+    @CustomTab(manager, "Pekerjaan")
+    @CustomTab(manager, "Kemahiran")
+    @CustomTab(manager, "Akademik")
+    @CustomTab(manager, "Pewaris")
+    @CustomTab(manager, "Tanggungan")
+    @CustomTab(manager, "Kuarters")
+    @CustomTab(manager, "Gaji", "Gaji/Elaun/Potongan/Caruman")
+    @CustomTab(manager, "Anugerah")
+    @CustomTab(manager, "Persaraan")
+    @CustomTab(manager, "Tatatertib")
+    @CustomTab(manager, "Kematian")
+    @CustomTab(manager, "Prestasi")
+    @CustomTab(manager, "Cuti")
 </ul>
