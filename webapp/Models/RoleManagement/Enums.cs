@@ -7,20 +7,10 @@ namespace eSPP.Models.RoleManagement
 {
     public enum ViewLevel
     {
-        NoAccess = 0, //tak nampak apa2
-        View = 1, //read only
-        Edit = 2 //bole nampak/interact
-    }
-
-    public enum EditLevel
-    {
-        Add = 0,
-        Edit = 1,
-        Delete = 2
-    }
-
-    public static class ModuleConstant
-    {
-        public const string MaklumatKakiTangan = "MaklumatKakitangan";
+        NoAccess = 0,
+        View = 1,
+        Add = 2,
+        Edit = 3,
+        Delete = 4
     }
 }

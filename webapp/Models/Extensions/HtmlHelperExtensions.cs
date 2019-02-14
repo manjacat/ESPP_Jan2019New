@@ -77,13 +77,13 @@ namespace eSPP.Models.Extensions
 
             attributes = GetHtmlAttribute(htmlAttributes);
 
-            HtmlRole role = roleManager.GetHtmlRole(htmlName, moduleName);
+            HtmlRole role = roleManager.GetHtmlRole(htmlName);
 
-            if(role.ViewLevel == ViewLevel.NoAccess)
+            if(!role.IsView)
             {
                 attributes.Add("style", "display: none");
             }
-            else if(role.ViewLevel == ViewLevel.View)
+            else if(role.IsView && !role.IsEdit)
             {
                 attributes.Add("disabled", "disabled");
             }

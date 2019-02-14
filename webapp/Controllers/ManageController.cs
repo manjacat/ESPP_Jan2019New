@@ -280,35 +280,34 @@ namespace eSPP.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                var pokemon = User.Identity.Name;
-                var user1 = db.Users.Where(s => s.UserName== pokemon).SingleOrDefault();
-                var emel = db.Users.Where(s => s.Email == user1.Email).SingleOrDefault();
-                var role1 = db.UserRoles.Where(d => d.UserId == user1.Id).SingleOrDefault();
+                var UserName = User.Identity.Name;
+                ApplicationUser userDetail = db.Users.SingleOrDefault(s => s.Id == getuserid);
+                var role1 = db.UserRoles.Where(d => d.UserId == getuserid).SingleOrDefault();
                 IdentityRole role = new IdentityRole();
                 if(role != null)
                 {
                     role = db.Roles.Where(e => e.Id == role1.RoleId).SingleOrDefault();
                 }
-                
-                ApplicationUser ui = db.Users.SingleOrDefault(s => s.Id == getuserid);
-				PRUSER pruser = mc.PRUSER.SingleOrDefault(s => s.USERNAME == ui.UserName);
 
-				string password = model.NewPassword;
-				string hPassword = ComputeHash(password, new MD5CryptoServiceProvider());
+                PRUSER pruser = mc.PRUSER.SingleOrDefault(s => s.USERNAME == UserName);
 
-				pruser.USERPASSWORD = hPassword;
-				mc.Entry(pruser).State = EntityState.Modified;
-				mc.SaveChanges();
+                string password = model.NewPassword;
+                string hPassword = ComputeHash(password, new MD5CryptoServiceProvider());
+                //convert password to sha1
+                //string passs = UserManager.PasswordHasher.HashPassword(password);
 
-				ui.PasswordUpdate = DateTime.Now;
-                db.Entry(ui).State = EntityState.Modified;
+                pruser.USERPASSWORD = hPassword;
+                mc.Entry(pruser).State = EntityState.Modified;
+                mc.SaveChanges();
+
+                userDetail.PasswordUpdate = DateTime.Now;
+                db.Entry(userDetail).State = EntityState.Modified;
                 db.SaveChanges();
-                new AuditTrailModels().Log(emel.Email, emel.UserName, System.Web.HttpContext.Current.Request.UserHostAddress, role.Name, emel.UserName + " Telah Menukar Katalaluan", System.Net.Dns.GetHostName(), emel.PhoneNumber, Request.RawUrl, "ChangePassword");
+                new AuditTrailModels().Log(userDetail.Email, userDetail.UserName, System.Web.HttpContext.Current.Request.UserHostAddress, role.Name, userDetail.UserName + " Telah Menukar Katalaluan", System.Net.Dns.GetHostName(), userDetail.PhoneNumber, Request.RawUrl, "ChangePassword");
 
-				var username = User.Identity.Name;
-				HR_MAKLUMAT_PERIBADI name = db.HR_MAKLUMAT_PERIBADI.FirstOrDefault(s => s.HR_NO_KPBARU == username);
+                HR_MAKLUMAT_PERIBADI name = db.HR_MAKLUMAT_PERIBADI.FirstOrDefault(s => s.HR_NO_KPBARU == UserName);
 
-				return RedirectToAction("Index", "Home", new { id = name.HR_NO_PEKERJA, Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("Index", "Home", new { id = name.HR_NO_PEKERJA, Message = ManageMessageId.ChangePasswordSuccess });
 			}
 			AddErrors(result);
 			return RedirectToAction("ChangePassword", "Manage", new { getuserid = getuserid, Message = ManageMessageId.ErrorPassword });

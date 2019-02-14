@@ -1741,24 +1741,25 @@
     <Content Include="Views\Kewangan8\TanggungKerja.cshtml" />
     <Content Include="Views\Kewangan8\MemangkuKerja.cshtml" />
     <Content Include="Views\LuarNegaraPengesahan\SenaraiLuarNegara.cshtml" />
+    <Content Include="Views\UserGroupBak\Edit.cshtml" />
     <Content Include="Views\MaklumatKakitanganBak\Index.cshtml" />
-    <Content Include="Views\MaklumatKakitanganBak\SearchKakitangan.cshtml" />
-    <Content Include="Views\MaklumatKakitanganBak\ListKakitangan.cshtml" />
     <Content Include="Views\MaklumatKakitanganBak\KakitanganTab.cshtml" />
-    <Content Include="Views\MaklumatKakitanganBak\TabPeribadi.cshtml" />
-    <Content Include="Views\MaklumatKakitanganBak\TabPekerjaan.cshtml" />
-    <Content Include="Views\MaklumatKakitanganBak\TabKemahiran.cshtml" />
+    <Content Include="Views\MaklumatKakitanganBak\ListKakitangan.cshtml" />
+    <Content Include="Views\MaklumatKakitanganBak\SearchKakitangan.cshtml" />
     <Content Include="Views\MaklumatKakitanganBak\TabAkademik.cshtml" />
-    <Content Include="Views\MaklumatKakitanganBak\TabPewaris.cshtml" />
-    <Content Include="Views\MaklumatKakitanganBak\TabTanggungan.cshtml" />
-    <Content Include="Views\MaklumatKakitanganBak\TabKuarters.cshtml" />
-    <Content Include="Views\MaklumatKakitanganBak\TabGaji.cshtml" />
     <Content Include="Views\MaklumatKakitanganBak\TabAnugerah.cshtml" />
-    <Content Include="Views\MaklumatKakitanganBak\TabPersaraan.cshtml" />
-    <Content Include="Views\MaklumatKakitanganBak\TabTatatertib.cshtml" />
-    <Content Include="Views\MaklumatKakitanganBak\TabKematian.cshtml" />
-    <Content Include="Views\MaklumatKakitanganBak\TabPrestasi.cshtml" />
     <Content Include="Views\MaklumatKakitanganBak\TabCuti.cshtml" />
+    <Content Include="Views\MaklumatKakitanganBak\TabGaji.cshtml" />
+    <Content Include="Views\MaklumatKakitanganBak\TabKemahiran.cshtml" />
+    <Content Include="Views\MaklumatKakitanganBak\TabKematian.cshtml" />
+    <Content Include="Views\MaklumatKakitanganBak\TabKuarters.cshtml" />
+    <Content Include="Views\MaklumatKakitanganBak\TabPekerjaan.cshtml" />
+    <Content Include="Views\MaklumatKakitanganBak\TabPeribadi.cshtml" />
+    <Content Include="Views\MaklumatKakitanganBak\TabPersaraan.cshtml" />
+    <Content Include="Views\MaklumatKakitanganBak\TabPewaris.cshtml" />
+    <Content Include="Views\MaklumatKakitanganBak\TabPrestasi.cshtml" />
+    <Content Include="Views\MaklumatKakitanganBak\TabTanggungan.cshtml" />
+    <Content Include="Views\MaklumatKakitanganBak\TabTatatertib.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1838,7 +1839,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IconsController.cs" />
     <Compile Include="Controllers\IntelController.cs" />
-    <Compile Include="Controllers\MaklumatKakitanganBakController.cs" />
     <Compile Include="Controllers\MaklumatKakitanganController.cs" />
     <Compile Include="Controllers\MaklumatPekerjaanController.cs" />
     <Compile Include="Controllers\MaklumatPeribadiController.cs" />
@@ -1880,15 +1880,19 @@
     <Compile Include="Controllers\TuntutanInsuranController.cs" />
     <Compile Include="Controllers\TuntutanInsuransController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
+    <Compile Include="Controllers\UserGroupBakController.cs" />
     <Compile Include="Controllers\UserGroupController.cs" />
     <Compile Include="Controllers\UserInfoesController.cs" />
+    <Compile Include="CustomPasswordHasher.cs" />
     <Compile Include="Db\Set.cs" />
+    <Compile Include="Encrypt.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AgensiModels.cs" />
     <Compile Include="Models\AgreementModels.cs" />
     <Compile Include="Models\AcaraModels.cs" />
+    <Compile Include="Models\AspNetRolesHtmlModels.cs" />
     <Compile Include="Models\BonusSambilanDetailModel.cs" />
     <Compile Include="Models\EventsModels.cs" />
     <Compile Include="Models\Extensions\HtmlHelperExtensions.cs" />
@@ -1914,6 +1918,7 @@
     <Compile Include="Models\ReportBorangAModel.cs" />
     <Compile Include="Models\RoleManagement\Enums.cs" />
     <Compile Include="Models\RoleManagement\HtmlRole.cs" />
+    <Compile Include="Models\RoleManagement\ModuleConstant.cs" />
     <Compile Include="Models\RoleManagement\RoleManager.cs" />
     <Compile Include="Models\SejarahElaunPotongan.cs" />
     <Compile Include="Models\SejarahPekerjaanModels.cs" />

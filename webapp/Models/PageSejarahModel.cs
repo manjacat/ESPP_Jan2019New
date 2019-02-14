@@ -433,10 +433,10 @@ namespace eSPP.Models
             //List<HR_MAKLUMAT_ELAUN_POTONGAN> maklumatcaruman = GetCaruman(db, agree.HR_PEKERJA);
 
             //For Logging
-            var tbl = db.Users.Where(p => p.Id == user).SingleOrDefault();
-            var emel = db.HR_MAKLUMAT_PERIBADI.Where(s => s.HR_NO_KPBARU == tbl.UserName).SingleOrDefault();
-            var role1 = db.UserRoles.Where(d => d.UserId == tbl.Id).SingleOrDefault();
-            var role = db.Roles.Where(e => e.Id == role1.RoleId).SingleOrDefault();
+            var tbl = db.Users.Where(p => p.Id == user).FirstOrDefault();
+            var emel = db.HR_MAKLUMAT_PERIBADI.Where(s => s.HR_NO_KPBARU == tbl.UserName).FirstOrDefault();
+            var role1 = db.UserRoles.Where(d => d.UserId == tbl.Id).FirstOrDefault();
+            var role = db.Roles.Where(e => e.Id == role1.RoleId).FirstOrDefault();
 
             if (string.IsNullOrEmpty(command))
             {
@@ -476,7 +476,7 @@ namespace eSPP.Models
                 && s.HR_TAHUN_BEKERJA == agree.tahunbekerja
                 && s.HR_BULAN_DIBAYAR == agree.bulandibayar
                 && s.HR_TAHUN == agree.tahundibayar
-                && s.HR_KOD == "GAJPS").SingleOrDefault();
+                && s.HR_KOD == "GAJPS").FirstOrDefault();
             gaji.HR_MUKTAMAD = 1;
 
             db.Entry(gaji).State = EntityState.Modified;

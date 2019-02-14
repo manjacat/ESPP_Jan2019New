@@ -45,7 +45,29 @@ namespace eSPP.Controllers
                 string dateStr = "01/" + bulan + "/" + DateTime.Now.Year;
                 DateTime date = Convert.ToDateTime(dateStr);
 
-                sPeribadi = db.HR_MAKLUMAT_PERIBADI.Include(s => s.HR_MAKLUMAT_PEKERJAAN).AsEnumerable().Where(s => s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI != null && (Convert.ToDateTime(s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI).Month == bulan && Convert.ToDateTime(s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI).Year < DateTime.Now.Year) && s.HR_AKTIF_IND == "Y" && db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(p => p.HR_NO_PEKERJA == s.HR_NO_PEKERJA).Count() > 0).ToList();
+                List<HR_MAKLUMAT_PERIBADI> tmpPeribadi = new List<HR_MAKLUMAT_PERIBADI>();
+
+                //sPeribadi = db.HR_MAKLUMAT_PERIBADI.Include(s => s.HR_MAKLUMAT_PEKERJAAN).AsEnumerable().Where(s => (s.HR_AKTIF_IND != "T" && s.HR_AKTIF_IND != "P") && s.HR_MAKLUMAT_PEKERJAAN.HR_GAJI_IND == "Y" && s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI != null && (s.HR_MAKLUMAT_PEKERJAAN.HR_TARAF_JAWATAN == "T" || s.HR_MAKLUMAT_PEKERJAAN.HR_TARAF_JAWATAN == "K") && (Convert.ToDateTime(s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI).Month == bulan && Convert.ToDateTime(s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI).Year < DateTime.Now.Year)  && db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(p => p.HR_NO_PEKERJA == s.HR_NO_PEKERJA && p.HR_ELAUN_POTONGAN_IND == "G" && p.HR_AKTIF_IND == "Y").Count() > 0).ToList();
+                sPeribadi = db.HR_MAKLUMAT_PERIBADI.Include(s => s.HR_MAKLUMAT_PEKERJAAN).AsEnumerable().Where(s => (s.HR_AKTIF_IND != "T" && s.HR_AKTIF_IND != "P") && s.HR_MAKLUMAT_PEKERJAAN.HR_GAJI_IND == "Y" && s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI != null && (s.HR_MAKLUMAT_PEKERJAAN.HR_TARAF_JAWATAN == "T" || s.HR_MAKLUMAT_PEKERJAAN.HR_TARAF_JAWATAN == "K") && (Convert.ToDateTime(s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI).Month == bulan) && db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(p => p.HR_NO_PEKERJA == s.HR_NO_PEKERJA && p.HR_ELAUN_POTONGAN_IND == "G" && p.HR_AKTIF_IND == "Y").Count() > 0).ToList();
+                //foreach (HR_MAKLUMAT_PERIBADI p in sPeribadi)
+                //{
+                //    if(p.HR_MAKLUMAT_PEKERJAAN.HR_GRED != null && p.HR_MAKLUMAT_PEKERJAAN.HR_GRED != "")
+                //    {
+                //        GE_PARAMTABLE checkGred = mc.GE_PARAMTABLE.AsEnumerable().Where(g => g.ORDINAL == Convert.ToInt32(p.HR_MAKLUMAT_PEKERJAAN.HR_GRED) && g.GROUPID == 109 && g.STRING_PARAM == "SSM").FirstOrDefault();
+                //        if(checkGred != null)
+                //        {
+                //            var checkJadualGaji = db.HR_JADUAL_GAJI.Where(j => j.HR_GRED_GAJI == checkGred.SHORT_DESCRIPTION && j.HR_PERINGKAT == p.HR_MAKLUMAT_PEKERJAAN.HR_MATRIKS_GAJI.Substring(0,2)).Count();
+                //            if(checkJadualGaji > 0)
+                //            {
+                //                tmpPeribadi.Add(p);
+                //            }
+                //        }
+                //    }
+                    
+                //}
+                //sPeribadi = new List<HR_MAKLUMAT_PERIBADI>();
+                //sPeribadi = tmpPeribadi;
+
             }
 
             //if (kod != "00025")
@@ -560,22 +582,22 @@ namespace eSPP.Controllers
             {
                 if(tarafjawatan != "")
                 {
-                    ListPeribadi = db.HR_MAKLUMAT_PERIBADI.Include(s => s.HR_MAKLUMAT_PEKERJAAN).Where(s => s.HR_AKTIF_IND == jenisperubahan && s.HR_MAKLUMAT_PEKERJAAN.HR_GAJI_IND != "Y" && s.HR_MAKLUMAT_PEKERJAAN.HR_KAKITANGAN_IND == tarafpekerja && s.HR_MAKLUMAT_PEKERJAAN.HR_TARAF_JAWATAN == tarafjawatan && s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI.Value.Month == bulan).ToList<HR_MAKLUMAT_PERIBADI>();
+                    ListPeribadi = db.HR_MAKLUMAT_PERIBADI.Include(s => s.HR_MAKLUMAT_PEKERJAAN).Where(s => s.HR_AKTIF_IND == jenisperubahan && s.HR_MAKLUMAT_PEKERJAAN.HR_GAJI_IND != "Y" && s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI != null && s.HR_MAKLUMAT_PEKERJAAN.HR_KAKITANGAN_IND == tarafpekerja && s.HR_MAKLUMAT_PEKERJAAN.HR_TARAF_JAWATAN == tarafjawatan && (s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI.Value.Month == bulan) && db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(p => p.HR_NO_PEKERJA == s.HR_NO_PEKERJA && p.HR_ELAUN_POTONGAN_IND == "G" && p.HR_AKTIF_IND == "Y").Count() > 0).ToList<HR_MAKLUMAT_PERIBADI>();
                 }
                 else
                 {
-                    ListPeribadi = db.HR_MAKLUMAT_PERIBADI.Include(s => s.HR_MAKLUMAT_PEKERJAAN).Where(s => s.HR_AKTIF_IND == jenisperubahan && s.HR_MAKLUMAT_PEKERJAAN.HR_GAJI_IND != "Y" && s.HR_MAKLUMAT_PEKERJAAN.HR_KAKITANGAN_IND == tarafpekerja && s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI.Value.Month == bulan).ToList<HR_MAKLUMAT_PERIBADI>();
+                    ListPeribadi = db.HR_MAKLUMAT_PERIBADI.Include(s => s.HR_MAKLUMAT_PEKERJAAN).Where(s => s.HR_AKTIF_IND == jenisperubahan && s.HR_MAKLUMAT_PEKERJAAN.HR_GAJI_IND != "Y" && s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI != null && s.HR_MAKLUMAT_PEKERJAAN.HR_KAKITANGAN_IND == tarafpekerja && (s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI.Value.Month == bulan) && db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(p => p.HR_NO_PEKERJA == s.HR_NO_PEKERJA && p.HR_ELAUN_POTONGAN_IND == "G" && p.HR_AKTIF_IND == "Y").Count() > 0).ToList<HR_MAKLUMAT_PERIBADI>();
                 }
             }
             else
             {
                 if(tarafjawatan != "")
                 {
-                    ListPeribadi = db.HR_MAKLUMAT_PERIBADI.Include(s => s.HR_MAKLUMAT_PEKERJAAN).Where(s => (s.HR_AKTIF_IND != "T" && s.HR_AKTIF_IND != "P") && s.HR_MAKLUMAT_PEKERJAAN.HR_KAKITANGAN_IND == tarafpekerja && s.HR_MAKLUMAT_PEKERJAAN.HR_TARAF_JAWATAN == tarafjawatan && s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI.Value.Month == bulan).ToList<HR_MAKLUMAT_PERIBADI>();
+                    ListPeribadi = db.HR_MAKLUMAT_PERIBADI.Include(s => s.HR_MAKLUMAT_PEKERJAAN).Where(s => (s.HR_AKTIF_IND != "T" && s.HR_AKTIF_IND != "P") && s.HR_MAKLUMAT_PEKERJAAN.HR_GAJI_IND == "Y" && s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI != null && s.HR_MAKLUMAT_PEKERJAAN.HR_KAKITANGAN_IND == tarafpekerja && s.HR_MAKLUMAT_PEKERJAAN.HR_TARAF_JAWATAN == tarafjawatan && (s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI.Value.Month == bulan) && db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(p => p.HR_NO_PEKERJA == s.HR_NO_PEKERJA && p.HR_ELAUN_POTONGAN_IND == "G" && p.HR_AKTIF_IND == "Y").Count() > 0).ToList<HR_MAKLUMAT_PERIBADI>();
                 }
                 else
                 {
-                    ListPeribadi = db.HR_MAKLUMAT_PERIBADI.Include(s => s.HR_MAKLUMAT_PEKERJAAN).Where(s => (s.HR_AKTIF_IND != "T" && s.HR_AKTIF_IND != "P") && s.HR_MAKLUMAT_PEKERJAAN.HR_KAKITANGAN_IND == tarafpekerja && s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI.Value.Month == bulan).ToList<HR_MAKLUMAT_PERIBADI>();
+                    ListPeribadi = db.HR_MAKLUMAT_PERIBADI.Include(s => s.HR_MAKLUMAT_PEKERJAAN).Where(s => (s.HR_AKTIF_IND != "T" && s.HR_AKTIF_IND != "P") && s.HR_MAKLUMAT_PEKERJAAN.HR_GAJI_IND == "Y" && s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI != null && s.HR_MAKLUMAT_PEKERJAAN.HR_KAKITANGAN_IND == tarafpekerja && (s.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI.Value.Month == bulan) && db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(p => p.HR_NO_PEKERJA == s.HR_NO_PEKERJA && p.HR_ELAUN_POTONGAN_IND == "G" && p.HR_AKTIF_IND == "Y").Count() > 0).ToList<HR_MAKLUMAT_PERIBADI>();
 
                 }
             }
@@ -4356,7 +4378,7 @@ namespace eSPP.Controllers
             }
 
             var output = new MemoryStream();
-            var document = new iTextSharp.text.Document(PageSize.A4, 30, 30, 30, 30);
+            var document = new iTextSharp.text.Document(PageSize.A4, 45, 45, 45, 45);
             var writer = PdfWriter.GetInstance(document, output);
             writer.CloseStream = false;
             document.Open();

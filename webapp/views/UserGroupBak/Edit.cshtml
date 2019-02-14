@@ -1,0 +1,126 @@
+﻿@using eSPP.Models.RoleManagement
+@model eSPP.Models.RoleManagement.RoleManager
+
+<div id="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa fa-table fa-fw "></i>
+                Edit Kumpulan Pengguna
+                <span>
+                    >
+                    Maklumat Kakitangan
+                </span>
+            </h1>
+        </div>
+
+        <!-- widget grid -->
+        <section id="widget-grid" class="">
+            <!-- row -->
+            <div class="row">
+
+                <!-- NEW WIDGET START -->
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                    <!-- Widget ID (each widget will need unique ID)-->
+                    <div class="jarviswidget" id="wid-id-3" data-widget-editbutton="false">
+                        <!-- widget options:
+                        usage: <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-0" data-widget-editbutton="false">
+
+                        data-widget-colorbutton="false"
+                        data-widget-editbutton="false"
+                        data-widget-togglebutton="false"
+                        data-widget-deletebutton="false"
+                        data-widget-fullscreenbutton="false"
+                        data-widget-custombutton="false"
+                        data-widget-collapsed="true"
+                        data-widget-sortable="false"
+
+                        -->
+                        <header>
+                            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                            <h2>Maklumat Kakitangan</h2>
+
+                        </header>
+
+                        <!-- widget div-->
+                        <div>
+
+                            <!-- widget edit box -->
+                            <div class="jarviswidget-editbox">
+                                <!-- This area used as dropdown edit box -->
+
+                            </div>
+                            <!-- end widget edit box -->
+                            <!-- widget content -->
+                            <div class="widget-body">
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.HiddenFor(m => m.RoleId)
+                                    @Html.HiddenFor(m => m.ModuleId)
+                                    <div class="row">
+                                        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <legend>
+                                                Tab
+                                            </legend>
+                                            <div>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Control Name</td>
+                                                            <td>View</td>
+                                                            <td>Add</td>
+                                                            <td>Edit</td>
+                                                            <td>Delete</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @for (int i = 0; i < Model.HtmlRoles.Count; i++)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @Html.DisplayFor(m => Model.HtmlRoles[i].HtmlName)
+                                                                    @Html.HiddenFor(m => Model.HtmlRoles[i].HtmlName)
+                                                                    @Html.HiddenFor(m => Model.HtmlRoles[i].RoleId)
+                                                                    @Html.HiddenFor(m => Model.HtmlRoles[i].ModuleId)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.CheckBoxFor(m => Model.HtmlRoles[i].IsView)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.CheckBoxFor(m => Model.HtmlRoles[i].IsAdd)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.CheckBoxFor(m => Model.HtmlRoles[i].IsEdit)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.CheckBoxFor(m => Model.HtmlRoles[i].IsDelete)
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="submit" value="Submit" class="btn btn-dark" />
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <!-- end widget div -->
+
+                        </div>
+                        <!-- end widget -->
+                    </div>
+                </article>
+                <!-- WIDGET END -->
+
+            </div>
+        </section>
+    </div>
+</div>
+

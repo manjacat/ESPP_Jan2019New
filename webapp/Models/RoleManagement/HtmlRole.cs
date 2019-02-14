@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -9,78 +10,150 @@ namespace eSPP.Models.RoleManagement
     {
         public HtmlRole()
         {
-            EditLevels = new List<EditLevel>();
+            IsView = false;
+            IsDelete = false;
+            IsAdd = false;
+            IsEdit = false;
         }
 
-        public string ModuleName { get; set; }
-        public string PropertyName { get; set; }
-        public ViewLevel ViewLevel { get; set; }
-        public List<EditLevel> EditLevels { get; set; }        
+        public string RoleId { get; set; }
+        public int ModuleId { get; set; }
+        public string HtmlName { get; set; }
+        public bool IsView { get; set; }
+        public bool IsAdd { get; set; }
+        public bool IsEdit { get; set; }
+        public bool IsDelete { get; set; }
 
-        public bool IsCanAdd()
+        public static List<HtmlRole> GetHtmlRoles(string roleId, int moduleId)
         {
-            bool check = EditLevels.Contains(EditLevel.Add);
-            return check;
+            List<ASPNETROLESHTML> roles = ASPNETROLESHTML.GetByRoleId(roleId);
+            List<HtmlRole> output = new List<HtmlRole>();
+            foreach(ASPNETROLESHTML role in roles)
+            {
+                HtmlRole single = new HtmlRole();
+                single.RoleId = role.ROLEID;
+                single.ModuleId = role.MODULEID.Equals(DBNull.Value) ? 0 : 1;
+                single.HtmlName = role.HTMLNAME;
+                if (!role.ISVIEW.Equals(DBNull.Value))
+                {
+                    if(role.ISVIEW > 0)
+                    {
+                        single.IsView = true;
+                    }
+                }
+                if (!role.ISADD.Equals(DBNull.Value))
+                {
+                    if (role.ISADD > 0)
+                    {
+                        single.IsAdd = true;
+                    }
+                }
+                if (!role.ISEDIT.Equals(DBNull.Value))
+                {
+                    if (role.ISEDIT > 0)
+                    {
+                        single.IsEdit = true;
+                    }
+                }
+                if (!role.ISDELETE.Equals(DBNull.Value))
+                {
+                    if (role.ISDELETE > 0)
+                    {
+                        single.IsDelete = true;
+                    }
+                }
+
+                output.Add(single);
+            }
+            return output;
         }
 
-        private static HtmlRole GetSampleRole(string propertyName, ViewLevel access = ViewLevel.Edit)
+        public static int EditList(List<HtmlRole> output)
+        {
+            try
+            {
+                List<ASPNETROLESHTML> roles = new List<ASPNETROLESHTML>();
+                foreach(HtmlRole single in output)
+                {
+                    ASPNETROLESHTML role = new ASPNETROLESHTML();
+                    role.ROLEID = single.RoleId;
+                    role.MODULEID = single.ModuleId;
+                    role.HTMLNAME = single.HtmlName;
+                    role.ISVIEW = single.IsView ? 1 : 0;
+                    role.ISADD = single.IsAdd ? 1 : 0;
+                    role.ISEDIT = single.IsEdit ? 1 : 0;
+                    role.ISDELETE = single.IsDelete ? 1 : 0;
+                    roles.Add(role);
+                }
+                ASPNETROLESHTML.EditList(roles);
+                return 0;
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+                return 1;
+            }
+        }
+
+        //testing
+        #region TestData
+        private static HtmlRole GetSampleRole(string htmlName, ViewLevel vl = ViewLevel.Edit)
         {
             HtmlRole role1 = new HtmlRole
             {
-                ModuleName = ModuleConstant.MaklumatKakiTangan,
-                PropertyName = propertyName,
-                ViewLevel = ViewLevel.Edit,
-                EditLevels = new List<EditLevel>
-                {
-                    EditLevel.Add,
-                    EditLevel.Edit
-                }
+                RoleId = ModuleConstant.roleAdmin,
+                ModuleId = ModuleConstant.MaklumatKakiTangan,
+                HtmlName = htmlName,
+                IsView = true,
+                IsAdd = false,
+                IsEdit = false,
+                IsDelete = false
             };
 
-            if(access != ViewLevel.Edit)
+            switch (vl)
             {
-                role1.ViewLevel = access;
-                role1.EditLevels = new List<EditLevel>();
+                case (ViewLevel.NoAccess):
+                    role1.IsView = false;
+                    role1.IsAdd = false;
+                    role1.IsEdit = false;
+                    role1.IsDelete = false;
+                    break;
+                case (ViewLevel.View):
+                    role1.IsView = true;
+                    role1.IsAdd = false;
+                    role1.IsEdit = false;
+                    role1.IsDelete = false;
+                    break;
+                case (ViewLevel.Add):
+                    role1.IsView = true;
+                    role1.IsAdd = true;
+                    role1.IsEdit = false;
+                    role1.IsDelete = false;
+                    break;
+                case (ViewLevel.Edit):
+                    role1.IsView = true;
+                    role1.IsAdd = false;
+                    role1.IsEdit = true;
+                    role1.IsDelete = false;
+                    break;
+                case (ViewLevel.Delete):
+                    role1.IsView = true;
+                    role1.IsAdd = false;
+                    role1.IsEdit = false;
+                    role1.IsDelete = true;
+                    break;
             }
+
             return role1;
         }
 
         public static List<HtmlRole> GetSampleList()
         {
-            HtmlRole role1 = new HtmlRole
-            {
-                ModuleName = ModuleConstant.MaklumatKakiTangan,
-                PropertyName = "key",
-                ViewLevel = ViewLevel.Edit,
-                EditLevels = new List<EditLevel>
-                {
-                    EditLevel.Add,
-                    EditLevel.Edit
-                }
-            };
+            HtmlRole role1 = GetSampleRole("key");                
             HtmlRole role2 = GetSampleRole("value");
             HtmlRole role3 = GetSampleRole("search");
-
-            HtmlRole role4 = new HtmlRole
-            {
-                ModuleName = ModuleConstant.MaklumatKakiTangan,
-                PropertyName = "HR_NAMA_PEKERJA",
-                ViewLevel = ViewLevel.Edit,
-                EditLevels = new List<EditLevel>
-                {
-                    EditLevel.Add,
-                    EditLevel.Edit
-                }
-            };
-
-            HtmlRole role5 = new HtmlRole
-            {
-                ModuleName = ModuleConstant.MaklumatKakiTangan,
-                PropertyName = "HR_NO_KPBARU",
-                ViewLevel = ViewLevel.View,
-                EditLevels = new List<EditLevel>()
-            };
-
+            HtmlRole role4 = GetSampleRole("HR_NAMA_PEKERJA");
+            HtmlRole role5 = GetSampleRole("HR_NO_KPBARU");
             HtmlRole role18 = GetSampleRole("Pekerjaan");
             HtmlRole role6 = GetSampleRole("Kemahiran");
             HtmlRole role7 = GetSampleRole("Akademik", ViewLevel.View);
@@ -93,7 +166,8 @@ namespace eSPP.Models.RoleManagement
             HtmlRole role14 = GetSampleRole("Tatatertib", ViewLevel.NoAccess);
             HtmlRole role15 = GetSampleRole("Kematian", ViewLevel.NoAccess);
             HtmlRole role16 = GetSampleRole("Prestasi", ViewLevel.NoAccess);
-            HtmlRole role17 = GetSampleRole("Cuti");          
+            HtmlRole role17 = GetSampleRole("Cuti");
+            HtmlRole edit1 = GetSampleRole("mKakitangan-btn");
 
             List<HtmlRole> htmlRoles = new List<HtmlRole>();
             htmlRoles.Add(role1);
@@ -114,7 +188,11 @@ namespace eSPP.Models.RoleManagement
             htmlRoles.Add(role16);
             htmlRoles.Add(role17);
             htmlRoles.Add(role18);
+            htmlRoles.Add(edit1);
+
+            htmlRoles = htmlRoles.OrderBy(o => o.HtmlName).ToList();
             return htmlRoles;
         }
+        #endregion
     }
 }

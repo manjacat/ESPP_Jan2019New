@@ -20,8 +20,8 @@ namespace eSPP.Controllers
         {
             //Add this ViewBag to get RoleManager
             RoleManager roleManager = new RoleManager();
-            ViewBag.RoleManager = roleManager.GetSample();
-            
+            ViewBag.RoleManager = roleManager.GetByRoleAndModule("Admin", ModuleConstant.MaklumatKakiTangan);
+
             ViewBag.photo = "";
             MaklumatKakitanganModels mKakitangan = new MaklumatKakitanganModels();
             ViewBag.key = "";

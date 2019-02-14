@@ -51,11 +51,9 @@ namespace eSPP.Controllers
             }
             catch (DocumentException de)
             {
-                Console.WriteLine(de.Message);
             }
             catch (System.IO.IOException ioe)
             {
-                Console.WriteLine(ioe.Message);
             }
         }
 

@@ -42,6 +42,9 @@ namespace eSPP.Models
         }
 
         public System.Data.Entity.DbSet<eSPP.Models.HR_BONUS_SAMBILAN_DETAIL> HR_BONUS_SAMBILAN_DETAIL { get; set; }
+        public System.Data.Entity.DbSet<eSPP.Models.ASPNETROLESHTML> ASPNETROLESHTML { get; set; }
+
+
         public System.Data.Entity.DbSet<eSPP.Models.UserInfo> UserInfoes { get; set; }
         public System.Data.Entity.DbSet<eSPP.Models.SystemFeature> SystemFeatures { get; set; }
         public System.Data.Entity.DbSet<eSPP.Models.GroupFeature> GroupFeatures { get; set; }

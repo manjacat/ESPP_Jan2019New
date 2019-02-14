@@ -17,7 +17,7 @@
                     @CustomInput(manager, "value", "Data")
                 </div>
                 <div class="col col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                    @CustomButton(manager, "search", "Cari", EditLevel.Edit)
+                    @CustomButton(manager, "search", "Cari")
                 </div>               
             </div>
         }
@@ -26,13 +26,13 @@
 <br />
 
 <!-- Helper -->
-@helper CustomSelect(RoleManager rl, string propertyName)
+@helper CustomSelect(RoleManager rl, string htmlName)
 {
-    HtmlRole role = rl.GetHtmlRole(propertyName, ModuleConstant.MaklumatKakiTangan);
-    if (role.ViewLevel == ViewLevel.View)
+    HtmlRole role = rl.GetHtmlRole(htmlName);
+    if (role.IsView && !role.IsEdit)
     {
         <div class="select">
-            <select name="@propertyName" id="@propertyName" class="form-control" disabled>
+            <select name="@htmlName" id="@htmlName" class="form-control" disabled>
                 <option selected disabled="disabled">Jenis</option>
                 <option value="1">No. Pekerja</option>
                 <option value="2">Nama Pekerja</option>
@@ -41,10 +41,10 @@
             <i></i>
         </div>
     }
-    else if (role.ViewLevel == ViewLevel.Edit)
+    else if (role.IsEdit && role.IsView)
     {
         <div class="select">
-            <select name="@propertyName" id="@propertyName" class="form-control">
+            <select name="@htmlName" id="@htmlName" class="form-control">
                 <option selected disabled="disabled">Jenis</option>
                 <option value="1">No. Pekerja</option>
                 <option value="2">Nama Pekerja</option>
@@ -59,24 +59,24 @@
     }
 }
 
-@helper CustomInput(RoleManager rl, string propertyName, string placeHolder = "")
+@helper CustomInput(RoleManager rl, string htmlName, string placeHolder = "")
 {
-    HtmlRole role = rl.GetHtmlRole(propertyName, ModuleConstant.MaklumatKakiTangan);
+    HtmlRole role = rl.GetHtmlRole(htmlName);
     if (placeHolder == "")
     {
         placeHolder = " ";
     }
 
-    if (role.ViewLevel == ViewLevel.View)
+    if (role.IsView && !role.IsEdit)
     {
         <div class="input">
-            <input type="text" name="@propertyName" id="@propertyName" class="form-control" disabled />
+            <input type="text" name="@htmlName" id="@htmlName" class="form-control" disabled />
         </div>
     }
-    else if (role.ViewLevel == ViewLevel.Edit)
+    else if (role.IsView && role.IsEdit)
     {
         <div class="input">
-            <input type="text" name="@propertyName" id="@propertyName" class="form-control" placeholder="@placeHolder" />
+            <input type="text" name="@htmlName" id="@htmlName" class="form-control" placeholder="@placeHolder" />
         </div>
     }
     else
@@ -85,14 +85,14 @@
     }
 }
 
-@helper CustomButton(RoleManager rl, string propertyName, string buttonLabel, EditLevel buttonType)
+@helper CustomButton(RoleManager rl, string htmlName, string buttonLabel)
 {
-    HtmlRole role = rl.GetHtmlRole(propertyName, ModuleConstant.MaklumatKakiTangan);
+    HtmlRole role = rl.GetHtmlRole(htmlName);
 
-    if (role.EditLevels.Contains(buttonType))
+    if (role.IsView && role.IsEdit)
     {
         <div class="button">
-            <button class="btn btn-default btn-primary" name="@propertyName" type="submit">
+            <button class="btn btn-default btn-primary" name="@htmlName" type="submit">
                 <i class="fa fa-search"></i>@buttonLabel
             </button>
         </div>

@@ -11,46 +11,74 @@ namespace eSPP.Models.RoleManagement
         {
             HtmlRoles = new List<HtmlRole>();
         }
-
-        public string RoleName { get; set; }
         public string RoleId { get; set; }
-        List<HtmlRole> HtmlRoles { get; set; }
+        public int ModuleId { get; set; }
+        public List<HtmlRole> HtmlRoles { get; set; }
 
-        public HtmlRole GetHtmlRole(string htmlName, string moduleName)
+        public static RoleManager GetByRoleId(string Guid)
+        {
+            int moduleId = ModuleConstant.MaklumatKakiTangan;
+            RoleManager manager = new RoleManager
+            {
+                RoleId = Guid,
+                ModuleId = moduleId
+            };
+
+            List<HtmlRole> roles = HtmlRole.GetHtmlRoles(Guid, moduleId);
+            manager.HtmlRoles.AddRange(roles);
+
+            return manager;
+        }
+        
+        //testing
+        public RoleManager GetByRoleAndModule(string roleId, int moduleId)
+        {
+            return null;        
+        }
+
+        public void Edit()
+        {
+
+        }
+
+        //testing
+        public HtmlRole GetHtmlRole(string htmlName)
         {
             if(htmlName == "Gaji")
             {
                 Console.Write("gaji");
             }
             HtmlRole role = HtmlRoles
-                .Where(s => s.ModuleName == moduleName
-                && s.PropertyName == htmlName).FirstOrDefault();
+                .Where(s => s.HtmlName == htmlName).FirstOrDefault();
             if(role == null)
             {
                 role = new HtmlRole
                 {
-                    ModuleName = moduleName,
-                    PropertyName = htmlName,
-                    ViewLevel = ViewLevel.NoAccess,
-                    EditLevels = new List<EditLevel>()
+                    RoleId = RoleId,
+                    ModuleId = ModuleId,
+                    HtmlName = htmlName,
+                    IsView = false,
+                    IsAdd = false,
+                    IsEdit = false,
+                    IsDelete = false
                 };
             }
             return role;
         }
 
-        public RoleManager GetSample()
+        //testing
+        private static RoleManager GetSample()
         {
             RoleManager rm = new RoleManager();
-            rm.RoleName = "Administrator";
             rm.RoleId = "4a205be5-cadc-446c-87c2-86c7ec5d6559";
+            rm.ModuleId = ModuleConstant.MaklumatKakiTangan;
             List<HtmlRole> roles = HtmlRole.GetSampleList();
+            foreach(HtmlRole role in roles)
+            {
+                role.ModuleId = rm.ModuleId;
+            }
             rm.HtmlRoles.AddRange(roles);
             return rm;
         }
-    }
-
-    public class RoleKakitangan : RoleManager
-    {
-
     }
 }
