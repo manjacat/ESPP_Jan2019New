@@ -13,6 +13,13 @@ namespace eSPP
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.LowercaseUrls = true;
+            routes.MapRoute("EditModule", "UserGroupBak/EditByModule/{moduleId}/{id}", new
+            {
+                controller = "UserGroupBak",
+                action = "EditByModule",
+                moduleId = UrlParameter.Optional,
+                id = UrlParameter.Optional
+            }).RouteHandler = new DashRouteHandler();
             routes.MapRoute("Default", "{controller}/{action}/{id}", new
             {
                 controller = "Home",

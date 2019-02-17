@@ -127,6 +127,8 @@ namespace eSPP.Controllers
 				if (role1 != null)
 				{
 					role = db.Roles.Where(e => e.Id == role1.RoleId).SingleOrDefault();
+                    //khairil: temp store role dlm cookie sbb tak tau macam mana nak call role
+                    WriteCookie(role1.RoleId);
 				}
 
 				new AuditTrailModels().Log(user.Email, user.UserName, System.Web.HttpContext.Current.Request.UserHostAddress, role.Name, user.UserName + " Telah Log Masuk Ke Dalam Sistem", System.Net.Dns.GetHostName(), user.PhoneNumber, Request.RawUrl, "Login");
@@ -168,9 +170,28 @@ namespace eSPP.Controllers
 			}
 		}
 
-		//
-		// GET: /Account/VerifyCode
-		[AllowAnonymous]
+
+        private void WriteCookie(string roleId)
+        {
+            HttpCookie RoleCookie = new HttpCookie("RoleCookie");
+            RoleCookie.Value = roleId;
+            RoleCookie.Expires = DateTime.Now.AddDays(1);
+            Response.SetCookie(RoleCookie);
+            Response.Flush();
+        }
+
+        public void RemoveCookie()
+        {
+            HttpCookie RoleCookie = new HttpCookie("RoleCookie");
+            RoleCookie.Value = "";
+            RoleCookie.Expires = DateTime.Now.AddDays(-1);
+            Response.SetCookie(RoleCookie);
+            Response.Flush();
+        }
+
+        //
+        // GET: /Account/VerifyCode
+        [AllowAnonymous]
 		public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
 		{
 			// Require that the user has already logged in via username/password or external login

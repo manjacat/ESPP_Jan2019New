@@ -1,15 +1,14 @@
 ﻿@using eSPP.Models.RoleManagement
-@model eSPP.Models.RoleManagement.RoleManager
 
 <div id="content">
     <div class="row">
         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
             <h1 class="page-title txt-color-blueDark">
                 <i class="fa fa-table fa-fw "></i>
-                Edit Kumpulan Pengguna
+                Kemaskini Kumpulan Pengguna
                 <span>
                     >
-                    Maklumat Kakitangan
+                    Pilih Module
                 </span>
             </h1>
         </div>
@@ -39,7 +38,7 @@
                         -->
                         <header>
                             <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                            <h2>Maklumat Kakitangan</h2>
+                            <h2>Pilih Module</h2>
 
                         </header>
 
@@ -54,62 +53,45 @@
                             <!-- end widget edit box -->
                             <!-- widget content -->
                             <div class="widget-body">
-                                @using (Html.BeginForm())
-                                {
-                                    @Html.AntiForgeryToken()
-                                    @Html.HiddenFor(m => m.RoleId)
-                                    @Html.HiddenFor(m => m.ModuleId)
-                                    <div class="row">
-                                        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <legend>
-                                                Tab
-                                            </legend>
-                                            <div>
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <td>Control Name</td>
-                                                            <td>View</td>
-                                                            <td>Add</td>
-                                                            <td>Edit</td>
-                                                            <td>Delete</td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @for (int i = 0; i < Model.HtmlRoles.Count; i++)
-                                                        {
-                                                            <tr>
-                                                                <td>
-                                                                    @Html.DisplayFor(m => Model.HtmlRoles[i].HtmlName)
-                                                                    @Html.HiddenFor(m => Model.HtmlRoles[i].HtmlName)
-                                                                    @Html.HiddenFor(m => Model.HtmlRoles[i].RoleId)
-                                                                    @Html.HiddenFor(m => Model.HtmlRoles[i].ModuleId)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.CheckBoxFor(m => Model.HtmlRoles[i].IsView)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.CheckBoxFor(m => Model.HtmlRoles[i].IsAdd)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.CheckBoxFor(m => Model.HtmlRoles[i].IsEdit)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.CheckBoxFor(m => Model.HtmlRoles[i].IsDelete)
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <input type="submit" value="Submit" class="btn btn-dark" />
+                                <div class="row">
+                                    <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <legend>
+                                            Kemaskini Kumpulan Pengguna
+                                        </legend>
+                                        <div>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <td>Nama Modul</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>@Html.ActionLink("Maklumat Kakitangan", "EditByModule", new { id = ViewBag.RoleId, moduleId = 1 })</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Lantikan Jawatan Baru</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Kakitangan Sambilan</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Fail Konfigurasi</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Jadual</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Transaksi</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Borang Kewangan 8</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                    </div>
-                                }
+                                    </fieldset>
+                                </div>
                             </div>
                             <!-- end widget div -->
 

@@ -1760,6 +1760,7 @@
     <Content Include="Views\MaklumatKakitanganBak\TabPrestasi.cshtml" />
     <Content Include="Views\MaklumatKakitanganBak\TabTanggungan.cshtml" />
     <Content Include="Views\MaklumatKakitanganBak\TabTatatertib.cshtml" />
+    <Content Include="Views\UserGroupBak\EditByModule.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

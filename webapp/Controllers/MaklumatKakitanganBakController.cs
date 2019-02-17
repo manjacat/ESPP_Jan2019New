@@ -1,5 +1,6 @@
 ﻿using eSPP.Models;
 using eSPP.Models.RoleManagement;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 
 namespace eSPP.Controllers
 {
+
     public class MaklumatKakitanganBakController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -19,8 +21,15 @@ namespace eSPP.Controllers
         public ActionResult Index(string key, string value)
         {
             //Add this ViewBag to get RoleManager
-            RoleManager roleManager = new RoleManager();
-            ViewBag.RoleManager = roleManager.GetByRoleAndModule("Admin", ModuleConstant.MaklumatKakiTangan);
+            //tak tau macam mana nk dpt roleId ?? dapat dari session/cookie?
+
+            string roleId = "4a205be5-cadc-446c-87c2-86c7ec5d6559";
+            HttpCookie cookie = HttpContext.Request.Cookies.Get("RoleCookie");
+            if(cookie != null)
+            {
+                roleId = cookie.Value;
+            }
+            ViewBag.RoleManager = RoleManager.GetByRoleId(roleId, ModuleConstant.MaklumatKakiTangan);
 
             ViewBag.photo = "";
             MaklumatKakitanganModels mKakitangan = new MaklumatKakitanganModels();

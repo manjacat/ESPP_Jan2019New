@@ -1,4 +1,41 @@
-﻿@model eSPP.Models.MaklumatKakitanganModels
+﻿@using eSPP.Models.RoleManagement
+@model eSPP.Models.MaklumatKakitanganModels
+
+@{
+    //pass role punya class dari ViewBag
+    RoleManager manager = (RoleManager)ViewBag.RoleManager;
+}
+
+@helper CustomKemaskini(RoleManager mg, string propertyName)
+{
+    HtmlRole role = mg.GetHtmlRole(propertyName);
+    if (role.IsEdit)
+    {
+        <label class="">Kemaskini (enabled) : </label>
+        <span class="onoffswitch">
+            <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="@propertyName" value="off">
+            <label class="onoffswitch-label" for="@propertyName">
+                <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
+
+        </span>
+        <input type="hidden" name="kemaskini" class="form-control" value="off">
+    }
+    else
+    {
+        <label class="">Kemaskini (disabled) : </label>
+        <span class="onoffswitch">
+            <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="@propertyName" value="off" disabled="disabled">
+            <label class="onoffswitch-label" for="@propertyName">
+                <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
+
+        </span>
+        <input type="hidden" name="kemaskini" class="form-control" value="off">
+    }
+}
 <div class="tab-pane fade" id="Prestasi">
     <div class="row">
 
@@ -114,16 +151,7 @@
     <div class="row">
         <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="text-right">
-                <label class="">Kemaskini : </label>
-                <span class="onoffswitch">
-                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mPrestasi-btn" value="off">
-
-                    <label class="onoffswitch-label" for="mPrestasi-btn">
-                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
-                        <span class="onoffswitch-switch"></span>
-                    </label>
-                </span>
-                <input type="hidden" name="kemaskini" class="form-control" value="off">
+                @CustomKemaskini(manager, "mPrestasi-btn")               
             </div>
         </div>
     </div>

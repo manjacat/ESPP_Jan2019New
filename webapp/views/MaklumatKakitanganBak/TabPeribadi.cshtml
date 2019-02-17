@@ -1,4 +1,41 @@
-﻿@model eSPP.Models.MaklumatKakitanganModels
+﻿@using eSPP.Models.RoleManagement
+@model eSPP.Models.MaklumatKakitanganModels
+
+@{
+    //pass role punya class dari ViewBag
+    RoleManager manager = (RoleManager)ViewBag.RoleManager;
+}
+
+@helper CustomKemaskini(RoleManager mg, string propertyName)
+{
+    HtmlRole role = mg.GetHtmlRole(propertyName);
+    if (role.IsEdit)
+    {
+        <label class="">Kemaskini (enabled) : </label>
+        <span class="onoffswitch">
+            <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="@propertyName" value="off">
+            <label class="onoffswitch-label" for="@propertyName">
+                <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
+
+        </span>
+        <input type="hidden" name="kemaskini" class="form-control" value="off">
+    }
+    else
+    {
+        <label class="">Kemaskini (disabled) : </label>
+        <span class="onoffswitch">
+            <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="@propertyName" value="off" disabled="disabled">
+            <label class="onoffswitch-label" for="@propertyName">
+                <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
+
+        </span>
+        <input type="hidden" name="kemaskini" class="form-control" value="off">
+    }
+}
 
 <div class="tab-pane active" id="Peribadi">
     <div class="row">
@@ -11,141 +48,212 @@
                 <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="row">
                         <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Status</label>
-                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                                <label class="select">
-                                    @Html.DropDownListFor(model => model.HR_MAKLUMAT_PERIBADI.HR_AKTIF_IND, new SelectList(ViewBag.HR_AKTIF_IND, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
-                                    <i></i>
-                                </label>
-                            </div>
-
+                            @if (manager.GetHtmlRole("HR_MAKLUMAT_PERIBADI.HR_AKTIF_IND").IsView)
+                            {
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Status</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="select">
+                                        @Html.DropDownListFor(model => model.HR_MAKLUMAT_PERIBADI.HR_AKTIF_IND, new SelectList(ViewBag.HR_AKTIF_IND, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(model => model.HR_MAKLUMAT_PERIBADI.HR_AKTIF_IND)
+                            }
                         </section>
 
                         <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Alasan</label>
-                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                                <label class="select">
-                                    @Html.DropDownListFor(model => model.HR_MAKLUMAT_PERIBADI.HR_ALASAN, new SelectList(ViewBag.HR_ALASAN, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
-                                    <i></i>
-                                </label>
-                            </div>
+                            @if (manager.GetHtmlRole("HR_MAKLUMAT_PERIBADI.HR_ALASAN").IsView)
+                            {
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Alasan</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="select">
+                                        @Html.DropDownListFor(model => model.HR_MAKLUMAT_PERIBADI.HR_ALASAN, new SelectList(ViewBag.HR_ALASAN, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(model => model.HR_MAKLUMAT_PERIBADI.HR_ALASAN)
+                            }
 
-                        </section>
-                    </div>
-
-                    <div class="row">
-                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. KP (Lama)</label>
-                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                                <label class="input">
-                                    <i class="icon-append fa fa-list-alt"></i>
-                                    @Html.EditorFor(model => model.HR_MAKLUMAT_PERIBADI.HR_NO_KPLAMA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
-                                </label>
-
-                            </div>
-
-                        </section>
-
-                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Taraf Perkahwinan</label>
-                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                                <label class="select">
-                                    @Html.DropDownListFor(model => model.HR_MAKLUMAT_PERIBADI.HR_TARAF_KAHWIN, new SelectList(ViewBag.TarafKahwin, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
-                                    <i></i>
-                                </label>
-                            </div>
 
                         </section>
                     </div>
 
                     <div class="row">
                         <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Lahir</label>
-                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                                <label class="input">
-                                    <i class="icon-append fa fa-calendar"></i>
-                                    <input type="text" name="HR_MAKLUMAT_PERIBADI.HR_TARIKH_LAHIR" id="HR_MAKLUMAT_PERIBADI_HR_TARIKH_LAHIR" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_PERIBADI.HR_TARIKH_LAHIR)" disabled="disabled" />
+                            @if (manager.GetHtmlRole("HR_MAKLUMAT_PERIBADI.HR_NO_KPLAMA").IsView)
+                            {
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. KP (Lama)</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-list-alt"></i>
+                                        @Html.EditorFor(model => model.HR_MAKLUMAT_PERIBADI.HR_NO_KPLAMA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
 
-                                </label>
-                            </div>
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(model => model.HR_MAKLUMAT_PERIBADI.HR_NO_KPLAMA)
+                            }
 
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            @if (manager.GetHtmlRole("HR_MAKLUMAT_PERIBADI.HR_TARAF_KAHWIN").IsView)
+                            {
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Taraf Perkahwinan</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="select">
+                                        @Html.DropDownListFor(model => model.HR_MAKLUMAT_PERIBADI.HR_TARAF_KAHWIN, new SelectList(ViewBag.TarafKahwin, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(model => model.HR_MAKLUMAT_PERIBADI.HR_TARAF_KAHWIN)
+                            }
+
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            @if (manager.GetHtmlRole("HR_MAKLUMAT_PERIBADI.HR_TARIKH_LAHIR").IsView)
+                            {
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Lahir</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-calendar"></i>
+                                        <input type="text" name="HR_MAKLUMAT_PERIBADI.HR_TARIKH_LAHIR" id="HR_MAKLUMAT_PERIBADI_HR_TARIKH_LAHIR" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_PERIBADI.HR_TARIKH_LAHIR)" disabled="disabled" />
+
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                <input type="hidden" name="HR_MAKLUMAT_PERIBADI.HR_TARIKH_LAHIR" id="HR_MAKLUMAT_PERIBADI_HR_TARIKH_LAHIR" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_PERIBADI.HR_TARIKH_LAHIR)" />
+                            }
                         </section>
 
                         <section class="col col-lg-6 col-md-6 col-sm-4 col-xs-6">
-                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Umur</label>
-                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
-                                <label class="input">
-                                    <input type="text" name="Umur" id="Umur" class="form-control" value="@ViewBag.Umur" disabled="disabled" />
-                                </label>
-                            </div>
-
+                            @if (manager.GetHtmlRole("Umur").IsView)
+                            {
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Umur</label>
+                                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
+                                    <label class="input">
+                                        <input type="text" name="Umur" id="Umur" class="form-control" value="@ViewBag.Umur" disabled="disabled" />
+                                    </label>
+                                </div>
+                            }
                         </section>
                     </div>
 
                     <div class="row">
                         <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tempat Lahir</label>
-                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                                <label class="select">
-                                    @Html.DropDownListFor(model => model.HR_MAKLUMAT_PERIBADI.HR_TEMPAT_LAHIR, new SelectList(ViewBag.TempatLahir, "Value", "Text"), htmlAttributes: new { @class = "form-control", disabled = "disabled" })
-                                    <i></i>
-                                </label>
-                            </div>
+                            @if (manager.GetHtmlRole("HR_MAKLUMAT_PERIBADI.HR_TEMPAT_LAHIR").IsView)
+                            {
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tempat Lahir</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="select">
+                                        @Html.DropDownListFor(model => model.HR_MAKLUMAT_PERIBADI.HR_TEMPAT_LAHIR, new SelectList(ViewBag.TempatLahir, "Value", "Text"), htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(model => model.HR_MAKLUMAT_PERIBADI.HR_TEMPAT_LAHIR)
+                            }
 
                         </section>
 
                         <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kewarganegaraan</label>
-                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                                <label class="select">
-                                    @Html.DropDownListFor(model => model.HR_MAKLUMAT_PERIBADI.HR_WARGANEGARA, new SelectList(ViewBag.HR_WARGANEGARA, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
-                                    <i></i>
-                                </label>
-                            </div>
-                        </section>
-                    </div>
-
-                    <div class="row">
-                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Agama</label>
-                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                                <label class="select">
-                                    @Html.DropDownListFor(model => model.HR_MAKLUMAT_PERIBADI.HR_AGAMA, new SelectList(ViewBag.Agama, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
-                                    <i></i>
-                                </label>
-                            </div>
-
-                        </section>
-
-                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Keturunan</label>
-                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                                <label class="select">
-                                    @Html.DropDownListFor(model => model.HR_MAKLUMAT_PERIBADI.HR_KETURUNAN, new SelectList(ViewBag.Keturunan, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
-                                    <i></i>
-                                </label>
-                            </div>
-
+                            @if (manager.GetHtmlRole("HR_MAKLUMAT_PERIBADI.HR_WARGANEGARA").IsView)
+                            {
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kewarganegaraan</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="select">
+                                        @Html.DropDownListFor(model => model.HR_MAKLUMAT_PERIBADI.HR_WARGANEGARA, new SelectList(ViewBag.HR_WARGANEGARA, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(model => model.HR_MAKLUMAT_PERIBADI.HR_WARGANEGARA)
+                            }
                         </section>
                     </div>
 
                     <div class="row">
                         <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">E-mel</label>
-                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                                <label class="input">
-                                    <i class="icon-append fa fa-envelope-o"></i>
-                                    @Html.EditorFor(model => model.HR_MAKLUMAT_PERIBADI.HR_EMAIL, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
-                                    <b class="tooltip tooltip-top-right">
-                                        <i class="fa fa-warning txt-color-teal"></i>
-                                        Sila isikan e-mel dengan betul (cth: = example@mbpj.gov.my)
-                                    </b>
-                                </label>
-                            </div>
-
+                            @if (manager.GetHtmlRole("HR_MAKLUMAT_PERIBADI.HR_AGAMA").IsView)
+                            {
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Agama</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="select">
+                                        @Html.DropDownListFor(model => model.HR_MAKLUMAT_PERIBADI.HR_AGAMA, new SelectList(ViewBag.Agama, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(model => model.HR_MAKLUMAT_PERIBADI.HR_AGAMA)
+                            }
                         </section>
 
                         <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            @if (manager.GetHtmlRole("HR_MAKLUMAT_PERIBADI.HR_KETURUNAN").IsView)
+                            {
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Keturunan</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="select">
+                                        @Html.DropDownListFor(model => model.HR_MAKLUMAT_PERIBADI.HR_KETURUNAN, new SelectList(ViewBag.Keturunan, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(model => model.HR_MAKLUMAT_PERIBADI.HR_KETURUNAN)
+                            }
+
+                            </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            @if (manager.GetHtmlRole("HR_MAKLUMAT_PERIBADI.HR_EMAIL").IsView)
+                            {
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">E-mel</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-envelope-o"></i>
+                                        @Html.EditorFor(model => model.HR_MAKLUMAT_PERIBADI.HR_EMAIL, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                        <b class="tooltip tooltip-top-right">
+                                            <i class="fa fa-warning txt-color-teal"></i>
+                                            Sila isikan e-mel dengan betul (cth: = example@mbpj.gov.my)
+                                        </b>
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(model => model.HR_MAKLUMAT_PERIBADI.HR_EMAIL)
+                            }
+                            </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            @if (manager.GetHtmlRole("HR_MAKLUMAT_PERIBADI.HR_JANTINA").IsView)
+                            {
                             <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jantina</label>
                             <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                                 <div class="inline-group">
@@ -159,21 +267,32 @@
                                     </label>
                                 </div>
                             </div>
-
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(model => model.HR_MAKLUMAT_PERIBADI.HR_JANTINA)
+                            }
                         </section>
 
                     </div>
                     <div class="row">
                         <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Gelaran</label>
-                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                                <label class="select">
-                                    @Html.DropDownListFor(model => model.HR_MAKLUMAT_PEKERJAAN.HR_GELARAN, new SelectList(ViewBag.HR_GELARAN, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
-                                    <i></i>
-                                </label>
-                            </div>
+                            @if (manager.GetHtmlRole("HR_MAKLUMAT_PEKERJAAN.HR_GELARAN").IsView)
+                            {
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Gelaran</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="select">
+                                        @Html.DropDownListFor(model => model.HR_MAKLUMAT_PEKERJAAN.HR_GELARAN, new SelectList(ViewBag.HR_GELARAN, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(model => model.HR_MAKLUMAT_PEKERJAAN.HR_GELARAN)
+                            }
 
-                        </section>
+                            </section>
                     </div>
                 </div>
 
@@ -497,16 +616,7 @@
     <div class="row">
         <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="text-right">
-                <label class="">Kemaskini : </label>
-                <span class="onoffswitch">
-                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mPeribadi-btn" value="off">
-
-                    <label class="onoffswitch-label" for="mPeribadi-btn">
-                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
-                        <span class="onoffswitch-switch"></span>
-                    </label>
-                </span>
-                <input type="hidden" name="kemaskini" class="form-control" value="off">
+                @CustomKemaskini(manager, "mPeribadi-btn")
             </div>
         </div>
     </div>

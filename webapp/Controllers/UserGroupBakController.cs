@@ -17,14 +17,21 @@ namespace eSPP.Controllers
 
         public ActionResult Edit(string id)
         {
-            RoleManager manager = RoleManager.GetByRoleId(id);
+            ViewBag.RoleId = id;
+            return View();
+        }
+
+        public ActionResult EditByModule(string id, string moduleId)
+        {
+            int moduleIdInt = Convert.ToInt32(moduleId);
+            RoleManager manager = RoleManager.GetByRoleIdWithSort(id, moduleIdInt);
             return View(manager);
         }
 
         [HttpPost]
-        public ActionResult Edit(RoleManager manager)
+        public ActionResult EditByModule(RoleManager manager)
         {
-            if(manager.HtmlRoles.Count > 0)
+            if (manager.HtmlRoles.Count > 0)
             {
                 HtmlRole.EditList(manager.HtmlRoles);
             }

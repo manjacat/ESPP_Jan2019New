@@ -29,6 +29,9 @@ namespace eSPP.Controllers
 
         public ActionResult Logout()
         {
+            //add remove cookie bila logout
+            AccountController ctrl = new AccountController();
+            ctrl.RemoveCookie();
             return View(db.AuditTrails.ToList().Where(s => s.audittype == "Logout"));
         }
 

@@ -11,7 +11,7 @@
     HtmlRole role = mg.GetHtmlRole(propertyName);
     if (role.IsEdit)
     {
-        <label class="">Kemaskini : </label>
+        <label class="">Kemaskini (enabled) : </label>
         <span class="onoffswitch">
             <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="@propertyName" value="off">
             <label class="onoffswitch-label" for="@propertyName">
@@ -24,7 +24,7 @@
     }
     else
     {
-        <label class="">Kemaskini : </label>
+        <label class="">Kemaskini (disabled) : </label>
         <span class="onoffswitch">
             <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="@propertyName" value="off" disabled="disabled">
             <label class="onoffswitch-label" for="@propertyName">

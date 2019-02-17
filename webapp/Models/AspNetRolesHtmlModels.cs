@@ -25,6 +25,7 @@ namespace eSPP.Models
         [Key]
         [Column(Order = 2)]
         public string HTMLNAME { get; set; }
+        public string CSSCLASS { get; set; }
         public int? ISVIEW { get; set; }
         public int? ISADD{ get; set; }
         public int? ISEDIT { get; set; }
@@ -53,6 +54,7 @@ namespace eSPP.Models
                     existingRole.ISADD = role.ISADD;
                     existingRole.ISEDIT = role.ISEDIT;
                     existingRole.ISDELETE = role.ISDELETE;
+                    existingRole.CSSCLASS = role.CSSCLASS;
                     db.Entry(existingRole).State = EntityState.Modified;
                     db.SaveChanges();                    
                 }

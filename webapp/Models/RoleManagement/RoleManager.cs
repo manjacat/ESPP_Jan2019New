@@ -15,9 +15,18 @@ namespace eSPP.Models.RoleManagement
         public int ModuleId { get; set; }
         public List<HtmlRole> HtmlRoles { get; set; }
 
+        //sample
         public static RoleManager GetByRoleId(string Guid)
         {
+            //default/testing
             int moduleId = ModuleConstant.MaklumatKakiTangan;
+            RoleManager manager = GetByRoleId(Guid, moduleId);
+
+            return manager;
+        }
+
+        public static RoleManager GetByRoleId(string Guid, int moduleId)
+        {
             RoleManager manager = new RoleManager
             {
                 RoleId = Guid,
@@ -29,27 +38,33 @@ namespace eSPP.Models.RoleManagement
 
             return manager;
         }
-        
+
+        public static RoleManager GetByRoleIdWithSort(string Guid, int moduleId)
+        {
+            RoleManager manager = new RoleManager
+            {
+                RoleId = Guid,
+                ModuleId = moduleId
+            };
+
+            List<HtmlRole> roles = HtmlRole.GetHtmlRolesWithSort(Guid, moduleId);
+            manager.HtmlRoles.AddRange(roles);
+
+            return manager;
+        }
+
         //testing
         public RoleManager GetByRoleAndModule(string roleId, int moduleId)
         {
             return null;        
         }
 
-        public void Edit()
-        {
-
-        }
-
-        //testing
         public HtmlRole GetHtmlRole(string htmlName)
         {
-            if(htmlName == "Gaji")
-            {
-                Console.Write("gaji");
-            }
             HtmlRole role = HtmlRoles
                 .Where(s => s.HtmlName == htmlName).FirstOrDefault();
+            //kalau takde role dalam DB,
+            //create satu temp Value yang takde access
             if(role == null)
             {
                 role = new HtmlRole
@@ -57,6 +72,7 @@ namespace eSPP.Models.RoleManagement
                     RoleId = RoleId,
                     ModuleId = ModuleId,
                     HtmlName = htmlName,
+                    CSSClass = "noclass",
                     IsView = false,
                     IsAdd = false,
                     IsEdit = false,
@@ -66,7 +82,7 @@ namespace eSPP.Models.RoleManagement
             return role;
         }
 
-        //testing
+        //testing only
         private static RoleManager GetSample()
         {
             RoleManager rm = new RoleManager();

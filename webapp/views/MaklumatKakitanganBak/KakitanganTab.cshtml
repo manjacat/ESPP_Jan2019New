@@ -6,24 +6,24 @@
 <!-- Helper -->
 @helper CustomTab(RoleManager rl, string propertyName, string displayName = "")
 {
-    HtmlRole role = rl.GetHtmlRole(propertyName, ModuleConstant.MaklumatKakiTangan);
+    HtmlRole role = rl.GetHtmlRole(propertyName);
     if (displayName == "")
     {
         displayName = propertyName;
     }
-    if (role.ViewLevel == ViewLevel.View) //kalau View, tab jadi ReadOnly (tak bole klik)
-    {
-        <li>
-            <a href="#@propertyName">@displayName</a>
-        </li>
-    }
-    else if (role.ViewLevel == ViewLevel.Edit) //Kalau Edit, Boleh Klik
+    if (role.IsEdit && role.IsView) //Kalau Edit, Boleh Klik
     {
         <li>
             <a href="#@propertyName" data-toggle="tab">@displayName</a>
         </li>
     }
-    //kalau ViewLevel.NoAccess, tab tu tak nampak langsung
+    else if (role.IsView) //kalau View, tab jadi ReadOnly (tak bole klik)
+    {
+        <li>
+            <a href="#@propertyName">@displayName</a>
+        </li>
+    }
+    //kalau role takde IsView dgn IsEdit, tab tu tak nampak langsung
 }
 <ul class="nav nav-tabs bordered">
     <li class="active">

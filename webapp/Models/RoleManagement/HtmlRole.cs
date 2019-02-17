@@ -19,11 +19,15 @@ namespace eSPP.Models.RoleManagement
         public string RoleId { get; set; }
         public int ModuleId { get; set; }
         public string HtmlName { get; set; }
+        public string CSSClass { get; set; }
         public bool IsView { get; set; }
         public bool IsAdd { get; set; }
         public bool IsEdit { get; set; }
         public bool IsDelete { get; set; }
 
+        //convert ASPNETROLESHTML kepada List<HtmlRole>
+        //css-class kalau null, kita defaultkan valuenya ke "noclass"
+        //display kat View
         public static List<HtmlRole> GetHtmlRoles(string roleId, int moduleId)
         {
             List<ASPNETROLESHTML> roles = ASPNETROLESHTML.GetByRoleId(roleId);
@@ -34,6 +38,8 @@ namespace eSPP.Models.RoleManagement
                 single.RoleId = role.ROLEID;
                 single.ModuleId = role.MODULEID.Equals(DBNull.Value) ? 0 : 1;
                 single.HtmlName = role.HTMLNAME;
+                single.CSSClass = role.CSSCLASS == null ? "noclass": role.CSSCLASS;
+
                 if (!role.ISVIEW.Equals(DBNull.Value))
                 {
                     if(role.ISVIEW > 0)
@@ -64,10 +70,21 @@ namespace eSPP.Models.RoleManagement
                 }
 
                 output.Add(single);
-            }
+            }            
             return output;
         }
 
+        //masa nak edit role je kita sort
+        //masa nak search role nak display kat view, tak payah sort
+        public static List<HtmlRole> GetHtmlRolesWithSort(string roleId, int moduleId)
+        {
+            List<HtmlRole> output = GetHtmlRoles(roleId, moduleId);
+            output = output.OrderBy(o => o.CSSClass).ToList();
+            return output;
+        }
+
+        //convert HtmlRole kepada ASPNETROLESHTML
+        //Update/Edit dalam Oracle DB
         public static int EditList(List<HtmlRole> output)
         {
             try
@@ -79,6 +96,7 @@ namespace eSPP.Models.RoleManagement
                     role.ROLEID = single.RoleId;
                     role.MODULEID = single.ModuleId;
                     role.HTMLNAME = single.HtmlName;
+                    role.CSSCLASS = single.CSSClass;
                     role.ISVIEW = single.IsView ? 1 : 0;
                     role.ISADD = single.IsAdd ? 1 : 0;
                     role.ISEDIT = single.IsEdit ? 1 : 0;
