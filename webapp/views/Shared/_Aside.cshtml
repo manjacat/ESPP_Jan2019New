@@ -533,8 +533,11 @@
                     <li class="@Html.RouteIf("penyediansuratrasmi", "active")">
                         <a href="#">Penyedian Surat Rasmi</a>
                         <ul>
+                            <li class="@Html.RouteIf("Search", "active")">
+                                <a href="@Url.Action("Search", "Laporan")"><i class=""></i>Surat Pengesahan Hospital/Klinik</a>
+                            </li>
                             <li class="@Html.RouteIf("SuratPengesahanHospital", "active")">
-                                <a href="@Url.Action("SuratPengesahanHospital", "Laporan")"><i class=""></i>Surat Pengesahan Hospital/Klinik</a>
+                                <a href="@Url.Action("SuratPengesahanHospital", "Laporan")"><i class=""></i>Deleted</a>
                             </li>
                             <li class="@Html.RouteIf("TawaranLantikan", "active")">
                                 <a href="@Url.Action("TawaranLantikan", "Laporan")"><i class=""></i>Surat Tawaran Perlantikan</a>

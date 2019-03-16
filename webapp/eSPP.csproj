@@ -665,6 +665,7 @@
     <None Include="Properties\PublishProfiles\eSPP.pubxml" />
     <None Include="Properties\PublishProfiles\SmartAdmin - Release.pubxml" />
     <None Include="Properties\PublishProfiles\SmartAdmin - Debug.pubxml" />
+    <Content Include="Reports\SuratPengesahanHospital.html" />
     <Content Include="Scripts\app.config.js" />
     <Content Include="Scripts\app.min.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
@@ -1761,6 +1762,7 @@
     <Content Include="Views\MaklumatKakitanganBak\TabTanggungan.cshtml" />
     <Content Include="Views\MaklumatKakitanganBak\TabTatatertib.cshtml" />
     <Content Include="Views\UserGroupBak\EditByModule.cshtml" />
+    <Content Include="Views\Laporan\Search.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1896,6 +1898,7 @@
     <Compile Include="Models\AcaraModels.cs" />
     <Compile Include="Models\AspNetRolesHtmlModels.cs" />
     <Compile Include="Models\BonusSambilanDetailModel.cs" />
+    <Compile Include="Models\CariPekerjaModel.cs" />
     <Compile Include="Models\EventsModels.cs" />
     <Compile Include="Models\Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Models\GredElaunPekelilingModels.cs" />
@@ -1924,6 +1927,7 @@
     <Compile Include="Models\RoleManagement\RoleManager.cs" />
     <Compile Include="Models\SejarahElaunPotongan.cs" />
     <Compile Include="Models\SejarahPekerjaanModels.cs" />
+    <Compile Include="Models\SuratPengesahanHospitalModel.cs" />
     <Compile Include="Models\TarikhAcaraModels.cs" />
     <Compile Include="Models\TextFileModel.cs" />
     <Compile Include="Models\TransaksiGajiModels.cs" />

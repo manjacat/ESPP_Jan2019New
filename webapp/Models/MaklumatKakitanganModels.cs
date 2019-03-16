@@ -275,6 +275,36 @@ namespace eSPP.Models
         public string HR_NP_KEYIN { get; set; }
         public Nullable<System.DateTime> HR_TARIKH_UBAH { get; set; }
         public string HR_NP_UBAH { get; set; }
+
+        public static List<MaklumatTanggungan> GetListTanggungan(string noPekerja)
+        {
+            List<MaklumatTanggungan> output = new List<MaklumatTanggungan>();
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<HR_MAKLUMAT_TANGGUNGAN> tanggunganDb = db.HR_MAKLUMAT_TANGGUNGAN
+                .Where(s => s.HR_NO_PEKERJA == noPekerja).ToList();
+            foreach (var item in tanggunganDb)
+            {
+                MaklumatTanggungan mTanggungan = new MaklumatTanggungan();
+                mTanggungan.HR_NO_PEKERJA = item.HR_NO_PEKERJA;
+                mTanggungan.HR_NAMA_TANGGUNGAN = item.HR_NAMA_TANGGUNGAN;
+                mTanggungan.HR_TARIKH_LAHIR = item.HR_TARIKH_LAHIR;
+                mTanggungan.HR_NO_KP = item.HR_NO_KP;
+                mTanggungan.HR_TEMPAT_LAHIR = item.HR_TEMPAT_LAHIR;
+                mTanggungan.HR_SEK_IPT = item.HR_SEK_IPT;
+                mTanggungan.HR_HUBUNGAN = item.HR_HUBUNGAN;
+                if (item.HR_HUBUNGAN != null)
+                {
+                    mTanggungan.HR_HUBUNGAN = new string(item.HR_HUBUNGAN.TakeWhile(x => char.IsDigit(x)).ToArray());
+                }
+                mTanggungan.HR_JANTINA = item.HR_JANTINA;
+                mTanggungan.HR_TARIKH_KEYIN = item.HR_TARIKH_KEYIN;
+                mTanggungan.HR_NP_KEYIN = item.HR_NP_KEYIN;
+                mTanggungan.HR_TARIKH_UBAH = item.HR_TARIKH_UBAH;
+                mTanggungan.HR_NP_UBAH = item.HR_NP_UBAH;
+                output.Add(mTanggungan);
+            }
+            return output;
+        }
     }
     public class MaklumatElaunPotongan
     {

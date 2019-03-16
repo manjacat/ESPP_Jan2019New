@@ -46,7 +46,7 @@
     <link rel="apple-touch-startup-image" href="~/content/img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
     <link rel="apple-touch-startup-image" href="~/content/img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
     <link rel="apple-touch-startup-image" href="~/content/img/splash/iphone.png" media="screen and (max-device-width: 320px)">
-    
+
 </head>
 <body class="@ViewBag.PageClass @Settings.CurrentTheme">
     @{ Html.RenderPartial("_Header", RenderSection("topright", false)); }
@@ -55,10 +55,15 @@
         @{ Html.RenderPartialIf("_Ribbon", Request.IsAuthenticated); }
         @RenderBody()
     </div>
-    @if(Request.IsAuthenticated)
+    <div id="timeout" title="Sessi login tamat">
+        <div>
+            Anda Akan Ditendang kerana idle selama 10 minit.
+        </div>
+    </div>
+    @if (Request.IsAuthenticated)
     {
-            Html.RenderPartial("_Footer");
-            Html.RenderPartialIf("_Tiles", Settings.EnableTiles);
+        Html.RenderPartial("_Footer");
+        Html.RenderPartialIf("_Tiles", Settings.EnableTiles);
     }
     @{ Html.RenderPartial("_Scripts", RenderSection("pagespecific", false)); }
     @if (groupFeature.ShowFeature(userGroupIDList, groupFeatureDisplayList, null, null, null))
@@ -78,23 +83,176 @@
         </script>
     }
     @*<script type="text/javascript">
-        $(document).keydown(function (event) {
-            if (event.keyCode == 123) {
-                return false;
-            }
-            else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) {
-                return false;
-            }
-        });
+            $(document).keydown(function (event) {
+                if (event.keyCode == 123) {
+                    return false;
+                }
+                else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) {
+                    return false;
+                }
+            });
 
-        $(document).on("contextmenu", function (e) {
-            e.preventDefault();
-        });
-    </script>*@
+            $(document).on("contextmenu", function (e) {
+                e.preventDefault();
+            });
+        </script>*@
 
     @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")*@
+        @Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        // Set timeout variables.
+        var warningMinute = 20; // Display warning in 15 Mins.
+        var timeOutMinute = 1; // Warning has been shown, give the user 1 minute to interact
+
+        var timoutWarning = warningMinute * 60000;
+        var timoutNow = timeOutMinute * 60000;
+        var logoutUrl = '/account/login?ReturnUrl=%2f'; // URL to logout page.
+
+        var warningTimer;
+        var timeoutTimer;
+
+        $(document).ready(function () {
+            console.log("init timer!");
+            StartWarningTimer();
+        });
+
+        // Start warning timer.
+        function StartWarningTimer() {
+            //console.log("Warning timer start!");
+            warningTimer = setTimeout("IdleWarning()", timoutWarning);
+            $(document).bind('keypress.session', function (ed, e) {
+                sessKeyPressed(ed, e);
+            });
+        }
+
+        function sessKeyPressed(ed, e) {
+            //reset timer bila ada keypress
+            ResetTimeOutTimer();
+        }
+
+        // Reset timers.
+        function ResetTimeOutTimer() {
+            var now = new Date();
+            console.log("timer reset at " + now.toTimeString());
+            clearTimeout(timeoutTimer);
+            StartWarningTimer();
+        }
+
+        // Show idle timeout warning dialog.
+        function IdleWarning() {
+            var now = new Date();
+            console.log('Warning keluar at ' + now.toTimeString());
+            clearTimeout(warningTimer);
+            timeoutTimer = setTimeout("IdleTimeout()", timoutNow);
+            //keluar modal dialog utk prompt user
+            $("#timeout").dialog({
+                modal: true,
+                buttons: {
+                    "Stay logged in": function () {                        
+                        ResetTimeOutTimer();
+                        $(this).dialog("close");
+                    },
+                    Cancel: function () {
+                        IdleTimeout();
+                        //$(this).dialog("close");
+                    }
+                }
+            });
+        }
+
+        // Logout the user.
+        function IdleTimeout() {
+            //console.log('sudah logout');
+            window.location = logoutUrl;
+        }
+    </script>
+
+    <script type="text/javascript">
+
+                        /*
+                        var sess_pollInterval = 60000;
+                        var sess_expirationMinutes = 2;
+                        var sess_warningMinutes = 1;
+
+                        var sess_intervalID;
+                        var sess_lastActivity;
+
+                        $(document).ready(function () {
+                            console.log("ready!");
+                            initSessionMonitor();
+                        });
+
+                        function initSessionMonitor() {
+                            sess_lastActivity = new Date();
+                            sessSetInterval();
+                            $(document).bind('keypress.session', function (ed, e) {
+                                sessKeyPressed(ed, e);
+                            });
+                        }
+
+                        function sessSetInterval() {
+                            sess_intervalID = setInterval('sessInterval()', sess_pollInterval);
+                        }
+
+                        function sessClearInterval() {
+                            clearInterval(sess_intervalID);
+                        }
+
+                        function sessKeyPressed(ed, e) {
+                            sess_lastActivity = new Date();
+                        }
+
+                        function sessPingServer() {
+                            //todoCallAjaxFunction
+                            sessLogOut();
+                        }
+
+                        function sessLogOut() {
+                            alert('Session expired');
+                            window.location.href = '/account/login?ReturnUrl=%2f';
+                        }
+
+                        function sessInterval() {
+                            var now = new Date();
+                            var diff = now - sess_lastActivity;
+                            var diffMins = (diff / 1000 / 60);
+                            if (diffMins >= sess_warningMinutes) {
+                                //stop timer
+                                sessClearInterval();
+                                //prompt for attention
+                                var sess_ExpireTime = sess_expirationMinutes - sess_warningMinutes;
+                                if (confirm(
+                                    'Last activity is ' + sess_lastActivity.toTimeString()
+                                    + ' minutes (as of ' + now.toTimeString()
+                                    + '). Press OK to remain logged in or press Cancel to log off.\n'
+                                    + 'If you are logged off any changes will be lost.')) {
+
+                                    //press OK
+                                    now = new Date();
+                                    diff = now - sess_lastActivity();
+                                    diffMins = (diff / 1000 / 60);
+                                    alert('diffMin: ' + diffMins + ' sess_ExpireMinutes: ' + sess_expirationMinutes);
+
+                                    if (diffMins > sess_expirationMinutes) {
+                                        sessLogOut();
+                                    }
+                                    else {
+                                        sessPingServer();
+                                        //start timer again
+                                        sess_lastActivity = new Date();
+                                        sessSetInterval();
+                                        alert('start timer again');
+                                    }
+                                } else {
+
+                                    //press cancel
+                                    sessPingServer();
+                                }
+                            }
+                        }
+                        */
+    </script>
 </body>
 
 
