@@ -1763,6 +1763,7 @@
     <Content Include="Views\MaklumatKakitanganBak\TabTatatertib.cshtml" />
     <Content Include="Views\UserGroupBak\EditByModule.cshtml" />
     <Content Include="Views\Laporan\Search.cshtml" />
+    <Content Include="Views\PengurusanKakitanganSambilan\MasSambilan.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -72,8 +72,8 @@
                         <a href="@Url.Action("ListTransaksiSambilan", "PengurusanKakitanganSambilan")"><i class=""></i> Sejarah Transaksi Sambilan </a>
                     </li>
                     @*<li class="@Html.RouteIf("BonusSambilan", "active")">
-                    <a href="@Url.Action("BonusSambilan", "PengurusanKakitanganSambilan")"><i class=""></i>Pengurusan Bonus Sambilan </a>
-                </li>*@
+            <a href="@Url.Action("BonusSambilan", "PengurusanKakitanganSambilan")"><i class=""></i>Pengurusan Bonus Sambilan </a>
+        </li>*@
                     <li class="@Html.RouteIf("UrusBonus", "active")">
                         <a href="@Url.Action("UrusBonus", "PengurusanKakitanganSambilan")"><i class=""></i>Pengurusan Bonus Sambilan </a>
                     </li>
@@ -83,9 +83,12 @@
                     <li class="@Html.RouteIf("Laporan", "active")">
                         <a href="@Url.Action("Laporan", "PengurusanKakitanganSambilan")"><i class=""></i>Laporan</a>
                     </li>
+                    <li class="@Html.RouteIf("MasSambilan", "active")">
+                        <a href="@Url.Action("MasSambilan", "PengurusanKakitanganSambilan")"><i class=""></i>MAS Sambilan</a>
+                    </li>
                     <!--<li class="@Html.RouteIf("PembayaranAutomatik", "active")">
-                <a href="@Url.Action("PembayaranAutomatik", "PengurusanKakitanganSambilan")"><i class=""></i>Pemprosesan Pembayaran Automatik </a>
-            </li>-->
+        <a href="@Url.Action("PembayaranAutomatik", "PengurusanKakitanganSambilan")"><i class=""></i>Pemprosesan Pembayaran Automatik </a>
+    </li>-->
                 </ul>
             </li>
 

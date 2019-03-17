@@ -795,6 +795,50 @@ namespace eSPP.Controllers
             return View();
         }
 
+        public ActionResult MasSambilan()
+        {
+            List<SelectListItem> bulan = new List<SelectListItem>
+            {
+                new SelectListItem { Text = "JANUARI", Value = "1" },
+                new SelectListItem { Text = "FEBRUARI", Value = "2" },
+                new SelectListItem { Text = "MAC", Value = "3" },
+                new SelectListItem { Text = "APRIL", Value = "4" },
+                new SelectListItem { Text = "MAY", Value = "5" },
+                new SelectListItem { Text = "JUN", Value = "6" },
+                new SelectListItem { Text = "JULAI", Value = "7" },
+                new SelectListItem { Text = "OGOS", Value = "8" },
+                new SelectListItem { Text = "SEPTEMBER", Value = "9" },
+                new SelectListItem { Text = "OKTOBER", Value = "10" },
+                new SelectListItem { Text = "NOVEMBER", Value = "11" },
+                new SelectListItem { Text = "DISEMBER", Value = "12" }
+            };
+            ViewBag.bulan = new SelectList(bulan, "Value", "Text", DateTime.Now.Month);
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult MasSambilan(string bulan, string tahun)
+        {
+            ObjectParameter text = new ObjectParameter("text", typeof(Guid));
+
+            int intBulan = Convert.ToInt32(bulan);
+            int intTahun = Convert.ToInt32(tahun);
+
+            var procedure = db2.SP_SAMBILAN_SALARY(intBulan, intTahun, text);
+
+            MemoryStream memoryStream = new MemoryStream();
+            TextWriter tw = new StreamWriter(memoryStream);
+
+            tw.WriteLine(text.Value);
+            tw.Flush();
+            tw.Close();
+
+            string fileName = "masSambilan_" + bulan + "_" + tahun;
+            string fileNamefull = fileName + ".csv";
+
+            return File(memoryStream.GetBuffer(), "text/csv", fileNamefull);
+        }
+
         public ActionResult BonusSambilan()
         {
             List<AgreementModels> agreelist = new List<AgreementModels>();
