@@ -13,7 +13,7 @@ namespace eSPP
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.LowercaseUrls = true;
-            routes.MapRoute("EditModule", "UserGroupBak/EditByModule/{id}/{moduleId}/{tabId}", new
+            routes.MapRoute("EditModule", "UserGroupBak/EditByModule/{id}/{moduleId}", new
             {
                 controller = "UserGroupBak",
                 action = "EditByModule",

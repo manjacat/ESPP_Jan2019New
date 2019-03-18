@@ -138,7 +138,7 @@
 
         // Show idle timeout warning dialog.
         function IdleWarning() {
-            $("#timeout").html('<div>Anda Akan Ditendang kerana idle selama ' + warningMinute  + ' minit.</div >');
+            $("#timeout").html('<div>Anda telah idle selama ' + warningMinute  + ' minit. Klik Kekal Login untuk kekal login, dan Cancel untuk log out.</div >');
             var now = new Date();
             console.log('Warning keluar at ' + now.toTimeString());
             clearTimeout(warningTimer);
@@ -148,7 +148,7 @@
                 modal: true,
                 title: 'Sessi login tamat',
                 buttons: {
-                    "Stay logged in": function () {                        
+                    "Kekal Login": function () {                        
                         ResetTimeOutTimer();
                         $(this).dialog("close");
                     },
@@ -163,8 +163,23 @@
         // Logout the user.
         function IdleTimeout() {
             //console.log('sudah logout');
+            Logout();
             window.location = logoutUrl;
         }
+
+        function Logout() {
+            $.ajax({
+                url: "../Audit/Logout",
+                data: { "test1": 1, "test2": 2 },
+                contentType: "application/json; charset=utf-8",
+                type: 'GET',
+                success: function (data) {
+                    window.location = logoutUrl;
+                }
+
+            })
+        }
+
     </script>
 
     <script type="text/javascript">

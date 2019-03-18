@@ -72,7 +72,7 @@
                                                     <a class="btn btn-xs btn-default btn-circle Padam" href="javascript:void(0)" data-id="@item.Id" title="Padam"><i class="fa fa-trash-o"></i></a>
                                                     <a class="btn btn-xs btn-default btn-circle AddUser" href="javascript:void(0)" data-id="@item.Id" title="Kemaskini Pengguna Role Ini"><i class="fa fa-sitemap"></i></a>
                                                     <a class="btn btn-xs btn-default btn-circle" href='@Url.Action("ManageUser", "UserGroup", new { id = item.Id })'><i class="fa fa-user"></i></a>
-                                                    <a class="btn btn-xs btn-default btn-circle EditKumpulan" href='@Url.Action("Edit","UserGroupBak",new { id = item.Id })' data-id="@item.Id" 
+                                                    <a class="btn btn-xs btn-default btn-circle EditKumpulan" href='@Url.Action("EditByModule","UserGroupBak",new { id = item.Id, moduleId = 1 })' data-id="@item.Id" 
                                                        title="Kemaskini Kumpulan Pengguna"><i class="fa fa-group"></i></a>
                                                 </div>
                                             </td>
