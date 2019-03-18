@@ -1764,6 +1764,7 @@
     <Content Include="Views\UserGroupBak\EditByModule.cshtml" />
     <Content Include="Views\Laporan\Search.cshtml" />
     <Content Include="Views\PengurusanKakitanganSambilan\MasSambilan.cshtml" />
+    <Content Include="Views\UserGroupBak\ModulMaklumatKakitangan.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1924,8 +1925,10 @@
     <Compile Include="Models\ReportBorangAModel.cs" />
     <Compile Include="Models\RoleManagement\Enums.cs" />
     <Compile Include="Models\RoleManagement\HtmlRole.cs" />
+    <Compile Include="Models\RoleManagement\HtmlRoleWithTab.cs" />
     <Compile Include="Models\RoleManagement\ModuleConstant.cs" />
     <Compile Include="Models\RoleManagement\RoleManager.cs" />
+    <Compile Include="Models\RoleManagement\RoleManagerByTab.cs" />
     <Compile Include="Models\SejarahElaunPotongan.cs" />
     <Compile Include="Models\SejarahPekerjaanModels.cs" />
     <Compile Include="Models\SuratPengesahanHospitalModel.cs" />

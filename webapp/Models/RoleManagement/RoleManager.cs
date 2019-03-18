@@ -39,7 +39,7 @@ namespace eSPP.Models.RoleManagement
             return manager;
         }
 
-        public static RoleManager GetByRoleIdWithSort(string Guid, int moduleId)
+        public static RoleManager GetByRoleIdWithSort(string Guid, int moduleId, int tabId)
         {
             RoleManager manager = new RoleManager
             {
@@ -47,39 +47,16 @@ namespace eSPP.Models.RoleManagement
                 ModuleId = moduleId
             };
 
-            List<HtmlRole> roles = HtmlRole.GetHtmlRolesWithSort(Guid, moduleId);
+            List<HtmlRole> roles = HtmlRole.GetHtmlRolesWithSort(Guid, moduleId, tabId);
             manager.HtmlRoles.AddRange(roles);
 
             return manager;
         }
 
-        //testing
-        public RoleManager GetByRoleAndModule(string roleId, int moduleId)
-        {
-            return null;        
-        }
-
         public HtmlRole GetHtmlRole(string htmlName)
         {
-            HtmlRole role = HtmlRoles
-                .Where(s => s.HtmlName == htmlName).FirstOrDefault();
-            //kalau takde role dalam DB,
-            //create satu temp Value yang takde access
-            if(role == null)
-            {
-                role = new HtmlRole
-                {
-                    RoleId = RoleId,
-                    ModuleId = ModuleId,
-                    HtmlName = htmlName,
-                    CSSClass = "noclass",
-                    IsView = false,
-                    IsAdd = false,
-                    IsEdit = false,
-                    IsDelete = false
-                };
-            }
-            return role;
+            HtmlRole output = HtmlRole.GetHtmlRoleByHtmlName(HtmlRoles, htmlName, RoleId, ModuleId);
+            return output;
         }
 
         //testing only
@@ -95,6 +72,12 @@ namespace eSPP.Models.RoleManagement
             }
             rm.HtmlRoles.AddRange(roles);
             return rm;
+        }
+
+        //testing
+        public RoleManager GetByRoleAndModule(string roleId, int moduleId)
+        {
+            return null;
         }
     }
 }

@@ -1,0 +1,87 @@
+﻿@using eSPP.Models.RoleManagement
+@model eSPP.Models.RoleManagement.RoleManagerByTab
+
+<fieldset>
+    @using (Html.BeginForm("EditPeribadi", "UserGroupBak", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <legend>
+            &nbsp;
+            @Html.HiddenFor(m => Model.RoleId)
+            @Html.HiddenFor(m => Model.ModuleId)
+        </legend>
+        for (int r = 0; r < Model.HtmlRolesWithTabs.Count; r++)
+        {
+
+            <legend>
+                @Html.DisplayFor(m => Model.HtmlRolesWithTabs[r].TabHeader.HtmlName)
+
+                @Html.HiddenFor(m => Model.HtmlRolesWithTabs[r].TabHeader.RoleId)
+                @Html.HiddenFor(m => Model.HtmlRolesWithTabs[r].TabHeader.ModuleId)
+                @Html.HiddenFor(m => Model.HtmlRolesWithTabs[r].TabHeader.HtmlName)
+
+
+                @Html.CheckBoxFor(m => Model.HtmlRolesWithTabs[r].TabHeader.IsView)
+                @Html.HiddenFor(m => Model.HtmlRolesWithTabs[r].TabHeader.IsAdd)
+                @Html.HiddenFor(m => Model.HtmlRolesWithTabs[r].TabHeader.IsEdit)
+                @Html.HiddenFor(m => Model.HtmlRolesWithTabs[r].TabHeader.IsDelete)
+                @Html.HiddenFor(m => Model.HtmlRolesWithTabs[r].TabHeader.CSSClass)
+                @Html.HiddenFor(m => Model.HtmlRolesWithTabs[r].TabHeader.TabId)
+
+            </legend>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td>Control Name</td>
+                        <td>CSS Class</td>
+                        <td>View</td>
+                        <td>Add</td>
+                        <td>Edit</td>
+                        <td>Delete</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.HtmlRolesWithTabs[r].HtmlRoles.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => Model.HtmlRolesWithTabs[r].HtmlRoles[i].HtmlName)
+                                @Html.HiddenFor(m => Model.HtmlRolesWithTabs[r].HtmlRoles[i].HtmlName)
+
+                                @Html.HiddenFor(m => Model.HtmlRolesWithTabs[r].HtmlRoles[i].RoleId)
+                                @Html.HiddenFor(m => Model.HtmlRolesWithTabs[r].HtmlRoles[i].ModuleId)
+                                @Html.HiddenFor(m => Model.HtmlRolesWithTabs[r].HtmlRoles[i].TabId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => Model.HtmlRolesWithTabs[r].HtmlRoles[i].CSSClass)
+                                @Html.HiddenFor(m => Model.HtmlRolesWithTabs[r].HtmlRoles[i].CSSClass)
+                            </td>
+                            <td>
+                                @Html.CheckBoxFor(m => Model.HtmlRolesWithTabs[r].HtmlRoles[i].IsView)
+                            </td>
+                            <td>
+                                @Html.CheckBoxFor(m => Model.HtmlRolesWithTabs[r].HtmlRoles[i].IsAdd)
+                            </td>
+                            <td>
+                                @Html.CheckBoxFor(m => Model.HtmlRolesWithTabs[r].HtmlRoles[i].IsEdit)
+                            </td>
+                            <td>
+                                @Html.CheckBoxFor(m => Model.HtmlRolesWithTabs[r].HtmlRoles[i].IsDelete)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div style="text-align:right;">
+                <button type="submit" class="btn btn-default" name="Command"
+                        value="@Model.HtmlRolesWithTabs[r].TabHeader.TabId">
+                    <i class="fa fa-file-text-o"></i>
+                    Kemaskini @Html.DisplayFor(m => Model.HtmlRolesWithTabs[r].TabHeader.HtmlName)
+                </button>
+                <input type="submit" style="margin-bottom:4px;display:none;"
+                       value="Kemaskini @Html.DisplayFor(m => m.HtmlRolesWithTabs[r].TabHeader.HtmlName)"
+                       class="btn btn-dark" />
+            </div>
+        }
+    }
+</fieldset>

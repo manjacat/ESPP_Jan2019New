@@ -13,7 +13,7 @@ namespace eSPP.Models.RoleManagement
             IsView = false;
             IsDelete = false;
             IsAdd = false;
-            IsEdit = false;
+            IsEdit = false;            
         }
 
         public string RoleId { get; set; }
@@ -25,18 +25,77 @@ namespace eSPP.Models.RoleManagement
         public bool IsEdit { get; set; }
         public bool IsDelete { get; set; }
 
+        //only for editing
+        public int TabId { get; set; }
+
+        public static HtmlRole GetHtmlRoleByHtmlName(List<HtmlRole> HtmlRoles, string htmlName, string RoleId, int ModuleId)
+        {
+            HtmlRole role = HtmlRoles
+                .Where(s => s.HtmlName == htmlName).FirstOrDefault();
+            //kalau takde role dalam DB,
+            //create satu temp Value yang takde access
+            if (role == null)
+            {
+                role = new HtmlRole
+                {
+                    RoleId = RoleId,
+                    ModuleId = ModuleId,
+                    HtmlName = htmlName,
+                    CSSClass = "noclass",
+                    IsView = false,
+                    IsAdd = false,
+                    IsEdit = false,
+                    IsDelete = false
+                };
+            }
+            return role;
+        }
+
+        public static HtmlRole GetTabHeader(string roleId, int moduleId, int tabId)
+        {
+            HtmlRole tabHeader = GetHtmlRoles(roleId, moduleId, tabId)
+                .Where(s => s.CSSClass == "tab").FirstOrDefault();
+            if(tabHeader == null)
+            {
+                tabHeader = new HtmlRole
+                {
+                    RoleId = roleId,
+                    ModuleId = moduleId,
+                    HtmlName = "",
+                    TabId = tabId,
+                    CSSClass = "tab",
+                    IsView = false,
+                    IsAdd = false,
+                    IsEdit = false,
+                    IsDelete = false
+                };
+            }
+            return tabHeader;
+        }
+
+
         //convert ASPNETROLESHTML kepada List<HtmlRole>
         //css-class kalau null, kita defaultkan valuenya ke "noclass"
         //display kat View
-        public static List<HtmlRole> GetHtmlRoles(string roleId, int moduleId)
+        public static List<HtmlRole> GetHtmlRoles(string roleId, int moduleId, int tabId = 0)
         {
-            List<ASPNETROLESHTML> roles = ASPNETROLESHTML.GetByRoleId(roleId);
+            List<ASPNETROLESHTML> roles = new List<ASPNETROLESHTML>();
+            if(tabId == 0)
+            {
+                roles = ASPNETROLESHTML.GetByRoleId(roleId);
+            }
+            else
+            {
+                roles = ASPNETROLESHTML.GetByRoleId(roleId, moduleId, tabId);
+            }
+            
             List<HtmlRole> output = new List<HtmlRole>();
             foreach(ASPNETROLESHTML role in roles)
             {
                 HtmlRole single = new HtmlRole();
                 single.RoleId = role.ROLEID;
-                single.ModuleId = role.MODULEID.Equals(DBNull.Value) ? 0 : 1;
+                single.ModuleId = role.MODULEID.Equals(DBNull.Value) ? 0 : moduleId;
+                single.TabId = role.TABID.Equals(DBNull.Value) ? 0 : tabId;
                 single.HtmlName = role.HTMLNAME;
                 single.CSSClass = role.CSSCLASS == null ? "noclass": role.CSSCLASS;
 
@@ -76,12 +135,77 @@ namespace eSPP.Models.RoleManagement
 
         //masa nak edit role je kita sort
         //masa nak search role nak display kat view, tak payah sort
-        public static List<HtmlRole> GetHtmlRolesWithSort(string roleId, int moduleId)
+        public static List<HtmlRole> GetHtmlRolesWithSort(string roleId, int moduleId, int tabId = 0)
         {
-            List<HtmlRole> output = GetHtmlRoles(roleId, moduleId);
+            List<HtmlRole> output = GetHtmlRoles(roleId, moduleId, tabId);
+            HtmlRole tab = output.Where(s => s.CSSClass == "tab").FirstOrDefault();
+            if(tab != null)
+            {
+                output.Remove(tab);
+            }
             output = output.OrderBy(o => o.CSSClass).ToList();
             return output;
         }
+
+        //convert HtmlRole kepada ASPNETROLESHTML
+        //Update/Edit dalam Oracle DB
+        public static int EditList(List<HtmlRoleWithTab> output, int tabId)
+        {
+            try
+            {
+                //sepatutnya output ni dapat 1 je sebab tabId ada 1 je utk setiap output
+                output = output
+                    .Where(s => s.TabHeader.TabId == tabId).ToList();
+
+                //sebenarnya edit 1 je. 1 tab daripada semua tab yang tersenarai
+                foreach(HtmlRoleWithTab single in output)
+                {
+                    List<ASPNETROLESHTML> roles = new List<ASPNETROLESHTML>();
+
+                    ASPNETROLESHTML tabHeader = new ASPNETROLESHTML();
+                    tabHeader.ROLEID = single.TabHeader.RoleId;
+                    tabHeader.MODULEID = single.TabHeader.ModuleId;
+                    tabHeader.HTMLNAME = single.TabHeader.HtmlName;
+                    tabHeader.CSSCLASS = single.TabHeader.CSSClass;
+                    tabHeader.ISVIEW = single.TabHeader.IsView ? 1 : 0;
+                    tabHeader.ISADD = single.TabHeader.IsAdd ? 1 : 0;
+                    tabHeader.ISEDIT = single.TabHeader.IsEdit ? 1 : 0;
+                    tabHeader.ISDELETE = single.TabHeader.IsDelete ? 1 : 0;
+                    tabHeader.TABID = single.TabHeader.TabId;
+
+                    //add header to TOEDIT list;
+                    roles.Add(tabHeader);
+
+                    foreach (HtmlRole inSingle in single.HtmlRoles)
+                    {
+                        ASPNETROLESHTML role = new ASPNETROLESHTML();
+                        role.ROLEID = inSingle.RoleId;
+                        role.MODULEID = inSingle.ModuleId;
+                        role.HTMLNAME = inSingle.HtmlName;
+                        role.CSSCLASS = inSingle.CSSClass;
+                        role.ISVIEW = inSingle.IsView ? 1 : 0;
+                        role.ISADD = inSingle.IsAdd ? 1 : 0;
+                        role.ISEDIT = inSingle.IsEdit ? 1 : 0;
+                        role.ISDELETE = inSingle.IsDelete ? 1 : 0;
+                        role.TABID = inSingle.TabId;
+                        //add others to roles
+                        roles.Add(role);                        
+                    }
+                    //Edit all the htmlRoles
+                    ASPNETROLESHTML.EditList(roles);
+                }
+
+
+
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+                return 1;
+            }
+        }
+
 
         //convert HtmlRole kepada ASPNETROLESHTML
         //Update/Edit dalam Oracle DB
@@ -101,6 +225,7 @@ namespace eSPP.Models.RoleManagement
                     role.ISADD = single.IsAdd ? 1 : 0;
                     role.ISEDIT = single.IsEdit ? 1 : 0;
                     role.ISDELETE = single.IsDelete ? 1 : 0;
+                    role.TABID = single.TabId;
                     roles.Add(role);
                 }
                 ASPNETROLESHTML.EditList(roles);

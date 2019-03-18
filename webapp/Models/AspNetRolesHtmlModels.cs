@@ -30,6 +30,7 @@ namespace eSPP.Models
         public int? ISADD{ get; set; }
         public int? ISEDIT { get; set; }
         public int? ISDELETE { get; set; }
+        public int? TABID { get; set; }
 
         public static List<ASPNETROLESHTML> GetByRoleId(string RoleId)
         {
@@ -37,6 +38,43 @@ namespace eSPP.Models
             List<ASPNETROLESHTML> roles = db.ASPNETROLESHTML
                 .Where(s => s.ROLEID == RoleId).ToList();
             return roles;
+        }
+
+        public static List<ASPNETROLESHTML> GetByRoleId(string RoleId, int moduleId, int tabId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<ASPNETROLESHTML> roles = db.ASPNETROLESHTML
+                .Where(s => s.ROLEID == RoleId
+                && s.MODULEID == moduleId
+                && s.TABID == tabId)
+                .ToList();
+            return roles;
+        }
+
+        //tak pakai. combine dgn EditList
+        public static void EditHeader(ASPNETROLESHTML role)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            ASPNETROLESHTML existingRole = db.ASPNETROLESHTML
+                    .Where(s => s.MODULEID == role.MODULEID
+                    && s.ROLEID == role.ROLEID
+                    && s.HTMLNAME == role.HTMLNAME
+                    && s.CSSCLASS == "tab"
+                    && s.TABID != null).FirstOrDefault();
+            if (existingRole != null)
+            {
+                int changeCheck = 0;
+                if (role.ISVIEW != existingRole.ISVIEW)
+                {
+                    existingRole.ISVIEW = role.ISVIEW;
+                    changeCheck++;
+                }
+                if (changeCheck > 0)
+                {
+                    db.Entry(existingRole).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
         }
 
         public static void EditList(List<ASPNETROLESHTML> roles)
@@ -50,13 +88,40 @@ namespace eSPP.Models
                     && s.HTMLNAME == role.HTMLNAME).FirstOrDefault();
                 if(existingRole != null)
                 {
-                    existingRole.ISVIEW = role.ISVIEW;
-                    existingRole.ISADD = role.ISADD;
-                    existingRole.ISEDIT = role.ISEDIT;
-                    existingRole.ISDELETE = role.ISDELETE;
-                    existingRole.CSSCLASS = role.CSSCLASS;
-                    db.Entry(existingRole).State = EntityState.Modified;
-                    db.SaveChanges();                    
+                    int changeCheck = 0;
+                    if(role.ISVIEW != existingRole.ISVIEW)
+                    {
+                        existingRole.ISVIEW = role.ISVIEW;
+                        changeCheck++;
+                    }
+                    if(existingRole.ISADD != role.ISADD)
+                    {
+                        existingRole.ISADD = role.ISADD;
+                        changeCheck++;
+                    }
+                    if(existingRole.ISEDIT != role.ISEDIT)
+                    {
+                        existingRole.ISEDIT = role.ISEDIT;
+                        changeCheck++;
+                    }
+                    if (existingRole.ISDELETE != role.ISDELETE)
+                    {
+                        existingRole.ISDELETE = role.ISDELETE;
+                        changeCheck++;
+                    }
+                    if (existingRole.CSSCLASS != role.CSSCLASS)
+                    {
+                        existingRole.CSSCLASS = role.CSSCLASS;
+                        changeCheck++;
+                    }
+                    //existingRole.TABID = role.TABID;
+                    if(changeCheck > 0)
+                    {
+                        //just tukar kalau ada change je.
+                        //kalau takde change, takyah update DB
+                        db.Entry(existingRole).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }                                  
                 }
             }
         }

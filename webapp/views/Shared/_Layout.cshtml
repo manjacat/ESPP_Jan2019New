@@ -55,11 +55,7 @@
         @{ Html.RenderPartialIf("_Ribbon", Request.IsAuthenticated); }
         @RenderBody()
     </div>
-    <div id="timeout" title="Sessi login tamat">
-        <div>
-            Anda Akan Ditendang kerana idle selama 10 minit.
-        </div>
-    </div>
+    <div id="timeout"></div>
     @if (Request.IsAuthenticated)
     {
         Html.RenderPartial("_Footer");
@@ -133,6 +129,7 @@
 
         // Reset timers.
         function ResetTimeOutTimer() {
+            $("#timeout").html('');
             var now = new Date();
             console.log("timer reset at " + now.toTimeString());
             clearTimeout(timeoutTimer);
@@ -141,6 +138,7 @@
 
         // Show idle timeout warning dialog.
         function IdleWarning() {
+            $("#timeout").html('<div>Anda Akan Ditendang kerana idle selama ' + warningMinute  + ' minit.</div >');
             var now = new Date();
             console.log('Warning keluar at ' + now.toTimeString());
             clearTimeout(warningTimer);
@@ -148,6 +146,7 @@
             //keluar modal dialog utk prompt user
             $("#timeout").dialog({
                 modal: true,
+                title: 'Sessi login tamat',
                 buttons: {
                     "Stay logged in": function () {                        
                         ResetTimeOutTimer();
