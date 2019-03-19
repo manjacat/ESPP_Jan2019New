@@ -71,7 +71,7 @@
                         <!-- end widget edit box -->
                         <!-- widget content -->
                         <div class="widget-body">
-
+                            <div></div>
                             <div class="row">
 
                                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 offset-lg-1">
@@ -80,28 +80,25 @@
                                         <div class="row">
                                             <div class="col-lg-3 col-sm-3 col-xs-12">
                                                 <div class="input">
-                                                    <input type="text" name="noPekerja" id="noPekerja"
-                                                           class="form-control" placeholder="No.Pekerja" />
+                                                    @Html.EditorFor(m => Model.NoPekerja, new { htmlAttributes = new { @class = "form-control", placeholder = "No.Pekerja" } })
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                                                 <div class="input">
-                                                    <input type="text" name="namaPekerja" id="namaPekerja"
-                                                           class="form-control" placeholder="Nama" />
+                                                    @Html.EditorFor(m => Model.NamaPekerja, new { htmlAttributes = new { @class = "form-control", placeholder = "Nama" } })
                                                 </div>
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                                 <div class="input">
-                                                    <input type="text" name="noKpBaru" id="noKpBaru"
-                                                           class="form-control" placeholder="No. KP (Baru)" />
+                                                    @Html.EditorFor(m => Model.NoKPBaru, new { htmlAttributes = new { @class = "form-control", placeholder = "No. KP (Baru)" } })
                                                 </div>
                                             </div>
 
                                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                                                 <div class="button">
-                                                    <button class="btn btn-default btn-primary" type="submit">
-                                                        <i class="fa fa-search"></i> Cari
-                                                    </button>
+                                                    <a class="btn btn-default btn-primary" href='@Url.Action("Search","laporan",new { jenis = 1, value = Model.NoPekerja})'> 
+                                                        <i class="fa fa-search" style="padding-right:5px;"></i>Cari
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -117,6 +114,9 @@
                             @using (Html.BeginForm("SuratPengesahanHospital", "Laporan", FormMethod.Post, new { @class = "smart-form" }))
                             {
                                 @Html.AntiForgeryToken()
+                                @Html.HiddenFor(m => Model.NoPekerja)
+                                @Html.HiddenFor(m => Model.NamaPekerja)
+                                @Html.HiddenFor(m => Model.NoKPBaru)
                                 <div>
                                     <fieldset>
                                         <div class="row">
@@ -127,20 +127,18 @@
                                             </section>
                                             <section class="col col-lg-4 col-md-4 col-sm-12">
                                                 <label class="input">
-
-                                                    @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
-                                                    @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                                    @Html.EditorFor(m => Model.Jawatan, new { htmlAttributes = new { @class = "form-control" } })
                                                 </label>
                                             </section>
                                             <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                                 <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Rawatan Tanggungan</label>
                                                 <div class="inline-group col-lg-8 col-md-8 col-sm-12 col-xs-12">
                                                     <label class="radio">
-                                                        @Html.RadioButton("a", "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                        @Html.RadioButton("IsRawatanSendiri", true, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
                                                         <i></i>Sendiri
                                                     </label>
                                                     <label class="radio">
-                                                        @Html.RadioButton("a", "T", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                        @Html.RadioButton("IsRawatanSendiri", false, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
                                                         <i></i>Tanggungan
                                                     </label>
                                                 </div>
@@ -154,9 +152,7 @@
                                             </section>
                                             <section class="col col-lg-4 col-md-4 col-sm-12">
                                                 <label class="input">
-
-                                                    @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
-                                                    @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                                    @Html.TextBoxFor(m => Model.GredGaji, new { htmlAttributes = new { @class = "form-control" } })
                                                 </label>
                                             </section>
                                             <section class="col col-lg-2 col-md-2 col-sm-12">
@@ -166,8 +162,7 @@
                                             </section>
                                             <section class="col col-lg-4 col-md-4 col-sm-12">
                                                 <label class="input">
-
-                                                    @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.TextBoxFor(m => m.TarikhString, new { htmlAttributes = new { @class = "form-control", data_mask = "99/99/9999", data_mask_placeholder = "-" } })
                                                     @Html.ValidationMessage("a", "", new { @class = "text-danger" })
                                                 </label>
                                             </section>
@@ -180,9 +175,7 @@
                                             </section>
                                             <section class="col col-lg-4 col-md-4 col-sm-12">
                                                 <label class="input">
-
-                                                    @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
-                                                    @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                                    @Html.TextBoxFor(m => m.GajiBulanan, new { htmlAttributes = new { @class = "form-control" } })
                                                 </label>
                                             </section>
 
@@ -190,11 +183,11 @@
                                                 <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Surat Pengesahan bagi</label>
                                                 <div class="inline-group col-lg-8 col-md-8 col-sm-12 col-xs-12">
                                                     <label class="radio">
-                                                        @Html.RadioButton("a", "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                        @Html.RadioButton("IsHospital", true, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
                                                         <i></i>Hospital
                                                     </label>
                                                     <label class="radio">
-                                                        @Html.RadioButton("a", "T", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                        @Html.RadioButton("IsHospital", false, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
                                                         <i></i>Klinik
                                                     </label>
                                                 </div>
@@ -206,9 +199,7 @@
                                             </section>
                                             <section class="col col-lg-4 col-md-4 col-sm-12">
                                                 <label class="input">
-
-                                                    @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
-                                                    @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                                    @Html.TextBoxFor(m => m.HospitalName, new { htmlAttributes = new { @class = "form-control" } })
                                                 </label>
                                             </section>
                                         </div>
@@ -221,11 +212,11 @@
                                                 <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
                                                 <div class="inline-group col-lg-8 col-md-8 col-sm-12 col-xs-12">
                                                     <label class="radio">
-                                                        @Html.RadioButton("a", "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                        @Html.RadioButton("IsPengesahanMajikan", true, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
                                                         <i></i>Disahkan
                                                     </label>
                                                     <label class="radio">
-                                                        @Html.RadioButton("a", "T", htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                        @Html.RadioButton("IsPengesahanMajikan", false, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
                                                         <i></i>Tidak Disahkan
                                                     </label>
                                                 </div>
@@ -237,75 +228,36 @@
                                         Maklumat Tanggungan
                                     </header>
                                     <fieldset>
-                                        <div class="row">
-                                            <section class="col col-lg-2 col-md-2 col-sm-12">
-                                                <label class="label">
-                                                    Nama
-                                                </label>
-                                            </section>
-                                            <section class="col col-lg-4 col-md-4 col-sm-12">
-                                                <label class="input">
-
-                                                    @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
-                                                    @Html.ValidationMessage("a", "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
-                                        </div>
-                                        <div class="row">
-                                            <section class="col col-lg-2 col-md-2 col-sm-12">
-                                                <label class="label">
-                                                    Hubungan
-                                                </label>
-                                            </section>
-                                            <section class="col col-lg-4 col-md-4 col-sm-12">
-                                                <label class="input">
-
-                                                    @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
-                                                    @Html.ValidationMessage("a", "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
-                                        </div>
-                                        <div class="row">
-                                            <section class="col col-lg-2 col-md-2 col-sm-12">
-                                                <label class="label">
-                                                    No. KP
-                                                </label>
-                                            </section>
-                                            <section class="col col-lg-4 col-md-4 col-sm-12">
-                                                <label class="input">
-
-                                                    @Html.Editor("a", new { htmlAttributes = new { @class = "form-control" } })
-                                                    @Html.ValidationMessage("a", "", new { @class = "text-danger" })
-                                                </label>
-                                            </section>
-                                        </div>
-                                    </fieldset>
-
-
-                                    <fieldset>
-
                                         <div class="">
-                                            <table id="datatable_tabletools" class="table table-striped table-bordered table-hover" width="100%">
+                                            <table id="datatable_tabletools" class="table table-bordered table-hover" width="100">
                                                 <thead>
                                                     <tr>
-                                                        <th data-hide="phone">Senarai Tanggungan</th>
-
-
+                                                        <th colspan="3" data-hide="phone">Senarai Tanggungan</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td></td>
-
-
-
+                                                        <td>Nama</td>
+                                                        <td>Hubungan</td>
+                                                        <td>No KP</td>
                                                     </tr>
-                                                    <tr>
-                                                        <td></td>
-
-
-
-                                                    </tr>
+                                                    @for (int i = 0; i < Model.MaklumatTanggungan.Count(); i++)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(m => Model.MaklumatTanggungan[i].Nama)
+                                                                @Html.HiddenFor(m => Model.MaklumatTanggungan[i].Nama)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(m => Model.MaklumatTanggungan[i].Hubungan)
+                                                                @Html.HiddenFor(m => Model.MaklumatTanggungan[i].Hubungan)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(m => Model.MaklumatTanggungan[i].NoKP)
+                                                                @Html.HiddenFor(m => Model.MaklumatTanggungan[i].NoKP)
+                                                            </td>
+                                                        </tr>
+                                                    }
                                                 </tbody>
                                             </table>
                                         </div>
@@ -313,7 +265,7 @@
                                     <fieldset>
 
                                         <div class="">
-                                            <table id="datatable_tabletools" class="table table-striped table-bordered table-hover" width="100%">
+                                            <table id="datatable_tabletools" class="table table-striped table-bordered table-hover">
                                                 <thead>
                                                     <tr>
                                                         <th data-hide="phone">Senarai Surat Pengesahan Yang Pernah Dikeluarkan</th>
@@ -354,8 +306,48 @@
                             }
                         </div>
                     </div>
+                </div>
             </article>
 
         </div>
     </section>
 </div>
+
+<!--
+<fieldset>
+    <div class="row">
+        <section class="col col-lg-2 col-md-2 col-sm-12">
+            <label class="label">
+                Nama
+            </label>
+        </section>
+        <section class="col col-lg-4 col-md-4 col-sm-12">
+            <label class="input">
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-lg-2 col-md-2 col-sm-12">
+            <label class="label">
+                Hubungan
+            </label>
+        </section>
+        <section class="col col-lg-4 col-md-4 col-sm-12">
+            <label class="input">
+            </label>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col col-lg-2 col-md-2 col-sm-12">
+            <label class="label">
+                No. KP
+            </label>
+        </section>
+        <section class="col col-lg-4 col-md-4 col-sm-12">
+            <label class="input">
+            </label>
+        </section>
+    </div>
+</fieldset>
+
+-->

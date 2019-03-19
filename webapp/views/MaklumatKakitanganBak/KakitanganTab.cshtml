@@ -11,13 +11,13 @@
     {
         displayName = propertyName;
     }
-    if (role.IsEdit && role.IsView) //Kalau Edit, Boleh Klik
+    if (role.IsEdit || role.IsView) //Kalau Edit, Boleh Klik
     {
         <li>
             <a href="#@propertyName" data-toggle="tab">@displayName</a>
         </li>
     }
-    else if (role.IsView) //kalau View, tab jadi ReadOnly (tak bole klik)
+    else if (role.IsDelete) //kalau View, tab jadi ReadOnly (tak bole klik)
     {
         <li>
             <a href="#@propertyName">@displayName</a>

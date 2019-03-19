@@ -16,7 +16,6 @@ namespace eSPP.Models
         public static List<CariPekerjaModel> GetPekerja(string jenis, string value)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-
             List<HR_MAKLUMAT_PERIBADI> mPeribadi = new List<HR_MAKLUMAT_PERIBADI>();
 
             if (jenis == "1")
