@@ -111,7 +111,7 @@
                             <br />
 
 
-                            @using (Html.BeginForm("SuratPengesahanHospital", "Laporan", FormMethod.Post, new { @class = "smart-form" }))
+                            @using (Html.BeginForm("SuratPengesahanHospital", "Laporan", FormMethod.Post, new { @class = "smart-form", target="_blank" }))
                             {
                                 @Html.AntiForgeryToken()
                                 @Html.HiddenFor(m => Model.NoPekerja)
@@ -127,18 +127,19 @@
                                             </section>
                                             <section class="col col-lg-4 col-md-4 col-sm-12">
                                                 <label class="input">
-                                                    @Html.EditorFor(m => Model.Jawatan, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.EditorFor(m => Model.Jawatan, new { htmlAttributes = new { @class = "form-control", disabled = "disabled " } })
+                                                    @Html.HiddenFor(m => Model.Jawatan)
                                                 </label>
                                             </section>
                                             <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                                 <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Rawatan Tanggungan</label>
                                                 <div class="inline-group col-lg-8 col-md-8 col-sm-12 col-xs-12">
                                                     <label class="radio">
-                                                        @Html.RadioButton("IsRawatanSendiri", true, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                        @Html.RadioButton("IsRawatanSendiri", true, htmlAttributes: new { @class = "form-control" })
                                                         <i></i>Sendiri
                                                     </label>
                                                     <label class="radio">
-                                                        @Html.RadioButton("IsRawatanSendiri", false, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                        @Html.RadioButton("IsRawatanSendiri", false, htmlAttributes: new { @class = "form-control" })
                                                         <i></i>Tanggungan
                                                     </label>
                                                 </div>
@@ -152,7 +153,8 @@
                                             </section>
                                             <section class="col col-lg-4 col-md-4 col-sm-12">
                                                 <label class="input">
-                                                    @Html.TextBoxFor(m => Model.GredGaji, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.TextBoxFor(m => Model.GredGaji, new { @class = "form-control", disabled = "disabled" })
+                                                    @Html.HiddenFor(m => Model.GredGaji)
                                                 </label>
                                             </section>
                                             <section class="col col-lg-2 col-md-2 col-sm-12">
@@ -162,7 +164,7 @@
                                             </section>
                                             <section class="col col-lg-4 col-md-4 col-sm-12">
                                                 <label class="input">
-                                                    @Html.TextBoxFor(m => m.TarikhString, new { htmlAttributes = new { @class = "form-control", data_mask = "99/99/9999", data_mask_placeholder = "-" } })
+                                                    @Html.TextBoxFor(m => m.TarikhString, new { @class = "form-control", data_mask = "99/99/9999", data_mask_placeholder = "-" })
                                                     @Html.ValidationMessage("a", "", new { @class = "text-danger" })
                                                 </label>
                                             </section>
@@ -175,7 +177,8 @@
                                             </section>
                                             <section class="col col-lg-4 col-md-4 col-sm-12">
                                                 <label class="input">
-                                                    @Html.TextBoxFor(m => m.GajiBulanan, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.TextBoxFor(m => m.GajiBulanan, new { @class = "form-control", disabled = "disabled" })
+                                                    @Html.HiddenFor(m => m.GajiBulanan)
                                                 </label>
                                             </section>
 
@@ -183,11 +186,11 @@
                                                 <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Surat Pengesahan bagi</label>
                                                 <div class="inline-group col-lg-8 col-md-8 col-sm-12 col-xs-12">
                                                     <label class="radio">
-                                                        @Html.RadioButton("IsHospital", true, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                        @Html.RadioButton("IsHospital", true, htmlAttributes: new { @class = "form-control" })
                                                         <i></i>Hospital
                                                     </label>
                                                     <label class="radio">
-                                                        @Html.RadioButton("IsHospital", false, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                        @Html.RadioButton("IsHospital", false, htmlAttributes: new { @class = "form-control" })
                                                         <i></i>Klinik
                                                     </label>
                                                 </div>
@@ -212,11 +215,11 @@
                                                 <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
                                                 <div class="inline-group col-lg-8 col-md-8 col-sm-12 col-xs-12">
                                                     <label class="radio">
-                                                        @Html.RadioButton("IsPengesahanMajikan", true, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                        @Html.RadioButton("IsPengesahanMajikan", true, htmlAttributes: new { @class = "form-control" })
                                                         <i></i>Disahkan
                                                     </label>
                                                     <label class="radio">
-                                                        @Html.RadioButton("IsPengesahanMajikan", false, htmlAttributes: new { @class = "form-control", disabled = "disabled " })
+                                                        @Html.RadioButton("IsPengesahanMajikan", false, htmlAttributes: new { @class = "form-control" })
                                                         <i></i>Tidak Disahkan
                                                     </label>
                                                 </div>
@@ -294,8 +297,8 @@
 
                                     <fieldset>
                                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                                            <div class="button">
-                                                <button class="btn btn-default btn-success" type="submit">
+                                            <div>
+                                                <button class="button" type="submit">
                                                     <i class="fa fa-print"></i> Cetak
                                                 </button>
                                             </div>

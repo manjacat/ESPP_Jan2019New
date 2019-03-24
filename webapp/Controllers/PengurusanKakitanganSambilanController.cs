@@ -834,9 +834,9 @@ namespace eSPP.Controllers
             tw.Close();
 
             string fileName = "masSambilan_" + bulan + "_" + tahun;
-            string fileNamefull = fileName + ".csv";
+            string fileNamefull = fileName + ".txt";
 
-            return File(memoryStream.GetBuffer(), "text/csv", fileNamefull);
+            return File(memoryStream.GetBuffer(), "text/txt", fileNamefull);
         }
 
         public ActionResult BonusSambilan()

@@ -189,12 +189,13 @@ namespace eSPP.Controllers
             try
             {
                 Response.SetCookie(RoleCookie);
+                Response.Flush();
             }
             catch
             {
 
             }
-            Response.Flush();
+            
         }
 
         //

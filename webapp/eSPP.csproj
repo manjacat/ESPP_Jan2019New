@@ -656,12 +656,12 @@
     <Content Include="Content\template\DocTo.pdf" />
     <Content Include="Content\template\gaji_pekerja_sambilan.docx" />
     <Content Include="Content\template\template_gaji_pekerja_sambilan.docx" />
-    <Content Include="Content\template\Surat_Pergerakan_Gaji.docx" />
     <Content Include="Content\template\Surat_Pergerakan_Gaji.pdf" />
     <Content Include="Content\template\Template Surat Pergerakan Gaji.docx" />
     <Content Include="Content\template\BORANG_PINK.docx" />
     <Content Include="Content\template\BORANG_PINK.pdf" />
     <Content Include="Content\template\TEMPLATE BORANG PINK.docx" />
+    <Content Include="Content\template\SuratPengesahanHospital.docx" />
     <None Include="Properties\PublishProfiles\eSPP.pubxml" />
     <None Include="Properties\PublishProfiles\SmartAdmin - Release.pubxml" />
     <None Include="Properties\PublishProfiles\SmartAdmin - Debug.pubxml" />
@@ -2074,6 +2074,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\img\realestate\thumbs\" />
+    <Folder Include="Content\template\SuratPengesahanHospital\" />
     <Folder Include="Content\template\SuratPergerakanGaji\" />
   </ItemGroup>
   <ItemGroup>
