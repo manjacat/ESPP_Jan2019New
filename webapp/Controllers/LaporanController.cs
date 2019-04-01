@@ -45,10 +45,14 @@ namespace eSPP.Controllers
         }
 
         [HttpPost]
-        public ActionResult SuratPengesahanHospital(SuratPengesahanHospitalModel model)
+        public ActionResult SuratPengesahanHospital(SuratPengesahanHospitalModel model, string Command)
         {
             if (model != null)
             {
+                if(Command == "printDoc")
+                {
+                    return CreateDocxReport(model);
+                }
                 return CreatePdfReport(model);
             }
             else return new EmptyResult();
@@ -130,7 +134,7 @@ namespace eSPP.Controllers
             string path_file = Server.MapPath("~/Content/template/");
             Microsoft.Office.Interop.Word.Application WordApp = new Microsoft.Office.Interop.Word.Application();
             object missing = System.Reflection.Missing.Value;
-            string[] filePaths = Directory.GetFiles(path_file + "SuratPergerakanGaji/");
+            string[] filePaths = Directory.GetFiles(path_file + "SuratPergerakanGaji\\");
             foreach (string filePath in filePaths)
                 System.IO.File.Delete(filePath);
 
@@ -138,24 +142,61 @@ namespace eSPP.Controllers
             object start = 0; object end = 0;
             Microsoft.Office.Interop.Word.Range rng = Doc.Range(ref start, ref missing);
 
-            string tempFile = "SuratPengesahanHospital/SuratPengesahanHospital(" + model.NoPekerja + ").docx";
+            string tempFile = "SuratPengesahanHospital\\SuratPengesahanHospital(" + model.NoPekerja + ").docx";
 
+            string LT1, LT2, LT3, LT4, LT5, LT6, LT7;
+            string T1, T2, T3, T4, T5, T6, T7;
 
-                var templateEngine = new swxben.docxtemplateengine.DocXTemplateEngine();
+            LT1 = model.MaklumatTanggungan.Count > 0 ? string.Format("Nama: {0}.     No KP: {1}", 
+                model.MaklumatTanggungan[0].Nama, model.MaklumatTanggungan[0].NoKP) : string.Empty;
+            LT2 = model.MaklumatTanggungan.Count > 1 ? string.Format("Nama: {0}.     No KP: {1}", 
+                model.MaklumatTanggungan[1].Nama, model.MaklumatTanggungan[1].NoKP) : string.Empty;
+            LT3 = model.MaklumatTanggungan.Count > 2 ? string.Format("Nama: {0}.     No KP: {1}", 
+                model.MaklumatTanggungan[2].Nama, model.MaklumatTanggungan[2].NoKP) : string.Empty;
+            LT4 = model.MaklumatTanggungan.Count > 3 ? string.Format("Nama: {0}.     No KP: {1}"
+                , model.MaklumatTanggungan[3].Nama, model.MaklumatTanggungan[3].NoKP) : string.Empty;
+            LT5 = model.MaklumatTanggungan.Count > 4 ? string.Format("Nama: {0}.     No KP: {1}"
+                , model.MaklumatTanggungan[4].Nama, model.MaklumatTanggungan[4].NoKP) : string.Empty;
+            LT6 = model.MaklumatTanggungan.Count > 5 ? string.Format("Nama: {0}.     No KP: {1}", 
+                model.MaklumatTanggungan[5].Nama, model.MaklumatTanggungan[5].NoKP) : string.Empty;
+            LT7 = model.MaklumatTanggungan.Count > 6 ? string.Format("Nama: {0}.     No KP: {1}", 
+                model.MaklumatTanggungan[6].Nama, model.MaklumatTanggungan[6].NoKP) : string.Empty;
+
+            T1 = model.MaklumatTanggungan.Count > 0 ? model.MaklumatTanggungan[0].Nama : string.Empty;
+            T2 = model.MaklumatTanggungan.Count > 1 ? model.MaklumatTanggungan[1].Nama : string.Empty;
+            T3 = model.MaklumatTanggungan.Count > 2 ? model.MaklumatTanggungan[2].Nama : string.Empty;
+            T4 = model.MaklumatTanggungan.Count > 3 ? model.MaklumatTanggungan[3].Nama : string.Empty;
+            T5 = model.MaklumatTanggungan.Count > 4 ? model.MaklumatTanggungan[4].Nama : string.Empty;
+            T6 = model.MaklumatTanggungan.Count > 5 ? model.MaklumatTanggungan[5].Nama : string.Empty;
+            T7 = model.MaklumatTanggungan.Count > 6 ? model.MaklumatTanggungan[6].Nama : string.Empty;
+
+            var templateEngine = new swxben.docxtemplateengine.DocXTemplateEngine();
                 templateEngine.Process(
                     source: path_file + "SuratPengesahanHospital.docx",
                     destination: path_file + tempFile,
                     data: new
                     {
                         tarikh = model.TarikhString,
-                        namaHospital = model.HospitalName,
-                        namaPegawai = model.NamaPekerja,
-                        noKPbaru = model.NoKPBaru,
+                        namahospital = model.HospitalName,
+                        namapegawai = model.NamaPekerja,
+                        nokpbaru = model.NoKPBaru,
                         jawatan = model.Jawatan,
-                        Gred = model.GredGaji,
-                        gajiBulanan = model.GajiBulanan.ToString("#,##0.00"),
-                        listtanggungan1 = string.Format("Nama: {0}", model.MaklumatTanggungan[0].Nama),
-                        tanggungan1 = model.MaklumatTanggungan[0].Nama,
+                        gred = model.GredGaji,
+                        gajibulanan = model.GajiBulanan.ToString("#,##0.00"),
+                        listtanggungan1 = LT1,
+                        listtanggungan2 = LT2,
+                        listtanggungan3 = LT3,
+                        listtanggungan4 = LT4,
+                        listtanggungan5 = LT5,
+                        listtanggungan6 = LT6,
+                        listtanggungan7 = LT7,
+                        tanggungan1 = T1,
+                        tanggungan2 = T2,
+                        tanggungan3 = T3,
+                        tanggungan4 = T4,
+                        tanggungan5 = T5,
+                        tanggungan6 = T6,
+                        tanggungan7 = T7
                     });
 
 
@@ -174,22 +215,31 @@ namespace eSPP.Controllers
             //    paragraph.Format.SpaceAfter = 0.1f;
             //}
 
-            Doc.SaveAs2(path_file + "SuratPengesahanHospital.docx");
+            Doc.SaveAs2(path_file + tempFile);
             Doc.Application.Quit();
-            WordApp.Quit();
+            try
+            {
+                WordApp.Quit();
+            }
+            catch
+            {
 
-            System.IO.FileInfo file = new System.IO.FileInfo(path_file + "SuratPengesahanHospital.docx");
+            }
 
-            Response.Clear();
-            Response.AddHeader("content-length", file.Length.ToString());
-            Response.AddHeader("content-disposition", "attachment; filename = Surat_Pergerakan_Gaji.docx");
-            Response.ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-            Response.TransmitFile(path_file + "SuratPengesahanHospital.docx");
-            Response.Flush();
-            Response.Close();
+            //System.IO.FileInfo file = new System.IO.FileInfo(path_file + tempFile);
+
+            //Response.Clear();
+            //Response.AddHeader("content-length", file.Length.ToString());
+            //Response.AddHeader("content-disposition", "attachment; filename = SuratPengesahanHospital.docx");
+            //Response.ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+            //Response.TransmitFile(path_file + "SuratPengesahanHospital.docx");
+            //Response.Flush();
+            //Response.Close();
 
             //return View();
-            return File(path_file + "SuratPengesahanHospital.docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+            string fullFilePath = path_file + tempFile;
+            return File(fullFilePath, 
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
 
         }
 

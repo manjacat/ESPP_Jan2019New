@@ -1117,10 +1117,11 @@ namespace eSPP.Controllers
 		//
 		// POST: /Account/LogOff
 		[HttpPost]
-		[ValidateAntiForgeryToken]
+        //Khairil remove validate anti forgery token
 		public ActionResult LogOff()
 		{
-			var pokemon = User.Identity.GetUserId();
+            
+            var pokemon = User.Identity.GetUserId();
 			var user = db.Users.Where(s => s.Id == pokemon).SingleOrDefault();
 			var role1 = db.UserRoles.Where(d => d.UserId == user.Id).SingleOrDefault();
 			var role = new IdentityRole();
@@ -1129,7 +1130,10 @@ namespace eSPP.Controllers
 				role = db.Roles.Where(e => e.Id == role1.RoleId).SingleOrDefault();
 			}
 
-			new AuditTrailModels().Log(user.Email, user.UserName, System.Web.HttpContext.Current.Request.UserHostAddress, role.Name, user.UserName + " Telah Log Keluar Dari Sistem", System.Net.Dns.GetHostName(), user.PhoneNumber, Request.RawUrl, "Logout");
+            //khairil add remove cookie
+            RemoveCookie();
+
+            new AuditTrailModels().Log(user.Email, user.UserName, System.Web.HttpContext.Current.Request.UserHostAddress, role.Name, user.UserName + " Telah Log Keluar Dari Sistem", System.Net.Dns.GetHostName(), user.PhoneNumber, Request.RawUrl, "Logout");
 
 			AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
 			return RedirectToAction("Index", "Home");
