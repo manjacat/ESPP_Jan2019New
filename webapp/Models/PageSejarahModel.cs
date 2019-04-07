@@ -302,6 +302,23 @@ namespace eSPP.Models
             return elaunka;
         }
 
+        //guna utk Insert. masukkan semua elaun termasuk elaun KA
+        //all elaun except elaun E0164 (elaun OT)
+        public static List<HR_MAKLUMAT_ELAUN_POTONGAN> GetElaunSemua(ApplicationDbContext db, string HR_PEKERJA)
+        {
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> userMaklumatPotongan = db.HR_MAKLUMAT_ELAUN_POTONGAN
+                        .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA).ToList();
+
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunLain = userMaklumatPotongan
+                .Where(s => s.HR_ELAUN_POTONGAN_IND == "E"
+                && DateTime.Now >= s.HR_TARIKH_MULA && DateTime.Now <= s.HR_TARIKH_AKHIR
+                && s.HR_AKTIF_IND == "Y"
+                && (s.HR_KOD_ELAUN_POTONGAN != "E0164"))
+                .ToList();
+
+            return elaunLain;
+        }
+
         public static List<HR_MAKLUMAT_ELAUN_POTONGAN> GetElaunLain(ApplicationDbContext db, string HR_PEKERJA)
         {
             List<HR_MAKLUMAT_ELAUN_POTONGAN> userMaklumatPotongan = db.HR_MAKLUMAT_ELAUN_POTONGAN
@@ -428,16 +445,22 @@ namespace eSPP.Models
 
         public static decimal GetGajiPokok(ApplicationDbContext db, string HR_PEKERJA, int hariBekerja)
         {
-            decimal gajiSehari = GetGajiSehari(db, HR_PEKERJA);
-            decimal gajiPokok = gajiSehari * hariBekerja;
-            gajiPokok = decimal.Round(gajiPokok, 2);
+            //add new condition: no need to go to DB if hari bekerja is 0
+            if(hariBekerja > 0)
+            {
+                decimal gajiSehari = GetGajiSehari(db, HR_PEKERJA);
+                decimal gajiPokok = gajiSehari * hariBekerja;
+                gajiPokok = decimal.Round(gajiPokok, 2);
 
-            return gajiPokok;
+                return gajiPokok;
+            }
+            return 0.00M;            
         }
 
         public static decimal GetGajiSehari(ApplicationDbContext db, string HR_PEKERJA)
         {
-            GajiPekerja gajiPekerja = ListPekerjaBerkecuali.Where(s => s.NoPekerja == HR_PEKERJA).FirstOrDefault();
+            GajiPekerja gajiPekerja = ListPekerjaBerkecuali
+                .Where(s => s.NoPekerja == HR_PEKERJA).FirstOrDefault();
             if (gajiPekerja != null)
             {
                 return gajiPekerja.GajiSehari;
@@ -467,30 +490,38 @@ namespace eSPP.Models
         }
 
         public static decimal GetElaunOT(ApplicationDbContext db, string HR_PEKERJA, int jumlahHari, decimal jumlahJamOT)
-        {  
-            var gajiSehari = GetGajiSehari(db, HR_PEKERJA);
-            var gajisehariot = (gajiSehari * jumlahHari) * 12 / 2504;
-            var elaunOT = gajisehariot * jumlahJamOT;
-            return elaunOT;
+        {
+            //add new condition: no need to calculate if hari or jam OT is 0
+            if(jumlahJamOT > 0 && jumlahHari > 0)
+            {
+                var gajiSehari = GetGajiSehari(db, HR_PEKERJA);
+                var gajisehariot = (gajiSehari * jumlahHari) * 12 / 2504;
+                var elaunOT = gajisehariot * jumlahJamOT;
+                return elaunOT;
+            }
+            return 0;            
         }
 
         public static decimal GetPotonganSocso(ApplicationDbContext db, decimal gajiPokok, decimal elaunOT)
         {
             decimal gajiKasar = gajiPokok + elaunOT;
-            try
+            if(gajiKasar > 0)
             {
-                //fix issue userSocso keluar error kalau user taip hari = 1
-                HR_SOCSO userSocso = db.HR_SOCSO.Where(s => s.HR_GAJI_DARI <= gajiKasar
-                   && gajiKasar <= s.HR_GAJI_HINGGA).SingleOrDefault();
+                try
+                {
+                    //fix issue userSocso keluar error kalau user taip hari = 1
+                    HR_SOCSO userSocso = db.HR_SOCSO.Where(s => s.HR_GAJI_DARI <= gajiKasar
+                       && gajiKasar <= s.HR_GAJI_HINGGA).SingleOrDefault();
 
-                return userSocso.HR_JUMLAH;
+                    return userSocso.HR_JUMLAH;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    return 0;
+                }
             }
-            catch (Exception ex)
-            {   
-                Console.WriteLine(ex.ToString());
-                return 0;
-            }
-
+            return 0;
         }
 
         public static PageSejarahModel Insert(PageSejarahModel agree, string user, string command)
@@ -501,8 +532,8 @@ namespace eSPP.Models
             //MajlisContext mc = new MajlisContext();
             HR_MAKLUMAT_PEKERJAAN mpekerjaan = db.HR_MAKLUMAT_PEKERJAAN.Where(s => s.HR_NO_PEKERJA == agree.HR_PEKERJA).SingleOrDefault();
 
-            //Only add elaun lain, do not add ElaunOT
-            List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunLain = GetElaunLain(db, agree.HR_PEKERJA);
+            //Only add elaun lain (including elaun KA), do not add ElaunOT
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunsemua = GetElaunSemua(db, agree.HR_PEKERJA);
 
             //TODO: make sure bila insert, semua maklumat potongan masuk
             List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganSemua = GetPotonganSemua(db, agree.HR_PEKERJA, agree.gajipokok);
@@ -526,12 +557,12 @@ namespace eSPP.Models
                 switch (command.ToLower())
                 {
                     case ("hantar"):
-                        InsertHantar(db, agree, elaunLain, potonganSemua, agree.gajipokok);
+                        InsertHantar(db, agree, elaunsemua, potonganSemua, agree.gajipokok);
                         TrailLog(emel, role,
                             emel.HR_NAMA_PEKERJA + " Telah menambah data untuk pekerja " + agree.HR_PEKERJA);
                         break;
                     case ("kemaskini"):
-                        InsertHantar(db, agree, elaunLain, potonganSemua, agree.gajipokok);
+                        InsertHantar(db, agree, elaunsemua, potonganSemua, agree.gajipokok);
                         //InsertKemaskini(db, agree, listkwsp, elaunLain, potonganSemua,
                         //    maklumatcaruman, agree.gajipokok);
                         TrailLog(emel, role,

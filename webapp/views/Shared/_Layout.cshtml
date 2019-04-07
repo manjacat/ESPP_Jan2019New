@@ -109,7 +109,7 @@
         var timeoutTimer;
 
         $(document).ready(function () {
-            console.log("init timer!");
+            //console.log("init timer!");
             StartWarningTimer();
         });
 
@@ -118,7 +118,7 @@
             //console.log("Warning timer start!");
             warningTimer = setTimeout("IdleWarning()", timoutWarning);
             $(document).click(function () {  
-                console.log('mouse click');
+                //console.log('mouse click');
                 sessKeyPressed();
             });
             $(document).bind('keypress.session', function (ed, e) {
@@ -136,7 +136,7 @@
         function ResetTimeOutTimer() {
             $("#timeout").html('');
             var now = new Date();
-            console.log("timer reset at " + now.toTimeString());
+            //console.log("timer reset at " + now.toTimeString());
             clearTimeout(timeoutTimer);
             StartWarningTimer();
         }
