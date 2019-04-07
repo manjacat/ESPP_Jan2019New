@@ -8,6 +8,12 @@ using System.Web;
 
 namespace eSPP.Models
 {
+    //class only for listing ppl with gaji berkecuali.
+    public class GajiPekerja
+    {
+        public string NoPekerja { get; set; }
+        public decimal GajiSehari { get; set; }
+    }
 
     public class PageSejarahModel
     {
@@ -31,6 +37,36 @@ namespace eSPP.Models
                     "E0105"
                 };
             }
+        }
+
+        /// <summary>
+        /// No Pekerja with Pengecualian by Individu
+        /// </summary>
+        public static List<GajiPekerja> ListPekerjaBerkecuali
+        {
+            //LAI KOK SEONG 01595
+            //WOON SZE MEI 01535
+            //VIJAYA KUMARAN PILLAY A/L SEKARAN 01648
+            //DAPHNE NG CHIEW YEN 02142
+            //MUHAMMAD SYAWAL BIN MOHD ISMAIL 02812
+            //YANG LI LIAN 02938
+            //YAP CHENG WEN 03387
+            //CHEW CHOON ENG 01550
+            get
+            {
+                return new List<GajiPekerja>
+                {
+                    new GajiPekerja{ NoPekerja = "01595", GajiSehari = 29.990M},
+                    new GajiPekerja{ NoPekerja = "01535", GajiSehari = 29.990M},
+                    new GajiPekerja{ NoPekerja = "01648", GajiSehari = 29.990M},
+                    new GajiPekerja{ NoPekerja = "02142", GajiSehari = 35.670M},
+                    new GajiPekerja{ NoPekerja = "02812", GajiSehari = 35.670M},
+                    new GajiPekerja{ NoPekerja = "02938", GajiSehari = 35.670M},
+                    new GajiPekerja{ NoPekerja = "03387", GajiSehari = 35.670M},
+                    new GajiPekerja{ NoPekerja = "01550", GajiSehari = 29.990M}              
+                };
+            }
+
         }
 
         public PageSejarahModel()
@@ -310,6 +346,12 @@ namespace eSPP.Models
                 && s.HR_AKTIF_IND == "Y"
                 && (s.HR_KOD_ELAUN_POTONGAN != "P0015" && s.HR_KOD_ELAUN_POTONGAN != "P0035")).ToList();
 
+            HR_MAKLUMAT_ELAUN_POTONGAN potonganSukan = GetPotonganElaunSukan(HR_PEKERJA);
+            if (potonganSukan != null)
+            {
+                potonganlain.Add(potonganSukan);
+            }
+
             return potonganlain;
         }
 
@@ -317,9 +359,39 @@ namespace eSPP.Models
         {
             List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganSemua = new List<HR_MAKLUMAT_ELAUN_POTONGAN>();
             potonganSemua.AddRange(GetPotonganKSDK(db, HR_PEKERJA));
-            potonganSemua.Add(GetPotonganKWSP(db, HR_PEKERJA, gajiPokok));
+            HR_MAKLUMAT_ELAUN_POTONGAN potonganKWSP = GetPotonganKWSP(db, HR_PEKERJA, gajiPokok);
+            if(potonganKWSP != null)
+            {
+                potonganSemua.Add(potonganKWSP);
+            }
             potonganSemua.AddRange(GetPotonganLain(db, HR_PEKERJA));
+            HR_MAKLUMAT_ELAUN_POTONGAN potonganSukan = GetPotonganElaunSukan(HR_PEKERJA);
+            if ( potonganSukan != null)
+            {
+                potonganSemua.Add(potonganSukan);
+            }
+
             return potonganSemua;
+        }
+
+        public static HR_MAKLUMAT_ELAUN_POTONGAN GetPotonganElaunSukan(string HR_PEKERJA)
+        {
+            HR_MAKLUMAT_ELAUN_POTONGAN elaunSukan = null;
+            //only certain number of ppl need to pay elaun sukan
+            var check = ListPekerjaBerkecuali.Where(s => s.NoPekerja == HR_PEKERJA).ToList();
+            if (check.Count > 0)
+            {
+                elaunSukan = new HR_MAKLUMAT_ELAUN_POTONGAN
+                {
+                    HR_NO_PEKERJA = HR_PEKERJA,
+                    HR_ELAUN_POTONGAN_IND = "P",
+                    HR_KOD_ELAUN_POTONGAN = "P8888", //temp Code for Yuran sukan
+                    HR_AKTIF_IND = "Y",
+                    HR_JUMLAH = 1.50M //Yuran sukan is RM1.50
+                };
+            }
+            //if no pekerja not in the list, it will return null
+            return elaunSukan;
         }
 
         public static HR_MAKLUMAT_ELAUN_POTONGAN GetPotonganKWSP(ApplicationDbContext db, string HR_PEKERJA, decimal gajiPokok)
@@ -365,6 +437,12 @@ namespace eSPP.Models
 
         public static decimal GetGajiSehari(ApplicationDbContext db, string HR_PEKERJA)
         {
+            GajiPekerja gajiPekerja = ListPekerjaBerkecuali.Where(s => s.NoPekerja == HR_PEKERJA).FirstOrDefault();
+            if (gajiPekerja != null)
+            {
+                return gajiPekerja.GajiSehari;
+            }
+
             HR_MAKLUMAT_PEKERJAAN mpekerjaan = db.HR_MAKLUMAT_PEKERJAAN
                 .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA).FirstOrDefault();
             decimal gajiSehari = 54.00M;
@@ -433,38 +511,46 @@ namespace eSPP.Models
             //List<HR_MAKLUMAT_ELAUN_POTONGAN> maklumatcaruman = GetCaruman(db, agree.HR_PEKERJA);
 
             //For Logging
-            var tbl = db.Users.Where(p => p.Id == user).FirstOrDefault();
-            var emel = db.HR_MAKLUMAT_PERIBADI.Where(s => s.HR_NO_KPBARU == tbl.UserName).FirstOrDefault();
-            var role1 = db.UserRoles.Where(d => d.UserId == tbl.Id).FirstOrDefault();
-            var role = db.Roles.Where(e => e.Id == role1.RoleId).FirstOrDefault();
-
-            if (string.IsNullOrEmpty(command))
+            try
             {
-                command = "muktamad";
-            }
+                var tbl = db.Users.Where(p => p.Id == user).FirstOrDefault();
+                var emel = db.HR_MAKLUMAT_PERIBADI.Where(s => s.HR_NO_KPBARU == tbl.UserName).FirstOrDefault();
+                var role1 = db.UserRoles.Where(d => d.UserId == tbl.Id).FirstOrDefault();
+                var role = db.Roles.Where(e => e.Id == role1.RoleId).FirstOrDefault();
 
-            switch (command.ToLower())
-            {
-                case ("hantar"):
-                    InsertHantar(db, agree, elaunLain, potonganSemua, agree.gajipokok);
-                    TrailLog(emel, role,
-                        emel.HR_NAMA_PEKERJA + " Telah menambah data untuk pekerja " + agree.HR_PEKERJA);
-                    break;
-                case ("kemaskini"):
-                    InsertHantar(db, agree, elaunLain, potonganSemua, agree.gajipokok);
-                    //InsertKemaskini(db, agree, listkwsp, elaunLain, potonganSemua,
-                    //    maklumatcaruman, agree.gajipokok);
-                    TrailLog(emel, role,
-                        emel.HR_NAMA_PEKERJA + " Telah mengubah data untuk pekerja " + agree.HR_PEKERJA);
-                    break;
-                case ("muktamad"):
-                    InsertMuktamad(db, agree);
-                    TrailLog(emel, role,
-                        emel.HR_NAMA_PEKERJA + " Telah mengubah data untuk pekerja " + agree.HR_PEKERJA);
-                    break;
-                default:
-                    break;
+                if (string.IsNullOrEmpty(command))
+                {
+                    command = "muktamad";
+                }
+
+                switch (command.ToLower())
+                {
+                    case ("hantar"):
+                        InsertHantar(db, agree, elaunLain, potonganSemua, agree.gajipokok);
+                        TrailLog(emel, role,
+                            emel.HR_NAMA_PEKERJA + " Telah menambah data untuk pekerja " + agree.HR_PEKERJA);
+                        break;
+                    case ("kemaskini"):
+                        InsertHantar(db, agree, elaunLain, potonganSemua, agree.gajipokok);
+                        //InsertKemaskini(db, agree, listkwsp, elaunLain, potonganSemua,
+                        //    maklumatcaruman, agree.gajipokok);
+                        TrailLog(emel, role,
+                            emel.HR_NAMA_PEKERJA + " Telah mengubah data untuk pekerja " + agree.HR_PEKERJA);
+                        break;
+                    case ("muktamad"):
+                        InsertMuktamad(db, agree);
+                        TrailLog(emel, role,
+                            emel.HR_NAMA_PEKERJA + " Telah mengubah data untuk pekerja " + agree.HR_PEKERJA);
+                        break;
+                    default:
+                        break;
+                }
             }
+            catch
+            {
+
+            }
+           
             return agree;
         }
 
