@@ -29,15 +29,34 @@ namespace eSPP.Models
         {
             get
             {
-                return new List<string>
-                {
-                    "E0064",
-                    "E0096",
-                    "E0151",
-                    "E0105"
-                };
+                ApplicationDbContext db = new ApplicationDbContext();
+                List<string> kodElaunKA = db.HR_ELAUN
+                    .Where(s => s.HR_PENERANGAN_ELAUN.Contains("KHIDMAT AWAM"))
+                    .Select(s => s.HR_KOD_ELAUN).ToList();
+                return kodElaunKA;
+                //return new List<string>
+                //{
+                //    "E0064",
+                //    "E0096",
+                //    "E0151",
+                //    "E0105"
+                //};
             }
         }
+
+        //temporary not used. treated elaunlain = elauncola.
+        public static List<string> ListElaunCola
+        {
+            get
+            {
+                ApplicationDbContext db = new ApplicationDbContext();
+                List<string> kodElaunCola = db.HR_ELAUN
+                    .Where(s => s.HR_PENERANGAN_ELAUN.Contains("COLA"))
+                    .Select(s => s.HR_KOD_ELAUN).ToList();
+                return kodElaunCola;
+            }
+        }
+
 
         /// <summary>
         /// No Pekerja with Pengecualian by Individu
@@ -52,6 +71,15 @@ namespace eSPP.Models
             //YANG LI LIAN 02938
             //YAP CHENG WEN 03387
             //CHEW CHOON ENG 01550
+
+            //KHOO CHIN BEE 01866
+            //CHEONG JAY MEE 02452
+            //KANG BO LONG 03552
+            //RIDZUWAN BIN RAHMAT 02463
+            //NURSHAMILIA BINTI MD. SAMSUDIN 02797
+            //THEIVIYA A/P SELVA RAJOO 02816
+            //VASUTHEVAN A/L LORTCHUAN 01790
+
             get
             {
                 return new List<GajiPekerja>
@@ -63,7 +91,15 @@ namespace eSPP.Models
                     new GajiPekerja{ NoPekerja = "02812", GajiSehari = 35.670M},
                     new GajiPekerja{ NoPekerja = "02938", GajiSehari = 35.670M},
                     new GajiPekerja{ NoPekerja = "03387", GajiSehari = 35.670M},
-                    new GajiPekerja{ NoPekerja = "01550", GajiSehari = 29.990M}              
+                    new GajiPekerja{ NoPekerja = "01550", GajiSehari = 29.990M},
+                    //baru tambah v2
+                    new GajiPekerja{ NoPekerja = "01866", GajiSehari = 35.670M},
+                    new GajiPekerja{ NoPekerja = "02452", GajiSehari = 29.990M},
+                    new GajiPekerja{ NoPekerja = "03552", GajiSehari = 35.670M},
+                    new GajiPekerja{ NoPekerja = "02463", GajiSehari = 29.990M},
+                    new GajiPekerja{ NoPekerja = "02797", GajiSehari = 35.670M},
+                    new GajiPekerja{ NoPekerja = "02816", GajiSehari = 35.670M},
+                    new GajiPekerja{ NoPekerja = "01790", GajiSehari = 29.990M}
                 };
             }
 
@@ -282,6 +318,7 @@ namespace eSPP.Models
 
         public int GetJumlahOT()
         {
+            //E0164 = ELAUN LEBIH MASA SAMBILAN
             ApplicationDbContext db = new ApplicationDbContext();
             var jumlahHari = db.HR_TRANSAKSI_SAMBILAN_DETAIL
                 .Where(x => x.HR_BULAN_BEKERJA == bulanbekerja
@@ -502,8 +539,37 @@ namespace eSPP.Models
             return 0;            
         }
 
+        //9/5/2019 - added Extra calculaction to calculate GajiKasar
+        public static decimal GetGajiKasar(decimal gaji,
+            decimal? elaunka,
+            decimal? elaunlain,
+            decimal elaunot,
+            decimal hariBekerja)
+        {
+            try
+            {
+                //EKA = elaunKA x jumlahhari bekerja
+                //COLA = cola x jumlahhari bekerja
+                var totalElaunka = elaunka * hariBekerja;
+                var totalElaunLain = elaunlain * hariBekerja;
+                var totalElaunOT = elaunot;
+
+                var gajikasar = gaji + totalElaunka + totalElaunLain + totalElaunOT;
+                if (gajikasar == null)
+                {
+                    return 0;
+                }
+                return gajikasar.Value;
+            }
+            catch
+            {
+                return 0;
+            }            
+        }
+
         public static decimal GetPotonganSocso(ApplicationDbContext db, decimal gajiPokok, decimal elaunOT)
         {
+            //gaji kasar here means gaji kasar - elaun
             decimal gajiKasar = gajiPokok + elaunOT;
             if(gajiKasar > 0)
             {

@@ -101,9 +101,13 @@
         var warningMinute = 20; // Display warning in x Mins.
         var timeOutMinute = 1; // Warning has been shown, give the user x minute to interact
 
-        var timoutWarning = warningMinute * 60000;
+        //how often system checks for idle. default is 60000 (1 minute)
+        var idleInterval = 60000;
+        var counterReset = 0;
+        //this counter will increase after each idleInterval
+        var idleCounter = counterReset;
         var timoutNow = timeOutMinute * 60000;
-        var logoutUrl = '/account/login?ReturnUrl=%2f'; // URL to logout page.
+        var logoutUrl = '/'; // URL to logout page.
 
         var warningTimer;
         var timeoutTimer;
@@ -116,50 +120,55 @@
         // Start warning timer.
         function StartWarningTimer() {
             //console.log("Warning timer start!");
-            warningTimer = setTimeout("IdleWarning()", timoutWarning);
-            $(document).click(function () {  
-                //console.log('mouse click');
-                sessKeyPressed();
+            warningTimer = setInterval("UpdateCounter()", idleInterval);
+            $(document).mousemove(function (event) {
+                //console.log('mouse move');
+                ResetTimeOutTimer();
             });
             $(document).bind('keypress.session', function (ed, e) {
-                sessKeyPressed();
+                //console.log('keyboard press');
+                ResetTimeOutTimer();
             });
         }
 
-        function sessKeyPressed() {
-            //reset timer
-            //console.log('reset timer');
-            ResetTimeOutTimer();
+        //update idleCounter setiap idleInterval
+        function UpdateCounter() {
+            if (idleCounter == warningMinute) {
+                IdleWarning();
+                idleCounter++;
+            }
+            else {
+                idleCounter++;
+                //console.log('counter value is ' + idleCounter);
+            }
         }
 
         // Reset timers.
         function ResetTimeOutTimer() {
-            $("#timeout").html('');
-            var now = new Date();
-            //console.log("timer reset at " + now.toTimeString());
-            clearTimeout(timeoutTimer);
-            StartWarningTimer();
+            idleCounter = counterReset;            
         }
 
         // Show idle timeout warning dialog.
         function IdleWarning() {
-            $("#timeout").html('<div>Anda telah idle selama ' + warningMinute  + ' minit. Klik Kekal Login untuk kekal login, dan Cancel untuk log out.</div >');
+            $("#timeout").html('<div>Anda telah idle selama ' + warningMinute
+                + ' minit. Klik <i>Kekal Login</i> untuk kekal, atau <i>Cancel</i> untuk log out.</div >');
             var now = new Date();
             console.log('Warning keluar at ' + now.toTimeString());
-            clearTimeout(warningTimer);
             timeoutTimer = setTimeout("IdleTimeout()", timoutNow);
             //keluar modal dialog utk prompt user
             $("#timeout").dialog({
                 modal: true,
-                title: 'Sessi login tamat',
+                title: 'Sessi login hampir tamat',
                 buttons: {
-                    "Kekal Login": function () {                        
-                        ResetTimeOutTimer();
+                    "Kekal Login": function () {
                         $(this).dialog("close");
+                        //clear timeout timer if user choose to stay logged in
+                        clearInterval(timeoutTimer);
+                        $("#timeout").html('');     
+                        ResetTimeOutTimer();                        
                     },
                     Cancel: function () {
                         IdleTimeout();
-                        //$(this).dialog("close");
                     }
                 }
             });
@@ -167,9 +176,7 @@
 
         // Logout the user.
         function IdleTimeout() {
-            //console.log('sudah logout');
             Logout();
-            window.location = logoutUrl;
         }
 
         function Logout() {
@@ -180,11 +187,13 @@
                 type: 'POST',
                 success: function (data) {
                     window.location = logoutUrl;
+                },
+                fail: function (data) {
+                    window.location = logoutUrl;
                 }
 
             })
         }
-
     </script>
 </body>
 

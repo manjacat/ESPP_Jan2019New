@@ -179,6 +179,18 @@ namespace eSPP.Models
         public string GE_SINGKATAN1 { get; set; }
         public string GE_AKTIF_IND1 { get; set; }
         public decimal? GAJIPOKOK { get; set; }
+        public string GAJIPOKOKSTR
+        {
+            get
+            {
+                string retString = "0.00";
+                if (GAJIPOKOK != null)
+                {
+                    retString = GAJIPOKOK.Value.ToString("0.00");
+                }
+                return retString;
+            }
+        }
         public string ELAUNKA { get; set; }
 		public string POTONGANKSDK { get; set; }
 		public string GAJIBASIC { get; set; }
@@ -213,7 +225,19 @@ namespace eSPP.Models
 		public string JUMLAHBONUS1 { get; set; }
 		public decimal? CARUMANKWSP { get; set; }
 		public decimal? POTONGANKWSP { get; set; }
-		public decimal? JUMLAHKWSP { get; set; }
+        public string POTONGANKWSPSTR
+        {
+            get
+            {
+                string retString = "0.00";
+                if (POTONGANKWSP != null)
+                {
+                    retString = POTONGANKWSP.Value.ToString("0.00");
+                }
+                return retString;
+            }
+        }
+        public decimal? JUMLAHKWSP { get; set; }
 		public int BULANDIBAYAR { get; set; }
         //khairil
         public int BULANDIBAYARPREV
@@ -260,13 +284,38 @@ namespace eSPP.Models
 		public string TUNGGAKANIND { get; set; }
 		public string TAKTOLAKKWSP { get; set; }
 		public decimal? GAJIBERSIH { get; set; }
-		public string JUMLAH { get; set; }
+        public string GAJIBERSIHSTR
+        {
+            get
+            {
+                string retString = "0.00";
+                if (GAJIBERSIH != null)
+                {
+                    retString = GAJIBERSIH.Value.ToString("0.00");
+                }
+                return retString;
+            }
+        }
+        public string JUMLAH { get; set; }
 		public decimal? HR_JUMLAH_MAKLUMAT { get; set; }
 		public DateTime? HR_TARIKH_MULA { get; set; }
 		public DateTime? HR_TARIKH_AKHIR { get; set; }
 		public decimal? CARUMANSOCSO { get; set; }
 		public decimal? POTONGANSOCSO { get; set; }
-		public int? MUKTAMAD { get; set; }
+        //KHAIRIL ADD
+        public string POTONGANSOCSOSTR
+        {
+            get
+            {
+                string retString = "0.00";
+                if(POTONGANSOCSO != null)
+                {
+                    retString = POTONGANSOCSO.Value.ToString("0.00");
+                }
+                return retString;
+            }
+        }
+        public int? MUKTAMAD { get; set; }
 
 		public IEnumerable<Agreement1Models> agree1 { get; set; }
     }

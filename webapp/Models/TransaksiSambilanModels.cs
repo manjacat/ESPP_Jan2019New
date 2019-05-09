@@ -22,6 +22,11 @@ namespace eSPP.Models
             string tahunbulannotis, string tahunbulanbonus, string bulankiradari, string bulankirahingga,
             decimal? jumlahot, int? jumlahhari)
         {
+            if(jumlahhari == null)
+            {
+                jumlahhari = 0;
+            }
+
             ApplicationDbContext db = new ApplicationDbContext();
             MajlisContext mc = new MajlisContext();
             db.Configuration.ProxyCreationEnabled = false;
@@ -84,7 +89,17 @@ namespace eSPP.Models
                     kerjaelaun.BAHAGIAN = userBahagian.GE_KETERANGAN;
                     kerjaelaun.NOKP = userPeribadi.HR_NO_KPBARU;
                     kerjaelaun.JAWATAN = jawatan.HR_NAMA_JAWATAN;
-                    kerjaelaun.JAMBEKERJA = elaunot.SingleOrDefault().HR_JAM_HARI;
+
+                    //check for null
+                    if(elaunot.FirstOrDefault() != null)
+                    {
+                        kerjaelaun.JAMBEKERJA = elaunot.FirstOrDefault().HR_JAM_HARI;
+                    }
+                    else
+                    {
+                        kerjaelaun.JAMBEKERJA = 0;
+                    }
+                    
                     kerjaelaun.HARIBEKERJA = gaji.HR_JAM_HARI;                    
 
                     //elaun
@@ -103,21 +118,22 @@ namespace eSPP.Models
                         .Where(s => s.HR_KOD == "GAJPS").SingleOrDefault().HR_TUNGGAKAN_IND;
 
                     //calculation
-                    var gajikasar = gaji.HR_JUMLAH
-                       + elaunka.Sum(s => s.HR_JUMLAH)
-                       + elaunlain.Sum(s => s.HR_JUMLAH)
-                       + elaunot.Sum(s => s.HR_JUMLAH);
-                    kerjaelaun.GAJIKASAR = gajikasar.Value.ToString("0.00");
+                    var totalElaunka = elaunka.Sum(s => s.HR_JUMLAH);
+                    var totalElaunLain = elaunlain.Sum(s => s.HR_JUMLAH);
+                    var totalElaunot = elaunot.Sum(s => s.HR_JUMLAH);
+                    decimal gajikasar = PageSejarahModel.GetGajiKasar
+                        (gaji.HR_JUMLAH.Value, 
+                        totalElaunka, 
+                        totalElaunLain, 
+                        totalElaunot.Value, kerjaelaun.HARIBEKERJA.Value);
+                    kerjaelaun.GAJIKASAR = gajikasar.ToString("0.00");
                     var gajiSebelumKWSP = gajikasar
                       - potonganSocso
                       - potonganksdk.Sum(s => s.HR_JUMLAH)
                       - potonganlain.Sum(s => s.HR_JUMLAH);
                     kerjaelaun.GAJISEBELUMKWSP = gajiSebelumKWSP.Value.ToString("0.00");
                     //gaji bersih = gaji pokok + elaun - potongan
-                    var bersih = kerjaelaun.GAJIPOKOK 
-                        + elaunka.Sum(s => s.HR_JUMLAH) 
-                        + elaunot.Sum(s => s.HR_JUMLAH) 
-                        + elaunlain.Sum(s => s.HR_JUMLAH)
+                    var bersih = gajikasar
                         - potonganSocso
                         - potonganKWSP.HR_JUMLAH
                         - potonganksdk.Sum(s => s.HR_JUMLAH)
@@ -163,13 +179,13 @@ namespace eSPP.Models
                     kerjaelaun.JABATAN = userJabatan.GE_KETERANGAN_JABATAN; 
                     kerjaelaun.BAHAGIAN = userBahagian.GE_KETERANGAN;
                     kerjaelaun.NOKP = userPeribadi.HR_NO_KPBARU;
-                    kerjaelaun.JAWATAN = jawatan.HR_NAMA_JAWATAN;                    
+                    kerjaelaun.JAWATAN = jawatan.HR_NAMA_JAWATAN;
 
-                    decimal? gajikasar = kerjaelaun.GAJIPOKOK 
-                        + elaunka.Sum(s => s.HR_JUMLAH) 
-                        + elaunLain.Sum(s => s.HR_JUMLAH) 
-                        + elaunot;
-                    kerjaelaun.GAJIKASAR = gajikasar.Value.ToString("0.00");
+                    var totalElaunka = elaunka.Sum(s => s.HR_JUMLAH);
+                    var totalElaunLain = elaunLain.Sum(s => s.HR_JUMLAH);
+                    decimal gajikasar = PageSejarahModel
+                        .GetGajiKasar(gajiPokok, totalElaunka, totalElaunLain, elaunot, jumlahHariInt);
+                    kerjaelaun.GAJIKASAR = gajikasar.ToString("0.00");
                     //double? gajikasar1 = (double)gajikasar * 0.11;
                     var gajiSebelumKWSP = gajikasar
                       - potonganSocso
@@ -177,10 +193,7 @@ namespace eSPP.Models
                       - potonganlain.Sum(s => s.HR_JUMLAH);
                     kerjaelaun.GAJISEBELUMKWSP = gajiSebelumKWSP.Value.ToString("0.00");
                     //gaji bersih = gaji pokok + elaun - potongan
-                    var bersih = kerjaelaun.GAJIPOKOK
-                        + elaunka.Sum(s => s.HR_JUMLAH)
-                        + elaunLain.Sum(s => s.HR_JUMLAH)
-                        + elaunot
+                    var bersih = gajikasar
                         - potonganSocso
                         - potonganKWSP.HR_JUMLAH
                         - potonganksdk.Sum(s => s.HR_JUMLAH)
