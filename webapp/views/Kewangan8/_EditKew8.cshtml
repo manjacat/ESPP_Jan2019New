@@ -1,7 +1,7 @@
 ﻿@model eSPP.Models.HR_MAKLUMAT_KEWANGAN8
 <div>
     <div class="modal-header">
-        <button type="button" class="close" aria-hidden="true" onclick="javascript: var command = confirm('Adakah anda pasti tidak ingin meneruskannya?'); if (command == true) { history.go(0); }">
+        <button type="button" class="close" aria-hidden="true">
             &times;
         </button>
         <h4 class="modal-title">
@@ -19,6 +19,7 @@
             @Html.HiddenFor(model => model.HR_TARIKH_MULA)
             @Html.HiddenFor(model => model.HR_TARIKH_KEYIN)
             @Html.HiddenFor(model => model.HR_KEW8_ID)
+            @Html.HiddenFor(model => model.HR_ANSURAN_ID)
             @Html.HiddenFor(model => model.HR_NP_FINALISED_HR)
             @Html.Hidden("HR_KOD_JAWATAN", null)
             @Html.Hidden("PA_BULAN", Model.HR_BULAN)
@@ -26,6 +27,7 @@
             @Html.Hidden("Kod", (string)ViewBag.Kod)
             @*@Html.HiddenFor(model => model.HR_FINALISED_IND_HR)*@
             List<HR_MAKLUMAT_PERIBADI> sPegawai = (List<HR_MAKLUMAT_PERIBADI>)ViewBag.sPegawai;
+
             <fieldset>
                 <div class="row">
                     @if (ViewBag.Kod == "00036" || ViewBag.Kod == "TMK" || ViewBag.Kod == "00032" || ViewBag.Kod == "00004")
@@ -289,7 +291,7 @@
                                     <label class="label col col-4">Gaji Min (Baru)</label>
                                     <div class="col col-3">
                                         <label class="input">
-                                            @Html.TextBox("HR_GAJI_MIN_BARU", string.Format("{0:0.00}", (decimal?)ViewBag.HR_GAJI_MIN_BARU), new { @class = "form-control", list = "list-min", autocomplete = "off" })
+                                            @Html.TextBox("HR_GAJI_MIN_BARU", (ViewBag.Kod == "00036") ? string.Format("{0:0.00}", (decimal?)ViewBag.HR_GAJI_MIN_BARU): string.Format("{0:0.00}", Model.HR_GAJI_MIN_BARU), new { @class = "form-control", list = "list-min", autocomplete = "off" })
                                             <datalist id="list-min"></datalist>
                                         </label>
                                     </div>
@@ -382,8 +384,9 @@
                                         <label class="label col col-4" id="changeJumTxt">@changeJumTxt</label>
                                         <div class="col col-3">
                                             <label class="input">
+                                                @Html.Hidden("[0].HR_KOD_CARUMAN", (string)ViewBag.kodG, new { @class = "form-control", id = "HR_KOD_ELAUN" })
                                                 @Html.TextBox("[0].HR_NILAI", string.Format("{0:0.00}", (decimal?)ViewBag.HR_JUMLAH_PERUBAHAN), new { @class = "form-control", @readonly = "readonly", id = "HR_JUMLAH_PERUBAHAN" })
-                                                @Html.Hidden("[0].HR_KOD_POTONGAN", (ViewBag.Kod == "00036") ? (string)ViewBag.kodTGaji : (string)ViewBag.HR_KOD_PELARASAN, new { @class = "form-control", @readonly = "readonly", id = "HR_KOD_POTONGAN" })
+                                                @Html.Hidden("[0].HR_KOD_POTONGAN", (ViewBag.Kod == "00036") ? (string)ViewBag.kodTGaji : (string)ViewBag.HR_KOD_PELARASAN, new { @class = "form-control", id = "HR_KOD_POTONGAN" })
                                             </label>
                                         </div>
                                     </div>
@@ -562,6 +565,7 @@
                                     <label class="label col col-4">Jumlah Perubahan</label>
                                     <div class="col col-8">
                                         <label class="input">
+                                            @Html.Hidden("[0].HR_KOD_CARUMAN", (string)ViewBag.kodG, new { @class = "form-control", id = "HR_KOD_ELAUN" })
                                             @Html.TextBox("[0].HR_NILAI", string.Format("{0:0.00}", (decimal?)ViewBag.HR_JUMLAH_PERUBAHAN), new { @class = "form-control", @readonly = "readonly", id = "HR_JUMLAH_PERUBAHAN" })
                                         </label>
                                     </div>
@@ -770,7 +774,7 @@
                                         <datalist id="list-pegawai">
                                             @foreach (var pegawai in sPegawai)
                                             {
-                                                <option value="@(pegawai.HR_NAMA_PEKERJA)" data-value="@pegawai.HR_NO_PEKERJA"></option>
+                                                <option value="@(pegawai.HR_NAMA_PEKERJA)" data-value="@pegawai.HR_NO_PEKERJA">@(pegawai.HR_NO_PEKERJA)</option>
                                             }
                                         </datalist>
 
@@ -796,6 +800,7 @@
                         }
                         else
                         {
+                            <div id="statusdata"></div>
                             @Html.HiddenFor(model => model.HR_FINALISED_IND_HR)
                         }
                     </div>
@@ -893,8 +898,13 @@
                                     <label class="label col col-4" id="tukarTajukPotonganGaji">Jumlah Potongan Gaji</label>
                                     <div class="col col-3">
                                         <label class="input">
+                                            @Html.Hidden("[0].HR_KOD_CARUMAN", (string)ViewBag.kodG, new { @class = "form-control", id = "HR_KOD_ELAUN" })
                                             @Html.TextBox("[0].HR_NILAI", string.Format("{0:0.00}", (decimal?)ViewBag.nilaiPGaji), new { @class = "form-control", @readonly = "readonly", id = "HR_JUMLAH_POTONGAN_GAJI" })
                                             @Html.Hidden("[0].HR_KOD_POTONGAN", KOD_PELARASAN_GAJI, new { @class = "form-control", @readonly = "readonly", id = "HR_KOD_POTONGAN" })
+                                            @*@if (ViewBag.Kod == "00015")
+                                            {
+                                                @Html.Hidden("[0].HR_AKTIF_IND", "Y", new { @class = "form-control", @readonly = "readonly", id = "HR_AKTIF_IND" })
+                                            }*@
                                         </label>
                                     </div>
                                 </div>
@@ -999,6 +1009,7 @@
                                     <label class="label col col-4">Jumlah <span id="jumTxt">Tunggakan</span> (RM)</label>
                                     <div class="col col-3">
                                         <label class="input">
+                                            @Html.Hidden("[0].HR_KOD_CARUMAN", (string)ViewBag.kodG, new { @class = "form-control", id = "HR_KOD_ELAUN" })
                                             @Html.TextBox("[0].HR_NILAI", string.Format("{0:0.00}", (decimal?)ViewBag.HR_JUMLAH_PERUBAHAN), new { @class = "form-control", @readonly = "readonly", id = "HR_JUMLAH_PERUBAHAN" })
                                             @Html.Hidden("[0].HR_KOD_POTONGAN", KOD_PELARASAN_GAJI, new { @class = "form-control", @readonly = "readonly", id = "HR_KOD_POTONGAN" })
                                         </label>
@@ -1021,8 +1032,8 @@
                                 <div class="row">
 
                                     <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div id="tableElaun">
-                                            <table class="table table-striped table-bordered table-hover" id="tableElaun2" width="100%">
+                                        <div id="tableElaun" style="overflow-x:auto; width:100%">
+                                            <table class="table table-striped table-bordered table-hover" id="tableElaun2" style="width:800px">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -1036,6 +1047,11 @@
                                                             <th>Pelarasan</th>
                                                             <th>Jumlah Pelarasan</th>
                                                         }
+
+                                                        @*@if (ViewBag.Kod == "00015")
+                                                        {
+                                                            <th width="50">Pilih</th>
+                                                        }*@
 
                                                     </tr>
                                                 </thead>
@@ -1087,9 +1103,22 @@
                                                                         {
                                                                             HR_NILAI = Convert.ToDecimal(potongan2.HR_NILAI);
                                                                         }
-                                                                        <td>@(KOD_PELARASAN_ELAUN) @{ var txts2 = ""; if (KOD_PELARASAN_ELAUN != null) { txts2 = "::"; } else { txts2 = ""; } } @txts2 @(potongan2.HR_PENERANGAN_POTONGAN)@Html.Hidden("[" + no2 + "].HR_KOD_POTONGAN", KOD_PELARASAN_ELAUN)</td>
+                                                                        <td>@(KOD_PELARASAN_ELAUN) @{ var txts2 = ""; if (KOD_PELARASAN_ELAUN != null) { txts2 = "::"; } else { txts2 = ""; } } @txts2 @(potongan2.HR_PENERANGAN_POTONGAN)@Html.Hidden("[" + no2 + "].HR_KOD_CARUMAN", item.HR_KOD_ELAUN, new { @class = "form-control", id = "HR_KOD_ELAUN" })@Html.Hidden("[" + no2 + "].HR_KOD_POTONGAN", KOD_PELARASAN_ELAUN)</td>
                                                                         <td id="pelarasan"><label class="input">@Html.TextBox("[" + no2 + "].HR_NILAI", string.Format("{0:0.00}", +Math.Abs(HR_NILAI)), new { @class = "form-control", id = "HR_NILAI_PELARASAN" })</label></td>
                                                                     }
+
+                                                                    @*@if (ViewBag.Kod == "00015")
+                                                                    {
+                                                                        <td>
+                                                                            <lable class="select">
+                                                                                <select name="[' + no2 + '].HR_AKTIF_IND" class="form-control" id="HR_PELARASAN_AKTIF_IND">
+                                                                                    <option value="Y">Y</option>
+                                                                                    <option value="T">T</option>
+                                                                                </select>
+                                                                                <i></i>
+                                                                            </lable>
+                                                                        </td>
+                                                                    }*@
                                                                 </tr>
                                                             }
                                                         }
@@ -1098,6 +1127,12 @@
                                                 </tbody>
                                                 @if (num.Count() > 0 && (ViewBag.Kod == "00030" || ViewBag.Kod == "00026" || ViewBag.Kod == "TP" || ViewBag.Kod == "CUTI" || ViewBag.Kod == "00015" || ViewBag.Kod == "LNTKN"))
                                                 {
+                                                    //var colspan15 = "1";
+                                                    //if (ViewBag.Kod == "00015")
+                                                    //{
+                                                    //    colspan15 = "2";
+                                                    //}
+
                                                     <tfoot>
                                                         <tr>
                                                             <td colspan="4" align="right"><strong>Jumlah (RM)</strong></td>
@@ -1129,7 +1164,7 @@
                 <button type="reset" class="btn btn-default">
                     Reset
                 </button>
-                <button type="button" class="btn btn-default" onclick="javascript: var command = confirm('Adakah anda pasti tidak ingin meneruskannya?'); if (command == true) { history.go(0); }">
+                <button type="button" id="btn-back" class="btn btn-default">
                     Kembali
                 </button>
             </footer>
@@ -1422,175 +1457,288 @@
             }
         });
 
-        $("#btn").on("click", function (e) {
+        function errorMsg(msg, error, location) {
+            $('#Modal').modal('hide');
+            $("#errorMsg").html("<div>" + msg + "</div>");
+            $("#errorMsg").dialog({
+                open: function (event, ui) {   // It'll hide Close button
+                    $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                },
+                closeOnEscape: false,        // Do not close dialog on press Esc button
+                modal: true,
+                title: 'Mesej',
+                buttons: {
+                    "Tutup": function () {
+                        $(this).dialog("close")
+                        if (error == false) {
+                            window.location = location;
+                        }
+                        else {
+                            $('#Modal').modal('show');
+                        }
+                        $("#errorMsg").html('');
+                        waitMsg();
+                    }
+                }
+            });
+        }
 
+        function waitMsg() {
+            $('#Modal').modal('hide');
+            $("#waitMsg").html("<div class='text-center'><div><span id='img'><img class='rounded mx-auto d-block center' src='../Content/img/ajax-loader.gif' alt='loading' id='img-load' /></span></div><div>Sila tunggu sebentar</div></div>");
+            $("#waitMsg").dialog({
+                open: function (event, ui) {   // It'll hide Close button
+                    $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                },
+                closeOnEscape: false,        // Do not close dialog on press Esc button
+                modal: true,
+                title: 'Mesej'
+            });
+        }
+
+        function FormSubmit(e, btn) {
             var isValid = 0;
-
-            $('#HR_KOD_PERUBAHAN').valid();
-            if ($('#HR_KOD_PERUBAHAN').valid() == false) {
-                $(this).focus();
-                isValid++;
-            }
-
-            if ('@ViewBag.Kod' == "00031" || '@ViewBag.Kod' == "00039" || '@ViewBag.Kod' == "00024") {
-                $('#HR_KOD_PELARASAN').valid();
-                if ($('#HR_KOD_PELARASAN').valid() == false) {
-                    $(this).focus();
-                    isValid++;
-                }
-            }
-
-            if ('@ViewBag.Kod' == "00026" || '@ViewBag.Kod' == "00025" || '@ViewBag.Kod' == "kew8" || '@ViewBag.Kod' == "00022" || '@ViewBag.Kod' == "00037" || '@ViewBag.Kod' == "CUTI" || '@ViewBag.Kod' == "00039" || '@ViewBag.Kod' == "00036" || '@ViewBag.Kod' == "00024" || '@ViewBag.Kod' == "LNTKN" || '@ViewBag.Kod' == "TMK" || '@ViewBag.Kod' == "00032" || '@ViewBag.Kod' == "00004" || '@ViewBag.Kod' == "00015") {
-                $('#HR_TARIKH_MULA').valid();
-                if ($('#HR_TARIKH_MULA').valid() == false) {
-                    $(this).focus();
-                    isValid++;
-                }
-            }
-
-            if ('@ViewBag.Kod' == "00026" || ('@ViewBag.Kod' == "00024" && $('#HR_KEW8_IND:checked').val() == "P") || ('@ViewBag.Kod' == "00039" && $('#HR_KEW8_IND:checked').val() == "P") || '@ViewBag.Kod' == "LNTKN" || '@ViewBag.Kod' == "TMK" || '@ViewBag.Kod' == "00032" || '@ViewBag.Kod' == "00004" || '@ViewBag.Kod' == "00015" || ('@ViewBag.Kod' == "CUTI" && $('#HR_KOD_PERUBAHAN').val() == "00017")) {
-                $('#HR_TARIKH_AKHIR').valid();
-                if ($('#HR_TARIKH_AKHIR').valid() == false) {
-                    $(this).focus();
-                    isValid++;
-                }
-            }
-
-            if ('@ViewBag.Kod' == "00031") {
-                $('#HR_JUMLAH_BULAN').valid();
-                if ($('#HR_JUMLAH_BULAN').valid() == false) {
-                    $(this).focus();
+            if (btn != "M") {
+                $('#HR_KOD_PERUBAHAN').valid();
+                if ($('#HR_KOD_PERUBAHAN').valid() == false) {
+                    $('#HR_KOD_PERUBAHAN').focus();
                     isValid++;
                 }
 
-                $('#HR_NILAI_EPF').valid();
-                if ($('#HR_NILAI_EPF').valid() == false) {
-                    $(this).focus();
-                    isValid++;
+                if ('@ViewBag.Kod' == "00031" || '@ViewBag.Kod' == "00039" || '@ViewBag.Kod' == "00024") {
+                    $('#HR_KOD_PELARASAN').valid();
+                    if ($('#HR_KOD_PELARASAN').valid() == false) {
+                        $('#HR_KOD_PELARASAN').focus();
+                        isValid++;
+                    }
                 }
 
-                $('#HR_NILAI_PERATUS').valid();
-                if ($('#HR_NILAI_PERATUS').valid() == false) {
-                    $(this).focus();
-                    isValid++;
+                if ('@ViewBag.Kod' == "00026" || '@ViewBag.Kod' == "00025" || '@ViewBag.Kod' == "kew8" || '@ViewBag.Kod' == "00022" || '@ViewBag.Kod' == "00037" || '@ViewBag.Kod' == "CUTI" || '@ViewBag.Kod' == "00039" || '@ViewBag.Kod' == "00036" || '@ViewBag.Kod' == "00024" || '@ViewBag.Kod' == "LNTKN" || '@ViewBag.Kod' == "TMK" || '@ViewBag.Kod' == "00032" || '@ViewBag.Kod' == "00004" || '@ViewBag.Kod' == "00015") {
+                    $('#HR_TARIKH_MULA').valid();
+                    if ($('#HR_TARIKH_MULA').valid() == false) {
+                        $('#HR_TARIKH_MULA').focus();
+                        isValid++;
+                    }
                 }
-            }
 
-            if ('@ViewBag.Kod' == "00036" || '@ViewBag.Kod' == "TMK" || '@ViewBag.Kod' == "00032" || '@ViewBag.Kod' == "00004") {
-                if ('@ViewBag.Kod' == "TMK" || '@ViewBag.Kod' == "00032" || '@ViewBag.Kod' == "00004") {
-                    $('#HR_JAWATAN_BARU').valid();
-                    if ($('#HR_JAWATAN_BARU').valid() == false) {
-                        $('#HR_JAWATAN_BARU').focus();
+                if ('@ViewBag.Kod' == "00026" || ('@ViewBag.Kod' == "00024" && $('#HR_KEW8_IND:checked').val() == "P") || ('@ViewBag.Kod' == "00039" && $('#HR_KEW8_IND:checked').val() == "P") || '@ViewBag.Kod' == "LNTKN" || '@ViewBag.Kod' == "TMK" || '@ViewBag.Kod' == "00032" || '@ViewBag.Kod' == "00004" || '@ViewBag.Kod' == "00015" || ('@ViewBag.Kod' == "CUTI" && $('#HR_KOD_PERUBAHAN').val() == "00017")) {
+                    $('#HR_TARIKH_AKHIR').valid();
+                    if ($('#HR_TARIKH_AKHIR').valid() == false) {
+                        $('#HR_TARIKH_AKHIR').focus();
+                        isValid++;
+                    }
+                }
+
+                if ('@ViewBag.Kod' == "00031") {
+                    $('#HR_JUMLAH_BULAN').valid();
+                    if ($('#HR_JUMLAH_BULAN').valid() == false) {
+                        $('#HR_JUMLAH_BULAN').focus();
                         isValid++;
                     }
 
-                    //$('#HR_PGT_BARU').valid();
-                    //if ($('#HR_PGT_BARU').valid() == false) {
-                    //    $('#HR_PGT_BARU').focus();
-                    //    isValid++;
-                    //}
-                }
-                $('#HR_GRED').valid();
-                if ($('#HR_GRED').valid() == false) {
-                    $('#HR_GRED').focus();
-                    isValid++;
-                }
-
-                $('#HR_GAJI_MIN_BARU').valid();
-                if ($('#HR_GAJI_MIN_BARU').valid() == false) {
-                    if ($('#HR_GRED').val() != "")
-                    {
-                        $('#HR_GAJI_MIN_BARU').focus();
+                    $('#HR_NILAI_EPF').valid();
+                    if ($('#HR_NILAI_EPF').valid() == false) {
+                        $('#HR_NILAI_EPF').focus();
+                        isValid++;
                     }
 
-                    isValid++;
+                    $('#HR_NILAI_PERATUS').valid();
+                    if ($('#HR_NILAI_PERATUS').valid() == false) {
+                        $('#HR_NILAI_PERATUS').focus();
+                        isValid++;
+                    }
                 }
 
-                if ('@ViewBag.Kod' == "00036")
-                {
-                    $('#HR_GAJI_MAX_BARU').valid();
-                    if ($('#HR_GAJI_MAX_BARU').valid() == false) {
-                        if ($('#HR_GRED').val() != "" && $('#HR_GAJI_MIN_BARU').val() != "") {
-                            $('#HR_GAJI_MAX_BARU').focus();
+                if ('@ViewBag.Kod' == "00036" || '@ViewBag.Kod' == "TMK" || '@ViewBag.Kod' == "00032" || '@ViewBag.Kod' == "00004") {
+                    if ('@ViewBag.Kod' == "TMK" || '@ViewBag.Kod' == "00032" || '@ViewBag.Kod' == "00004") {
+                        $('#HR_JAWATAN_BARU').valid();
+                        if ($('#HR_JAWATAN_BARU').valid() == false) {
+                            $('#HR_JAWATAN_BARU').focus();
+                            isValid++;
+                        }
+
+                        //$('#HR_PGT_BARU').valid();
+                        //if ($('#HR_PGT_BARU').valid() == false) {
+                        //    $('#HR_PGT_BARU').focus();
+                        //    isValid++;
+                        //}
+                    }
+                    $('#HR_GRED').valid();
+                    if ($('#HR_GRED').valid() == false) {
+                        $('#HR_GRED').focus();
+                        isValid++;
+                    }
+
+                    $('#HR_GAJI_MIN_BARU').valid();
+                    if ($('#HR_GAJI_MIN_BARU').valid() == false) {
+                        if ($('#HR_GRED').val() != "") {
+                            $('#HR_GAJI_MIN_BARU').focus();
                         }
 
                         isValid++;
                     }
 
-                    $('#HR_GAJI_BARU').valid();
-                    if ($('#HR_GAJI_BARU').valid() == false) {
-                        $('#HR_GAJI_BARU').focus();
-                        isValid++;
-                    }
-                }
-            }
-
-            if ('@ViewBag.Kod' == "TP") {
-                $('#HR_TARIKH_TAMAT').valid();
-                if ($('#HR_TARIKH_TAMAT').valid() == false) {
-                    $('#HR_TARIKH_TAMAT').focus();
-                    isValid++;
-                }
-            }
-
-            if ('@ViewBag.Kod' == "00030" || '@ViewBag.Kod' == "00015") {
-                $('#HR_JUMLAH_POTONGAN').valid();
-                if ($('#HR_JUMLAH_POTONGAN').valid() == false) {
-                    isValid++;
-                }
-
-                if ('@ViewBag.Kod' != "CUTI") {
-
-                    if ('@ViewBag.Kod' == "00030")
-                    {
-                        if ($('#HR_KEW8_IND:checked').val() == "A") {
-                            $('#HR_BIL2').valid();
-                            if ($('#HR_BIL2').valid() == false) {
-                                isValid++;
+                    if ('@ViewBag.Kod' == "00036") {
+                        $('#HR_GAJI_MAX_BARU').valid();
+                        if ($('#HR_GAJI_MAX_BARU').valid() == false) {
+                            if ($('#HR_GRED').val() != "" && $('#HR_GAJI_MIN_BARU').val() != "") {
+                                $('#HR_GAJI_MAX_BARU').focus();
                             }
+
+                            isValid++;
                         }
-                    }
 
-
-                    if ($('#HR_KEW8_IND:checked').val() == "H") {
-                        $('#HR_BIL3').valid();
-                        if ($('#HR_BIL3').valid() == false) {
+                        $('#HR_GAJI_BARU').valid();
+                        if ($('#HR_GAJI_BARU').valid() == false) {
+                            $('#HR_GAJI_BARU').focus();
                             isValid++;
                         }
                     }
-
-                    $('#HR_KEW8_IND').valid();
-                    if ($('#HR_KEW8_IND').valid() == false) {
-                        isValid++;
-                     }
                 }
-            }
 
-            $('#HR_NAMA_PEGAWAI').valid();
-            if ($('#HR_NAMA_PEGAWAI').valid() == false) {
-                $('#HR_NAMA_PEGAWAI').focus();
-                isValid++;
-            }
+                if ('@ViewBag.Kod' == "TP") {
+                    $('#HR_TARIKH_TAMAT').valid();
+                    if ($('#HR_TARIKH_TAMAT').valid() == false) {
+                        $('#HR_TARIKH_TAMAT').focus();
+                        isValid++;
+                    }
+                }
 
-            if (isValid > 0) {
-                e.preventDefault();
-            }
-            else {
-                e.preventDefault;
-                $.ajax({
-                    type: "POST",
-                    url: $("#form").attr('action'),
-                    data: $("#form").serialize(),
-                    success: function (data) {
-                        alert(data.msg);
+                if ('@ViewBag.Kod' == "00030" || '@ViewBag.Kod' == "00015") {
+                    $('#HR_JUMLAH_POTONGAN').valid();
+                    if ($('#HR_JUMLAH_POTONGAN').valid() == false) {
+                        isValid++;
+                    }
 
-                        if (data.error == false) {
-                            window.location = data.location;
+                    if ('@ViewBag.Kod' != "CUTI") {
+
+                        if ('@ViewBag.Kod' == "00030") {
+                            if ($('#HR_KEW8_IND:checked').val() == "A") {
+                                $('#HR_BIL2').valid();
+                                if ($('#HR_BIL2').valid() == false) {
+                                    isValid++;
+                                }
+                            }
+                        }
+
+
+                        if ($('#HR_KEW8_IND:checked').val() == "H") {
+                            $('#HR_BIL3').valid();
+                            if ($('#HR_BIL3').valid() == false) {
+                                isValid++;
+                            }
+                        }
+
+                        $('#HR_KEW8_IND').valid();
+                        if ($('#HR_KEW8_IND').valid() == false) {
+                            isValid++;
                         }
                     }
-                });
-            }
+                }
 
+                $('#HR_NAMA_PEGAWAI').valid();
+                if ($('#HR_NAMA_PEGAWAI').valid() == false) {
+                    $('#HR_NAMA_PEGAWAI').focus();
+                    isValid++;
+                }
+            }
+            if (isValid > 0) {
+                e.preventDefault();
+                e.preventDefault();
+                $("#btn").removeAttr('disabled');
+                $("button[type='reset']").removeAttr('disabled');
+                $("#btn-back").removeAttr('disabled');
+                $("button.close").removeAttr('disabled');
+                return "T";
+            }
+            else {
+                if (btn == "Y" || btn == "M") {
+                    waitMsg()
+                    e.preventDefault;
+                    $.ajax({
+                        type: "POST",
+                        url: $("#form").attr('action'),
+                        data: $("#form").serialize(),
+                        success: function (data) {
+                            $("#waitMsg").dialog("close")
+                            $("#waitMsg").html('')
+                            errorMsg(data.msg, data.error, data.location);
+                        }
+                    });
+                }
+            }
+            return "Y";
+        }
+
+        $("#btn").on("click", function (e) {
+            $("#btn").attr('disabled', 'disabled');
+            $("button[type='reset']").attr('disabled', 'disabled');
+            $("#btn-back").attr('disabled', 'disabled');
+            $("button.close").attr('disabled', 'disabled');
+
+            if ($("#HR_FINALISED_IND_HR").val() == "Y") {
+                if (FormSubmit(e, "T") == "Y") {
+                    $('#Modal').modal('hide');
+                    $("#errorMsg").html('<div>Adakah anda pasti ingin muktamadkan ini?</div>');
+                    $("#errorMsg").dialog({
+                        open: function (event, ui) {   // It'll hide Close button
+                            $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                        },
+                        closeOnEscape: false,        // Do not close dialog on press Esc button
+                        modal: true,
+                        title: 'Mesej',
+                        buttons: {
+                            "Ya": function () {
+                                $(this).dialog("close")
+                                FormSubmit(e, "M")
+                                $("#errorMsg").html('');
+                            },
+                            "Tidak": function () {
+                                $(this).dialog("close")
+                                e.preventDefault();
+                                $("#btn").removeAttr('disabled');
+                                $("button[type='reset']").removeAttr('disabled');
+                                $("#btn-back").removeAttr('disabled');
+                                $("button.close").removeAttr('disabled');
+                                $("#errorMsg").html('');
+                                $('#Modal').modal('show');
+                            }
+                        }
+                    });
+                }
+            }
+            else {
+                FormSubmit(e, "Y");
+            }
+            
+            return true;
+        })
+
+        $("#btn-back, button.close").on("click", function () {
+            $("#errorMsg").html('Adakah anda pasti tidak ingin meneruskannya?');
+            $('#Modal').modal('hide');
+            $("#errorMsg").dialog({
+                open: function (event, ui) {   // It'll hide Close button
+                    $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                },
+                closeOnEscape: false,        // Do not close dialog on press Esc button
+                modal: true,
+                title: 'Mesej',
+                buttons: {
+                    "Ya": function () {
+                        $(this).dialog("close")
+                        waitMsg()
+                        history.go(0);
+                        $("#errorMsg").html('');
+                        
+                    },
+                    "Tidak": function () {
+                        $(this).dialog("close")
+                        $("#errorMsg").html('');
+                        $('#Modal').modal('show');
+                    }
+                }
+            });
         })
 
     });
@@ -2149,7 +2297,7 @@
                                                 '<div class="col col-8">' +
                                                     '<label class="select">' +
                                                         '<select class="form-control" id="HR_FINALISED_IND_HR" name="HR_FINALISED_IND_HR">' +
-                                                            '<option value="T">Baru</option>' +
+                                                            '<option value="T">Tidak Aktif</option>' +
                                                             '<option value="P">Proses</option>' +
                                                             '<option value="Y">Muktamad</option>' +
                                                         '<select>' +
@@ -2369,7 +2517,7 @@
                 $.ajax({
                     url: "../Kewangan8/DataAnsuran",
                     type: "GET",
-                    data: { "HR_NO_PEKERJA": $("#HR_NO_PEKERJA").val(), "HR_KOD_PERUBAHAN": $("#HR_KOD_PERUBAHAN").val(), "HR_KEW8_ID": $("#HR_KEW8_ID").val() },
+                    data: { "HR_NO_PEKERJA": $("#HR_NO_PEKERJA").val(), "HR_KOD_PERUBAHAN": $("#HR_KOD_PERUBAHAN").val(), "HR_ANSURAN_ID": $("#HR_ANSURAN_ID").val() },
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function (ansuran) {
@@ -2481,6 +2629,8 @@
                                     jumPelarasan = parseFloat($("#tableElaun tfoot tr td input#TotalPelarasan").val()) * jum
                                 }
                                 $("#tableElaun tfoot tr td input#TotalPelarasan").val((jumPelarasan).toFixed(2))
+                                var jumPot = parseFloat(gaji) + parseFloat((jumPelarasan).toFixed(2))
+                                $('#HR_JUMLAH_POTONGAN').val((jumPot).toFixed(2));
 
                                 TarikhAnsuran();
                             }
@@ -3186,7 +3336,7 @@
                 readonly = "readonly='readonly'"
             }
 
-            var table3 = '<table class="table table-striped table-bordered table-hover" id="tableElaun2" width="100%">' +
+            var table3 = '<table class="table table-striped table-bordered table-hover" id="tableElaun2" style="width:800px">' +
                             '<thead>' +
                                 '<tr>' +
                                     '<th>#</th>' +
@@ -3253,7 +3403,7 @@
                                         '<td align="center">' + no2 + '</td>' +
                                         '<td>' + val.ELAUN.HR_KOD_ELAUN + ' :: ' + val.ELAUN.HR_PENERANGAN_ELAUN + '</td>' +
                                         '<td>' + val.ELAUN.HR_NILAI + '</td>' +
-                                        '<td>' + val.KOD_PELARASAN + ' :: ' + val.PENERANGAN + '<input name="[' + no2 + '].HR_KOD_POTONGAN" type="hidden" value="' + val.KOD_PELARASAN + '" /></td>' +
+                                        '<td>' + val.KOD_PELARASAN + ' :: ' + val.PENERANGAN + '<input name="[' + no2 + '].HR_KOD_CARUMAN" type="hidden" value="' + val.ELAUN.HR_KOD_ELAUN + '" id="HR_KOD_ELAUN" /><input name="[' + no2 + '].HR_KOD_POTONGAN" type="hidden" value="' + val.KOD_PELARASAN + '" /></td>' +
                                         '<td id="pelarasan"><label class="input"><input name="[' + no2 + '].HR_NILAI" type="text" class="form-control" value="' + (+Math.abs(nilaiPelarasan)).toFixed(2) + '" id="HR_NILAI_PELARASAN" ' + readonly + ' /></label></td>' +
                                     '</tr>');
                         jumPotongan2 += parseFloat(nilaiPelarasan.toFixed(2));
@@ -3337,7 +3487,7 @@
                 readonly = "readonly='readonly'"
             }
 
-            var table3 = '<table class="table table-striped table-bordered table-hover" id="tableElaun2" width="100%">' +
+            var table3 = '<table class="table table-striped table-bordered table-hover" id="tableElaun2" style="width:800px">' +
                             '<thead>' +
                                 '<tr>' +
                                     '<th>#</th>' +
@@ -3402,7 +3552,7 @@
                                         '<td align="center">' + no2 + '</td>' +
                                         '<td>' + val.ELAUN.HR_KOD_ELAUN + ' :: ' + val.ELAUN.HR_PENERANGAN_ELAUN + '</td>' +
                                         '<td>' + val.ELAUN.HR_NILAI + '</td>' +
-                                        '<td>' + val.KOD_PELARASAN + ' :: ' + val.PENERANGAN + '<input name="[' + no2 + '].HR_KOD_POTONGAN" type="hidden" value="' + val.KOD_PELARASAN + '" /></td>' +
+                                        '<td>' + val.KOD_PELARASAN + ' :: ' + val.PENERANGAN + '<input name="[' + no2 + '].HR_KOD_CARUMAN" type="hidden" value="' + val.ELAUN.HR_KOD_ELAUN + '" id="HR_KOD_ELAUN" /><input name="[' + no2 + '].HR_KOD_POTONGAN" type="hidden" value="' + val.KOD_PELARASAN + '" /></td>' +
                                         '<td id="pelarasan"><label class="input"><input name="[' + no2 + '].HR_NILAI" type="text" class="form-control" value="' + (+Math.abs(nilaiPelarasan)).toFixed(2) + '" id="HR_NILAI_PELARASAN" ' + readonly + ' /></label></td>' +
                                     '</tr>');
                         jumPotongan2 += parseFloat(nilaiPelarasan.toFixed(2));

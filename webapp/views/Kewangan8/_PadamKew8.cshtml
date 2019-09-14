@@ -1,7 +1,7 @@
 ﻿@model eSPP.Models.HR_MAKLUMAT_KEWANGAN8
 <div>
     <div class="modal-header">
-        <button type="button" class="close" aria-hidden="true" onclick="javascript: var command = confirm('Adakah anda pasti tidak ingin meneruskannya?'); if (command == true) { history.go(0); }">
+        <button type="button" class="close" aria-hidden="true">
             &times;
         </button>
         <h4 class="modal-title">
@@ -19,6 +19,7 @@
             @Html.HiddenFor(model => model.HR_TARIKH_MULA)
             @Html.HiddenFor(model => model.HR_TARIKH_KEYIN)
             @Html.HiddenFor(model => model.HR_KEW8_ID)
+            @Html.HiddenFor(model => model.HR_ANSURAN_ID)
             @Html.HiddenFor(model => model.HR_NP_FINALISED_HR)
             @Html.Hidden("HR_KOD_JAWATAN", null)
             @Html.Hidden("PA_BULAN", Model.HR_BULAN)
@@ -26,6 +27,7 @@
             @Html.Hidden("Kod", (string)ViewBag.Kod)
             @*@Html.HiddenFor(model => model.HR_FINALISED_IND_HR)*@
             List<HR_MAKLUMAT_PERIBADI> sPegawai = (List<HR_MAKLUMAT_PERIBADI>)ViewBag.sPegawai;
+
             <fieldset>
                 <div class="row">
                     @if (ViewBag.Kod == "00036" || ViewBag.Kod == "TMK" || ViewBag.Kod == "00032" || ViewBag.Kod == "00004")
@@ -289,7 +291,7 @@
                                     <label class="label col col-4">Gaji Min (Baru)</label>
                                     <div class="col col-3">
                                         <label class="input">
-                                            @Html.TextBox("HR_GAJI_MIN_BARU", string.Format("{0:0.00}", (decimal?)ViewBag.HR_GAJI_MIN_BARU), new { @class = "form-control", list = "list-min", autocomplete = "off", disabled = "disabled" })
+                                            @Html.TextBox("HR_GAJI_MIN_BARU", (ViewBag.Kod == "00036") ? string.Format("{0:0.00}", (decimal?)ViewBag.HR_GAJI_MIN_BARU) : string.Format("{0:0.00}", Model.HR_GAJI_MIN_BARU), new { @class = "form-control", list = "list-min", autocomplete = "off", disabled = "disabled" })
                                             <datalist id="list-min"></datalist>
                                         </label>
                                     </div>
@@ -382,8 +384,9 @@
                                         <label class="label col col-4" id="changeJumTxt">@changeJumTxt</label>
                                         <div class="col col-3">
                                             <label class="input">
+                                                @Html.Hidden("[0].HR_KOD_CARUMAN", (string)ViewBag.kodG, new { @class = "form-control", id = "HR_KOD_ELAUN" })
                                                 @Html.TextBox("[0].HR_NILAI", string.Format("{0:0.00}", (decimal?)ViewBag.HR_JUMLAH_PERUBAHAN), new { @class = "form-control", disabled = "disabled", id = "HR_JUMLAH_PERUBAHAN" })
-                                                @Html.Hidden("[0].HR_KOD_POTONGAN", (ViewBag.Kod == "00036") ? (string)ViewBag.kodTGaji : (string)ViewBag.HR_KOD_PELARASAN, new { @class = "form-control", @readonly = "readonly", id = "HR_KOD_POTONGAN" })
+                                                @Html.Hidden("[0].HR_KOD_POTONGAN", (ViewBag.Kod == "00036") ? (string)ViewBag.kodTGaji : (string)ViewBag.HR_KOD_PELARASAN, new { @class = "form-control", id = "HR_KOD_POTONGAN" })
                                             </label>
                                         </div>
                                     </div>
@@ -562,6 +565,7 @@
                                     <label class="label col col-4">Jumlah Perubahan</label>
                                     <div class="col col-8">
                                         <label class="input">
+                                            @Html.Hidden("[0].HR_KOD_CARUMAN", (string)ViewBag.kodG, new { @class = "form-control", id = "HR_KOD_ELAUN" })
                                             @Html.TextBox("[0].HR_NILAI", string.Format("{0:0.00}", (decimal?)ViewBag.HR_JUMLAH_PERUBAHAN), new { @class = "form-control", disabled = "disabled", id = "HR_JUMLAH_PERUBAHAN" })
                                         </label>
                                     </div>
@@ -893,8 +897,9 @@
                                     <label class="label col col-4" id="tukarTajukPotonganGaji">Jumlah Potongan Gaji</label>
                                     <div class="col col-3">
                                         <label class="input">
+                                            @Html.Hidden("[0].HR_KOD_CARUMAN", (string)ViewBag.kodG, new { @class = "form-control", id = "HR_KOD_ELAUN" })
                                             @Html.TextBox("[0].HR_NILAI", string.Format("{0:0.00}", (decimal?)ViewBag.nilaiPGaji), new { @class = "form-control", disabled = "disabled", id = "HR_JUMLAH_POTONGAN_GAJI" })
-                                            @Html.Hidden("[0].HR_KOD_POTONGAN", KOD_PELARASAN_GAJI, new { @class = "form-control", @readonly = "readonly", id = "HR_KOD_POTONGAN" })
+                                            @Html.Hidden("[0].HR_KOD_POTONGAN", KOD_PELARASAN_GAJI, new { @class = "form-control", id = "HR_KOD_POTONGAN" })
                                         </label>
                                     </div>
                                 </div>
@@ -999,8 +1004,9 @@
                                     <label class="label col col-4">Jumlah <span id="jumTxt">Tunggakan</span> (RM)</label>
                                     <div class="col col-3">
                                         <label class="input">
+                                            @Html.Hidden("[0].HR_KOD_CARUMAN", (string)ViewBag.kodG, new { @class = "form-control", id = "HR_KOD_ELAUN" })
                                             @Html.TextBox("[0].HR_NILAI", string.Format("{0:0.00}", (decimal?)ViewBag.HR_JUMLAH_PERUBAHAN), new { @class = "form-control", id = "HR_JUMLAH_PERUBAHAN", disabled = "disabled" })
-                                            @Html.Hidden("[0].HR_KOD_POTONGAN", KOD_PELARASAN_GAJI, new { @class = "form-control", @readonly = "readonly", id = "HR_KOD_POTONGAN" })
+                                            @Html.Hidden("[0].HR_KOD_POTONGAN", KOD_PELARASAN_GAJI, new { @class = "form-control", id = "HR_KOD_POTONGAN" })
                                         </label>
                                     </div>
                                 </div>
@@ -1021,8 +1027,8 @@
                                 <div class="row">
 
                                     <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div id="tableElaun">
-                                            <table class="table table-striped table-bordered table-hover" id="tableElaun2" width="100%">
+                                        <div id="tableElaun" style="overflow-x:auto; width:100%">
+                                            <table class="table table-striped table-bordered table-hover" id="tableElaun2" style="width:800px">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -1087,7 +1093,7 @@
                                                                         {
                                                                             HR_NILAI = Convert.ToDecimal(potongan2.HR_NILAI);
                                                                         }
-                                                                        <td>@(KOD_PELARASAN_ELAUN) @{ var txts2 = ""; if (KOD_PELARASAN_ELAUN != null) { txts2 = "::"; } else { txts2 = ""; } } @txts2 @Html.DisplayFor(model => potongan2.HR_PENERANGAN_POTONGAN)@Html.Hidden("[" + no2 + "].HR_KOD_POTONGAN", KOD_PELARASAN_ELAUN)</td>
+                                                                        <td>@(KOD_PELARASAN_ELAUN) @{ var txts2 = ""; if (KOD_PELARASAN_ELAUN != null) { txts2 = "::"; } else { txts2 = ""; } } @txts2 @Html.DisplayFor(model => potongan2.HR_PENERANGAN_POTONGAN)@Html.Hidden("[" + no2 + "].HR_KOD_CARUMAN", item.HR_KOD_ELAUN, new { @class = "form-control", id = "HR_KOD_ELAUN" })@Html.Hidden("[" + no2 + "].HR_KOD_POTONGAN", KOD_PELARASAN_ELAUN)</td>
                                                                         <td id="pelarasan"><label class="input">@Html.TextBox("[" + no2 + "].HR_NILAI", string.Format("{0:0.00}", +Math.Abs(HR_NILAI)), new { @class = "form-control", id = "HR_NILAI_PELARASAN", disabled = "disabled" })</label></td>
                                                                     }
                                                                 </tr>
@@ -1126,7 +1132,7 @@
                 <button type="button" id="btn" class="btn btn-danger">
                     <span class="fa fa-trash-o"></span> Padam
                 </button>
-                <button type="button" class="btn btn-default" onclick="javascript: var command = confirm('Adakah anda pasti tidak ingin meneruskannya?'); if (command == true) { history.go(0); }">
+                <button type="button" id="btn-back" class="btn btn-default">
                     Kembali
                 </button>
             </footer>
@@ -1373,23 +1379,118 @@
             }
         });
 
-        $("#btn").on("click", function () {
-            var arahan = confirm("Adakah anda ingin memadam data ini?");
-            if (arahan == true) {
-                $.ajax({
-                    cache: false,
-                    async: true,
-                    type: "POST",
-                    url: $("#form").attr('action'),
-                    data: $("#form").serialize(),
-                    success: function (data) {
-                        alert(data.msg);
-                        if (data.error == false) {
-                            window.location = data.location;
+        function errorMsg(msg, error, location) {
+            $("#errorMsg").html("<div>" + msg + "</div>");
+            $("#errorMsg").dialog({
+                open: function (event, ui) {   // It'll hide Close button
+                    $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                },
+                closeOnEscape: false,        // Do not close dialog on press Esc button
+                modal: true,
+                title: 'Mesej',
+                buttons: {
+                    "Tutup": function () {
+                        $(this).dialog("close")
+                        if (error == false) {
+                            window.location = location;
                         }
+                        else {
+                            $('#Modal').modal('show');
+                        }
+                        $("#errorMsg").html('');
+                        waitMsg();
                     }
-                });
-            }
+                }
+            });
+        }
+
+        function waitMsg() {
+            $('#Modal').modal('hide');
+            $("#waitMsg").html("<div class='text-center'><div><span id='img'><img class='rounded mx-auto d-block center' src='../Content/img/ajax-loader.gif' alt='loading' id='img-load' /></span></div><div>Sila tunggu sebentar</div></div>");
+            $("#waitMsg").dialog({
+                open: function (event, ui) {   // It'll hide Close button
+                    $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                },
+                closeOnEscape: false,        // Do not close dialog on press Esc button
+                modal: true,
+                title: 'Mesej'
+            });
+        }
+
+        function FormSubmit(e) {
+            waitMsg()
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "POST",
+                url: $("#form").attr('action'),
+                data: $("#form").serialize(),
+                success: function (data) {
+                    $("#waitMsg").dialog("close")
+                    $("#waitMsg").html('')
+                    errorMsg(data.msg, data.error, data.location);
+                }
+            });
+        }
+
+        $("#btn").on("click", function (e) {
+            $("#btn").attr('disabled', 'disabled');
+            $("#btn-back").attr('disabled', 'disabled');
+            $("button.close").attr('disabled', 'disabled');
+            $('#Modal').modal('hide');
+
+            $("#errorMsg").html('Adakah anda ingin memadam data ini?');
+            $("#errorMsg").dialog({
+                open: function (event, ui) {   // It'll hide Close button
+                    $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                },
+                closeOnEscape: false,        // Do not close dialog on press Esc button
+                modal: true,
+                title: 'Mesej',
+                buttons: {
+                    "Ya": function () {
+                        $(this).dialog("close")
+                        FormSubmit(e)
+                        $("#errorMsg").html('');
+                    },
+                    "Tidak": function () {
+                        $(this).dialog("close")
+                        e.preventDefault();
+                        $("#btn").removeAttr('disabled');
+                        $("#btn-back").removeAttr('disabled');
+                        $("button.close").removeAttr('disabled');
+                        $("#errorMsg").html('');
+                        $('#Modal').modal('show');
+                    }
+                }
+            }); 
+            return true;
+        })
+
+        $("#btn-back, button.close").on("click", function () {
+            $("#errorMsg").html('Adakah anda pasti tidak ingin meneruskannya?');
+            $('#Modal').modal('hide');
+            $("#errorMsg").dialog({
+                open: function (event, ui) {   // It'll hide Close button
+                    $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                },
+                closeOnEscape: false,        // Do not close dialog on press Esc button
+                modal: false,
+                title: 'Mesej',
+                buttons: {
+                    "Ya": function () {
+                        $(this).dialog("close")
+                        waitMsg()
+                        history.go(0);
+                        $("#errorMsg").html('');
+                    },
+                    "Tidak": function () {
+                        $(this).dialog("close")
+                        $("#errorMsg").html('');
+                        $('#Modal').modal('show');
+                    }
+                }
+            });
         })
 
     });
@@ -2168,7 +2269,7 @@
                 $.ajax({
                     url: "../Kewangan8/DataAnsuran",
                     type: "GET",
-                    data: { "HR_NO_PEKERJA": $("#HR_NO_PEKERJA").val(), "HR_KOD_PERUBAHAN": $("#HR_KOD_PERUBAHAN").val(), "HR_KEW8_ID": $("#HR_KEW8_ID").val() },
+                    data: { "HR_NO_PEKERJA": $("#HR_NO_PEKERJA").val(), "HR_KOD_PERUBAHAN": $("#HR_KOD_PERUBAHAN").val(), "HR_ANSURAN_ID": $("#HR_ANSURAN_ID").val() },
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function (ansuran) {
@@ -2280,6 +2381,8 @@
                                     jumPelarasan = parseFloat($("#tableElaun tfoot tr td input#TotalPelarasan").val()) * jum
                                 }
                                 $("#tableElaun tfoot tr td input#TotalPelarasan").val((jumPelarasan).toFixed(2))
+                                var jumPot = parseFloat(gaji) + parseFloat((jumPelarasan).toFixed(2))
+                                $('#HR_JUMLAH_POTONGAN').val((jumPot).toFixed(2));
 
                                 TarikhAnsuran();
                             }
@@ -2984,7 +3087,7 @@
                 readonly = "readonly='readonly'"
             }
 
-            var table3 = '<table class="table table-striped table-bordered table-hover" id="tableElaun2" width="100%">' +
+            var table3 = '<table class="table table-striped table-bordered table-hover" id="tableElaun2" style="width:800px">' +
                             '<thead>' +
                                 '<tr>' +
                                     '<th>#</th>' +
@@ -3051,7 +3154,7 @@
                                         '<td align="center">' + no2 + '</td>' +
                                         '<td>' + val.ELAUN.HR_KOD_ELAUN + ' :: ' + val.ELAUN.HR_PENERANGAN_ELAUN + '</td>' +
                                         '<td>' + val.ELAUN.HR_NILAI + '</td>' +
-                                        '<td>' + val.KOD_PELARASAN + ' :: ' + val.PENERANGAN + '<input name="[' + no2 + '].HR_KOD_POTONGAN" type="hidden" value="' + val.KOD_PELARASAN + '" /></td>' +
+                                        '<td>' + val.KOD_PELARASAN + ' :: ' + val.PENERANGAN + '<input name="[' + no2 + '].HR_KOD_CARUMAN" type="hidden" value="' + val.ELAUN.HR_KOD_ELAUN + '" id="HR_KOD_ELAUN" /><input name="[' + no2 + '].HR_KOD_POTONGAN" type="hidden" value="' + val.KOD_PELARASAN + '" /></td>' +
                                         '<td id="pelarasan"><label class="input"><input name="[' + no2 + '].HR_NILAI" type="text" class="form-control" value="' + (+Math.abs(nilaiPelarasan)).toFixed(2) + '" id="HR_NILAI_PELARASAN" ' + readonly + ' /></label></td>' +
                                     '</tr>');
                         jumPotongan2 += parseFloat(nilaiPelarasan.toFixed(2));
@@ -3135,7 +3238,7 @@
                 readonly = "readonly='readonly'"
             }
 
-            var table3 = '<table class="table table-striped table-bordered table-hover" id="tableElaun2" width="100%">' +
+            var table3 = '<table class="table table-striped table-bordered table-hover" id="tableElaun2" style="width:800px">' +
                             '<thead>' +
                                 '<tr>' +
                                     '<th>#</th>' +
@@ -3200,7 +3303,7 @@
                                         '<td align="center">' + no2 + '</td>' +
                                         '<td>' + val.ELAUN.HR_KOD_ELAUN + ' :: ' + val.ELAUN.HR_PENERANGAN_ELAUN + '</td>' +
                                         '<td>' + val.ELAUN.HR_NILAI + '</td>' +
-                                        '<td>' + val.KOD_PELARASAN + ' :: ' + val.PENERANGAN + '<input name="[' + no2 + '].HR_KOD_POTONGAN" type="hidden" value="' + val.KOD_PELARASAN + '" /></td>' +
+                                        '<td>' + val.KOD_PELARASAN + ' :: ' + val.PENERANGAN + '<input name="[' + no2 + '].HR_KOD_CARUMAN" type="hidden" value="' + val.ELAUN.HR_KOD_ELAUN + '" id="HR_KOD_ELAUN" /><input name="[' + no2 + '].HR_KOD_POTONGAN" type="hidden" value="' + val.KOD_PELARASAN + '" /></td>' +
                                         '<td id="pelarasan"><label class="input"><input name="[' + no2 + '].HR_NILAI" type="text" class="form-control" value="' + (+Math.abs(nilaiPelarasan)).toFixed(2) + '" id="HR_NILAI_PELARASAN" ' + readonly + ' /></label></td>' +
                                     '</tr>');
                         jumPotongan2 += parseFloat(nilaiPelarasan.toFixed(2));

@@ -124,19 +124,19 @@
     </Reference>
     <Reference Include="NPOI, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NPOI\NPOI.dll</HintPath>
+      <HintPath>..\..\..\kkkkkkkkk\ESPP_26082018\packages\NPOI\NPOI.dll</HintPath>
     </Reference>
     <Reference Include="NPOI.OOXML, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NPOI\NPOI.OOXML.dll</HintPath>
+      <HintPath>..\..\..\kkkkkkkkk\ESPP_26082018\packages\NPOI\NPOI.OOXML.dll</HintPath>
     </Reference>
     <Reference Include="NPOI.OpenXml4Net, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NPOI\NPOI.OpenXml4Net.dll</HintPath>
+      <HintPath>..\..\..\kkkkkkkkk\ESPP_26082018\packages\NPOI\NPOI.OpenXml4Net.dll</HintPath>
     </Reference>
     <Reference Include="NPOI.OpenXmlFormats, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NPOI\NPOI.OpenXmlFormats.dll</HintPath>
+      <HintPath>..\..\..\kkkkkkkkk\ESPP_26082018\packages\NPOI\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <HintPath>..\packages\Oracle.ManagedDataAccess.12.2.1100\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
@@ -598,6 +598,19 @@
     <Content Include="Content\uploads\75fc0ee5-89dc-41ba-aad2-ee858cea86f8.png" />
     <Content Include="Content\xml\gmap\pins.xml" />
     <Content Include="Global.asax" />
+    <Content Include="Models\GenerateMatriksGaji.Context.tt">
+      <DependentUpon>GenerateMatriksGaji.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>GenerateMatriksGaji.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\GenerateMatriksGaji.edmx.diagram">
+      <DependentUpon>GenerateMatriksGaji.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\GenerateMatriksGaji.tt">
+      <DependentUpon>GenerateMatriksGaji.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>GenerateMatriksGaji.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\ProcedureModels.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ProcedureModels.edmx</DependentUpon>
@@ -639,6 +652,10 @@
     <Content Include="Content\fonts\fontawesome4.2\fontawesome-webfont.woff" />
     <Content Include="Content\fonts\fontawesome4.2\FontAwesome.otf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <EntityDeploy Include="Models\GenerateMatriksGaji.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GenerateMatriksGaji.Designer.cs</LastGenOutput>
+    </EntityDeploy>
     <EntityDeploy Include="Models\ProcedureModels.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ProcedureModels.Designer.cs</LastGenOutput>
@@ -656,6 +673,7 @@
     <Content Include="Content\template\DocTo.pdf" />
     <Content Include="Content\template\gaji_pekerja_sambilan.docx" />
     <Content Include="Content\template\template_gaji_pekerja_sambilan.docx" />
+    <Content Include="Content\template\Surat_Pergerakan_Gaji.docx" />
     <Content Include="Content\template\Surat_Pergerakan_Gaji.pdf" />
     <Content Include="Content\template\Template Surat Pergerakan Gaji.docx" />
     <Content Include="Content\template\BORANG_PINK.docx" />
@@ -1127,7 +1145,7 @@
     <Content Include="Views\Kewangan8\JenisPotongan.cshtml" />
     <Content Include="Views\Kewangan8\Kewangan.cshtml" />
     <Content Include="Views\Kewangan8\Penyata.cshtml" />
-    <Content Include="Views\Kewangan8\PergerakanGaji.cshtml" />
+    <Content Include="Views\Kewangan8\PergerakanGaji_bak.cshtml" />
     <Content Include="Views\Kewangan8\Perlantikan.cshtml" />
     <Content Include="Views\Kewangan8\PindaanGaji.cshtml" />
     <Content Include="Views\Kewangan8\PotonganGaji.cshtml" />
@@ -1742,7 +1760,17 @@
     <Content Include="Views\Kewangan8\TanggungKerja.cshtml" />
     <Content Include="Views\Kewangan8\MemangkuKerja.cshtml" />
     <Content Include="Views\LuarNegaraPengesahan\SenaraiLuarNegara.cshtml" />
-    <Content Include="Views\UserGroupBak\Edit.cshtml" />
+    <Content Include="Views\Kewangan8\PergerakanGaji.cshtml" />
+    <Content Include="Views\MatrikGaji\CariPemohon.cshtml" />
+    <Content Include="Views\MatrikGaji\Index.cshtml" />
+    <Content Include="Views\MatrikGaji\SenaraiGaji.cshtml" />
+    <Content Include="Views\MatrikGaji\SenaraiMatrikGaji.cshtml" />
+    <Content Include="Views\MatrikGaji\_GajiList.cshtml" />
+    <Content Include="Views\MatrikGaji\_GajiListEdit.cshtml" />
+    <Content Include="Views\MatrikGaji\_GajiListInfo.cshtml" />
+    <Content Include="Views\MatrikGaji\_GajiListPadam.cshtml" />
+    <Content Include="Views\MatrikGaji\_MatrikList.cshtml" />
+    <Content Include="Views\MatrikGaji\_TambahMatrik.cshtml" />
     <Content Include="Views\MaklumatKakitanganBak\Index.cshtml" />
     <Content Include="Views\MaklumatKakitanganBak\KakitanganTab.cshtml" />
     <Content Include="Views\MaklumatKakitanganBak\ListKakitangan.cshtml" />
@@ -1761,10 +1789,44 @@
     <Content Include="Views\MaklumatKakitanganBak\TabPrestasi.cshtml" />
     <Content Include="Views\MaklumatKakitanganBak\TabTanggungan.cshtml" />
     <Content Include="Views\MaklumatKakitanganBak\TabTatatertib.cshtml" />
-    <Content Include="Views\UserGroupBak\EditByModule.cshtml" />
-    <Content Include="Views\Laporan\Search.cshtml" />
     <Content Include="Views\PengurusanKakitanganSambilan\MasSambilan.cshtml" />
+    <Content Include="Views\PengurusanKakitanganSambilan\Index.cshtml" />
+    <Content Include="Views\UserGroupBak\Edit.cshtml" />
+    <Content Include="Views\UserGroupBak\EditByModule.cshtml" />
     <Content Include="Views\UserGroupBak\ModulMaklumatKakitangan.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\_Peribadi.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\LantikanJawatanBaruManual.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ListKakitangan.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\KakitanganTab.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\TabPeribadi.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\TabPekerjaan.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\TabKemahiran.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ModalPengalamanKerja.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ModalKemahiranBahasa.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ModalKemahiranTeknikal.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\TabAkademik.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ModalKelayakan.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ModalSijil.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ModalKursusLatihan.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ModalAktivitiLuar.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\TabPewaris.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\TabTanggungan.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ModalTanggungan.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\TabKuarters.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\TabGaji.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ModalGaji.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ModalElaun.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ModalPotongan.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ModalCaruman.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\TabAnugerah.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ModalAnugerahPingat.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ModalPekerja.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ModalAnugerahCemerlang.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\TabPersaraan.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\TabTatatertib.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ModalTatatertib.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\TabKematian.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\TabPrestasi.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1852,6 +1914,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MarkahTemudugaController.cs" />
     <Compile Include="Controllers\MatapelajaranController.cs" />
+    <Compile Include="Controllers\MatrikGajiController.cs" />
     <Compile Include="Controllers\MiscController.cs" />
     <Compile Include="Controllers\PageEventHelper.cs" />
     <Compile Include="Controllers\PanelHospitalController.cs" />
@@ -1903,6 +1966,21 @@
     <Compile Include="Models\CariPekerjaModel.cs" />
     <Compile Include="Models\EventsModels.cs" />
     <Compile Include="Models\Extensions\HtmlHelperExtensions.cs" />
+    <Compile Include="Models\GenerateMatriksGaji.Context.cs">
+      <DependentUpon>GenerateMatriksGaji.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Models\GenerateMatriksGaji.cs">
+      <DependentUpon>GenerateMatriksGaji.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Models\GenerateMatriksGaji.Designer.cs">
+      <DependentUpon>GenerateMatriksGaji.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Include="Models\GredElaunPekelilingModels.cs" />
     <Compile Include="Models\HR_Bonus_Sambilan_Detail.cs" />
     <Compile Include="Models\ModelsView\RoleAccess_MaklumatKakitangan.cs" />
@@ -1911,6 +1989,7 @@
     <Compile Include="Models\PanelHospitalModels.cs" />
     <Compile Include="Models\ParameterKew8Models.cs" />
     <Compile Include="Models\ParamTableBulanGajiModels.cs" />
+    <Compile Include="Models\PasswordExpiredModels.cs" />
     <Compile Include="Models\PelarasanModels.cs" />
     <Compile Include="Models\PemohonanPinkModels.cs" />
     <Compile Include="Models\PendahuluanDiriModels.cs" />
@@ -1930,7 +2009,9 @@
     <Compile Include="Models\RoleManagement\RoleManager.cs" />
     <Compile Include="Models\RoleManagement\RoleManagerByTab.cs" />
     <Compile Include="Models\SejarahElaunPotongan.cs" />
+    <Compile Include="Models\SejarahKewangan8Models.cs" />
     <Compile Include="Models\SejarahPekerjaanModels.cs" />
+    <Compile Include="Models\SejarahPeribadiModels.cs" />
     <Compile Include="Models\SuratPengesahanHospitalModel.cs" />
     <Compile Include="Models\TarikhAcaraModels.cs" />
     <Compile Include="Models\TextFileModel.cs" />

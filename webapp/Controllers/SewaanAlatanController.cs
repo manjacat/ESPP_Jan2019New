@@ -45,25 +45,40 @@ namespace eSPP.Controllers
             return PartialView("_TambahSewaan");
         }
 
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult TambahSewaan([Bind(Include = "HR_KOD_ALAT,HR_PENERANGAN,HR_SINGKATAN,HR_HARGA_SEWAAN")] HR_SEWAAN_ALATAN sewaan)
         {
             if (ModelState.IsValid)
             {
-                var SelectLastID = db.HR_SEWAAN_ALATAN.OrderByDescending(s => s.HR_KOD_ALAT).FirstOrDefault().HR_KOD_ALAT;
-                var LastID = new string(SelectLastID.SkipWhile(x => x == 'A' || x == '0').ToArray());
-                var Increment = Convert.ToSingle(LastID) + 1;
-                var KodSewaan = Convert.ToString(Increment).PadLeft(3, '0');
-                sewaan.HR_KOD_ALAT = "A" + KodSewaan;
+                HR_SEWAAN_ALATAN mSewaan = db.HR_SEWAAN_ALATAN.OrderByDescending(s => s.HR_KOD_ALAT).FirstOrDefault();
+                if (mSewaan == null)
+                {
+                    mSewaan = new HR_SEWAAN_ALATAN();
+                }
 
+                int LastID2 = 0;
+                if (mSewaan.HR_KOD_ALAT != null)
+                {
+                    var ListID = new string(mSewaan.HR_KOD_ALAT.SkipWhile(x => x == 'A' || x == '0').ToArray());
+                    LastID2 = Convert.ToInt32(ListID);
+                }
+
+                var Increment = LastID2 + 1;
+                var kod = Convert.ToString(Increment).PadLeft(3, '0');
+                sewaan.HR_KOD_ALAT = "A" + kod;
                 db.HR_SEWAAN_ALATAN.Add(sewaan);
                 db.SaveChanges();
+
                 return RedirectToAction("SenaraiSewaan");
             }
 
             return View(sewaan);
         }
+
+
+
 
         public ActionResult EditSewaan(string id)
         {

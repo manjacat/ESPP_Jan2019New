@@ -99,9 +99,9 @@
                     <div class="row">
                         <label class="label col col-4">  Kreditor  </label>
                         <div class="col col-8">
-                            <label class="input">
-                                @Html.EditorFor(model => model.HR_KOD_KREDITOR, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
-
+                            <label class="select">
+                                @Html.DropDownListFor(model => model.HR_KOD_KREDITOR, null, String.Empty, new { @class = "form-control", disabled = "disabled" })
+                                <i></i>
                             </label>
                         </div>
                     </div>

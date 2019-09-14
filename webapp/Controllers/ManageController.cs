@@ -284,7 +284,7 @@ namespace eSPP.Controllers
                 ApplicationUser userDetail = db.Users.SingleOrDefault(s => s.Id == getuserid);
                 var role1 = db.UserRoles.Where(d => d.UserId == getuserid).SingleOrDefault();
                 IdentityRole role = new IdentityRole();
-                if(role != null)
+                if(role1 != null)
                 {
                     role = db.Roles.Where(e => e.Id == role1.RoleId).SingleOrDefault();
                 }
@@ -303,6 +303,7 @@ namespace eSPP.Controllers
                 userDetail.PasswordUpdate = DateTime.Now;
                 db.Entry(userDetail).State = EntityState.Modified;
                 db.SaveChanges();
+
                 new AuditTrailModels().Log(userDetail.Email, userDetail.UserName, System.Web.HttpContext.Current.Request.UserHostAddress, role.Name, userDetail.UserName + " Telah Menukar Katalaluan", System.Net.Dns.GetHostName(), userDetail.PhoneNumber, Request.RawUrl, "ChangePassword");
 
                 HR_MAKLUMAT_PERIBADI name = db.HR_MAKLUMAT_PERIBADI.FirstOrDefault(s => s.HR_NO_KPBARU == UserName);

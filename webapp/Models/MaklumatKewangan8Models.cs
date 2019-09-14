@@ -59,7 +59,8 @@ namespace eSPP.Models
         public string HR_MATRIKS_GAJI_LAMA { get; set; }
         public string HR_GRED_LAMA { get; set; }
         public string HR_UBAH_IND { get; set; }
-        //public string HR_JAWATAN { get; set; }
+        public Nullable<int> HR_ANSURAN_ID { get; set; }
+        public Nullable<decimal> HR_GAJI_MIN_BARU { get; set; }
     }
 
     public class HR_ANSURAN

@@ -8,7 +8,7 @@
             &times;
         </button>
         <h4 class="modal-title">
-            Edit Jadual Gaji<span class="error"></span>
+            Ubah Jadual Gaji<span class="error"></span>
         </h4>
     </div>
     <div class="modal-body no-padding">
@@ -29,11 +29,11 @@
                         <div class="col col-8">
                             <div class="inline-group">
                                 <label class="radio">
-                                    @Html.RadioButtonFor(model => model.HR_SISTEM_SARAAN, "SSB", htmlAttributes: new { @class = "form-control", disabled = "disabled"})
+                                    @Html.RadioButtonFor(model => model.HR_SISTEM_SARAAN, "SSB", htmlAttributes: new { @class = "form-control", @readonly = "readonly"})
                                     <i></i>SSB
                                 </label>
                                 <label class="radio">
-                                    @Html.RadioButtonFor(model => model.HR_SISTEM_SARAAN, "SSM", htmlAttributes: new { @checked = "checked", disabled = "disabled" })
+                                    @Html.RadioButtonFor(model => model.HR_SISTEM_SARAAN, "SSM", htmlAttributes: new { @checked = "checked", @readonly = "readonly" })
                                     <i></i>SSM
                                 </label>
                             </div>
@@ -44,9 +44,8 @@
                     <div class="row">
                         <label class="label col col-4">Gred Gaji  </label>
                         <div class="col col-8">
-                            <label class="select">
-                                @Html.DropDownListFor(model => model.HR_GRED_GAJI, null, String.Empty, new { @class = "form-control", disabled = "disabled" })
-                                <i></i>
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_GRED_GAJI, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             </label>
                         </div>
                     </div>
@@ -55,9 +54,9 @@
                     <div class="row">
                         <label class="label col col-4">Peringkat  </label>
                         <div class="col col-8">
-                            <label class="select">
-                                @Html.DropDownListFor(model => model.HR_PERINGKAT, null, String.Empty, new { @class = "form-control", disabled = "disabled" })
-                                <i></i>
+                        
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_PERINGKAT, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             </label>
                         </div>
                     </div>
@@ -66,7 +65,7 @@
                     <div class="row">
                         <label class="label col col-4">Gaji Pokok  </label>
                         <div class="col col-8">
-                            <label class="input">
+                            <label class="input"> 
                                 @Html.EditorFor(model => model.HR_GAJI_POKOK, new { htmlAttributes = new { @class = "form-control" } })
 
                             </label>
@@ -196,7 +195,19 @@
                         required: true
                     },
                     HR_KOD_GAJI: {
-                        required: true
+                        required: true,
+                        remote: {
+                            url: "../JadualGaji/CariEditGaji",
+                            type: "get",
+                            data: {
+                                kod: function () {
+                                    return $("#HR_KOD_GAJI").val();
+                                },
+                                gred: function () {
+                                    return $("#HR_GRED_GAJI").val();
+                                },
+                            }
+                        }
                     },
                 },
 

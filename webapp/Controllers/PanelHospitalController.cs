@@ -53,20 +53,67 @@ namespace eSPP.Controllers
         }
 
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult TambahAcara([Bind(Include = "HR_KOD_ACARA,HR_TAJUK,HR_WARNA,HR_ICON,HR_AKTIF_IND")] HR_ACARA aktiviti)
+        {
+            if (ModelState.IsValid)
+            {
+                HR_ACARA mAktiviti = db.HR_ACARA.OrderByDescending(s => s.HR_KOD_ACARA).FirstOrDefault();
+                if (mAktiviti == null)
+                {
+                    mAktiviti = new HR_ACARA();
+                }
+
+                int LastID2 = 0;
+                if (mAktiviti.HR_KOD_ACARA != null)
+                {
+                    var ListID = new string(mAktiviti.HR_KOD_ACARA.SkipWhile(x => x == 'A' || x == '0').ToArray());
+                    LastID2 = Convert.ToInt32(ListID);
+                }
+
+                var Increment = LastID2 + 1;
+                var kod = Convert.ToString(Increment).PadLeft(4, '0');
+                aktiviti.HR_KOD_ACARA = "A" + kod;
+                aktiviti.HR_AKTIF_IND = "Y";
+                db.HR_ACARA.Add(aktiviti);
+                db.SaveChanges();
+
+                return RedirectToAction("SenaraiAcara");
+            }
+
+            return View(aktiviti);
+        }
+
+
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult TambahPanel([Bind(Include = "HR_KOD_HOSPITAL,HR_NAMA_HOSPITAL,HR_NEGERI")] HR_PANEL_HOSPITAL panel)
         {
             if (ModelState.IsValid)
             {
-                var SelectLastID = db.HR_PANEL_HOSPITAL.OrderByDescending(s => s.HR_KOD_HOSPITAL).FirstOrDefault().HR_KOD_HOSPITAL;
-                var LastID = new string(SelectLastID.SkipWhile(x => x == 'H' || x == '0').ToArray());
-                var Increment = Convert.ToSingle(LastID) + 1;
-                var KodHospital = Convert.ToString(Increment).PadLeft(4, '0');
-                panel.HR_KOD_HOSPITAL = "H" + KodHospital;
+                HR_PANEL_HOSPITAL mHospital = db.HR_PANEL_HOSPITAL.OrderByDescending(s => s.HR_KOD_HOSPITAL).FirstOrDefault();
+                if (mHospital == null)
+                {
+                    mHospital = new HR_PANEL_HOSPITAL();
+                }
 
+                int LastID2 = 0;
+                if (mHospital.HR_KOD_HOSPITAL != null)
+                {
+                    var ListID = new string(mHospital.HR_KOD_HOSPITAL.SkipWhile(x => x == 'H' || x == '0').ToArray());
+                    LastID2 = Convert.ToInt32(ListID);
+                }
+
+                var Increment = LastID2 + 1;
+                var kod = Convert.ToString(Increment).PadLeft(4, '0');
+                panel.HR_KOD_HOSPITAL = "H" + kod;
                 db.HR_PANEL_HOSPITAL.Add(panel);
                 db.SaveChanges();
+
+                
                 return RedirectToAction("SenaraiPanel");
             }
 

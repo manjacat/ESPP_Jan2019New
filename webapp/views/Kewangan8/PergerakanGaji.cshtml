@@ -6,7 +6,7 @@
         <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
             <h1 class="page-title txt-color-blueDark">
                 <i class="fa-fw fa fa-pencil-square-o"></i>
-                Forms
+                Kewangan 8
                 <span>
                     >
                     Pergerakan Gaji
@@ -67,44 +67,57 @@
 
                             <div class="row">
 
-                                <div class="col col-lg-8 col-md-10 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-1">
+                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="well">
                                         @using (Html.BeginForm("PergerakanGaji", "Kewangan8", FormMethod.Get))
                                         {
+                                            @Html.Hidden("key", "4")
                                             <div class="row">
-                                                <div class="col smart-form col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                    <div class="select">
-                                                        <select name="key" id="key" class="form-control" disabled="disabled">
-                                                            <option selected disabled="disabled">Jenis</option>
-                                                            <option value="1" @((string)ViewBag.key == "1" ? "selected" : "")>No. Pekerja</option>
-                                                            <option value="2" @((string)ViewBag.key == "2" ? "selected" : "")>Nama Pekerja</option>
-                                                            <option value="3" @((string)ViewBag.key == "3" ? "selected" : "")>No. KP(Baru)</option>
-                                                            <option value="4" @((string)ViewBag.key == "4" || (string)ViewBag.key == null ? "selected" : "")>Bulan Pergerakan</option>
-                                                        </select>
-                                                        <i></i>
-                                                    </div>
-                                                    @Html.Hidden("key", "4")
-                                                </div>
-                                                <div class="col smart-form col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                    <div class="select" id="actionText">
-                                                        <select class="form-control" id="bulan" name="bulan">
-                                                            <option value="" disabled="disabled" selected>Bulan</option>
-                                                            <option value="1" @((int?)ViewBag.bulan == 1 ? "selected" : "")>Januari</option>
-                                                            <option value="2" @((int?)ViewBag.bulan == 2 ? "selected" : "")>Febuari</option>
-                                                            <option value="3" @((int?)ViewBag.bulan == 3 ? "selected" : "")>Mac</option>
-                                                            <option value="4" @((int?)ViewBag.bulan == 4 ? "selected" : "")>April</option>
-                                                            <option value="5" @((int?)ViewBag.bulan == 5 ? "selected" : "")>Mei</option>
-                                                            <option value="6" @((int?)ViewBag.bulan == 6 ? "selected" : "")>Jun</option>
-                                                            <option value="7" @((int?)ViewBag.bulan == 7 ? "selected" : "")>Julai</option>
-                                                            <option value="8" @((int?)ViewBag.bulan == 8 ? "selected" : "")>Ogos</option>
-                                                            <option value="9" @((int?)ViewBag.bulan == 9 ? "selected" : "")>September</option>
-                                                            <option value="10" @((int?)ViewBag.bulan == 10 ? "selected" : "")>Oktober</option>
-                                                            <option value="11" @((int?)ViewBag.bulan == 11 ? "selected" : "")>November</option>
-                                                            <option value="12" @((int?)ViewBag.bulan == 12 ? "selected" : "")>Disember</option>
-                                                        </select><i></i>
+                                                <div class="col col-lg-3 col-md-6 col-sm-12 col-xs-12 smart-form">
+                                                    <div class="row">
+                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
+                                                            <b>Taraf pekerja : </b>
+                                                        </div>
+                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                            <div class="inline-group">
+                                                                <label class="radio">
+                                                                    <input type="radio" id="tarafpekerja" name="tarafpekerja" value="Y" @(ViewBag.tarafpekerja == "Y" ? "checked" : "")>
+                                                                    <i></i>Kakitangan
+                                                                </label>
+                                                                <label class="radio">
+                                                                    <input type="radio" id="tarafpekerja" name="tarafpekerja" value="T" @(ViewBag.tarafpekerja == "T" ? "checked" : "")>
+                                                                    <i></i>Pekerja
+                                                                </label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col col-lg-2 col-md-2 col-sm-2 col-xs-12">
+
+                                                <div class="col col-lg-3 col-md-6 col-sm-12 col-xs-12 smart-form">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
+                                                        <b>Bulan : </b>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                        <label class="select">
+                                                                @Html.DropDownList("bulan", new SelectList(ViewBag.month, "Value", "Text", null), new { @class = "form-control", id = "bulan" })
+                                                            <i></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col col-lg-3 col-md-6 col-sm-12 col-xs-12 smart-form">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
+                                                        <b>Tindakan : </b>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                        <label class="select">
+                                                            @Html.DropDownList("tindakan", new SelectList(ViewBag.Tindakan, "Value", "Text"), new { @class = "form-control", id = "tindakan" })
+                                                            <i></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col col-lg-3 col-md-6 col-sm-12 col-xs-12 text-right" style="padding-top:16px">
                                                     <div class="button">
                                                         <button class="btn btn-default btn-primary" type="submit">
                                                             <i class="fa fa-search"></i> Cari
@@ -118,398 +131,25 @@
 
                             </div>
                             <br />
-                            @{ 
-                                List<PergerakanGajiModels> editKew8 = ViewBag.EditKew8;
-                                List<PergerakanGajiModels> jumEditKew8 = ViewBag.JumEditKew8;
-                                var m = 0;
-                            }
-                            @if (editKew8.Count() > 0)
-                            {
-                                <fieldset>
-                                    <legend>
-                                        Senarai Pekerja :: Kemaskini / Muktamad Pergerakan Gaji
-                                    </legend>
-
-                                    <table id="datatable_tabletools2" class="table table-striped table-bordered table-hover" width="100%" style="overflow-x: scroll; width: 1700px;">
-                                        <thead class="smart-form">
-                                            <tr class="table5" id="table5">
-                                                <th>
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" name="PilihPekerja2" value="1" id="PilihPekerja2" class="PilihPekerja" checked>
-                                                        <i></i>
-                                                    </label>
-                                                </th>
-                                                <th data-class="expand" width="380">Nama Pekerja</th>
-                                                <th data-hide="phone,tablet">Jenis PGT</th>
-                                                <th data-hide="phone,tablet">Sekarang</th>
-                                                @*<th data-hide="phone,tablet">Gaji Min/Max</th>*@
-                                                <th data-hide="phone,tablet">Baru</th>
-                                                <th data-hide="phone,tablet">Kritikal</th>
-                                                <th data-hide="phone,tablet">Wilayah</th>
-                                                <th data-hide="phone,tablet">Pilih</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="smart-form">
-                                            @for (var item3 = 0; item3 < jumEditKew8.Count(); item3++)
-                                            {
-                                                var n = 0;
-                                                var o = 0;
-                                                //var tarikhmula = "";
-                                                //var kewid = "";
-                                                for (var item2 = 0; item2 < editKew8.Count(); item2++)
-                                                {
-                                                    if (editKew8.ElementAt(item2).HR_KEW8_ID == jumEditKew8.ElementAt(item3).HR_KEW8_ID && editKew8.ElementAt(item2).HR_KOD_PERUBAHAN == jumEditKew8.ElementAt(item3).HR_KOD_PERUBAHAN && editKew8.ElementAt(item2).HR_TARIKH_MULA == jumEditKew8.ElementAt(item3).HR_TARIKH_MULA)
-                                                    {
-
-                                                        if (editKew8.ElementAt(item2).HR_FINALISED_IND_HR == "Y")
-                                                        {
-                                                            var style = "";
-                                                            //if (tarikhmula != editKew8.ElementAt(item2).HR_TARIKH_MULA.ToString() && kewid == editKew8.ElementAt(item2).HR_KEW8_ID.ToString())
-                                                            //{
-                                                            //    n = 0;
-                                                            //}
-                                                            //if (n != 0)
-                                                            //{
-                                                            //    style = "border-top-style:none";
-                                                            //}
-                                                            <tr class="success table5" id="table5_@item2">
-                                                                <td>
-                                                                    @Html.DisplayFor(model => editKew8.ElementAt(item2).HR_NO_PEKERJA),@Html.DisplayFor(model => editKew8.ElementAt(item2).HR_FINALISED_IND_HR)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.Hidden("[" + item2 + "].HR_TARIKH_MULA2", string.Format("{0:dd/MM/yyyy}", editKew8.ElementAt(item2).HR_TARIKH_MULA), new { @class = "form-control HR_TARIKH_MULA text-muktamad" })
-                                                                    @Html.Hidden("[" + item2 + "].HR_KEW8_ID2", editKew8.ElementAt(item2).HR_KEW8_ID, new { @class = "form-control HR_KEW8_ID text-muktamad" })
-                                                                    @Html.Hidden("[" + item2 + "].HR_KOD_PELARASAN2", editKew8.ElementAt(item2).HR_KOD_PELARASAN, new { @class = "form-control HR_KOD_PELARASAN text-muktamad" })
-
-                                                                    <a target="_blank" href='@Url.Action("SejarahPergerakanGaji", "Kewangan8", new { key = "1", value = editKew8.ElementAt(item2).HR_NO_PEKERJA, kod = editKew8.ElementAt(item2).HR_KOD_PERUBAHAN })' title="Senarai Pergerakan Gaji">@Html.DisplayFor(model => editKew8.ElementAt(item2).HR_NAMA_PEKERJA)</a>
-                                                                    <br />
-                                                                    <strong>No KP :</strong> @Html.DisplayFor(model => editKew8.ElementAt(item2).HR_NO_KPBARU)
-                                                                    <br />
-                                                                    <strong>No Pekerja :</strong> @Html.DisplayFor(model => editKew8.ElementAt(item2).HR_NO_PEKERJA)
-                                                                </td>
-                                                                <td>
-                                                                    <div class="col-12">
-                                                                        <label class="radio">
-                                                                            @Html.RadioButton("[" + item2 + "].HR_JENIS_PERGERAKAN2", "D", isChecked: (editKew8.ElementAt(item2).HR_JENIS_PERGERAKAN == "D") ? true : false, htmlAttributes: new { @class = "form-control HR_JENIS_PERGERAKAN ext-muktamad", disabled = "disabled" })
-                                                                            <i></i>Mendatar
-                                                                        </label>
-                                                                        <label class="radio">
-                                                                            @Html.RadioButton("[" + item2 + "].HR_JENIS_PERGERAKAN2", "S", isChecked: (editKew8.ElementAt(item2).HR_JENIS_PERGERAKAN == "S") ? true : false, htmlAttributes: new { @class = "form-control HR_JENIS_PERGERAKAN ext-muktamad", disabled = "disabled" })
-                                                                            <i></i>Statik
-                                                                        </label>
-                                                                        <label class="radio">
-                                                                            @Html.RadioButton("[" + item2 + "].HR_JENIS_PERGERAKAN2", "J", isChecked: (editKew8.ElementAt(item2).HR_JENIS_PERGERAKAN == "J") ? true : false, htmlAttributes: new { @class = "form-control HR_JENIS_PERGERAKAN ext-muktamad", disabled = "disabled" })
-                                                                            <i></i>Anjakan
-                                                                        </label>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <strong>Gred :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_GRED_LAMA2", editKew8.ElementAt(item2).HR_GRED_LAMA, new { @class = "form-control HR_GRED_LAMA text-muktamad", disabled = "disabled" })
-                                                                    </label>
-                                                                    <br />
-                                                                    <strong>Gaji :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_GAJI_LAMA2", editKew8.ElementAt(item2).HR_GAJI_LAMA, new { @class = "form-control HR_GAJI_LAMA text-muktamad", disabled = "disabled" })
-                                                                    </label>
-                                                                    <br />
-                                                                    <strong>Matriks :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_MATRIKS_GAJI_LAMA2", editKew8.ElementAt(item2).HR_MATRIKS_GAJI_LAMA, new { @class = "form-control HR_MATRIKS_GAJI_LAMA text-muktamad", disabled = "disabled" })
-                                                                    </label>
-                                                                </td>
-                                                                @*<td>
-                                                                        <strong>Min Baru:</strong>
-                                                                        <br />
-                                                                        <label class="input">
-                                                                            @Html.TextBox("[" + item + "].HR_GAJI_MIN", Model.ElementAt(item).HR_GAJI_MIN, new { @class = "form-control HR_GAJI_MIN", list = "list-min_" + item, autocomplete = "off", @readonly = "readonly" })
-                                                                            <datalist class="list-min" id="list-min_@item"></datalist>
-                                                                        </label>
-                                                                        <br />
-                                                                        <strong>Max Baru:</strong>
-                                                                        <br />
-                                                                        <label class="input">
-                                                                            @Html.TextBox("[" + item + "].HR_GAJI_MAX", Model.ElementAt(item).HR_GAJI_MAX, new { @class = "form-control HR_GAJI_MAX", list = "list-max_" + item, autocomplete = "off", @readonly = "readonly" })
-                                                                            <datalist class="list-max" id="list-max_@item"></datalist>
-                                                                        </label>
-                                                                    </td>*@
-                                                                <td>
-
-                                                                    <strong>Gred :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_GRED2", editKew8.ElementAt(item2).HR_GRED, new { @class = "form-control HR_GRED text-muktamad", list = "list-gred2_" + item2, autocomplete = "off", disabled = "disabled" })
-                                                                        <datalist class="list-gred" id="list-gred2_@item2"></datalist>
-                                                                    </label>
-                                                                    <br />
-                                                                    <strong>Gaji :</strong>
-                                                                    <br />
-                                                                    <div class="input-group">
-                                                                        <label class="input">
-                                                                            @Html.TextBox("[" + item2 + "].HR_GAJI_BARU2", editKew8.ElementAt(item2).HR_GAJI_BARU, new { @class = "form-control HR_GAJI_BARU text-muktamad", id = "HR_GAJI_BARU", list = "list-gaji2_" + item2, autocomplete = "off", disabled = "disabled" })
-                                                                            <datalist class="list-gaji" id="list-gaji2_@item2"></datalist>
-                                                                        </label>
-                                                                        <div class="input-group-btn">
-                                                                            <a class="btn btn-default btn-sm btn-MinMaxModal text-muktamad" id="MinMaxModal_@item2" href="javascript:void(0)" title="Cari Gaji" disabled="disabled"><i class="fa fa-search"></i></a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <br />
-                                                                    <br />
-                                                                    <strong>Matriks :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_MATRIKS_GAJI2", editKew8.ElementAt(item2).HR_MATRIKS_GAJI, new { @class = "form-control HR_MATRIKS_GAJI text-muktamad", disabled = "disabled" })
-                                                                    </label>
-                                                                    <br />
-                                                                    <strong> Jumlah Perubahan :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_KENAIKAN2", editKew8.ElementAt(item2).HR_KENAIKAN, new { @class = "form-control HR_KENAIKAN text-muktamad", disabled = "disabled" })
-                                                                        @Html.Hidden("[" + item2 + "].HR_JUMLAH_PERUBAHAN2", editKew8.ElementAt(item2).HR_JUMLAH_PERUBAHAN, new { @class = "form-control HR_JUMLAH_PERUBAHAN text-muktamad", disabled = "disabled" })
-                                                                    </label>
-                                                                </td>
-
-                                                                <td>
-                                                                    <strong>Nilai % :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.Hidden("[" + item2 + "].HR_KOD_KRITIKAL2", editKew8.ElementAt(item2).HR_KOD_KRITIKAL, new { @class = "form-control HR_KOD_KRITIKAL" })
-                                                                        @Html.TextBox("[" + item2 + "].HR_KRITIKAL", editKew8.ElementAt(item2).HR_KRITIKAL, new { @class = "form-control HR_KRITIKAL text-muktamad", disabled = "disabled" })
-                                                                    </label>
-                                                                    <br />
-                                                                    <strong>Perubahan :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_PERUBAHAN_KRITIKAL2", editKew8.ElementAt(item2).HR_PERUBAHAN_KRITIKAL, new { @class = "form-control HR_PERUBAHAN_KRITIKAL text-muktamad", disabled = "disabled" })
-                                                                    </label>
-                                                                    <br />
-                                                                    <strong>Pergerakan :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_PERGERAKAN_EKAL2", editKew8.ElementAt(item2).HR_PERGERAKAN_EKAL, new { @class = "form-control HR_PERGERAKAN_EKAL text-muktamad", disabled = "disabled" })
-                                                                    </label>
-                                                                </td>
-                                                                <td>
-                                                                    <strong>Nilai % :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.Hidden("[" + item2 + "].HR_KOD_WILAYAH2", editKew8.ElementAt(item2).HR_KOD_WILAYAH, new { @class = "form-control HR_KOD_WILAYAH" })
-                                                                        @Html.TextBox("[" + item2 + "].HR_WILAYAH2", editKew8.ElementAt(item2).HR_WILAYAH, new { @class = "form-control HR_WILAYAH text-muktamad", disabled = "disabled" })
-                                                                    </label>
-                                                                    <br />
-                                                                    <strong>Perubahan :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_PERUBAHAN_WILAYAH2", editKew8.ElementAt(item2).HR_PERUBAHAN_WILAYAH, new { @class = "form-control HR_PERUBAHAN_WILAYAH text-muktamad", disabled = "disabled" })
-                                                                    </label>
-                                                                    <br />
-                                                                    <strong>Pergerakan :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_PERGERAKAN_EWIL2", editKew8.ElementAt(item2).HR_PERGERAKAN_EWIL, new { @class = "form-control HR_PERGERAKAN_EWIL text-muktamad", disabled = "disabled" })
-                                                                    </label>
-                                                                </td>
-                                                                <td style="@style">
-                                                                    @if (n == 0)
-                                                                    {
-                                                                        <div class="btn-group-vertical">
-                                                                            <a class="btn btn-default btn-xs" href="javascript:void(0)" data-id="@editKew8.ElementAt(item2).HR_KEW8_ID" data-kodperubahan="@editKew8.ElementAt(item2).HR_KOD_PERUBAHAN" data-tarikh="@string.Format("{0:dd/MM/yyyy}", editKew8.ElementAt(item2).HR_TARIKH_MULA)" data-kodpelarasan="" data-muktamad="@editKew8.ElementAt(item2).HR_FINALISED_IND_HR" title="Kemaskini" disabled="disabled"><i class="fa fa-edit"></i></a>
-                                                                            <a class="btn btn-default btn-xs" href="javascript:void(0)" data-id="@editKew8.ElementAt(item2).HR_KEW8_ID" data-kodperubahan="@editKew8.ElementAt(item2).HR_KOD_PERUBAHAN" data-tarikh="@string.Format("{0:dd/MM/yyyy}", editKew8.ElementAt(item2).HR_TARIKH_MULA)" data-kodpelarasan="" data-muktamad="@editKew8.ElementAt(item2).HR_FINALISED_IND_HR" title="Padam" disabled="disabled"><i class="fa fa-trash-o"></i></a>
-                                                                            @*<a class="btn btn-default btn-xs" href="javascript:void(0)" data-id="@editKew8.ElementAt(item2).HR_KEW8_ID" data-kodperubahan="@editKew8.ElementAt(item2).HR_KOD_PERUBAHAN" data-tarikh="@string.Format("{0:dd/MM/yyyy}", editKew8.ElementAt(item2).HR_TARIKH_MULA)" data-kodpelarasan="" data-muktamad="@editKew8.ElementAt(item2).HR_FINALISED_IND_HR" title="Muktamad" disabled="disabled"><i class="fa fa-check-square-o"></i></a>*@
-                                                                            <a class="btn btn-default btn-xs btn-cetak" target="_blank" id="btn-cetak" href="javascript:void(0)" data-id="@editKew8.ElementAt(item2).HR_KEW8_ID" data-kodperubahan="@editKew8.ElementAt(item2).HR_KOD_PERUBAHAN" data-tarikh="@string.Format("{0:dd/MM/yyyy}", editKew8.ElementAt(item2).HR_TARIKH_MULA)" data-kodpelarasan="" data-muktamad="@editKew8.ElementAt(item2).HR_FINALISED_IND_HR" title="Cetak"><i class="fa fa-print"></i></a>
-                                                                            <a class="btn btn-default btn-xs btn-surat" id="btn-surat" href="javascript:void(0)" data-id="@editKew8.ElementAt(item2).HR_KEW8_ID" data-kodperubahan="@editKew8.ElementAt(item2).HR_KOD_PERUBAHAN" data-tarikh="@string.Format("{0:dd/MM/yyyy}", editKew8.ElementAt(item2).HR_TARIKH_MULA)" data-kodpelarasan="" data-muktamad="@editKew8.ElementAt(item2).HR_FINALISED_IND_HR" title="Cetak Surat"><i class="fa fa-file-text"></i></a>
-                                                                        </div>
-                                                                    }
-                                                                </td>
-                                                            </tr>
-                                                            //n++;
-                                                        }
-                                                        if (editKew8.ElementAt(item2).HR_FINALISED_IND_HR != "Y")
-                                                        {
-                                                            var style = "";
-                                                            //if (tarikhmula != editKew8.ElementAt(item2).HR_TARIKH_MULA.ToString() && kewid == editKew8.ElementAt(item2).HR_KEW8_ID.ToString())
-                                                            //{
-                                                            //    o = 0;
-                                                            //}
-                                                            //if (o != 0)
-                                                            //{
-                                                            //    style = "border-top-style:none";
-                                                            //}
-                                                            <tr class="table5" id="table5_@item2">
-                                                                <td>
-                                                                    @Html.DisplayFor(model => editKew8.ElementAt(item2).HR_NO_PEKERJA),@Html.DisplayFor(model => editKew8.ElementAt(item2).HR_FINALISED_IND_HR)
-                                                                    
-                                                                </td>
-                                                                <td>
-                                                                    @Html.Hidden("[" + item2 + "].HR_TARIKH_MULA2", string.Format("{0:dd/MM/yyyy}", editKew8.ElementAt(item2).HR_TARIKH_MULA), new { @class = "form-control HR_TARIKH_MULA" })
-                                                                    @Html.Hidden("[" + item2 + "].HR_KEW8_ID2", editKew8.ElementAt(item2).HR_KEW8_ID, new { @class = "form-control HR_KEW8_ID" })
-                                                                    @Html.Hidden("[" + item2 + "].HR_KOD_PELARASAN2", editKew8.ElementAt(item2).HR_KOD_PELARASAN, new { @class = "form-control HR_KOD_PELARASAN" })
-
-                                                                    <a target="_blank" href='@Url.Action("SejarahPergerakanGaji", "Kewangan8", new { key = "1", value = editKew8.ElementAt(item2).HR_NO_PEKERJA, kod = editKew8.ElementAt(item2).HR_KOD_PERUBAHAN })' title="Senarai Pergerakan Gaji">@Html.DisplayFor(model => editKew8.ElementAt(item2).HR_NAMA_PEKERJA)</a>
-                                                                    <br />
-                                                                    <strong>No KP :</strong> @Html.DisplayFor(model => editKew8.ElementAt(item2).HR_NO_KPBARU)
-                                                                    <br />
-                                                                    <strong>No Pekerja :</strong> @Html.DisplayFor(model => editKew8.ElementAt(item2).HR_NO_PEKERJA)
-                                                                </td>
-                                                                <td>
-                                                                    <div class="col-12">
-                                                                        <label class="radio">
-                                                                            @Html.RadioButton("[" + item2 + "].HR_JENIS_PERGERAKAN2", "D", isChecked: (editKew8.ElementAt(item2).HR_JENIS_PERGERAKAN == "D") ? true : false, htmlAttributes: new { @class = "form-control HR_JENIS_PERGERAKAN" })
-                                                                            <i></i>Mendatar
-                                                                        </label>
-                                                                        <label class="radio">
-                                                                            @Html.RadioButton("[" + item2 + "].HR_JENIS_PERGERAKAN2", "S", isChecked: (editKew8.ElementAt(item2).HR_JENIS_PERGERAKAN == "S") ? true : false, htmlAttributes: new { @class = "form-control HR_JENIS_PERGERAKAN" })
-                                                                            <i></i>Statik
-                                                                        </label>
-                                                                        <label class="radio">
-                                                                            @Html.RadioButton("[" + item2 + "].HR_JENIS_PERGERAKAN2", "J", isChecked: (editKew8.ElementAt(item2).HR_JENIS_PERGERAKAN == "J") ? true : false, htmlAttributes: new { @class = "form-control HR_JENIS_PERGERAKAN" })
-                                                                            <i></i>Anjakan
-                                                                        </label>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <strong>Gred :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_GRED_LAMA2", editKew8.ElementAt(item2).HR_GRED_LAMA, new { @class = "form-control HR_GRED_LAMA", disabled = "disabled" })
-                                                                    </label>
-                                                                    <br />
-                                                                    <strong>Gaji :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_GAJI_LAMA2", editKew8.ElementAt(item2).HR_GAJI_LAMA, new { @class = "form-control HR_GAJI_LAMA", disabled = "disabled" })
-                                                                    </label>
-                                                                    <br />
-                                                                    <strong>Matriks :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_MATRIKS_GAJI_LAMA2", editKew8.ElementAt(item2).HR_MATRIKS_GAJI_LAMA, new { @class = "form-control HR_MATRIKS_GAJI_LAMA", disabled = "disabled" })
-                                                                    </label>
-                                                                </td>
-                                                                @*<td>
-                                                                        <strong>Min Baru:</strong>
-                                                                        <br />
-                                                                        <label class="input">
-                                                                            @Html.TextBox("[" + item + "].HR_GAJI_MIN", Model.ElementAt(item).HR_GAJI_MIN, new { @class = "form-control HR_GAJI_MIN", list = "list-min_" + item, autocomplete = "off", @readonly = "readonly" })
-                                                                            <datalist class="list-min" id="list-min_@item"></datalist>
-                                                                        </label>
-                                                                        <br />
-                                                                        <strong>Max Baru:</strong>
-                                                                        <br />
-                                                                        <label class="input">
-                                                                            @Html.TextBox("[" + item + "].HR_GAJI_MAX", Model.ElementAt(item).HR_GAJI_MAX, new { @class = "form-control HR_GAJI_MAX", list = "list-max_" + item, autocomplete = "off", @readonly = "readonly" })
-                                                                            <datalist class="list-max" id="list-max_@item"></datalist>
-                                                                        </label>
-                                                                    </td>*@
-                                                                <td>
-
-                                                                    <strong>Gred :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_GRED2", editKew8.ElementAt(item2).HR_GRED, new { @class = "form-control HR_GRED", list = "list-gred2_" + item2, autocomplete = "off", @readonly = "readonly" })
-                                                                        <datalist class="list-gred" id="list-gred2_@item2"></datalist>
-                                                                    </label>
-                                                                    <br />
-                                                                    <strong>Gaji :</strong>
-                                                                    <br />
-                                                                    <div class="input-group">
-                                                                        <label class="input">
-                                                                            @Html.TextBox("[" + item2 + "].HR_GAJI_BARU2", editKew8.ElementAt(item2).HR_GAJI_BARU, new { @class = "form-control HR_GAJI_BARU", id = "HR_GAJI_BARU", list = "list-gaji2_" + item2, autocomplete = "off", @readonly = "readonly" })
-                                                                            <datalist class="list-gaji" id="list-gaji2_@item2"></datalist>
-                                                                        </label>
-                                                                        <div class="input-group-btn">
-                                                                            <a class="btn btn-default btn-sm btn-MinMaxModal" id="MinMaxModal_@item2" href="javascript:void(0)" title="Cari Gaji"><i class="fa fa-search"></i></a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <br />
-                                                                    <br />
-                                                                    <strong>Matriks :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_MATRIKS_GAJI2", editKew8.ElementAt(item2).HR_MATRIKS_GAJI, new { @class = "form-control HR_MATRIKS_GAJI", @readonly = "readonly" })
-                                                                    </label>
-                                                                    <br />
-                                                                    <strong> Jumlah Perubahan :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_KENAIKAN2", editKew8.ElementAt(item2).HR_KENAIKAN, new { @class = "form-control HR_KENAIKAN", @readonly = "readonly" })
-                                                                        @Html.Hidden("[" + item2 + "].HR_JUMLAH_PERUBAHAN2", editKew8.ElementAt(item2).HR_JUMLAH_PERUBAHAN, new { @class = "form-control HR_JUMLAH_PERUBAHAN", @readonly = "readonly" })
-                                                                    </label>
-                                                                </td>
-
-                                                                <td>
-                                                                    <strong>Nilai % :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.Hidden("[" + item2 + "].HR_KOD_KRITIKAL2", editKew8.ElementAt(item2).HR_KOD_KRITIKAL, new { @class = "form-control HR_KOD_KRITIKAL" })
-                                                                        @Html.TextBox("[" + item2 + "].HR_KRITIKAL2", editKew8.ElementAt(item2).HR_KRITIKAL, new { @class = "form-control HR_KRITIKAL", @readonly = "readonly" })
-                                                                    </label>
-                                                                    <br />
-                                                                    <strong>Perubahan :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_PERUBAHAN_KRITIKAL2", editKew8.ElementAt(item2).HR_PERUBAHAN_KRITIKAL, new { @class = "form-control HR_PERUBAHAN_KRITIKAL", @readonly = "readonly" })
-                                                                    </label>
-                                                                    <br />
-                                                                    <strong>Pergerakan :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_PERGERAKAN_EKAL2", editKew8.ElementAt(item2).HR_PERGERAKAN_EKAL, new { @class = "form-control HR_PERGERAKAN_EKAL", @readonly = "readonly" })
-                                                                    </label>
-                                                                </td>
-                                                                <td>
-                                                                    <strong>Nilai % :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.Hidden("[" + item2 + "].HR_KOD_WILAYAH2", editKew8.ElementAt(item2).HR_KOD_WILAYAH, new { @class = "form-control HR_KOD_WILAYAH" })
-                                                                        @Html.TextBox("[" + item2 + "].HR_WILAYAH2", editKew8.ElementAt(item2).HR_WILAYAH, new { @class = "form-control HR_WILAYAH", @readonly = "readonly" })
-                                                                    </label>
-                                                                    <br />
-                                                                    <strong>Perubahan :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_PERUBAHAN_WILAYAH2", editKew8.ElementAt(item2).HR_PERUBAHAN_WILAYAH, new { @class = "form-control HR_PERUBAHAN_WILAYAH", @readonly = "readonly" })
-                                                                    </label>
-                                                                    <br />
-                                                                    <strong>Pergerakan :</strong>
-                                                                    <br />
-                                                                    <label class="input">
-                                                                        @Html.TextBox("[" + item2 + "].HR_PERGERAKAN_EWIL2", editKew8.ElementAt(item2).HR_PERGERAKAN_EWIL, new { @class = "form-control HR_PERGERAKAN_EWIL", @readonly = "readonly" })
-                                                                    </label>
-                                                                </td>
-                                                                <td style="@style">
-                                                                    @if (o == 0)
-                                                                    {
-                                                                        <div class="btn-group-vertical">
-                                                                            <a class="btn btn-default btn-xs btn-edit" id="btn-edit" href="javascript:void(0)" data-id="@editKew8.ElementAt(item2).HR_KEW8_ID" data-kodperubahan="@editKew8.ElementAt(item2).HR_KOD_PERUBAHAN" data-tarikh="@string.Format("{0:dd/MM/yyyy}", editKew8.ElementAt(item2).HR_TARIKH_MULA)" data-kodpelarasan="" data-muktamad="@editKew8.ElementAt(item2).HR_FINALISED_IND_HR" title="Kemaskini"><i class="fa fa-edit"></i></a>
-                                                                            <a class="btn btn-default btn-xs btn-padam" id="btn-padam" href="javascript:void(0)" data-id="@editKew8.ElementAt(item2).HR_KEW8_ID" data-kodperubahan="@editKew8.ElementAt(item2).HR_KOD_PERUBAHAN" data-tarikh="@string.Format("{0:dd/MM/yyyy}", editKew8.ElementAt(item2).HR_TARIKH_MULA)" data-kodpelarasan="" data-muktamad="@editKew8.ElementAt(item2).HR_FINALISED_IND_HR" title="Padam"><i class="fa fa-trash-o"></i></a>
-                                                                            @*<a class="btn btn-default btn-xs btn-muktamad" id="btn-muktamad" href="javascript:void(0)" data-id="@editKew8.ElementAt(item2).HR_KEW8_ID" data-kodperubahan="@editKew8.ElementAt(item2).HR_KOD_PERUBAHAN" data-tarikh="@string.Format("{0:dd/MM/yyyy}", editKew8.ElementAt(item2).HR_TARIKH_MULA)" data-kodpelarasan="" data-muktamad="@editKew8.ElementAt(item2).HR_FINALISED_IND_HR" title="Muktamad"><i class="fa fa-check-square-o"></i></a>*@
-                                                                            <a class="btn btn-default btn-xs btn-cetak" target="_blank" id="btn-cetak" href="javascript:void(0)" data-id="@editKew8.ElementAt(item2).HR_KEW8_ID" data-kodperubahan="@editKew8.ElementAt(item2).HR_KOD_PERUBAHAN" data-tarikh="@string.Format("{0:dd/MM/yyyy}", editKew8.ElementAt(item2).HR_TARIKH_MULA)" data-kodpelarasan="" data-muktamad="@editKew8.ElementAt(item2).HR_FINALISED_IND_HR" title="Cetak"><i class="fa fa-print"></i></a>
-                                                                            <a class="btn btn-default btn-xs btn-surat" id="btn-surat" href="javascript:void(0)" data-id="@editKew8.ElementAt(item2).HR_KEW8_ID" data-kodperubahan="@editKew8.ElementAt(item2).HR_KOD_PERUBAHAN" data-tarikh="@string.Format("{0:dd/MM/yyyy}", editKew8.ElementAt(item2).HR_TARIKH_MULA)" data-kodpelarasan="" data-muktamad="@editKew8.ElementAt(item2).HR_FINALISED_IND_HR" title="Cetak Surat"><i class="fa fa-file-text"></i></a>
-                                                                        </div>
-                                                                    }
-                                                                </td>
-                                                            </tr>
-                                                            //o++;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            
-                                        </tbody>
-                                    </table>
-                                </fieldset>
-                            }
 
                             @if (Model.Count() > 0)
                             {
+                                string txtTindakan = null;
+                                if (ViewBag.ViewTindakan == "T")
+                                {
+                                    txtTindakan = "Tambah";
+                                }
+                                else if(ViewBag.ViewTindakan == "K")
+                                {
+                                    txtTindakan = "Kemaskini";
+                                }
+                                else if (ViewBag.ViewTindakan == "M")
+                                {
+                                    txtTindakan = "Muktamad";
+                                }
                                 <fieldset>
                                     <legend>
-                                        Senarai Pekerja :: Tambah Pergerakan Gaji
+                                        Senarai Pekerja :: @txtTindakan Pergerakan Gaji
                                     </legend>
 
                                     <table id="datatable_tabletools" class="table table-striped table-bordered table-hover" width="100%" style="overflow-x: scroll; width: 1700px;">
@@ -533,12 +173,20 @@
                                         <tbody class="smart-form">
                                             @for (var item = 0; item < Model.Count(); item++)
                                             {
-                                                m++;
                                                 <tr class="table4" id="table4_@item">
                                                     <td>
                                                         @Html.DisplayFor(model => Model.ElementAt(item).HR_NO_PEKERJA)
                                                     </td>
                                                     <td>
+
+                                                        @if (ViewBag.ViewTindakan != "T")
+                                                        {
+                                                            @Html.Hidden("[" + item + "].HR_TARIKH_MULA", string.Format("{0:dd/MM/yyyy}", Model.ElementAt(item).HR_TARIKH_MULA), new { @class = "form-control HR_TARIKH_MULA" })
+                                                            @Html.Hidden("[" + item + "].HR_KEW8_ID", Model.ElementAt(item).HR_KEW8_ID, new { @class = "form-control HR_KEW8_ID" })
+                                                            @Html.Hidden("[" + item + "].HR_ANSURAN_ID", Model.ElementAt(item).HR_ANSURAN_ID, new { @class = "form-control HR_ANSURAN_ID" })
+                                                            @Html.Hidden("[" + item + "].HR_KOD_PELARASAN", Model.ElementAt(item).HR_KOD_PELARASAN, new { @class = "form-control HR_KOD_PELARASAN" })
+                                                        }
+                                                        
                                                         <a target="_blank" href='@Url.Action("SejarahPergerakanGaji", "Kewangan8", new { key = "1", value = Model.ElementAt(item).HR_NO_PEKERJA, kod = Model.ElementAt(item).HR_KOD_PERUBAHAN })' title="Senarai Pergerakan Gaji">@Html.DisplayFor(model => Model.ElementAt(item).HR_NAMA_PEKERJA)</a>
                                                         <br />
                                                         <strong>No KP :</strong> @Html.DisplayFor(model => Model.ElementAt(item).HR_NO_KPBARU)
@@ -740,6 +388,10 @@
                                 @Html.Hidden("key2", (string)ViewBag.key)
                                 @Html.Hidden("value2", (string)ViewBag.value)
                                 @Html.Hidden("bulan2", (int?)ViewBag.bulan)
+
+                                @Html.Hidden("tarafpekerja2", (string)ViewBag.tarafpekerja)
+                                @Html.Hidden("tindakan2", (string)ViewBag.ViewTindakan)
+
                                 @Html.Hidden("btnSub", null)
                                 <div id="getChecked"></div>
                                 <div class="modal fade" id="Modal" tabindex="-1" role="dialog">
@@ -747,7 +399,7 @@
                                         <div class="modal-content">
                                             <div id='ModalContent'>
                                                 <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                    <button type="button" class="close" aria-hidden="true">
                                                         &times;
                                                     </button>
                                                     <h4 class="modal-title">
@@ -755,6 +407,7 @@
                                                     </h4>
                                                 </div>
                                                 <div class="modal-body no-padding smart-form">
+                                                    
                                                     <fieldset id="bodyHidden">
                                                         <section>
                                                             <div class="row">
@@ -852,13 +505,13 @@
                                                     </fieldset>
                                                     
                                                     <footer>
-                                                        <button type="submit" id="btn" class="btn btn-primary">
+                                                        <button type="button" id="btn" class="btn btn-primary">
                                                             <span class="fa fa-save"></span> Simpan
                                                         </button>
                                                         <button type="reset" class="btn btn-default">
                                                             Reset
                                                         </button>
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                        <button type="button" id="btn-back" class="btn btn-default">
                                                             Kembali
                                                         </button>
                                                     </footer>
@@ -999,7 +652,7 @@
             /* END COLUMN SHOW - HIDE */
 
             /* TABLETOOLS */
-            var table4 = $('#datatable_tabletools').DataTable({
+            var table = $('#datatable_tabletools').DataTable({
 
                 // Tabletools options:
                 //   https://datatables.net/extensions/tabletools/button_options
@@ -1079,31 +732,56 @@
             });
 
             var disabled
-            if (parseInt('@m') > 0) {
+            if (parseInt('@Model.Count()') > 0) {
 
                 $("div.btn-add").html('<div class="text-right">' +
-                    '<button type = "button" name = "Tambah" id = "btn-tambah" class = "btn btn-default btn-success" title = "Tambah Pergerakan Gaji" ><i class = "fa fa-plus"></i></button>' +
-                    '</div>');
+                                      '</div>');
+                if ('@ViewBag.ViewTindakan' == 'T') {
+                    $("div.btn-add div.text-right").append('<button type = "button" name = "Tambah" id = "btn-tambah" class = "btn btn-success" title = "Tambah Pergerakan Gaji" ><i class = "fa fa-plus"></i></button>'
+                                                          );
+                }
 
-                $("div.btn-jenis").html('<div class = "smart-form"><div class="inline-group">' +
-                                            '<label class="radio">' +
-                                                '<input type="radio" name="jenisPergerakan" value="D" id="JenisPergerakan" checked >' +
-                                                '<i></i>Mendatar' +
-                                            '</label>' +
-                                            '<label class="radio">' +
-                                                '<input type="radio" name="jenisPergerakan" value="S" id="JenisPergerakan" >' +
-                                                '<i></i>Statik' +
-                                            '</label>' +
-                                            '<label class="radio">' +
-                                                '<input type="radio" name="jenisPergerakan" value="J" id="JenisPergerakan" >' +
-                                                '<i></i>Anjakan' +
-                                            '</label>' +
-                                        '</div></div>');
+                if ('@ViewBag.ViewTindakan' == 'K') {
+                    $("div.btn-add div.text-right").append('<button type = "button" name = "Kemaskini" id = "btn-edit" class = "btn btn-success btn-edit" title = "Kemaskini Pergerakan Gaji" ><i class = "fa fa-edit"></i></button>' + 
+                                                           '<button type = "button" name = "Kemaskini" id = "btn-padam" class = "btn btn-danger btn-padam" title = "Padam Pergerakan Gaji" ><i class="fa fa-trash-o"></i></button>'
+                                                          );
+                }
+
+                if ('@ViewBag.ViewTindakan' == 'M' || '@ViewBag.ViewTindakan' == 'K') {
+                    $("div.btn-add div.text-right").append('<button type = "button" name = "Cetak" id = "btn-cetak" class = "btn btn-default btn-cetak" formtarget="_blank" title = "Cetak" ><i class = "fa fa-print"></i></button>' +
+                                                           '<button type = "button" name = "Surat" id = "btn-surat" class = "btn btn-default btn-surat" formtarget="_blank" title = "Cetak Surat" ><i class = "fa fa-file-text"></i></button>'
+                                                          );
+                }
+
+                if ('@ViewBag.ViewTindakan' == 'T' || '@ViewBag.ViewTindakan' == 'K') {
+                    $("div.btn-jenis").html('<div class = "smart-form"><div class="inline-group">' +
+                                                '<label class="radio">' +
+                                                    '<input type="radio" name="jenisPergerakan" value="D" id="JenisPergerakan" checked >' +
+                                                    '<i></i>Mendatar' +
+                                                '</label>' +
+                                                '<label class="radio">' +
+                                                    '<input type="radio" name="jenisPergerakan" value="S" id="JenisPergerakan" >' +
+                                                    '<i></i>Statik' +
+                                                '</label>' +
+                                                '<label class="radio">' +
+                                                    '<input type="radio" name="jenisPergerakan" value="J" id="JenisPergerakan" >' +
+                                                    '<i></i>Anjakan' +
+                                                '</label>' +
+                                            '</div></div>');
+                }
+            }
+
+            if ('@ViewBag.ViewTindakan' == 'M') {
+                table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                    var data = this.node();
+                    // ... do something with data(), or this.node(), etc
+                    $("td:not(:eq(0)) input, btn-MinMaxModal", data).attr("disabled", "disabled");
+                });
             }
 
             $("div.selected").html('<div style="padding-top: 9px; font-size: 13px; font-weight: 700; font-style: italic; color: #969696;">' +
-                                    'Jumlah pekerja yang dipilih : <span class="txt-color-darken" id="jumPilih">@(m)</span>' +
-                                    '</div>');
+                                        'Jumlah pekerja yang dipilih : <span class="txt-color-darken" id="jumPilih">@(Model.Count())</span>' +
+                                   '</div>');
 
             /* END TABLETOOLS */
 
@@ -1243,7 +921,7 @@
                                     '</div></div>');
 
             $("div.selected2").html('<div style="padding-top: 9px; font-size: 13px; font-weight: 700; font-style: italic; color: #969696;">' +
-                'Jumlah pekerja yang dipilih : <span class="txt-color-darken" id="jumPilih2">@(ViewBag.belumMuktamad)</span>' +
+                'Jumlah pekerja yang dipilih : <span class="txt-color-darken" id="jumPilih2"></span>' +
                 '</div>');
 
             /* END TABLETOOLS */
@@ -1302,47 +980,42 @@
             $('.PilihPekerja').on('click', function () {
                 // Get all rows with search applied
                 var ini = this;
-                var bapa = $(ini).parents("tr").attr("id")
 
-                var table = table4;
-                if (bapa == "table5") {
-                    table = table5;
-                }
                 var rows = table.rows({ 'search': 'applied' }).nodes();
                 // Check/uncheck checkboxes for all rows in the table
-                $('input[type="checkbox"]:not(.text-muktamad)', rows).prop('checked', ini.checked);
+                $('input[type="checkbox"]', rows).prop('checked', ini.checked);
                 if (ini.checked == true) {
 
-                    $("input.HR_JENIS_PERGERAKAN:not(.text-muktamad)", rows).removeAttr("disabled");
-                    $("input.HR_GRED:not(.text-muktamad)", rows).removeAttr("disabled");
-                    $("input.HR_GAJI_MIN:not(.text-muktamad)", rows).removeAttr("disabled");
-                    $("input.HR_GAJI_MAX:not(.text-muktamad)", rows).removeAttr("disabled");
-                    $("input.HR_GAJI_BARU:not(.text-muktamad)", rows).removeAttr("disabled");
-                    $("input.HR_MATRIKS_GAJI:not(.text-muktamad)", rows).removeAttr("disabled").attr("readonly", "readonly");
-                    $("input.HR_JUMLAH_PERUBAHAN:not(.text-muktamad)", rows).removeAttr("disabled").attr("readonly", "readonly");
+                    $("input.HR_JENIS_PERGERAKAN", rows).removeAttr("disabled");
+                    $("input.HR_GRED", rows).removeAttr("disabled");
+                    $("input.HR_GAJI_MIN", rows).removeAttr("disabled");
+                    $("input.HR_GAJI_MAX", rows).removeAttr("disabled");
+                    $("input.HR_GAJI_BARU", rows).removeAttr("disabled");
+                    $("input.HR_MATRIKS_GAJI", rows).removeAttr("disabled").attr("readonly", "readonly");
+                    $("input.HR_JUMLAH_PERUBAHAN", rows).removeAttr("disabled").attr("readonly", "readonly");
 
-                    $("input.HR_WILAYAH:not(.text-muktamad)", rows).removeAttr("disabled");
-                    $("input.HR_PERUBAHAN_WILAYAH:not(.text-muktamad)", rows).removeAttr("disabled");
-                    $("input.HR_PERGERAKAN_EWIL:not(.text-muktamad)", rows).removeAttr("disabled");
+                    $("input.HR_WILAYAH", rows).removeAttr("disabled");
+                    $("input.HR_PERUBAHAN_WILAYAH", rows).removeAttr("disabled");
+                    $("input.HR_PERGERAKAN_EWIL", rows).removeAttr("disabled");
 
-                    $("input.HR_KRITIKAL:not(.text-muktamad)", rows).removeAttr("disabled");
-                    $("input.HR_PERUBAHAN_KRITIKAL:not(.text-muktamad)", rows).removeAttr("disabled");
-                    $("input.HR_PERGERAKAN_EKAL:not(.text-muktamad)", rows).removeAttr("disabled");
+                    $("input.HR_KRITIKAL", rows).removeAttr("disabled");
+                    $("input.HR_PERUBAHAN_KRITIKAL", rows).removeAttr("disabled");
+                    $("input.HR_PERGERAKAN_EKAL", rows).removeAttr("disabled");
 
-                    if ($("input.HR_JENIS_PERGERAKAN:checked:not(.text-muktamad)", rows).val() != "J") {
-                        $("input.HR_GRED:not(.text-muktamad)", rows).attr("readonly", "readonly");
-                        $("input.HR_GAJI_MIN:not(.text-muktamad)", rows).attr("readonly", "readonly");
-                        $("input.HR_GAJI_MAX:not(.text-muktamad)", rows).attr("readonly", "readonly");
-                        $("input.HR_GAJI_BARU:not(.text-muktamad)", rows).attr("readonly", "readonly");
+                    if ($("input.HR_JENIS_PERGERAKAN:checked", rows).val() != "J") {
+                        $("input.HR_GRED", rows).attr("readonly", "readonly");
+                        $("input.HR_GAJI_MIN", rows).attr("readonly", "readonly");
+                        $("input.HR_GAJI_MAX", rows).attr("readonly", "readonly");
+                        $("input.HR_GAJI_BARU", rows).attr("readonly", "readonly");
 
-                        $("input.HR_WILAYAH:not(.text-muktamad)", rows).attr("readonly", "readonly");
-                        $("input.HR_PERUBAHAN_WILAYAH:not(.text-muktamad)", rows).attr("readonly", "readonly");
-                        $("input.HR_PERGERAKAN_EWIL:not(.text-muktamad)", rows).attr("readonly", "readonly");
+                        $("input.HR_WILAYAH", rows).attr("readonly", "readonly");
+                        $("input.HR_PERUBAHAN_WILAYAH", rows).attr("readonly", "readonly");
+                        $("input.HR_PERGERAKAN_EWIL", rows).attr("readonly", "readonly");
 
-                        $("input.HR_KRITIKAL:not(.text-muktamad)", rows).attr("readonly", "readonly");
-                        $("input.HR_PERUBAHAN_KRITIKAL:not(.text-muktamad)", rows).attr("readonly", "readonly");
-                        $("input.HR_PERGERAKAN_EKAL:not(.text-muktamad)", rows).attr("readonly", "readonly");
-                        $("div.input-group-btn:not(.text-muktamad)", rows).hide();
+                        $("input.HR_KRITIKAL", rows).attr("readonly", "readonly");
+                        $("input.HR_PERUBAHAN_KRITIKAL", rows).attr("readonly", "readonly");
+                        $("input.HR_PERGERAKAN_EKAL", rows).attr("readonly", "readonly");
+                        $("div.input-group-btn", rows).hide();
                     }
                     else {
                         $("div.input-group-btn", rows).show();
@@ -1434,19 +1107,9 @@
             });
 
             function TotalSelected(ini) {
-                var bapa = $(ini).parents("tr")
-                var table = table4;
-                var TotalNameID = "#jumPilih";
-                var SelectAllID = "#PilihPekerja";
-                if (bapa.hasClass("table5")) {
-                    table = table5;
-                    TotalNameID = "#jumPilih2"
-                    SelectAllID = "#PilihPekerja2";
-                }
-
                 var rows = table.rows().nodes();
-                $(TotalNameID).html($('input[type="checkbox"]:checked:not(.text-muktamad)', rows).length);
-                if (bapa.hasClass("table4")) {
+                $("#jumPilih").html($('input[type="checkbox"]:checked', rows).length);
+                if ('@ViewBag.ViewTindakan' == "T") {
                     if ($('input[type="checkbox"]:checked', rows).length <= 0) {
                         $("#btn-tambah").attr("disabled", "disabled")
                     }
@@ -1455,14 +1118,14 @@
                     }
                 }
 
-                var totalSelected = $('input[type="checkbox"]:checked:not(.text-muktamad)', rows).length;
+                var totalSelected = $('input[type="checkbox"]:checked', rows).length;
 
                 if (totalSelected <= 0) {
-                    $(SelectAllID).prop("checked", false);
+                    $("#PilihPekerja").prop("checked", false);
                 }
 
-                if ($('input[type="checkbox"]:not(.text-muktamad)', rows).length == totalSelected) {
-                    $(SelectAllID).prop("checked", true);
+                if ($('input[type="checkbox"]', rows).length == totalSelected) {
+                    $("#PilihPekerja").prop("checked", true);
                 }
 
             };
@@ -1720,10 +1383,6 @@
                 var ini = this;
 
                 var table_id = $("table").find("tr#" + id).parents("table").attr("id")
-                var table = table4;
-                if (table_id == "datatable_tabletools2") {
-                    table = table5;
-                }
 
                 var VIEW = table.$("tr#" + id);
 
@@ -1822,18 +1481,10 @@
                     }
                 })
 
-                table4.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                table.rows().every(function (rowIdx, tableLoop, rowLoop) {
                     var data = this.node();
                     $("datalist.list-gred", data).html(xhtml);
-                    $(".input-group-btn", data).hide();
-                    // ... do something with data(), or this.node(), etc
-
-                });
-
-                table5.rows().every(function (rowIdx, tableLoop, rowLoop) {
-                    var data = this.node();
-                    $("datalist.list-gred", data).html(xhtml);
-                    if ($("input.HR_JENIS_PERGERAKAN:checked:not(.text-muktamad)", data).val() == "J") {
+                    if ($("input.HR_JENIS_PERGERAKAN:checked", data).val() == "J") {
                         $(".input-group-btn", data).show();
                     }
                     else {
@@ -1850,15 +1501,10 @@
                 $("input.HR_GAJI_MIN").val("");
                 $("input.HR_GAJI_MAX").val("")
 
-                var table = table4;
-
-                if ($(ini).attr("id") == "JenisPergerakan2") {
-                    table = table5;
-                }
                 table.rows().every(function (rowIdx, tableLoop, rowLoop) {
                     var data = this.node();
                     // ... do something with data(), or this.node(), etc
-                    if ($("input[type='checkbox']:not(.text-muktamad)", data).is(":checked") == true)
+                    if ($("input[type='checkbox']", data).is(":checked") == true)
                     {
                         $("input[type='radio']:checked", data).prop('checked', false).removeAttr("checked");
                         $("input[type='radio'][value='" + ini.value + "']", data).prop('checked', true).attr("checked", "checked");
@@ -1887,8 +1533,15 @@
             });
 
             // Handle form submission event
-            $('#btn-tambah').on('click', function (e) {
-                $('#Modal input:not(input[type="hidden"], #HR_PENERANGAN), #Modal select, #Modal textarea').val("");
+            $('#btn-tambah, #btn-edit, #btn-padam, #btn-muktamad, #btn-cetak, #btn-surat').on('click', function (e) {
+                if ($(this).attr("id") == "btn-tambah")
+                {
+                    $('#Modal input:not(input[type="hidden"], #HR_PENERANGAN), #Modal select, #Modal textarea').val("");
+                }
+                else {
+                    $('#Modal input:not(#HR_PENERANGAN), #Modal select, #Modal textarea').not("input[type=hidden]").val("");
+                }
+
                 var form = $('#form-pergerakangaji');
                 var getChecked = $("#getChecked");
                 var pekerja = [];
@@ -1896,11 +1549,10 @@
                 $("#bodyHidden").show();
                 $("#bodyHidden2").hide();
                 getChecked.html("");
-                $("#tajukModel").html("Tambah")
 
                 // Iterate over all checkboxes in the table
                 var no = 0;
-                table4.$('input[type="checkbox"]').each(function () {
+                table.$('input[type="checkbox"]').each(function () {
                     // If checkbox doesn't exist in DOM
                     //if (!$.contains(document, this)) {
                         // If checkbox is checked
@@ -1919,6 +1571,13 @@
                             var HR_WILAYAH = VIEW.find("input.HR_WILAYAH").val()
                             var HR_PERUBAHAN_WILAYAH = VIEW.find("input.HR_PERUBAHAN_WILAYAH").val()
                             var HR_PERGERAKAN_EWIL = VIEW.find("input.HR_PERGERAKAN_EWIL").val()
+
+                            if ('@ViewBag.ViewTindakan' == "K" || '@ViewBag.ViewTindakan' == "M") {
+                                var HR_TARIKH_MULA = VIEW.find("input.HR_TARIKH_MULA").val()
+                                var HR_KEW8_ID = VIEW.find("input.HR_KEW8_ID").val()
+                                var HR_ANSURAN_ID = VIEW.find("input.HR_ANSURAN_ID").val()
+                                var HR_KOD_PELARASAN = VIEW.find("input.HR_KOD_PELARASAN").val()
+                            }
 
                             // Create a hidden element
                             getChecked.append(
@@ -2002,7 +1661,7 @@
                             );
 
                             getChecked.append(
-                              $('<input>')
+                               $('<input>')
                                  .attr('type', 'hidden')
                                  .attr('name', '[' + no + '].HR_KOD_WILAYAH')
                                  .attr('id', no + '__' + 'HR_KOD_WILAYAH')
@@ -2010,7 +1669,7 @@
                             );
 
                             getChecked.append(
-                              $('<input>')
+                               $('<input>')
                                  .attr('type', 'hidden')
                                  .attr('name', '[' + no + '].HR_WILAYAH')
                                  .attr('id', no + '__' + 'HR_WILAYAH')
@@ -2018,7 +1677,7 @@
                             );
 
                             getChecked.append(
-                              $('<input>')
+                               $('<input>')
                                  .attr('type', 'hidden')
                                  .attr('name', '[' + no + '].HR_PERUBAHAN_WILAYAH')
                                  .attr('id', no + '__' + 'HR_PERUBAHAN_WILAYAH')
@@ -2026,329 +1685,315 @@
                             );
 
                             getChecked.append(
-                             $('<input>')
-                                .attr('type', 'hidden')
-                                .attr('name', '[' + no + '].HR_PERGERAKAN_EWIL')
-                                .attr('id', no + '__' + 'HR_PERGERAKAN_EWIL')
-                                .val(HR_PERGERAKAN_EWIL)
+                               $('<input>')
+                                 .attr('type', 'hidden')
+                                 .attr('name', '[' + no + '].HR_PERGERAKAN_EWIL')
+                                 .attr('id', no + '__' + 'HR_PERGERAKAN_EWIL')
+                                 .val(HR_PERGERAKAN_EWIL)
                             );
 
-                            pekerja.push(this.value)
+                            if ('@ViewBag.ViewTindakan' == "K" || '@ViewBag.ViewTindakan' == "M") {
+                                getChecked.append(
+                                    $('<input>')
+                                        .attr('type', 'hidden')
+                                        .attr('name', '[' + no + '].HR_TARIKH_MULA')
+                                        .attr('id', no + '__' + 'HR_TARIKH_MULA')
+                                        .val(HR_TARIKH_MULA)
+                                );
+
+                                getChecked.append(
+                                    $('<input>')
+                                        .attr('type', 'hidden')
+                                        .attr('name', '[' + no + '].HR_KEW8_ID')
+                                        .attr('id', no + '__' + 'HR_KEW8_ID')
+                                        .val(HR_KEW8_ID)
+                                );
+
+                                getChecked.append(
+                                    $('<input>')
+                                        .attr('type', 'hidden')
+                                        .attr('name', '[' + no + '].HR_ANSURAN_ID')
+                                        .attr('id', no + '__' + 'HR_ANSURAN_ID')
+                                        .val(HR_ANSURAN_ID)
+                                );
+
+                                getChecked.append(
+                                    $('<input>')
+                                        .attr('type', 'hidden')
+                                        .attr('name', '[' + no + '].HR_KOD_PELARASAN')
+                                        .attr('id', no + '__' + 'HR_KOD_PELARASAN')
+                                        .val(HR_KOD_PELARASAN)
+                                );
+                            }
+
+                            pekerja.push("'" + this.value + "'")
                             no++;
                         }
                     //}
                 });
                 $("#SENARAI_PEKERJA").val(pekerja.join(', '))
-                $('#HR_NO_SURAT_KEBENARAN').removeAttr("disabled")
-                $('#HR_BUTIR_PERUBAHAN').removeAttr("disabled")
-                $('#HR_NP_FINALISED_HR').removeAttr("disabled")
-                $('#HR_NAMA_PEGAWAI').removeAttr("disabled")
-                $('#HR_FINALISED_IND_HR').removeAttr("disabled")
-
-                $('#HR_NP_FINALISED_HR').val('@ViewBag.HR_NP_FINALISED_HR')
-                $('#HR_NAMA_PEGAWAI').val('@ViewBag.HR_NAMA_PEGAWAI')
-                $('#HR_FINALISED_IND_HR').val("T")
-                $('#btnSub').val("Tambah")
-
-                $('#ModalContent button[type="submit"]').attr({ "class": "btn btn-primary" }).html('<span class="fa fa-save"></span> Simpan')
-                $('button[type="reset"]').show()
-                $('#Modal').modal('show');
-                //form.submit();
-            });
-
-            $("#datatable_tabletools2 tbody").on("click", "#btn-edit, #btn-padam, #btn-muktamad, #btn-cetak, #btn-surat", function () {
-                $('#Modal input:not(#HR_PENERANGAN), #Modal select, #Modal textarea').not("input[type=hidden]").val("");
-                var form = $('#form-pergerakangaji');
-                var getChecked = $("#getChecked");
-                var pekerja = [];
-                $("#form-pergerakangaji").attr({ "action": "../Kewangan8/PergerakanGaji", "method": "post" }).removeAttr("target");
-                $("#bodyHidden").show();
-                $("#bodyHidden2").hide();
-                var $buttonClicked = $(this);
-                var id = $buttonClicked.attr('data-id');
-                var kod = $buttonClicked.attr('data-kodperubahan');
-                var tarikh = $buttonClicked.attr('data-tarikh');
-                var muktamad = $buttonClicked.attr('data-muktamad');
-
-                $("#getChecked").html("");
-
-                var valueMuktamad = ":not(.text-muktamad)";
-                if (muktamad == "Y") {
-                    valueMuktamad = ".text-muktamad";
-                }
-
-                var no = 0;
-                table5.$('input[type="checkbox"]' + valueMuktamad).each(function () {
-                    // If checkbox doesn't exist in DOM
-                    //if (!$.contains(document, this)) {
-                    // If checkbox is checked
-                    if (this.checked) {
-                        var VIEW = $(this).parents("tr")
-                        var HR_JENIS_PERGERAKAN = VIEW.find("input.HR_JENIS_PERGERAKAN:checked").val()
-                        var HR_GRED = VIEW.find("input.HR_GRED").val()
-                        var HR_GAJI_BARU = VIEW.find("input.HR_GAJI_BARU").val()
-                        var HR_MATRIKS_GAJI = VIEW.find("input.HR_MATRIKS_GAJI").val()
-                        var HR_JUMLAH_PERUBAHAN = VIEW.find("input.HR_JUMLAH_PERUBAHAN").val()
-                        var HR_KOD_KRITIKAL = VIEW.find("input.HR_KOD_KRITIKAL").val()
-                        var HR_KRITIKAL = VIEW.find("input.HR_KRITIKAL").val()
-                        var HR_PERUBAHAN_KRITIKAL = VIEW.find("input.HR_PERUBAHAN_KRITIKAL").val()
-                        var HR_PERGERAKAN_EKAL = VIEW.find("input.HR_PERGERAKAN_EKAL").val()
-                        var HR_KOD_WILAYAH = VIEW.find("input.HR_KOD_WILAYAH").val()
-                        var HR_WILAYAH = VIEW.find("input.HR_WILAYAH").val()
-                        var HR_PERUBAHAN_WILAYAH = VIEW.find("input.HR_PERUBAHAN_WILAYAH").val()
-                        var HR_PERGERAKAN_EWIL = VIEW.find("input.HR_PERGERAKAN_EWIL").val()
-
-                        var HR_TARIKH_MULA = VIEW.find("input.HR_TARIKH_MULA").val()
-                        var HR_KEW8_ID = VIEW.find("input.HR_KEW8_ID").val()
-                        var HR_KOD_PELARASAN = VIEW.find("input.HR_KOD_PELARASAN").val()
-
-                        if (tarikh == HR_TARIKH_MULA && id == HR_KEW8_ID) {
-                            // Create a hidden element
-                            getChecked.append(
-                               $('<input>')
-                                  .attr('type', 'hidden')
-                                  .attr('name', '[' + no + '].' + "HR_NO_PEKERJA")
-                                  .attr('id', no + '__' + "HR_NO_PEKERJA")
-                                  .val(this.value)
-                            );
-
-                            getChecked.append(
-                               $('<input>')
-                                  .attr('type', 'hidden')
-                                  .attr('name', '[' + no + '].HR_JENIS_PERGERAKAN')
-                                  .attr('id', no + '__' + 'HR_GRED')
-                                  .val(HR_JENIS_PERGERAKAN)
-                            );
-
-                            getChecked.append(
-                               $('<input>')
-                                  .attr('type', 'hidden')
-                                  .attr('name', '[' + no + '].HR_GRED')
-                                  .attr('id', no + '__' + 'HR_GRED')
-                                  .val(HR_GRED)
-                            );
-
-                            getChecked.append(
-                               $('<input>')
-                                  .attr('type', 'hidden')
-                                  .attr('name', '[' + no + '].HR_GAJI_BARU')
-                                  .attr('id', no + '__' + 'HR_GAJI_BARU')
-                                  .val(HR_GAJI_BARU)
-                            );
-
-                            getChecked.append(
-                               $('<input>')
-                                  .attr('type', 'hidden')
-                                  .attr('name', '[' + no + '].HR_MATRIKS_GAJI')
-                                  .attr('id', no + '__' + 'HR_MATRIKS_GAJI')
-                                  .val(HR_MATRIKS_GAJI)
-                            );
-
-                            getChecked.append(
-                               $('<input>')
-                                  .attr('type', 'hidden')
-                                  .attr('name', '[' + no + '].HR_JUMLAH_PERUBAHAN')
-                                  .attr('id', no + '__' + 'HR_JUMLAH_PERUBAHAN')
-                                  .val(HR_JUMLAH_PERUBAHAN)
-                            );
-
-                            getChecked.append(
-                               $('<input>')
-                                  .attr('type', 'hidden')
-                                  .attr('name', '[' + no + '].HR_KOD_KRITIKAL')
-                                  .attr('id', no + '__' + 'HR_KOD_KRITIKAL')
-                                  .val(HR_KOD_KRITIKAL)
-                            );
-
-                            getChecked.append(
-                               $('<input>')
-                                  .attr('type', 'hidden')
-                                  .attr('name', '[' + no + '].HR_KRITIKAL')
-                                  .attr('id', no + '__' + 'HR_KRITIKAL')
-                                  .val(HR_KRITIKAL)
-                            );
-
-                            getChecked.append(
-                               $('<input>')
-                                  .attr('type', 'hidden')
-                                  .attr('name', '[' + no + '].HR_PERUBAHAN_KRITIKAL')
-                                  .attr('id', no + '__' + 'HR_PERUBAHAN_KRITIKAL')
-                                  .val(HR_PERUBAHAN_KRITIKAL)
-                            );
-
-                            getChecked.append(
-                               $('<input>')
-                                  .attr('type', 'hidden')
-                                  .attr('name', '[' + no + '].HR_PERGERAKAN_EKAL')
-                                  .attr('id', no + '__' + 'HR_PERGERAKAN_EKAL')
-                                  .val(HR_PERGERAKAN_EKAL)
-                            );
-
-                            getChecked.append(
-                              $('<input>')
-                                 .attr('type', 'hidden')
-                                 .attr('name', '[' + no + '].HR_KOD_WILAYAH')
-                                 .attr('id', no + '__' + 'HR_KOD_WILAYAH')
-                                 .val(HR_KOD_WILAYAH)
-                            );
-
-                            getChecked.append(
-                              $('<input>')
-                                 .attr('type', 'hidden')
-                                 .attr('name', '[' + no + '].HR_WILAYAH')
-                                 .attr('id', no + '__' + 'HR_WILAYAH')
-                                 .val(HR_WILAYAH)
-                            );
-
-                            getChecked.append(
-                              $('<input>')
-                                 .attr('type', 'hidden')
-                                 .attr('name', '[' + no + '].HR_PERUBAHAN_WILAYAH')
-                                 .attr('id', no + '__' + 'HR_PERUBAHAN_WILAYAH')
-                                 .val(HR_PERUBAHAN_WILAYAH)
-                            );
-
-                            getChecked.append(
-                             $('<input>')
-                                .attr('type', 'hidden')
-                                .attr('name', '[' + no + '].HR_PERGERAKAN_EWIL')
-                                .attr('id', no + '__' + 'HR_PERGERAKAN_EWIL')
-                                .val(HR_PERGERAKAN_EWIL)
-                            );
-
-                            getChecked.append(
-                              $('<input>')
-                                 .attr('type', 'hidden')
-                                 .attr('name', '[' + no + '].HR_TARIKH_MULA')
-                                 .attr('id', no + '__' + 'HR_TARIKH_MULA')
-                                 .val(HR_TARIKH_MULA)
-                            );
-
-                            getChecked.append(
-                              $('<input>')
-                                 .attr('type', 'hidden')
-                                 .attr('name', '[' + no + '].HR_KEW8_ID')
-                                 .attr('id', no + '__' + 'HR_KEW8_ID')
-                                 .val(HR_KEW8_ID)
-                            );
-
-                            getChecked.append(
-                             $('<input>')
-                                .attr('type', 'hidden')
-                                .attr('name', '[' + no + '].HR_KOD_PELARASAN')
-                                .attr('id', no + '__' + 'HR_KOD_PELARASAN')
-                                .val(HR_KOD_PELARASAN)
-                            );
-
-                            pekerja.push(this.value)
-
-                            no++;
-                        }
-
-                    }
-                    //}
-                });
-
-                $("#SENARAI_PEKERJA").val(pekerja.join(', '))
-
-                if (pekerja.length <= 0) {
-                    $('#ModalContent button[type="submit"]').attr({ "disabled": "disabled" })
-                }
-                else {
-                    $('#ModalContent button[type="submit"]').removeAttr("disabled");
-                }
-
-                if ($(this).attr("id") == "btn-edit" || $(this).attr("id") == "btn-muktamad" || $(this).attr("id") == "btn-cetak" || $(this).attr("id") == "btn-surat") {
-                    $("#tajukModel").html("Kemaskini")
+                if ($(this).attr("id") == "btn-tambah") {
+                    $("#tajukModel").html("Tambah")
                     $('#HR_NO_SURAT_KEBENARAN').removeAttr("disabled")
                     $('#HR_BUTIR_PERUBAHAN').removeAttr("disabled")
                     $('#HR_NP_FINALISED_HR').removeAttr("disabled")
                     $('#HR_NAMA_PEGAWAI').removeAttr("disabled")
                     $('#HR_FINALISED_IND_HR').removeAttr("disabled")
-                    $('#btnSub').val("Edit")
-                    if ($(this).attr("id") == "btn-cetak") {
-                        $('#btnSub').val("Cetak")
-                    }
-                    if ($(this).attr("id") == "btn-surat") {
-                        $('#btnSub').val("Surat")
-                    }
 
-                    if ($(this).attr("id") == "btn-surat") {
-                        $('#ModalContent button[type="submit"]').attr({ "class": "btn btn-primary" }).html('<span class="fa fa-download"></span> Muat Turun')
-                    }
+                    $('#HR_NP_FINALISED_HR').val('@ViewBag.HR_NP_FINALISED_HR')
+                    $('#HR_NAMA_PEGAWAI').val('@ViewBag.HR_NAMA_PEGAWAI')
+                    $('#HR_FINALISED_IND_HR').val("T")
+                    $('#btnSub').val("Tambah")
 
-                    else if ($(this).attr("id") == "btn-cetak") {
-                        $('#ModalContent button[type="submit"]').attr({ "class": "btn btn-primary" }).html('<span class="fa fa-print"></span> Cetak')
-                    }
-                    else {
-                        $('#ModalContent button[type="submit"]').attr({ "class": "btn btn-primary" }).html('<span class="fa fa-save"></span> Simpan')
-                    }
+                    $('#ModalContent #btn').attr({ "class": "btn btn-primary" }).html('<span class="fa fa-save"></span> Simpan')
+                    $('button[type="reset"]').show()
+                }
 
-                    if ($(this).attr("id") == "btn-edit") {
-                        $('button[type="reset"]').show()
-                    }
-                    else {
-                        $('button[type="reset"]').hide()
-                    }
+                if (pekerja.length <= 0) {
+                    $('#ModalContent #btn').attr({ "disabled": "disabled" })
                 }
                 else {
-                    $("#tajukModel").html("Padam")
-                    $('#HR_NO_SURAT_KEBENARAN').attr("disabled", "disabled")
-                    $('#HR_BUTIR_PERUBAHAN').attr("disabled", "disabled")
-                    $('#HR_NP_FINALISED_HR').attr("disabled", "disabled")
-                    $('#HR_NAMA_PEGAWAI').attr("disabled", "disabled")
-                    $('#HR_FINALISED_IND_HR').attr("disabled", "disabled")
-                    $('#btnSub').val("Padam")
-
-                    $('#ModalContent button[type="submit"]').attr({ "class": "btn btn-danger" }).html('<span class="fa fa-trash-o"></span> Padam')
-                    $('button[type="reset"]').hide()
+                    $('#ModalContent #btn').removeAttr("disabled");
                 }
 
-                var ini = this;
+                if ('@ViewBag.ViewTindakan' == "K" || '@ViewBag.ViewTindakan' == "M") {
+                    if ($(this).attr("id") == "btn-edit" || $(this).attr("id") == "btn-muktamad" || $(this).attr("id") == "btn-cetak" || $(this).attr("id") == "btn-surat") {
+                        $("#tajukModel").html("Kemaskini")
+                        $('#HR_NO_SURAT_KEBENARAN').removeAttr("disabled")
+                        $('#HR_BUTIR_PERUBAHAN').removeAttr("disabled")
+                        $('#HR_NP_FINALISED_HR').removeAttr("disabled")
+                        $('#HR_NAMA_PEGAWAI').removeAttr("disabled")
+                        $('#HR_FINALISED_IND_HR').removeAttr("disabled")
+                        $('#btnSub').val("Edit")
+                        if ($(this).attr("id") == "btn-cetak") {
+                            $('#btnSub').val("Cetak")
+                        }
+                        if ($(this).attr("id") == "btn-surat") {
+                            $('#btnSub').val("Surat")
+                        }
 
-                $.ajax({
-                    url: "../Kewangan8/CariPergerakanGaji",
-                    type: "Get",
-                    contentType: "application/json; charset=utf-8",
-                    data: { "id": id, "kod": kod, "tarikh": tarikh },
-                    dataType: "Json",
-                    success: function (kew8) {
-                        $('#HR_NO_SURAT_KEBENARAN').val(kew8.HR_NO_SURAT_KEBENARAN)
-                        $('#HR_BUTIR_PERUBAHAN').val(kew8.HR_BUTIR_PERUBAHAN)
-                        $('#HR_NP_FINALISED_HR').val(kew8.HR_NP_FINALISED_HR)
-                        $('#HR_NAMA_PEGAWAI').val(kew8.HR_NAMA_PEGAWAI)
-                        $('#HR_FINALISED_IND_HR').val(kew8.HR_FINALISED_IND_HR)
+                        if ($(this).attr("id") == "btn-surat") {
+                            $('#ModalContent #btn').attr({ "class": "btn btn-primary" }).html('<span class="fa fa-download"></span> Muat Turun')
+                        }
+
+                        else if ($(this).attr("id") == "btn-cetak") {
+                            $('#ModalContent #btn').attr({ "class": "btn btn-primary" }).html('<span class="fa fa-print"></span> Cetak')
+                        }
+                        else {
+                            $('#ModalContent #btn').attr({ "class": "btn btn-primary" }).html('<span class="fa fa-save"></span> Simpan')
+                        }
+
+                        if ($(this).attr("id") == "btn-edit") {
+                            $('button[type="reset"]').show()
+                        }
+                        else {
+                            $('button[type="reset"]').hide()
+                        }
                     }
-                })
-                if ($(this).attr("id") == "btn-muktamad") {
-                    $("#form-pergerakangaji").find('#HR_FINALISED_IND_HR').val("Y").prop("selected", true)
-                    $("#tajukModel").html("Muktamad")
-                    $("#bodyHidden2").hide();
-                    $("#bodyHidden").hide();
-                   // $("#form-pergerakangaji").submit();
+                    else {
+                        $("#tajukModel").html("Padam")
+                        $('#HR_NO_SURAT_KEBENARAN').attr("disabled", "disabled")
+                        $('#HR_BUTIR_PERUBAHAN').attr("disabled", "disabled")
+                        $('#HR_NP_FINALISED_HR').attr("disabled", "disabled")
+                        $('#HR_NAMA_PEGAWAI').attr("disabled", "disabled")
+                        $('#HR_FINALISED_IND_HR').attr("disabled", "disabled")
+                        $('#btnSub').val("Padam")
+
+                        $('#ModalContent #btn').attr({ "class": "btn btn-danger" }).html('<span class="fa fa-trash-o"></span> Padam')
+                        $('button[type="reset"]').hide()
+                    }
+
+                    var ini = this;
+
+                    $.ajax({
+                        url: "../Kewangan8/CariPergerakanGaji",
+                        type: "Get",
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": '@ViewBag.ID', "kod": '@ViewBag.HR_KOD_PERUBAHAN', "tarikh": '@ViewBag.TARIKH_MULA' },
+                        dataType: "Json",
+                        success: function (kew8) {
+                            $('#HR_NO_SURAT_KEBENARAN').val(kew8.HR_NO_SURAT_KEBENARAN)
+                            $('#HR_BUTIR_PERUBAHAN').val(kew8.HR_BUTIR_PERUBAHAN)
+                            $('#HR_NP_FINALISED_HR').val(kew8.HR_NP_FINALISED_HR)
+                            $('#HR_NAMA_PEGAWAI').val(kew8.HR_NAMA_PEGAWAI)
+                            $('#HR_FINALISED_IND_HR').val(kew8.HR_FINALISED_IND_HR)
+                        }
+                    })
+                    if ($(this).attr("id") == "btn-muktamad") {
+                        $("#form-pergerakangaji").find('#HR_FINALISED_IND_HR').val("Y").prop("selected", true)
+                        $("#tajukModel").html("Muktamad")
+                        $("#bodyHidden2").hide();
+                        $("#bodyHidden").hide();
+                        // $("#form-pergerakangaji").submit();
+                    }
+                    else if ($(this).attr("id") == "btn-cetak") {
+                        $("#form-pergerakangaji").attr({ "action": "../Kewangan8/SenaraiSlipKewangan8", "method": "POST", "target": "_blank" })
+                        $("#tajukModel").html("Cetak")
+                        $("#bodyHidden2").hide();
+                        $("#bodyHidden").hide();
+                        //$("#form-pergerakangaji").submit();
+                    }
+                    else if ($(this).attr("id") == "btn-surat") {
+                        $("#form-pergerakangaji").attr({ "action": "../Kewangan8/SenaraiSuratKewangan8", "method": "POST", "target": "_blank" })
+                        $("#tajukModel").html("Muat Turun Surat")
+                        $("#bodyHidden2").show();
+                        $("#bodyHidden").hide();
+                        var crrnDate = new Date();
+                        $("#TARIKH_BERSIDANG").val(crrnDate.toLocaleDateString('en-GB'))
+                        //$("#form-pergerakangaji").submit();
+                    }
                 }
-                else if ($(this).attr("id") == "btn-cetak") {
-                    $("#form-pergerakangaji").attr({ "action": "../Kewangan8/SenaraiSlipKewangan8", "method": "get", "target": "_blank" })
-                    $("#tajukModel").html("Cetak")
-                    $("#bodyHidden2").hide();
-                    $("#bodyHidden").hide();
-                    //$("#form-pergerakangaji").submit();
+                //$('#Modal').modal('show');
+                $("#Modal").modal({
+                    show: true,
+                    backdrop: 'static'
+                });
+                //form.submit();
+            });
+
+            function errorMsg(msg, error, location) {
+                $("#errorMsg").html("<div>" + msg + "</div>");
+                $("#errorMsg").dialog({
+                    open: function (event, ui) {   // It'll hide Close button
+                        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                    },
+                    closeOnEscape: false,        // Do not close dialog on press Esc button
+                    modal: true,
+                    title: 'Mesej',
+                    buttons: {
+                        "Tutup": function () {
+                            $(this).dialog("close")
+                            if (error == false) {
+                                window.location = location;
+                            }
+                            else {
+                                $('#Modal').modal('show');
+                            }
+                            $("#errorMsg").html('');
+                            waitMsg();
+                        }
+                    }
+                });
+            }
+
+            function waitMsg() {
+                $("#waitMsg").html("<div class='text-center'><div><span id='img'><img class='rounded mx-auto d-block center' src='../Content/img/ajax-loader.gif' alt='loading' id='img-load' /></span></div><div>Sila tunggu sebentar</div></div>");
+                $("#waitMsg").dialog({
+                    open: function (event, ui) {   // It'll hide Close button
+                        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                    },
+                    closeOnEscape: false,        // Do not close dialog on press Esc button
+                    modal: true,
+                    title: 'Mesej'
+                });
+            }
+
+            function FormSub(e) {
+                if ($("#btnSub").val() != "Surat" && $("#btnSub").val() != "Cetak") {
+                    waitMsg();
+                    e.preventDefault;
+                    $.ajax({
+                        type: "POST",
+                        url: $("#form-pergerakangaji").attr('action'),
+                        data: $("#form-pergerakangaji").serialize(),
+                        success: function (data) {
+                            $("#waitMsg").dialog("close")
+                            $("#waitMsg").html('')
+                            var location = "../kewangan8/pergerakangaji?key=" + data.key + "&tarafpekerja=" + data.tarafpekerja + "&bulan=" + data.bulan + "&tindakan=" + data.tindakan + "";
+                            errorMsg(data.msg, data.error, location)
+                        }
+                    });
                 }
-                else if ($(this).attr("id") == "btn-surat") {
-                    $("#form-pergerakangaji").attr({ "action": "../Kewangan8/SenaraiSuratKewangan8", "method": "POST", "target": "_blank" })
-                    $("#tajukModel").html("Muat Turun Surat")
-                    $("#bodyHidden2").show();
-                    $("#bodyHidden").hide();
-                    var crrnDate = new Date();
-                    $("#TARIKH_BERSIDANG").val(crrnDate.toLocaleDateString('en-GB'))
-                    //$("#form-pergerakangaji").submit();
+                else {
+                    $("#form-pergerakangaji").submit();
                 }
-                //else {
-                //    $('#Modal').modal('show');
-                //}
-                $('#Modal').modal('show');
+            }
+            
+            $("#btn").on('click', function (e) {
+
+                if ($("#btnSub").val() != "Surat" && $("#btnSub").val() != "Cetak") {
+                    $("#btn").attr('disabled', 'disabled');
+                    $("button[type='reset']").attr('disabled', 'disabled');
+                    $("#btn-back").attr('disabled', 'disabled');
+                    $("button.close").attr('disabled', 'disabled');
+                    $("#Modal").modal('hide');
+
+                    if ($("#HR_FINALISED_IND_HR").val() == "Y") {
+                        $("#errorMsg").html('<div>Adakah anda pasti ingin muktamadkan ini?</div>');
+                        $("#errorMsg").dialog({
+                            open: function (event, ui) {   // It'll hide Close button
+                                $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                            },
+                            closeOnEscape: false,        // Do not close dialog on press Esc button
+                            modal: true,
+                            title: 'Mesej',
+                            buttons: {
+                                "Ya": function () {
+                                    $(this).dialog("close")
+                                    FormSub(e)
+                                    $("#errorMsg").html('');
+                                },
+                                "Tidak": function () {
+                                    $(this).dialog("close")
+                                    e.preventDefault();
+                                    $("#btn").removeAttr('disabled');
+                                    $("button[type='reset']").removeAttr('disabled');
+                                    $("#btn-back").removeAttr('disabled');
+                                    $("button.close").removeAttr('disabled');
+                                    $("#errorMsg").html('');
+                                    $("#Modal").modal('show');
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        FormSub(e)
+                    }
+                }
+                else
+                {
+                    FormSub(e)
+                }
+                
+                return true;
+
             })
 
+            $("#btn-back, button.close").on("click", function () {
+                $("#errorMsg").html('Adakah anda pasti tidak ingin meneruskannya?');
+                $("#Modal").modal('hide');
+                $("#errorMsg").dialog({
+                    open: function (event, ui) {   // It'll hide Close button
+                        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                    },
+                    closeOnEscape: false,        // Do not close dialog on press Esc button
+                    modal: true,
+                    title: 'Mesej',
+                    buttons: {
+                        "Ya": function () {
+                            $(this).dialog("close")
+                            $("#errorMsg").html('');
+                        },
+                        "Tidak": function () {
+                            $(this).dialog("close")
+                            $("#errorMsg").html('');
+                            $('#Modal').modal('show');
+                        }
+                    }
+                });
+            })
+
+            function BilPekerja(key, bulan, tarafpekerja) {
+                $.get("../Kewangan8/BilPekerja", { key: key, value: null, bulan: bulan, tarafpekerja: tarafpekerja }, function (data) {
+                    $.each(data, function (i, v) {
+                        $("#tindakan option[value= '" + v.HR_KEW8_IND + "']").text(v.HR_BUTIR_PERUBAHAN + " ( " + v.HR_BIL + " )")
+                    })
+                })
+            }
+
+            $("#tarafpekerja, #bulan").on('change', function () {
+                BilPekerja($("#key").val(), $("#bulan").val(), $("#tarafpekerja:checked").val());
+            })
         });
     </script>
 }

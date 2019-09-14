@@ -57,7 +57,51 @@
                         <div class="widget-body">
                             <div class="row">
                                 @Html.Partial("SearchKakitangan", Model)
+                                
                             </div>
+                            <br />
+                            @using (Html.BeginForm("Index", "MaklumatKakitanganBak", FormMethod.Post, new { id = "mKakitangan", enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationBootstrap()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                @Html.Partial("ListKakitangan", Model)
+                                if (ViewBag.key == "4")
+                                {
+                                    <div id="lihat-info">
+                                        <div class="row">
+                                            <div class="col-md-12 tab-pane">
+                                                @Html.Partial("KakitanganTab")
+                                                <div class="tab-content padding-10">
+                                                    @Html.Partial("TabPeribadi", Model)
+                                                    @Html.Partial("TabPekerjaan", Model)
+                                                    @Html.Partial("TabKemahiran", Model)
+                                                    @Html.Partial("TabAkademik", Model)
+                                                    @Html.Partial("TabPewaris", Model)
+                                                    @Html.Partial("TabTanggungan", Model)
+                                                    @Html.Partial("TabKuarters", Model)
+                                                    @Html.Partial("TabGaji", Model)
+                                                    @Html.Partial("TabAnugerah", Model)
+                                                    @Html.Partial("TabPersaraan", Model)
+                                                    @Html.Partial("TabTatatertib", Model)
+                                                    @Html.Partial("TabKematian", Model)
+                                                    @Html.Partial("TabPrestasi", Model)
+                                                    @Html.Partial("TabCuti", Model)
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                        <footer>
+                                            <div class="well text-right">
+                                                <button type="submit" name="Command" id="btn-edit" class="btn btn-primary" disabled="disabled">
+                                                    <i class="fa fa-edit"> Kemaskini</i>
+                                                </button>
+                                            </div>
+                                        </footer>
+                                }
+                            }
                         </div>
                         <!-- end widget div -->
 
@@ -70,47 +114,7 @@
         </div>
     </section>
 
-    @using (Html.BeginForm("Index", "MaklumatKakitanganBak", FormMethod.Post, new { id = "mKakitangan", enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationBootstrap()
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        @Html.Partial("ListKakitangan", Model)
-        if (ViewBag.key == "4")
-        {
-            <div id="lihat-info">
-                <div class="row">
-                    <div class="col-md-12 tab-pane">
-                        @Html.Partial("KakitanganTab")
-                    </div>
-                    <div class="tab-content padding-10">
-                        @Html.Partial("TabPeribadi", Model)
-                        @Html.Partial("TabPekerjaan", Model)
-                        @Html.Partial("TabKemahiran", Model)
-                        @Html.Partial("TabAkademik", Model)
-                        @Html.Partial("TabPewaris", Model)
-                        @Html.Partial("TabTanggungan", Model)
-                        @Html.Partial("TabKuarters", Model)
-                        @Html.Partial("TabGaji", Model)
-                        @Html.Partial("TabAnugerah", Model)
-                        @Html.Partial("TabPersaraan", Model)
-                        @Html.Partial("TabTatatertib", Model)
-                        @Html.Partial("TabKematian", Model)
-                        @Html.Partial("TabPrestasi", Model)
-                        @Html.Partial("TabCuti", Model)
-                    </div>
-                </div>
-            </div>
-            <footer>
-                <div class="well text-right">
-                    <button type="submit" name="Command" id="btn-edit" class="btn btn-primary" disabled="disabled">
-                        <i class="fa fa-edit"> Kemaskini</i>
-                    </button>
-                </div>
-            </footer>
-        }
-    }
+    
 </div>
 
 

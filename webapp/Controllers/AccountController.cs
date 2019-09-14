@@ -176,8 +176,7 @@ namespace eSPP.Controllers
             HttpCookie RoleCookie = new HttpCookie("RoleCookie");
             RoleCookie.Value = roleId;
             RoleCookie.Expires = DateTime.Now.AddDays(1);
-            HttpContext.Response.SetCookie(RoleCookie);
-            //Response.SetCookie(RoleCookie);
+            Response.SetCookie(RoleCookie);
             //Response.Flush();
         }
 
@@ -189,7 +188,7 @@ namespace eSPP.Controllers
             RoleCookie.Expires = DateTime.Now.AddDays(-1);
             try
             {
-                HttpContext.Response.SetCookie(RoleCookie);
+                Response.SetCookie(RoleCookie);
                 //Response.Flush();
             }
             catch

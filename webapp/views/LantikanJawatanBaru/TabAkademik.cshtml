@@ -1,0 +1,218 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+
+<div class="tab-pane fade" id="Akademik">
+    <div class="row">
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Keputusan Subjek Bahasa Malaysia - Sijil Pelajaran Malaysia (SPM)
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mAkademik-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mAkademik-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Akademik1" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row smart-form" id="xmodel">
+                <div class="row smart-form">
+                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="row">
+                            <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Tahun Ambil SPM</label>
+                                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_MAKLUMAT_PERIBADI.HR_TAHUN_SPM, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 4 } })
+                                    </label>
+                                </div>
+
+                            </section>
+
+                            <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Gred BM</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_MAKLUMAT_PERIBADI.HR_GRED_BM, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Kelayakan
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mAkademik2-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mAkademik2-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Akademik2" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalKelayakan")
+                    <table id="datatable_Kelayakan" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kelayakan Akademik</th>
+                                <th>Kelulusan</th>
+                                <th>Tahun Mula</th>
+                                <th>Tahun Tamat</th>
+                                <th>Sekolah/IPT</th>
+                                <th>Padam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Sijil-Sijil Khas / Peperiksaan
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mAkademik3-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mAkademik3-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Akademik3" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalSijil")
+                    <table id="datatable_Sijil" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Sijil Peperiksaan</th>
+                                <th>Tarikh Diperolehi</th>
+                                <th>Anjuran</th>
+                                <th>Keputusan</th>
+                                <th>Padam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Kursus / Latihan Yang Telah Dihadiri
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mAkademik4-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mAkademik4-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Akademik4" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalKursusLatihan")
+                    <table id="datatable_Kursus" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Kursus</th>
+                                <th>Tarikh Mula</th>
+                                <th>Tarikh Tamat</th>
+                                <th>Anjuran</th>
+                                <th>Keputusan</th>
+                                <th>Padam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Aktiviti Luar Yang Disertai
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mAkademik5-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mAkademik5-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Akademik5" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalAktivitiLuar")
+                    <table id="datatable_AktivitiLuar" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Peringkat</th>
+                                <th>Tarikh</th>
+                                <th>Nama Aktiviti</th>
+                                <th>Anjuran</th>
+                                <th>Padam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </fieldset>
+    </div>
+    <br />
+    <br />
+    <br />
+    @*<div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <label class="">Tambah : </label>
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mAkademik-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mAkademik-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" name="kemaskini" class="form-control" value="off">
+            </div>
+        </div>
+    </div>*@
+</div>
+
+
+

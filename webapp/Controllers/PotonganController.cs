@@ -13,6 +13,8 @@ namespace eSPP.Controllers
     public class PotonganController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        //private FMSContext db2 = new FMSContext();
+        private ApplicationDbContext db2 = new ApplicationDbContext();
 
         // GET: Potongan
         public ActionResult SenaraiPemotongan()
@@ -33,14 +35,14 @@ namespace eSPP.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.HR_KOD_KREDITOR = new SelectList(db.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
+            ViewBag.HR_KOD_KREDITOR = new SelectList(db2.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
             ViewBag.HR_POTONGAN = db.HR_POTONGAN.ToList();
             return PartialView("_InfoPotongan", potongan);
         }
 
         public ActionResult TambahPotongan()
         {
-            ViewBag.HR_KOD_KREDITOR = new SelectList(db.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
+            ViewBag.HR_KOD_KREDITOR = new SelectList(db2.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
             ViewBag.HR_POTONGAN = db.HR_POTONGAN.ToList();
             return PartialView("_TambahPotongan");
         }
@@ -76,7 +78,7 @@ namespace eSPP.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.HR_KOD_KREDITOR = new SelectList(db.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
+            ViewBag.HR_KOD_KREDITOR = new SelectList(db2.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
             return PartialView("_EditPotongan", potongan);
         }
 
@@ -104,6 +106,7 @@ namespace eSPP.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.HR_KOD_KREDITOR = new SelectList(db2.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
             return PartialView("_PadamPotongan", potongan);
         }
 

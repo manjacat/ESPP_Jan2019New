@@ -1,0 +1,65 @@
+﻿
+@model IEnumerable<eSPP.Models.HR_MATRIKS_GAJI>
+
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-controller="Movies" asp-action="Index" method="get">
+    <p>
+
+        <select asp-for="MovieGenre" asp-items="Model.Genres">
+            <option value="">All</option>
+        </select>
+
+        Title: <input type="text" asp-for="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th data-hide="phone">Sistem Saraan</th>
+            <th data-class="expand">Gred Gaji</th>
+            <th data-class="expand">Peringkat</th>
+            <th>Tahap</th>
+            <th data-hide="phone">Gaji Pokok</th>
+            <th data-hide="phone">Gaji Max</th>
+            <th data-hide="phone">Pilih</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HR_SISTEM_SARAAN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HR_GRED_GAJI)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HR_PERINGKAT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HR_TAHAP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HR_GAJI_POKOK)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HR_GAJI_MAX)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.HR_GRED_GAJI">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.HR_GRED_GAJI">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.HR_GRED_GAJI">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

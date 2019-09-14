@@ -65,7 +65,6 @@ namespace eSPP.Controllers
             return View();
         }
 
-
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public ActionResult Aktiviti(HR_ACARA aktiviti, HR_TARIKH_ACARA tarikhaktiviti, string HR_KATEGORI, string HR_JENIS)

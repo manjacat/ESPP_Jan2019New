@@ -1,0 +1,73 @@
+﻿<div class="modal fade" id="ModalKemahiranBahasa" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    Tambah Kemahiran Bahasa <span class="error"></span>
+                </h4>
+            </div>
+            <div class="modal-body no-padding smart-form">
+                <fieldset>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Bahasa</label>
+                            <div class="col col-8">
+                                <label class="select">
+                                    @Html.DropDownList("HR_MAKLUMAT_KEMAHIRAN_BAHASA_HR_BAHASA", new SelectList(ViewBag.HR_BAHASA, "Value", "Text"), String.Empty, new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Pembacaan</label>
+                            <div class="col col-8">
+                                <label class="select">
+                                    @Html.DropDownList("HR_MAKLUMAT_KEMAHIRAN_BAHASA_HR_PEMBACAAN", new SelectList(ViewBag.P_TAHAP_KEMAHIRAN, "Value", "Text"), String.Empty, new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Penulisan</label>
+                            <div class="col col-8">
+                                <label class="select">
+                                    @Html.DropDownList("HR_MAKLUMAT_KEMAHIRAN_BAHASA_HR_PENULISAN", new SelectList(ViewBag.P_TAHAP_KEMAHIRAN, "Value", "Text"), String.Empty, new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Pertuturan</label>
+                            <div class="col col-8">
+                                <label class="select">
+                                    @Html.DropDownList("HR_MAKLUMAT_KEMAHIRAN_BAHASA_HR_PERTUTURAN", new SelectList(ViewBag.P_TAHAP_KEMAHIRAN, "Value", "Text"), String.Empty, new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                </fieldset>
+                <footer>
+                    <button type="button" id="btn-KemahiranBahasa" class="btn btn-primary">
+                        <span class="fa fa-plus"></span> Tambah
+                    </button>
+                    <button type="reset" class="btn btn-default">
+                        Reset
+                    </button>
+                    <button type="button" id="btn-back" class="btn btn-default" data-dismiss="modal">
+                        Kembali
+                    </button>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>

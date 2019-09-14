@@ -1,0 +1,229 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+
+<div class="tab-pane" id="Anugerah">
+    <div class="row">
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Maklumat Anugerah Pingat
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mAnugerah-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mAnugerah-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Anugerah1" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalAnugerahPingat")
+                    <table id="datatable_AnugerahPingat" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th data-class="expand">Peringkat Kurnian</th>
+                                <th>Nama Kurniaan</th>
+                                <th>Nama Darjah Kebesaran / Bintang / Pingat</th>
+                                <th>Tarikh Percalonan</th>
+                                <th>Nama Pegawai yang Mencalonkan</th>
+                                <th>Keputusan Pencalonan</th>
+                                <th>Tarikh Kurniaan</th>
+                                <th>Padam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Maklumat Anugerah Cemerlang
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mAnugerah2-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mAnugerah2-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Anugerah2" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalAnugerahCemerlang")
+                    <table id="datatable_AnugerahCemerlang" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th width="5%">No</th>
+                                <th width="75%">Nama Anugerah</th>
+                                <th width="15%">Tarikh Penerimaan</th>
+                                <th width="5%">Padam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Maklumat Anugerah Haji
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mAnugerah3-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mAnugerah3-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Anugerah3" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row smart-form" id="xmodal">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Status</label>
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.HiddenFor(model => model.HR_ANUGERAH_HAJI.HR_NO_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    @Html.DropDownListFor(model => model.HR_ANUGERAH_HAJI.HR_STATUS_HAJI, new SelectList(ViewBag.HR_STATUS_HAJI, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Pemergian</label>
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input type="text" name="HR_ANUGERAH_HAJI.HR_TAHUN_PERGI" id="HR_ANUGERAH_HAJI_HR_TAHUN_PERGI" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_ANUGERAH_HAJI.HR_TAHUN_PERGI)" disabled="disabled" />
+
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kelulusan YDP / SUP</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <div class="inline-group">
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_ANUGERAH_HAJI.HR_LULUS_IND, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>Lulus
+                                    </label>
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_ANUGERAH_HAJI.HR_LULUS_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>Tidak Lulus
+                                    </label>
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-12 col-md-12 col-sm-12 col-xs-12">Untuk Perhatian</label>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 input-group">
+                                <label class="input">
+                                    @Html.TextBox("HR_ANUGERAH_HAJI.HR_NAMA_UP", null, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+                                </label>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default btn-sm btn-pekerja3" id="btn-pekerja3" title="Cari Pekerja" disabled ="disabled"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Pekerja</label>
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_ANUGERAH_HAJI.HR_NP_UP, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", } })
+
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-12 col-md-12 col-sm-12 col-xs-12">Yang Dipertua MBPJ</label>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 input-group">
+                                <label class="input">
+                                    @Html.TextBox("HR_ANUGERAH_HAJI.HR_NAMA_YDP", null, new { @class = "form-control", disabled = "disabled", @readonly= "readonly" })
+                                </label>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default btn-sm btn-pekerja4" id="btn-pekerja4" title="Cari Pekerja" disabled ="disabled"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Pekerja</label>
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_ANUGERAH_HAJI.HR_NP_YDP, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", } })
+
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </fieldset>
+
+    </div>
+    <br />
+    <br />
+    <br />
+    @*<div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <label class="">Tambah : </label>
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mAnugerah-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mAnugerah-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" name="kemaskini" class="form-control" value="off">
+            </div>
+        </div>
+    </div>*@
+</div>

@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+  <configSections>
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+    <section name="oracle.manageddataaccess.client" type="OracleInternal.Common.ODPMSectionHandler, Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342" />
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+  </configSections>
+  <appSettings>
+    <add key="owin:AutomaticAppStartup" value="true" />
+    <add key="config:EnableTiles" value="1" />
+    <add key="config:EnableLoader" value="1" />
+    <add key="config:Project" value="eSPP" />
+    <add key="config:Company" value="MyOrange Inc., Walapa" />
+    <add key="config:CurrentTheme" value="" />
+  </appSettings>
+  <connectionStrings>
+    <add name="OracleDbContext" connectionString="User Id=SPP;Password=Pa$$w0rd;DATA SOURCE=192.168.1.101:1521/orcl" providerName="Oracle.ManagedDataAccess.Client" />
+    <add name="MajlisEntities" connectionString="User Id=MAJLIS;Password=Pa$$w0rd;DATA SOURCE=192.168.1.101:1521/orcl" providerName="Oracle.ManagedDataAccess.Client" />
+    <add name="SPGEntities" connectionString="User Id=SPG;Password=Pa$$w0rd;DATA SOURCE=192.168.1.101:1521/orcl" providerName="Oracle.ManagedDataAccess.Client" />
+    <add name="eSPPContext" connectionString="Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=eSPPContext-20180206121158; Integrated Security=True; MultipleActiveResultSets=True; AttachDbFilename=|DataDirectory|eSPPContext-20180206121158.mdf" providerName="System.Data.SqlClient" />
+    <add name="Entities" connectionString="metadata=res://*/Models.ProcedureModels.csdl|res://*/Models.ProcedureModels.ssdl|res://*/Models.ProcedureModels.msl;provider=Oracle.ManagedDataAccess.Client;provider connection string=&quot;DATA SOURCE=192.168.1.101:1521/orcl;PASSWORD=Pa$$w0rd;USER ID=SPP&quot;" providerName="System.Data.EntityClient" />
+    <add name="Entities1" connectionString="metadata=res://*/Controllers.Model1.csdl|res://*/Controllers.Model1.ssdl|res://*/Controllers.Model1.msl;provider=Oracle.ManagedDataAccess.Client;provider connection string=&quot;DATA SOURCE=192.168.1.101:1521/orcl;PASSWORD=Pa$$w0rd;USER ID=SPP&quot;" providerName="System.Data.EntityClient" />
+    <add name="Entities2" connectionString="metadata=res://*/Models.Model1.csdl|res://*/Models.Model1.ssdl|res://*/Models.Model1.msl;provider=Oracle.ManagedDataAccess.Client;provider connection string=&quot;DATA SOURCE=192.168.1.101:1521/orcl;PASSWORD=Pa$$w0rd;USER ID=SPP&quot;" providerName="System.Data.EntityClient" />
+    <add name="Entities3" connectionString="metadata=res://*/Models.Model1.csdl|res://*/Models.Model1.ssdl|res://*/Models.Model1.msl;provider=Oracle.ManagedDataAccess.Client;provider connection string=&quot;DATA SOURCE=192.168.1.101:1521/orcl;PASSWORD=Pa$$w0rd;USER ID=SPP&quot;" providerName="System.Data.EntityClient" />
+    <add name="Entities4" connectionString="metadata=res://*/Models.Model1.csdl|res://*/Models.Model1.ssdl|res://*/Models.Model1.msl;provider=Oracle.ManagedDataAccess.Client;provider connection string=&quot;DATA SOURCE=192.168.1.101:1521/orcl;PASSWORD=Pa$$w0rd;USER ID=SPP&quot;" providerName="System.Data.EntityClient" />
+  </connectionStrings>
+  <!--
+    For a description of web.config changes see http://go.microsoft.com/fwlink/?LinkId=235367.
+
+    The following attributes can be set on the <httpRuntime> tag.
+      <system.Web>
+        <httpRuntime targetFramework="4.5.2" />
+      </system.Web>
+  -->
+  <system.web>
+    <authentication mode="Forms">
+      <forms loginUrl="~/account/login" timeout="30" />
+    </authentication>
+    <sessionState mode="InProc" timeout="1" />
+    <customErrors mode="Off" defaultRedirect="~/account/error" />
+    <compilation debug="true" targetFramework="4.5.2" />
+    <httpRuntime targetFramework="4.5" />
+    <globalization uiCulture="en" culture="en-GB" />
+  </system.web>
+  <system.webServer>
+    <staticContent>
+      <remove fileExtension=".woff" />
+      <mimeMap fileExtension=".woff" mimeType="application/x-font-woff" />
+      <remove fileExtension=".woff2" />
+      <mimeMap fileExtension=".woff2" mimeType="application/x-font-woff2" />
+      <remove fileExtension=".ttf" />
+      <mimeMap fileExtension=".ttf" mimeType="font/truetype" />
+      <remove fileExtension=".otf" />
+      <mimeMap fileExtension=".otf" mimeType="font/opentype" />
+      <remove fileExtension=".eot" />
+      <mimeMap fileExtension=".eot" mimeType="application/vnd.ms-fontobject" />
+      <remove fileExtension=".json" />
+      <mimeMap fileExtension=".json" mimeType="application/json" />
+    </staticContent>
+    <handlers>
+      <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
+      <remove name="OPTIONSVerbHandler" />
+      <remove name="TRACEVerbHandler" />
+      <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="*" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
+    </handlers>
+  </system.webServer>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="WebGrease" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-1.6.5135.21930" newVersion="1.6.5135.21930" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-6.0.0.0" newVersion="6.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Antlr3.Runtime" publicKeyToken="eb42632606e9261f" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.5.0.2" newVersion="3.5.0.2" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <publisherPolicy apply="no" />
+        <assemblyIdentity name="Oracle.ManagedDataAccess" publicKeyToken="89b483f429c47342" culture="neutral" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-5.2.3.0" newVersion="5.2.3.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.1.0.0" newVersion="3.1.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.1.0.0" newVersion="3.1.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security.OAuth" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.1.0.0" newVersion="3.1.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security.Cookies" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.1.0.0" newVersion="3.1.0.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.LocalDbConnectionFactory, EntityFramework">
+      <parameters>
+        <parameter value="v12.0" />
+      </parameters>
+    </defaultConnectionFactory>
+    <providers>
+      <provider invariantName="Oracle.ManagedDataAccess.Client" type="Oracle.ManagedDataAccess.EntityFramework.EFOracleProviderServices, Oracle.ManagedDataAccess.EntityFramework, Version=6.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342" />
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
+    </providers>
+  </entityFramework>
+  <system.data>
+    <DbProviderFactories>
+      <remove invariant="Oracle.ManagedDataAccess.Client" />
+      <add name="ODP.NET, Managed Driver" invariant="Oracle.ManagedDataAccess.Client" description="Oracle Data Provider for .NET, Managed Driver" type="Oracle.ManagedDataAccess.Client.OracleClientFactory, Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342" />
+    </DbProviderFactories>
+  </system.data>
+  <oracle.manageddataaccess.client>
+    <version number="*">
+      <dataSources>
+        <dataSource alias="SampleDataSource" descriptor="(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=ORCL))) " />
+      </dataSources>
+    </version>
+  </oracle.manageddataaccess.client>
+</configuration>

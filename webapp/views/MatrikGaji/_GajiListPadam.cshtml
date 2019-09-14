@@ -1,0 +1,275 @@
+﻿    
+
+
+@model eSPP.Models.HR_MATRIKS_GAJI
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="Tambah-btn" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Padam Matrik Gaji  <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("GajiListPadam", "MatrikGaji", FormMethod.Post, new { @class = "smart-form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_SISTEM_SARAAN)        ;
+            @Html.HiddenFor(model => model.HR_GRED_GAJI)
+            @Html.HiddenFor(model => model.HR_PERINGKAT)
+            @Html.HiddenFor(model => model.HR_TAHAP)
+
+
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Sistem Saraan</label>
+                        <div class="col col-8">
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_SISTEM_SARAAN, "SSB", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>SSB
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_SISTEM_SARAAN, "SSM", htmlAttributes: new { @checked = "checked", disabled = "disabled" })
+                                    <i></i>SSM
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Gred Gaji  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_GRED_GAJI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Peringkat  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_PERINGKAT, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+    <div class="row">
+        <label class="label col col-4">Tahap  </label>
+        <div class="col col-8">
+            <label class="input">
+                @Html.EditorFor(model => model.HR_TAHAP, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                  
+                        </label>
+                    </div>
+                </div>
+            </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Gaji Pokok  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_GAJI_POKOK, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Gaji Minimum  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_GAJI_MIN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Gaji Maximum  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_GAJI_MAX, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Kenaikan  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_RM_KENAIKAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+               </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Kod Gaji  </label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_KOD_GAJI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Status</label>
+                        <div class="col col-8">
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>Aktif
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_AKTIF_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>Tidak Aktif
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Kanan</label>
+                        <div class="col col-8">
+                            <div class="inline-group">
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_KANAN_IND, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>Aktif
+                                </label>
+                                <label class="radio">
+                                    @Html.RadioButtonFor(model => model.HR_KANAN_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>Tidak Aktif
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </fieldset>
+
+            <footer>
+                <button type="button" id="btn" class="btn btn-danger">
+                    <span class="fa fa-trash-o"></span> Padam
+                </button>
+                <a type="button" class="btn btn-default" data-dismiss="modal" >
+                    Kembali
+                </a>
+            </footer>
+        }
+
+    </div>
+
+</div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tambah-btn").click(function () {
+                debugger
+                $('#PadamModal').modal('hide');
+            });
+
+
+            function errorMsg(msg, location, error) {
+                $("#PadamModal").modal('hide');
+                $("#errorMsg").html("<div>" + msg + "</div>");
+                $("#errorMsg").dialog({
+                    open: function (event, ui) {   // It'll hide Close button
+                        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                    },
+                    closeOnEscape: false,        // Do not close dialog on press Esc button
+                    modal: true,
+                    title: 'Mesej',
+                    buttons: {
+                        "Tutup": function () {
+                            $(this).dialog("close")
+                            if (error == false) {
+                                window.location = location;
+                                $("#errorMsg").html('');
+                                waitMsg();
+                            }
+                            else {
+                                $('#TambahModal').modal('show');
+                            }
+                            
+                            
+                        }
+                    }
+                });
+            }
+
+            function waitMsg() {
+                $("#PadamModal").modal('hide');
+                $("#waitMsg").html("<div class='text-center'><div><span id='img'><img class='rounded mx-auto d-block center' src='../Content/img/ajax-loader.gif' alt='loading' id='img-load' /></span></div><div>Sila tunggu sebentar</div></div>");
+                $("#waitMsg").dialog({
+                    open: function (event, ui) {   // It'll hide Close button
+                        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                    },
+                    closeOnEscape: false,        // Do not close dialog on press Esc button
+                    modal: true,
+                    title: 'Mesej'
+                });
+            }
+
+
+            $("#btn").on("click", function (v) {
+                $("#PadamModal").modal('hide');
+                $("#errorMsg").html("<div>Adakah anda ingin padam data ini?</div>");
+                $("#errorMsg").dialog({
+                    open: function (event, ui) {   // It'll hide Close button
+                        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                    },
+                    closeOnEscape: false,        // Do not close dialog on press Esc button
+                    modal: true,
+                    title: 'Mesej',
+                    buttons: {
+                        "Ya": function () {
+                            $(this).dialog("close")
+                            if ($('#HR_GRED_GAJI').valid() == false || $('#HR_PERINGKAT').valid() == false || $('#HR_GAJI_POKOK').valid() == false) {
+                                $("#PadamModal").modal('show');
+
+                            }
+                            else {
+                                waitMsg()
+                                var model = { HR_GRED_GAJI: $("#HR_GRED_GAJI").val(), HR_GAJI_POKOK: $("#HR_GAJI_POKOK").val(), HR_KOD_GAJI: $("#HR_KOD_GAJI").val(), HR_PERINGKAT: $("#HR_PERINGKAT").val(), HR_TAHAP: $("#HR_TAHAP").val(), HR_SISTEM_SARAAN: $("#HR_SISTEM_SARAAN").val() }
+                                $.post("../MatrikGaji/GajiListPadam", { __RequestVerificationToken: $(':input[name="__RequestVerificationToken"]').val(), matrik: model }, function (data) {
+                                    $("#waitMsg").dialog("close")
+                                    $("#waitMsg").html('')
+                                    var location = "../MatrikGaji/SenaraiGaji?value=" + data.gred;
+                                    errorMsg(data.msg, location, data.error);
+
+                                });
+                            }
+                            $("#errorMsg").html('');
+                            waitMsg();
+                        },
+                        "Tidak": function () {
+                            $(this).dialog("close")
+                            v.preventDefault();
+                            $("#errorMsg").html('');
+                            $('#PadamModal').modal('show');
+                        }
+                    }
+                });
+            });
+
+
+        })
+    </script> 

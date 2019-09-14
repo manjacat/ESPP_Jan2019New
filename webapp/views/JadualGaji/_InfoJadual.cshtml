@@ -7,7 +7,7 @@
             &times;
         </button>
         <h4 class="modal-title">
-            Info Jadual Gaji<span class="error"></span>
+            Maklumat Jadual Gaji<span class="error"></span>
         </h4>
     </div>
     <div class="modal-body no-padding">
@@ -40,11 +40,10 @@
                 </section>
                 <section>
                     <div class="row">
-                        <label class="label col col-4">Gred Gaji  </label>
+                        <label class="label col col-4">Gred Gaji </label>
                         <div class="col col-8">
-                            <label class="select">
-                                @Html.DropDownListFor(model => model.HR_GRED_GAJI, null, String.Empty, new { @class = "form-control", disabled = "disabled" })
-                                <i></i>
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_GRED_GAJI, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             </label>
                         </div>
                     </div>
@@ -53,9 +52,8 @@
                     <div class="row">
                         <label class="label col col-4">Peringkat  </label>
                         <div class="col col-8">
-                            <label class="select">
-                                @Html.DropDownListFor(model => model.HR_PERINGKAT, null, String.Empty, new { @class = "form-control", disabled = "disabled" })
-                                <i></i>
+                            <label class="input">
+                                @Html.EditorFor(model => model.HR_PERINGKAT, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             </label>
                         </div>
                     </div>
@@ -162,7 +160,7 @@
             </fieldset>
             <footer>
                
-                <a type="button" class="btn btn-default" href="SenaraiGaji">
+                <a type="button" class="btn btn-default" data-dismiss="modal">
                     Kembali
                 </a>
             </footer>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<eSPP.Models.HR_JADUAL_GAJI>
+﻿ @model IEnumerable<eSPP.Models.HR_JADUAL_GAJI>
 
     <div id="content">
 
@@ -6,10 +6,8 @@
             <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
                 <h1 class="page-title txt-color-blueDark">
                     <i class="fa-fw fa fa-pencil-square-o"></i>
-                    Forms
+                    Jadual Gaji
                     <span>
-                        >
-                        Jadual Gaji
                     </span>
                 </h1>
             </div>
@@ -76,6 +74,7 @@
                                                     <th>#</th>
                                                     <th data-hide="phone">Sistem Saraan</th>
                                                     <th data-class="expand">Gred</th>
+                                                    <th>Peringkat</th>
                                                     <th>Gaji Pokok</th>
                                                     <th data-hide="phone">Gaji Minimum</th>
                                                     <th data-hide="phone">Gaji Maximum</th>
@@ -95,6 +94,7 @@
                                                             <a class="Info" id="Info" href="javascript:void(0)" data-id="@item.HR_SISTEM_SARAAN" value="@item.HR_GRED_GAJI" name="@item.HR_PERINGKAT"  title="Kemaskini">@item.HR_SISTEM_SARAAN</a>
                                                         </td>
                                                         <td>@Html.DisplayFor(modelItem => item.HR_GRED_GAJI)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.HR_PERINGKAT)</td>
                                                         <td>@Html.DisplayFor(modelItem => item.HR_GAJI_POKOK)</td>
                                                         <td>@Html.DisplayFor(modelItem => item.HR_GAJI_MIN)</td>
                                                         <td>@Html.DisplayFor(modelItem => item.HR_GAJI_MAX)</td>

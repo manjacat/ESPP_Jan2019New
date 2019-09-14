@@ -1,0 +1,82 @@
+﻿<div class="modal fade" id="ModalPengalaman" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    Tambah Pengalaman Bekerja <span class="error"></span>
+                </h4>
+            </div>
+            <div class="modal-body no-padding smart-form">
+                @Html.Hidden("HR_MAKLUMAT_PENGALAMAN_KERJA_HR_TINGKATAN", null, new { @class = "form-control" })
+                <fieldset>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Nama Syarikat</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    @Html.TextBox("HR_MAKLUMAT_PENGALAMAN_KERJA_HR_NAMA_SYARIKAT", null, new { @class = "form-control" })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Jawatan</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    @Html.TextBox("HR_MAKLUMAT_PENGALAMAN_KERJA_HR_JAWATAN", null, new { @class = "form-control" })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Tarikh Mula</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    @Html.TextBox("HR_MAKLUMAT_PENGALAMAN_KERJA_HR_TARIKH_MULA", null, new { @class = "form-control" })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Tarikh Tamat</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    @Html.TextBox("HR_MAKLUMAT_PENGALAMAN_KERJA_HR_TARIKH_TAMAT", null, new { @class = "form-control" })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Alasan Berhenti</label>
+                            <div class="col col-8">
+                                <label class="textarea textarea-resizable">
+                                    @Html.TextArea("HR_MAKLUMAT_PENGALAMAN_KERJA_HR_ALASAN_BERHENTI", null, new { @class = "form-control", rows = "6" })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                </fieldset>
+                <footer>
+                    <button type="button" id="btn-pengalaman" class="btn btn-primary">
+                        <span class="fa fa-plus"></span> Tambah
+                    </button>
+                    <button type="reset" class="btn btn-default">
+                        Reset
+                    </button>
+                    <button type="button" id="btn-back" class="btn btn-default" data-dismiss="modal">
+                        Kembali
+                    </button>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>

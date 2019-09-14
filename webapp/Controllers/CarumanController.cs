@@ -13,6 +13,8 @@ namespace eSPP.Controllers
     public class CarumanController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        //private FMSContext db2 = new FMSContext();
+        private ApplicationDbContext db2 = new ApplicationDbContext();
 
         // GET: Caruman
         public ActionResult SenaraiCaruman()
@@ -39,14 +41,14 @@ namespace eSPP.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.HR_KOD_KREDITOR = new SelectList(db.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
+            ViewBag.HR_KOD_KREDITOR = new SelectList(db2.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
             ViewBag.HR_CARUMAN = db.HR_CARUMAN.ToList();
             return PartialView("_InfoCaruman", caruman);
         }
 
         public ActionResult TambahCaruman()
         {
-            ViewBag.HR_KOD_KREDITOR = new SelectList(db.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
+            ViewBag.HR_KOD_KREDITOR = new SelectList(db2.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
             ViewBag.HR_CARUMAN = db.HR_CARUMAN.ToList();
             return PartialView("_TambahCaruman");
         }
@@ -83,7 +85,7 @@ namespace eSPP.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.HR_KOD_KREDITOR = new SelectList(db.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
+            ViewBag.HR_KOD_KREDITOR = new SelectList(db2.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
             ViewBag.HR_CARUMAN = db.HR_CARUMAN.ToList();
             return PartialView("_EditCaruman", caruman);
         }
@@ -114,7 +116,7 @@ namespace eSPP.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.HR_KOD_KREDITOR = new SelectList(db.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
+            ViewBag.HR_KOD_KREDITOR = new SelectList(db2.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
             ViewBag.HR_CARUMAN = db.HR_CARUMAN.ToList();
             return PartialView("_PadamCaruman", caruman);
         }

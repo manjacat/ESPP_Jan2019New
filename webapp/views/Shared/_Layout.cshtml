@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Microsoft.AspNet.Identity;
+@{
     eSPP.Models.GroupFeature groupFeature = new eSPP.Models.GroupFeature();
     List<Guid> userGroupIDList = new List<Guid>();
     List<eSPP.Models.GroupFeaturesDisplay> groupFeatureDisplayList = new List<eSPP.Models.GroupFeaturesDisplay>();
@@ -8,6 +9,8 @@
         userGroupIDList = userGroup.GetGroupByLoginUser();
         groupFeatureDisplayList = groupFeature.GetFeatureListByGroup(userGroupIDList);
     }
+    PasswordExpiredModels Expired2 = new PasswordExpiredModels();
+    var expire2 = Expired2.Expire(User.Identity.GetUserId());
 }
 
 <!DOCTYPE html>
@@ -56,6 +59,8 @@
         @RenderBody()
     </div>
     <div id="timeout"></div>
+    <div id="errorMsg"></div>
+    <div id="waitMsg"></div>
     @if (Request.IsAuthenticated)
     {
         Html.RenderPartial("_Footer");
@@ -102,7 +107,7 @@
         var timeOutMinute = 1; // Warning has been shown, give the user x minute to interact
 
         //how often system checks for idle. default is 60000 (1 minute)
-        var idleInterval = 60000;
+        var idleInterval = 1000;
         var counterReset = 0;
         //this counter will increase after each idleInterval
         var idleCounter = counterReset;
@@ -133,7 +138,7 @@
 
         //update idleCounter setiap idleInterval
         function UpdateCounter() {
-            if (idleCounter == warningMinute) {
+            if (idleCounter == warningMinute * 60) {
                 IdleWarning();
                 idleCounter++;
             }
@@ -141,11 +146,15 @@
                 idleCounter++;
                 //console.log('counter value is ' + idleCounter);
             }
+
+            if ($("#waitMsg").html() != '') {
+                ResetTimeOutTimer();
+            }
         }
 
         // Reset timers.
         function ResetTimeOutTimer() {
-            idleCounter = counterReset;            
+            idleCounter = counterReset;
         }
 
         // Show idle timeout warning dialog.
@@ -164,8 +173,8 @@
                         $(this).dialog("close");
                         //clear timeout timer if user choose to stay logged in
                         clearInterval(timeoutTimer);
-                        $("#timeout").html('');     
-                        ResetTimeOutTimer();                        
+                        $("#timeout").html('');
+                        ResetTimeOutTimer();
                     },
                     Cancel: function () {
                         IdleTimeout();

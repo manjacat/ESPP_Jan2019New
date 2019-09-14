@@ -14,6 +14,8 @@ namespace eSPP.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private MajlisContext db2 = new MajlisContext();
+        //private FMSContext db3 = new FMSContext();
+        private ApplicationDbContext db3 = new ApplicationDbContext();
 
         // GET: HR_GAJI_UPAHAN
         public ActionResult SenaraiGaji()
@@ -34,7 +36,7 @@ namespace eSPP.Controllers
                 ViewBag.HR_GAJI_UPAHAN = db.HR_GAJI_UPAHAN.ToList();
                 return HttpNotFound();
             }
-            ViewBag.HR_KOD_KREDITOR = new SelectList(db.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
+            ViewBag.HR_KOD_KREDITOR = new SelectList(db3.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
             ViewBag.HR_JAWATAN_IND = new SelectList(db2.GE_PARAMTABLE.Where(s => s.GROUPID == 110), "STRING_PARAM", "SHORT_DESCRIPTION");
             return PartialView("_InfoGajiUpahan",upahan);
         }

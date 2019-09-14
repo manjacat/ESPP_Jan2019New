@@ -49,6 +49,7 @@ namespace eSPP.Models
         public string HR_TELRUMAH { get; set; }
         public string HR_TELPEJABAT { get; set; }
         public string HR_TELBIMBIT { get; set; }
+        [DataType(DataType.EmailAddress, ErrorMessage = "Email tidak sah")]
         public string HR_EMAIL { get; set; }
         public string HR_AKTIF_IND { get; set; }
         public Nullable<decimal> HR_CC_KENDERAAN { get; set; }

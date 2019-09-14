@@ -41,6 +41,7 @@ namespace eSPP.Models
         public string HR_KOD_JAWATAN { get; set; }
 
         public Nullable<int> HR_KEW8_ID { get; set; }
+        public Nullable<int> HR_ANSURAN_ID { get; set; }
         public string HR_LANTIKAN_IND { get; set; }
         public Nullable<System.DateTime> HR_TARIKH_SP { get; set; }
         public string HR_SP_IND { get; set; }

@@ -15,7 +15,11 @@ namespace eSPP.Models
 
     public class HR_SEJARAH_ELAUN_POTONGAN
     {
+        [Key]
+        [Column(Order = 0)]
         public string HR_NO_PEKERJA { get; set; }
+        [Key]
+        [Column(Order = 1)]
         public string HR_KOD_ELAUN_POTONGAN { get; set; }
         public string HR_PENERANGAN { get; set; }
         public string HR_NO_FAIL { get; set; }
@@ -38,7 +42,10 @@ namespace eSPP.Models
         public string HR_NP_UBAH { get; set; }
         public string HR_AUTO_IND { get; set; }
         [Key]
+        [Column(Order = 2)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public decimal HR_ID_ELAUN_POTONGAN { get; set; }
+        public Nullable<DateTime> HR_TARIKH_SEJARAH { get; set; }
+        public string HR_TINDAKAN { get; set; }
     }
 }

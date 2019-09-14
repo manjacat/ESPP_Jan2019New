@@ -81,8 +81,8 @@ namespace eSPP.Models
         public string HR_UNIFORM { get; set; }
         public string HR_TEKNIKAL { get; set; }
         public Nullable<System.DateTime> HR_TARIKH_KELUAR_MBPJ { get; set; }
+        public Nullable<System.DateTime> HR_TARIKH_SAH_J_TUKAR_LANTIK { get; set; }
 
-        
         public virtual ICollection<HR_MAKLUMAT_ELAUN_POTONGAN> HR_MAKLUMAT_ELAUN_POTONGAN { get; set; }
         [ForeignKey("HR_NO_PEKERJA")]
 

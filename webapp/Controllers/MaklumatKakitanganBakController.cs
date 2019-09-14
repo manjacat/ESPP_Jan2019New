@@ -1728,6 +1728,26 @@ namespace eSPP.Controllers
             HR_MAKLUMAT_KEMATIAN mKematian = db.HR_MAKLUMAT_KEMATIAN.Find(mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA);
             HR_PENILAIAN_PRESTASI mPrestasi = db.HR_PENILAIAN_PRESTASI.SingleOrDefault(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA && s.HR_TAHUN_PRESTASI == mKakitangan.HR_PENILAIAN_PRESTASI.HR_TAHUN_PRESTASI);
 
+            if (mKakitangan.HR_SENARAI_PERIBADI == null)
+            {
+                mKakitangan.HR_SENARAI_PERIBADI = new List<MaklumatPeribadi>();
+            }
+
+            if (mKakitangan.HR_MAKLUMAT_PERIBADI == null)
+            {
+                mKakitangan.HR_MAKLUMAT_PERIBADI = new MaklumatPeribadi();
+            }
+
+            if (mKakitangan.HR_GAMBAR_PENGGUNA == null)
+            {
+                mKakitangan.HR_GAMBAR_PENGGUNA = new HR_GAMBAR_PENGGUNA();
+            }
+
+            if (mKakitangan.HR_MAKLUMAT_PEKERJAAN == null)
+            {
+                mKakitangan.HR_MAKLUMAT_PEKERJAAN = new MaklumatPekerjaan();
+            }
+
             if (mKakitangan.HR_MAKLUMAT_PEKERJAAN_HISTORY == null)
             {
                 mKakitangan.HR_MAKLUMAT_PEKERJAAN_HISTORY = new List<HR_MAKLUMAT_PEKERJAAN_HISTORY>();
@@ -1758,14 +1778,29 @@ namespace eSPP.Controllers
                 mKakitangan.HR_MAKLUMAT_SIJIL = new List<MaklumatSijil>();
             }
 
+            if (mKakitangan.HR_MAKLUMAT_KURSUS_LATIHAN == null)
+            {
+                mKakitangan.HR_MAKLUMAT_KURSUS_LATIHAN = new List<MaklumatKursusLatihan>();
+            }
+
             if (mKakitangan.HR_MAKLUMAT_AKTIVITI == null)
             {
                 mKakitangan.HR_MAKLUMAT_AKTIVITI = new List<MaklumatAktiviti>();
             }
 
+            if (mKakitangan.HR_MAKLUMAT_PEWARIS == null)
+            {
+                mKakitangan.HR_MAKLUMAT_PEWARIS = new List<MaklumatPewaris> { new MaklumatPewaris() };
+            }
+
             if (mKakitangan.HR_MAKLUMAT_TANGGUNGAN == null)
             {
                 mKakitangan.HR_MAKLUMAT_TANGGUNGAN = new List<MaklumatTanggungan>();
+            }
+
+            if (mKakitangan.HR_MAKLUMAT_KUARTERS == null)
+            {
+                mKakitangan.HR_MAKLUMAT_KUARTERS = new MaklumatKuarters();
             }
 
             if (mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_G == null)
@@ -1788,27 +1823,49 @@ namespace eSPP.Controllers
                 mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_C = new List<MaklumatElaunPotongan>();
             }
 
+            if (mKakitangan.HR_MAKLUMAT_KURNIAAN == null)
+            {
+                mKakitangan.HR_MAKLUMAT_KURNIAAN = new List<MaklumatKurniaan>();
+            }
+
+            if (mKakitangan.HR_ANUGERAH_CEMERLANG == null)
+            {
+                mKakitangan.HR_ANUGERAH_CEMERLANG = new List<MaklumatAnugerahCemerlang>();
+            }
+
+            if (mKakitangan.HR_ANUGERAH_HAJI == null)
+            {
+                mKakitangan.HR_ANUGERAH_HAJI = new MaklumatAnugerahHaji();
+            }
+
+            if (mKakitangan.HR_PERSARAAN == null)
+            {
+                mKakitangan.HR_PERSARAAN = new MaklumatPersaraan();
+            }
+
             if (mKakitangan.HR_TINDAKAN_DISIPLIN == null)
             {
                 mKakitangan.HR_TINDAKAN_DISIPLIN = new List<MaklumatTindakanDisiplin>();
             }
 
-            /*if (mPekerjaan == null)
+            if (mKakitangan.HR_MAKLUMAT_KEMATIAN == null)
             {
-                mPekerjaan = new HR_MAKLUMAT_PEKERJAAN();
-            }*/
+                mKakitangan.HR_MAKLUMAT_KEMATIAN = new MaklumatKematian();
+            }
+
+            if (mKakitangan.HR_PENILAIAN_PRESTASI == null)
+            {
+                mKakitangan.HR_PENILAIAN_PRESTASI = new MaklumatPenilaianPrestasi();
+            }
+
+            if (mKakitangan.HR_MAKLUMAT_CUTI == null)
+            {
+                mKakitangan.HR_MAKLUMAT_CUTI = new MaklumatCuti();
+            }
 
             if (ModelState.IsValid)
             {
-                /*if(kemaskini == null)
-                {
-                    kemaskini = new List<string>();
-                    kemaskini.Add("off");
-                }
-                for(var i = 2; i > kemaskini.Count(); i--)
-                {
-                    kemaskini.Add("off");
-                }*/
+
                 foreach (var Kemaskini in kemaskini)
                 {
                     if (Kemaskini == "Info")

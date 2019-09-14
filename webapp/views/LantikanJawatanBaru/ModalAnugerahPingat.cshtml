@@ -1,0 +1,113 @@
+﻿<div class="modal fade" id="ModalAnugerahPingat" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    Tambah Anugerah Pingat <span class="error"></span>
+                </h4>
+            </div>
+            <div class="modal-body no-padding smart-form">
+                
+                @Html.Hidden("HR_MAKLUMAT_KURNIAAN_HR_NO_PEKERJA", null, new { @class = "form-control" })
+                @Html.Hidden("HR_MAKLUMAT_KURNIAAN_HR_NP_PENCALON", null, new { @class = "form-control" })
+                <fieldset>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Peringkat Kurniaan</label>
+                            <div class="col col-8">
+                                <label class="select">
+                                    @Html.DropDownList("HR_MAKLUMAT_KURNIAAN_HR_PERINGKAT", new SelectList(ViewBag.Peringkat, "Value", "Text"), string.Empty, new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Nama Kurniaan</label>
+                            <div class="col col-8">
+                                <label class="select">
+                                    @Html.DropDownList("HR_MAKLUMAT_KURNIAAN_HR_KURNIAAN_IND", new SelectList(ViewBag.HR_KURNIAAN_IND, "Value", "Text"), string.Empty, new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Nama Darjah Kebesaran / Bintang / Pingat</label>
+                            <div class="col col-8">
+                                <label class="select">
+                                    @Html.DropDownList("HR_MAKLUMAT_KURNIAAN_HR_KOD_KURNIAAN", new SelectList(ViewBag.Kurniaan, "HR_KOD_KURNIAAN", "HR_PENERANGAN"), string.Empty, new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Tarikh Percalonan</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    @Html.TextBox("HR_MAKLUMAT_KURNIAAN_HR_TARIKH_PENCALONAN", null, new { @class = "form-control HR_MAKLUMAT_KURNIAAN_HR_TARIKH_PENCALONAN", @readonly = "readonly", size = 9 })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Nama Pegawai yang Mencalonkan</label>
+                            <div class="col col-8 input-group">
+                                <label class="input">
+                                    @Html.TextBox("HR_MAKLUMAT_KURNIAAN_HR_NAMA_PENCALON", null, new { @class = "form-control", @readonly = "readonly" })
+                                </label>
+                                <div class="input-group-btn">
+                                    <a class="btn btn-default btn-sm btn-pekerja" id="btn-pekerja" href="javascript:void(0)" title="Cari Pekerja"><i class="fa fa-search"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Keputusan Pencalonan</label>
+                            <div class="col col-8">
+                                <label class="select">
+                                    @Html.DropDownList("HR_MAKLUMAT_KURNIAAN_HR_STATUS", new SelectList(ViewBag.HR_STATUS, "Value", "Text"), string.Empty, new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Tarikh Akhir</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    @Html.TextBox("HR_MAKLUMAT_KURNIAAN_HR_TARIKH_KURNIAAN", null, new { @class = "form-control HR_MAKLUMAT_KURNIAAN_HR_TARIKH_KURNIAAN", size = 9, @readonly = "readonly" })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                </fieldset>
+                <footer>
+                    <button type="button" id="btn-AnugerahPingat" class="btn btn-primary">
+                        <span class="fa fa-plus"></span> Tambah
+                    </button>
+                    <button type="reset" class="btn btn-default">
+                        Reset
+                    </button>
+                    <button type="button" id="btn-back" class="btn btn-default" data-dismiss="modal">
+                        Kembali
+                    </button>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>
+
+

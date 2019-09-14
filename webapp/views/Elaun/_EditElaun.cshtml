@@ -8,7 +8,7 @@
             &times;
         </button>
         <h4 class="modal-title">
-            Edit Elaun<span class="error"></span>
+            Ubah Elaun<span class="error"></span>
         </h4>
     </div>
     <div class="modal-body no-padding">
@@ -260,7 +260,23 @@
             var $elaunForm = $("#elaun-form").validate({
                 // Rules for form validation
                 rules: {
-                    
+
+                    HR_KOD_ELAUN: {
+                        required: true,
+                        remote: {
+                            url: "../Elaun/CariEditElaun",
+                            type: "get",
+                            data: {
+                               
+                                kod: function () {
+                                    return $("#HR_KOD_ELAUN").val();
+                                }
+
+
+
+                            }
+                        }
+                    },
                     HR_PENERANGAN_ELAUN: {
                         required: true,
                         remote: {

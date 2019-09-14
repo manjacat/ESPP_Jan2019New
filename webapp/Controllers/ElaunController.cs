@@ -188,19 +188,22 @@ namespace eSPP.Controllers
         public ActionResult CariEditElaun(string kategori, string kod, string penerangan, string vot, string singkatan)
         {
             List<HR_ELAUN> elaun = new List<HR_ELAUN>();
-            
+            if (kod != null)
+            {
+                elaun = db.HR_ELAUN.Where(s => s.HR_KOD_ELAUN == kod).ToList();
+            }
             if (penerangan != null)
             {
                 elaun = db.HR_ELAUN.Where(s => s.HR_KOD_ELAUN != kod && s.HR_KOD_KATEGORI != kategori && s.HR_PENERANGAN_ELAUN == penerangan).ToList();
             }
             if (vot != null)
             {
-                elaun = db.HR_ELAUN.Where(s => s.HR_KOD_ELAUN != kod && s.HR_VOT_ELAUN == vot).ToList();
+                elaun = db.HR_ELAUN.Where(s => s.HR_KOD_ELAUN == kod && s.HR_KOD_KATEGORI == kategori && s.HR_VOT_ELAUN != vot).ToList();
 
             }
             if (singkatan != null)
             {
-                elaun = db.HR_ELAUN.Where(s => s.HR_KOD_ELAUN != kod && s.HR_SINGKATAN == singkatan).ToList();
+                elaun = db.HR_ELAUN.Where(s => s.HR_KOD_ELAUN == kod && s.HR_KOD_KATEGORI == kategori && s.HR_SINGKATAN != singkatan).ToList();
             }
 
             string msg = null;
@@ -214,6 +217,8 @@ namespace eSPP.Controllers
             }
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
-       
+
+
+      
     }
 }

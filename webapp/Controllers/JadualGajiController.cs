@@ -31,42 +31,69 @@ namespace eSPP.Controllers
             }
 
             HR_JADUAL_GAJI jadual = db.HR_JADUAL_GAJI.SingleOrDefault(s => s.HR_SISTEM_SARAAN == saraan && s.HR_GRED_GAJI == gaji && s.HR_PERINGKAT == peringkat);
-
+           
             if (jadual == null)
             {
                 return HttpNotFound();
             }
             ViewBag.HR_PERINGKAT = new SelectList(db.HR_JADUAL_GAJI.GroupBy(c => c.HR_PERINGKAT).Select(c => c.FirstOrDefault()).OrderBy(c => c.HR_PERINGKAT), "HR_PERINGKAT", "HR_PERINGKAT");
             ViewBag.HR_GRED_GAJI = new SelectList(db2.GE_PARAMTABLE.Where(s => s.GROUPID == 109), "SHORT_DESCRIPTION", "SHORT_DESCRIPTION");
+
+
             return PartialView("_InfoJadual", jadual);
         }
 
         public ActionResult TambahJadual()
         {
             ViewBag.HR_PERINGKAT = new SelectList(db.HR_JADUAL_GAJI.GroupBy(c => c.HR_PERINGKAT).Select(c => c.FirstOrDefault()).OrderBy(c => c.HR_PERINGKAT), "HR_PERINGKAT", "HR_PERINGKAT");
-            ViewBag.HR_GRED_GAJI = new SelectList(db2.GE_PARAMTABLE.Where(s => s.GROUPID == 109), "SHORT_DESCRIPTION", "SHORT_DESCRIPTION");
+
+            List<String> disableditem = new List<string>(); //newobject
+            List<HR_JADUAL_GAJI> jad = db.HR_JADUAL_GAJI.GroupBy(s => s.HR_GRED_GAJI).Select(s => s.FirstOrDefault()).ToList(); //selectandgroupby
+            foreach (var item in jad) //loop 
+            {
+                var selectjadual = db.HR_JADUAL_GAJI.Where(s => s.HR_GRED_GAJI == item.HR_GRED_GAJI).Count(); // selectgredgaji
+
+                if (selectjadual >= 9)
+                {
+                    disableditem.Add(item.HR_GRED_GAJI); //masukkandata
+                    jad = new List<HR_JADUAL_GAJI>();
+
+                }
+            }
+            string[] gred = disableditem.ToArray(); //masukkandatadalamgred
+
+
+
+            ViewBag.HR_GRED_GAJI = new SelectList(db2.GE_PARAMTABLE.Where(s => s.GROUPID == 109), "SHORT_DESCRIPTION", "SHORT_DESCRIPTION", null, null, gred);
+
+
             return PartialView("_TambahJadual");
         }
-        
-        
+
+
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult TambahJadual([Bind(Include = "HR_SISTEM_SARAAN, HR_GRED_GAJI, HR_PERINGKAT, HR_GAJI_POKOK, HR_GAJI_MIN, HR_GAJI_MAX, HR_RM_KENAIKAN, HR_PERATUS_KENAIKAN, HR_KOD_GAJI, HR_AKTIF_IND, HR_KANAN_IND")] HR_JADUAL_GAJI jadual)
         {
             if (ModelState.IsValid)
             {
-                List<HR_JADUAL_GAJI> selectJadual = db.HR_JADUAL_GAJI.Where(s => s.HR_SISTEM_SARAAN == jadual.HR_SISTEM_SARAAN && s.HR_GRED_GAJI == jadual.HR_GRED_GAJI && s.HR_PERINGKAT == jadual.HR_PERINGKAT).ToList();
-                if (selectJadual.Count() <= 0)
-                {
-                    db.HR_JADUAL_GAJI.Add(jadual);
-                    db.SaveChanges();
-                }
-                ViewBag.HR_GRED_GAJI = new SelectList(db2.GE_PARAMTABLE.Where(s => s.GROUPID == 109), "SHORT_DESCRIPTION", "SHORT_DESCRIPTION");
+                   var selectJadual = db.HR_JADUAL_GAJI.Where(s=> s.HR_GRED_GAJI == jadual.HR_GRED_GAJI).Count(); //selectandgroupby
+                    //var SelectLastID = db.HR_JADUAL_GAJI.GroupBy(s=> s.HR_PERINGKAT ).Select(c => c.FirstOrDefault()).Count();
+                   var Increment = selectJadual + 1 ;
+                   jadual.HR_PERINGKAT = "P" + Increment;
+                   db.HR_JADUAL_GAJI.Add(jadual);
+                   db.SaveChanges();
+           
                 return RedirectToAction("SenaraiGaji");
             }
+            ViewBag.HR_GRED_GAJI = new SelectList(db2.GE_PARAMTABLE.Where(s => s.GROUPID == 109), "SHORT_DESCRIPTION", "SHORT_DESCRIPTION");
+
             return View();
         }
 
+        
+        
         public ActionResult EditJadual(string saraan, string gaji, string peringkat)
         {
             if (saraan == null || gaji == null || peringkat == null)
@@ -131,7 +158,7 @@ namespace eSPP.Controllers
             return RedirectToAction("SenaraiGaji");
         }
 
-        public ActionResult CariGaji ( string gaji, string peringkat)
+        public ActionResult CariGaji ( string gaji, string peringkat, string kod)
         {
             List<HR_JADUAL_GAJI> jadual = new List<HR_JADUAL_GAJI>();
             if (gaji != null)
@@ -141,6 +168,10 @@ namespace eSPP.Controllers
             if ( peringkat != null)
             {
                 jadual = db.HR_JADUAL_GAJI.Where(s => s.HR_GRED_GAJI == gaji && s.HR_PERINGKAT == peringkat).ToList();
+            }
+            if (kod != null)
+            {
+                jadual = db.HR_JADUAL_GAJI.Where(s => s.HR_KOD_GAJI == kod).ToList();
             }
             string msg = null;
             if (jadual.Count() > 0)
@@ -154,6 +185,25 @@ namespace eSPP.Controllers
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult CariEditGaji(string gred, string kod)
+        {
+            List<HR_JADUAL_GAJI> jadual = new List<HR_JADUAL_GAJI>();
+
+            if (kod != null)
+            {
+                jadual = db.HR_JADUAL_GAJI.Where(s => s.HR_GRED_GAJI != gred && s.HR_KOD_GAJI == kod).ToList();
+            }
+            string msg = null;
+            if (jadual.Count() > 0)
+            {
+                msg = "Data telah wujud";
+            }
+            else
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            return Json(msg, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

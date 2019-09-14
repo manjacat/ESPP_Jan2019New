@@ -43,5 +43,6 @@ namespace eSPP.Models
         public Nullable<decimal> HR_PERGERAKAN_EWIL { get; set; }
         public Nullable<decimal> HR_GAJI_LAMA { get; set; }
         public string HR_JAWATAN_BARU { get; set; }
+        public string HR_KOD_ELAUN { get; set; }
     }
 }

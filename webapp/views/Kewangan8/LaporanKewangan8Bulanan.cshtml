@@ -6,7 +6,7 @@
         <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
             <h1 class="page-title txt-color-blueDark">
                 <i class="fa-fw fa fa-pencil-square-o"></i>
-                Forms
+                Kewangan 8
                 <span>
                     >
                     Laporan Kewangan 8 Bulanan
@@ -92,7 +92,7 @@
                                                 <div class="well">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
-                                                            <b>Status Muktamat : </b>
+                                                            <b>Status Muktamad : </b>
                                                         </div>
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
                                                             <div class="inline-group">
@@ -146,7 +146,7 @@
                                                 <div class="well">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
-                                                            <b>Status Muktamat : </b>
+                                                            <b>Status Muktamad : </b>
                                                         </div>
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
                                                             <div class="inline-group">
@@ -200,7 +200,7 @@
                                                 <div class="well">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
-                                                            <b>Status Muktamat : </b>
+                                                            <b>Status Muktamad : </b>
                                                         </div>
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
                                                             <div class="inline-group">
@@ -245,7 +245,7 @@
                                         <th>Tarikh Akhir</th>
                                         <th>Kew.8</th>
                                         <th>Kew.8 ID</th>
-                                        <th>Muktamat</th>
+                                        <th>Muktamad</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -273,9 +273,15 @@
                                                 q8 = k.HR_PENERANGAN;
                                             }
                                         }
+
+                                        var expiredDate = "T";
+                                        if(Convert.ToDateTime(item.HR_TARIKH_KEYIN).Month < DateTime.Now.Month)
+                                        {
+                                            expiredDate = "Y";
+                                        }
                                         <tr>
                                             <td class="smart-form">
-                                                @Html.DisplayFor(model => item.HR_NO_PEKERJA),@Html.DisplayFor(model => item.HR_FINALISED_IND_HR)
+                                                @Html.DisplayFor(model => item.HR_NO_PEKERJA),@Html.DisplayFor(model => item.HR_FINALISED_IND_HR),@expiredDate
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(model => item.HR_NO_PEKERJA)
@@ -491,9 +497,18 @@
                             //checked = 'checked';
                             //disabled = ''
                         }
-                        return '<label class="checkbox"><input type="checkbox" name="' + muktamad + '" value="' + $('<div/>').text(s[0]).html() + '" class="form-control ' + muktamad + '"><i></i></label>';
+
+                        disabled = ''
+                        if (s[2] == "Y") {
+                            disabled = 'disabled="disabled"'
+                        }
+
+                        var html = '<label class="checkbox"><input type="checkbox" name="' + muktamad + '" value="' + $('<div/>').text(s[0]).html() + '" class="form-control ' + muktamad + '" ' + disabled + '><i></i></label>';
+                        html += '<input type="hidden" name="HR_FINALISED_IND_HR" id= "HR_FINALISED_IND_HR" value="' + $('<div/>').text(s[1]).html() + '" class="form-control" ' + disabled + '>';
+                        return html;
                     }
                 }],
+                "order": [[1, 'asc']],
                 "autoWidth": true,
                 "preDrawCallback": function () {
                     // Initialize the responsive datatables helper once.
@@ -512,8 +527,8 @@
             $("div.btn-print").html('<div class="text-right">' +
                 '<button type = "button" name = "print" id = "print" class = "btn btn-default" title = "Cetak PDF"><i class = "fa fa-print"></i><i class = "fa fa-file-pdf-o"></i></button>' +
                 '<button type = "button" name = "excel" id = "excel" class = "btn btn-default" title = "Muat Turun Excel"><i class = "fa fa-download"></i><i class = "fa fa-file-excel-o"></i></button>' +
-                '<button type = "button" name = "Muktamad" id = "Muktamad" class = "btn btn-success" title = "Muktamad"><i class = "fa fa-check-square-o"></i></button>' +
-                '<button type = "button" name = "Padam" id = "Padam" class = "btn btn-danger" title = "Padam"><i class = "fa fa-trash-o"></i></button>' +
+                '<button type = "button" name = "Muktamad" id = "Muktamad" class = "btn btn-success" title = "Muktamad" disabled = "disabled"><i class = "fa fa-check-square-o"></i></button>' +
+                '<button type = "button" name = "Padam" id = "Padam" class = "btn btn-danger" title = "Padam muktamad" disabled = "disabled"><i class = "fa fa-trash-o"></i></button>' +
                 '</div>');
 
             function JulPilih(){
@@ -522,7 +537,7 @@
             }
 
             $("div.selected").html('<div style="padding-top: 9px; font-size: 13px; font-weight: 700; font-style: italic; color: #969696;">' +
-                                    'Jumlah kewangan 8 yang dipilih untuk dimuktamadkan : <span class="txt-color-darken" id="jumPilih">' + 0 + '</span>' +
+                                    'Jumlah kewangan 8 yang dipilih : <span class="txt-color-darken" id="jumPilih">' + 0 + '</span>' +
                                     '</div>');
             /* END TABLETOOLS */
 
@@ -546,13 +561,15 @@
 
             $("#PilihPekerja").on("click", function () {
                 var rows = table.rows({ "search": "applied" }).nodes();
-                $("input[type='checkbox']", rows).prop("checked", this.checked)
+                $("input[type='checkbox']:not(:disabled)", rows).prop("checked", this.checked)
                 TotalSelected()
+                DisableBtn()
             })
 
             $('#datatable_tabletools tbody').on('click', 'input[type="checkbox"]', function () {
                 // If checkbox is not checked
                 TotalSelected()
+                DisableBtn()
             });
 
             // Handle click on checkbox to set state of "Select all" control
@@ -590,21 +607,107 @@
                 }
             };
 
-            $("#Muktamad, #Padam").on("click", function () {
+            function DisableBtn() {
+                var padam = 0;
+                var muk = 0;
+                var rows = table.$('input[type="checkbox"]').each(function () {
+                    if (this.checked) {
+                        if ($(this).parents('td').find("#HR_FINALISED_IND_HR").val() == "Y") {
+                            muk++;
+                        }
+                        if ($(this).parents('td').find("#HR_FINALISED_IND_HR").val() != "Y") {
+                            padam++;
+                        }
+                    }
+                })
+                if (padam > 0) {
+                    $("#Muktamad").removeAttr('disabled');
+                }
+                if (padam <= 0) {
+                    $("#Muktamad").attr('disabled', 'disabled');
+                }
+
+                if (muk > 0) {
+                    $("#Padam").removeAttr('disabled');
+                }
+                if (muk <= 0) {
+                    $("#Padam").attr('disabled', 'disabled');
+                }
+            }
+
+            function errorMsg(msg, error, location) {
+                $("#errorMsg").html("<div>" + msg + "</div>");
+                $("#errorMsg").dialog({
+                    open: function (event, ui) {   // It'll hide Close button
+                        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                    },
+                    closeOnEscape: false,        // Do not close dialog on press Esc button
+                    modal: true,
+                    title: 'Mesej',
+                    buttons: {
+                        "Tutup": function () {
+                            $(this).dialog("close")
+                            if (error == false) {
+                                window.location = location;
+                            }
+                            $("#errorMsg").html('');
+                            waitMsg();
+                        }
+                    }
+                });
+            }
+
+            function waitMsg() {
+                $("#waitMsg").html("<div class='text-center'><div><span id='img'><img class='rounded mx-auto d-block center' src='../Content/img/ajax-loader.gif' alt='loading' id='img-load' /></span></div><div>Sila tunggu sebentar</div></div>");
+                $("#waitMsg").dialog({
+                    open: function (event, ui) {   // It'll hide Close button
+                        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                    },
+                    closeOnEscape: false,        // Do not close dialog on press Esc button
+                    modal: true,
+                    title: 'Mesej'
+                });
+            }
+
+            $("#Muktamad, #Padam").on("click", function (e) {
                 var jenis = "Muktamad";
                 var jenis2 = "dimuktamadkan";
                 var muktamad = ".xmuktamad";
+                var msgRalat = "Adakah anda pasti ingin " + jenis.toLowerCase() + " data ini?";
                 if ($(this).attr("id") == "Padam") {
                     jenis = "Padam";
-                    jenis2 = "dipadam"
+                    jenis2 = "dikemaskini"
                     muktamad = "";
+                    msgRalat = "Adakah anda pasti ingin batalkan muktamad untuk data ini?";
                 }
 
                 var no = 0;
                 var listKew8 = []
                 var ansuran = []
-                var pengesahan = confirm("Adakah anda pasti ingin " + jenis.toLowerCase() + " data ini?");
-                if (pengesahan == true) {
+                $("#errorMsg").html('<div>' + msgRalat + '</div>');
+                $("#errorMsg").dialog({
+                    open: function (event, ui) {   // It'll hide Close button
+                        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                    },
+                    closeOnEscape: false,        // Do not close dialog on press Esc button
+                    modal: true,
+                    title: 'Mesej',
+                    buttons: {
+                        "Ya": function () {
+                            $(this).dialog("close")
+                            FormSub(e)
+                            $("#errorMsg").html('');
+                        },
+                        "Tidak": function () {
+                            $(this).dialog("close")
+                            e.preventDefault();
+                            $("#errorMsg").html('');
+                        }
+                    }
+                });
+
+                function FormSub(e) {
+                    waitMsg()
                     table.$('input[type="checkbox"]' + muktamad).each(function () {
                         if (this.checked) {
                             var VIEW = $(this).parents("tr")
@@ -657,13 +760,33 @@
                     })
                     //$("#form").submit();
                     $.post("../Kewangan8/LaporanKewangan8Bulanan", { model: listKew8, bulan: $("#bulan").val(), tahun: $("#tahun").val(), status: $("#status").val(), sAnsuran: ansuran, jenis: jenis }, function (data) {
+                        var txtmsg = "";
                         if (data == true) {
-                            alert("Data tidak berjaya " + jenis2)
+                            txtmsg = "Data tidak berjaya " + jenis2;
                         }
                         else {
-                            alert("Data berjaya " + jenis2)
+                            txtmsg = "Data berjaya " + jenis2;
                         }
-                        window.location.href = "../Kewangan8/LaporanKewangan8Bulanan?bulan=" + $("#bulan").val() + "&tahun=" + $("#tahun").val() + "&status=" + $("#status").val()
+                        $("#waitMsg").dialog("close")
+                        $("#waitMsg").html('')
+
+                        $("#errorMsg").html('<div>' + txtmsg + '</div>');
+                        $("#errorMsg").dialog({
+                            open: function (event, ui) {   // It'll hide Close button
+                                $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                            },
+                            closeOnEscape: false,        // Do not close dialog on press Esc button
+                            modal: true,
+                            title: 'Mesej',
+                            buttons: {
+                                "Tutup": function () {
+                                    $(this).dialog("close")
+                                    window.location.href = "../Kewangan8/LaporanKewangan8Bulanan?bulan=" + $("#bulan").val() + "&tahun=" + $("#tahun").val() + "&status=" + $("#status").val()
+                                    $("#errorMsg").html('');
+                                    waitMsg()
+                                }
+                            }
+                        });
                     }, "Json")
                 }
             })

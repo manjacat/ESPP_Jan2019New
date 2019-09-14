@@ -31,7 +31,7 @@
                 }
                 @foreach (HR_MAKLUMAT_KEWANGAN8 item in Model)
                 {
-                    List<HR_MAKLUMAT_KEWANGAN8> senraiAnsuran = ansuran.Where(s => s.HR_NO_PEKERJA == item.HR_NO_PEKERJA && s.HR_KOD_PERUBAHAN == item.HR_KOD_PERUBAHAN && s.HR_KEW8_ID == item.HR_KEW8_ID).OrderBy(s => s.HR_TARIKH_AKHIR).ToList();
+                    List<HR_MAKLUMAT_KEWANGAN8> senraiAnsuran = ansuran.Where(s => s.HR_NO_PEKERJA == item.HR_NO_PEKERJA && s.HR_KOD_PERUBAHAN == item.HR_KOD_PERUBAHAN && s.HR_ANSURAN_ID == item.HR_ANSURAN_ID).OrderBy(s => s.HR_TARIKH_AKHIR).ToList();
                     var CountAnsuran = senraiAnsuran.Count();
                     var txtAnsuran = "";
 
@@ -296,7 +296,7 @@
         });
         if ('@ViewBag.kod' != "00001")
         {
-            if ('@ViewBag.HR_AKTIF_IND' == "Y" && ('@ViewBag.HR_GAJI_IND' == "Y" || '@ViewBag.kod' == "00026"))
+            if (('@ViewBag.HR_AKTIF_IND' == "Y" && ('@ViewBag.HR_GAJI_IND' == "Y" || '@ViewBag.kod' == "00026")) || '@ViewBag.kod' == "TP" || '@ViewBag.kod' != "00031")
             {
                 if ('@ViewBag.kod' == "TP" && '@ViewBag.HR_NO_PEKERJA' == '@ViewBag.pengesahan') {
                     $("div.btn-print").html('<div class="text-right">' +
@@ -315,7 +315,6 @@
                 '</div>');
             }
         }
-
 
         $("#Error").on("click", function () {
             if ('@ViewBag.HR_AKTIF_IND' != "Y") {
@@ -422,7 +421,7 @@
         $("#Tambah").on("click", function () {
             //var $buttonClicked = $(this);
             //var HR_NO_PEKERJA = $buttonClicked.attr('data-id');
-
+            waitMsg()
             var options = { "backdrop": "static", keyboard: true };
             $.ajax({
                 type: "GET",
@@ -434,7 +433,7 @@
                     $('#ModalContent').html(data);
                     $('#Modal').modal(options);
                     $('#Modal').modal('show');
-
+                    $("#waitMsg").dialog("close");
                 },
                 error: function () {
                     alert("Dynamic content load failed.");
@@ -452,6 +451,7 @@
             var HR_TARIKH_MULA = $buttonClicked.attr('data-tarikh');
             var HR_KOD_PELARASAN = $buttonClicked.attr('data-kodpelarasan');
             var options = { "backdrop": "static", keyboard: true };
+            waitMsg()
             $.ajax({
                 type: "GET",
                 url: Info,
@@ -461,8 +461,12 @@
                 success: function (data) {
                     $('#ModalContent').html(data);
                     $('#Modal').modal(options);
-                    $('#Modal').modal('show');
-
+                    //$('#Modal').modal('show');
+                    $("#Modal").modal({
+                        show: true,
+                        backdrop: 'static'
+                    });
+                    $("#waitMsg").dialog("close");
                 },
                 error: function () {
                     alert("Dynamic content load failed.");
@@ -479,6 +483,7 @@
             var HR_TARIKH_MULA = $buttonClicked.attr('data-tarikh');
             var HR_KOD_PELARASAN = $buttonClicked.attr('data-kodpelarasan');
             var options = { "backdrop": "static", keyboard: true };
+            waitMsg()
             $.ajax({
                 type: "GET",
                 url: Edit,
@@ -488,8 +493,12 @@
                 success: function (data) {
                     $('#ModalContent').html(data);
                     $('#Modal').modal(options);
-                    $('#Modal').modal('show');
-
+                    //$('#Modal').modal('show');
+                    $("#Modal").modal({
+                        show: true,
+                        backdrop: 'static'
+                    });
+                    $("#waitMsg").dialog("close");
                 },
                 error: function () {
                     alert("Dynamic content load failed.");
@@ -506,6 +515,7 @@
             var HR_TARIKH_MULA = $buttonClicked.attr('data-tarikh');
             var HR_KOD_PELARASAN = $buttonClicked.attr('data-kodpelarasan');
             var options = { "backdrop": "static", keyboard: true };
+            waitMsg()
             $.ajax({
                 type: "GET",
                 url: Padam,
@@ -515,15 +525,18 @@
                 success: function (data) {
                     $('#ModalContent').html(data);
                     $('#Modal').modal(options);
-                    $('#Modal').modal('show');
-
+                    //$('#Modal').modal('show');
+                    $("#Modal").modal({
+                        show: true,
+                        backdrop: 'static'
+                    });
+                    $("#waitMsg").dialog("close");
                 },
                 error: function () {
                     alert("Dynamic content load failed.");
                 }
             });
         });
-
 
         //var myBackup = $('#Modal').clone();
 
@@ -545,6 +558,19 @@
         //    $('body').append(myClone);
         //});
     });
+
+    function waitMsg() {
+        $("#waitMsg").html("<div class='text-center'><div><span id='img'><img class='rounded mx-auto d-block center' src='../Content/img/ajax-loader.gif' alt='loading' id='img-load' /></span></div><div>Sila tunggu sebentar</div></div>");
+        $("#waitMsg").dialog({
+            open: function (event, ui) {   // It'll hide Close button
+                $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+            },
+            closeOnEscape: false,        // Do not close dialog on press Esc button
+            modal: false,
+            title: 'Mesej'
+        });
+    }
+
     @*$(function () {
         $("#datatable_tabletools").on("click", "#print", function () {
             var $buttonClicked = $(this);

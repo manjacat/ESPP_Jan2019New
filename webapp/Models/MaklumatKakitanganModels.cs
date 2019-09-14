@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,6 +8,7 @@ namespace eSPP.Models
 {
     public class MaklumatKakitanganModels
     {
+        public string ACTIVE_ITEM { get; set; }
         public List<MaklumatPeribadi> HR_SENARAI_PERIBADI { get; set; }
         public MaklumatPeribadi HR_MAKLUMAT_PERIBADI { get; set; }
         public HR_GAMBAR_PENGGUNA HR_GAMBAR_PENGGUNA { get; set; }
@@ -74,6 +76,7 @@ namespace eSPP.Models
         public string HR_TELRUMAH { get; set; }
         public string HR_TELPEJABAT { get; set; }
         public string HR_TELBIMBIT { get; set; }
+        [DataType(DataType.EmailAddress, ErrorMessage = "Email tidak sah")]
         public string HR_EMAIL { get; set; }
         public string HR_AKTIF_IND { get; set; }
         public Nullable<decimal> HR_CC_KENDERAAN { get; set; }
@@ -155,6 +158,7 @@ namespace eSPP.Models
         public string HR_UNIFORM { get; set; }
         public string HR_TEKNIKAL { get; set; }
         public Nullable<System.DateTime> HR_TARIKH_KELUAR_MBPJ { get; set; }
+        public Nullable<System.DateTime> HR_TARIKH_SAH_J_TUKAR_LANTIK { get; set; }
     }
     public class MaklumatPengalamanKerja
     {

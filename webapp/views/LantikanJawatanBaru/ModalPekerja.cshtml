@@ -1,0 +1,55 @@
+﻿<div class="modal fade" id="ModalPekerja" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    Cari Pekerja <span class="error"></span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                @Html.Hidden("INDEX", null, new { @class = "form-control"})
+                <fieldset>
+                    <section class="smart-form">
+                        <div class="row">
+                            <label class="label col col-2">Cari</label>
+                            <div class="col col-10">
+                                <div class="input-group">
+                                    <label class="input">
+                                        @Html.TextBox("nilai", null, new { @class = "form-control", autocomplete = "off" })
+                                    </label>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-default" type="button" id="CariPenyelia2">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+                    <table id="datatable_CariPekerja" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th width="40" data-class="expand">Pilih</th>
+                                <th width="80" data-class="expand">No. Pekerja</th>
+                                <th width="150" data-hide="phone">Kad Pengenalan</th>
+                                <th data-hide="phone">Nama</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </fieldset>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-done" class="btn btn-primary btn-done">
+                    <span class="fa fa-send-o"></span> Selesai
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+                    Kembali
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

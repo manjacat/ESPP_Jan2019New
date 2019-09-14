@@ -1,0 +1,131 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+
+<div class="tab-pane fade" id="Prestasi">
+    <div class="row">
+
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Maklumat Penilaian Prestasi
+            </legend>
+            <div class="row smart-form">
+
+                <div class="col col-lg-12 col-md-12 col-sm-6 col-xs-6">
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tahun Proses</label>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="input">
+
+                                    @Html.HiddenFor(model => model.HR_PENILAIAN_PRESTASI.HR_NO_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    @Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_TAHUN_PRESTASI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 4 } })
+
+                                </label>
+                            </div>
+
+                        </section>
+                        <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kumpulan Perkhidmatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <input type="text" name="HR_PENILAIAN_PRESTASI.HR_KUMP_PERKHIDMATAN" id="HR_PENILAIAN_PRESTASI_HR_KUMP_PERKHIDMATAN" value="@ViewBag.kumpulan" class="form-control" disabled="disabled" />
+                                </label>
+                            </div>
+
+                        </section>
+
+                    </div>
+                    <div class="row smart-form">
+                        <div class="table-responsive col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr style="border:none">
+                                        <th colspan="2" style="border:none">BAHAGIAN</th>
+                                        <th colspan="2" style="border:none">MARKAH DIPEROLEHI</th>
+                                        <th style="border:none">PURATA DIPEROLEHI</th>
+                                        <th style="border:none">PERATUS MARKAH MENGIKUT BAHAGIAN</th>
+                                    </tr>
+                                    <tr style="border:none">
+                                        <th colspan="2" style="border:none"></th>
+                                        <th style="border:none">PPP</th>
+                                        <th style="border:none">PPK</th>
+                                        <th style="border:none"></th>
+                                        <th style="border:none"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border:none">
+                                        <td style="border:none"><b>1.</b></td>
+                                        <td style="border:none"><b>Penghasilan Kerja</b></td>
+                                        <td style="border:none"><div class="col-4"><label class="input">@Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_PENGHASILAN_PPP, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })</label></div></td>
+                                        <td style="border:none"><div class="col-4"><label class="input">@Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_PENGHASILAN_PPK, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })</label></div></td>
+                                        <td style="border:none"><div class="col-4"><label class="input">@Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_PURATA_PENGHASILAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })</label></div></td>
+                                        <td style="border:none"><div class="col-4"><label class="input">@Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_PERATUS_PENGHASILAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })</label></div></td>
+                                    </tr>
+                                    <tr style="border:none">
+                                        <td style="border:none"><b>2.</b></td>
+                                        <td style="border:none"><b>Pengetahuan Dan Kemahiran</b></td>
+                                        <td style="border:none"><div class="col-4"><label class="input">@Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_PENGETAHUAN_PPP, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })</label></div></td>
+                                        <td style="border:none"><div class="col-4"><label class="input">@Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_PENGETAHUAN_PPK, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })</label></div></td>
+                                        <td style="border:none"><div class="col-4"><label class="input">@Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_PURATA_PENGETAHUAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })</label></div></td>
+                                        <td style="border:none"><div class="col-4"><label class="input">@Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_PERATUS_PENGETAHUAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })</label></div></td>
+                                    </tr>
+                                    <tr style="border:none">
+                                        <td style="border:none"><b>3.</b></td>
+                                        <td style="border:none"><b>Kualiti Peribadi</b></td>
+                                        <td style="border:none"><div class="col-4"><label class="input">@Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_KUALITI_PPP, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })</label></div></td>
+                                        <td style="border:none"><div class="col-4"><label class="input">@Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_KUALITI_PPK, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })</label></div></td>
+                                        <td style="border:none"><div class="col-4"><label class="input">@Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_PURATA_KUALITI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })</label></div></td>
+                                        <td style="border:none"><div class="col-4"><label class="input">@Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_PERATUS_KUALITI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })</label></div></td>
+                                    </tr>
+                                    <tr style="border:none">
+                                        <td style="border:none"><b>4.</b></td>
+                                        <td style="border:none"><b>Kegiatan Dan Sumbangan Di Luar Tugas Rasmi</b></td>
+                                        <td style="border:none"><div class="col-4"><label class="input">@Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_SUMBANGAN_PPP, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })</label></div></td>
+                                        <td style="border:none"><div class="col-4"><label class="input">@Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_SUMBANGAN_PPK, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })</label></div></td>
+                                        <td style="border:none"><div class="col-4"><label class="input">@Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_PURATA_SUMBANGAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })</label></div></td>
+                                        <td style="border:none"><div class="col-4"><label class="input">@Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_PERATUS_SUMBANGAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })</label></div></td>
+                                    </tr>
+                                    <tr style="border:none">
+
+                                        <td colspan="4" style="border:none"></td>
+                                        <td style="border:none"><b>Jumlah</b></td>
+                                        <td style="border:none"><div class="col-4"><label class="input">@Html.EditorFor(model => model.HR_PENILAIAN_PRESTASI.HR_JUMLAH_BESAR, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 6 } })</label></div></td>
+                                    </tr>
+                                    <tr style="border:none">
+                                        <td colspan="6" style="border:none"><b><span>*Pegawai Penilai Pertama (PPP)</span>&nbsp;&nbsp;&nbsp;<span>*Pegawai Penilai Kedua (PPK)</span></b></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </fieldset>
+
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <label class="">Tambah : </label>
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mPrestasi-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mPrestasi-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" name="kemaskini" class="form-control" value="off">
+            </div>
+        </div>
+    </div>
+</div>

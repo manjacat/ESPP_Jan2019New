@@ -18,9 +18,8 @@ namespace eSPP.Models
     {
 
         [Key]
+        [Column(Order = 0)]
         public string HR_NO_PEKERJA { get; set; }
-        public Nullable<int> HR_BULAN { get; set; }
-        public Nullable<int> HR_TAHUN { get; set; }
         public string HR_GELARAN { get; set; }
         public string HR_JABATAN { get; set; }
         public string HR_BAHAGIAN { get; set; }
@@ -83,5 +82,11 @@ namespace eSPP.Models
         public string HR_UNIFORM { get; set; }
         public string HR_TEKNIKAL { get; set; }
         public Nullable<System.DateTime> HR_TARIKH_KELUAR_MBPJ { get; set; }
+        [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public decimal HR_ID_SEJARAH { get; set; }
+        public Nullable<DateTime> HR_TARIKH_SEJARAH { get; set; }
+        public string HR_TINDAKAN { get; set; }
     }
 }

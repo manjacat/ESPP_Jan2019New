@@ -1,5 +1,11 @@
 ﻿    <!-- Left panel : Navigation area -->
 <!-- Note: This width of the aside area can be adjusted through LESS variables -->
+@using Microsoft.AspNet.Identity;
+@{ 
+    PasswordExpiredModels Expired = new PasswordExpiredModels();
+    var expire = Expired.Expire(User.Identity.GetUserId());
+}
+
 <aside id="left-panel">
 
     <!-- User info -->
@@ -27,22 +33,26 @@
 
         <ul>
             <li class="@Html.RouteIf("index", "active")">
-                <a href="@Url.Action("index", "home")"><i class="fa fa-lg fa-fw fa-home fa-spin-hover"></i> <span class="menu-item-parent">Dashboard</span></a>
+                <a href="@Url.Action("index", "home")"><i class="fa fa-lg fa-fw fa-home fa-spin-hover txt-color-greenDark wrapper"></i> <span class="menu-item-parent">Dashboard</span></a>
             </li>
 
             <!--<li class="@Html.RouteIf("index", "active")">
-        <a href="#" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
-        <ul>
-            <li class="@Html.RouteIf("index", "active")">
-                <a href="@Url.Action("index", "home")" title="Dashboard"><span class="menu-item-parent">Analytics Dashboard</span></a>
-            </li>
-            <li class="@Html.RouteIf("social", "active")">
-                <a href="@Url.Action("social", "home")" title="Dashboard"><span class="menu-item-parent">Social Wall</span></a>
-            </li>
-        </ul>
-    </li>-->
+                <a href="#" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+                <ul>
+                    <li class="@Html.RouteIf("index", "active")">
+                        <a href="@Url.Action("index", "home")" title="Dashboard"><span class="menu-item-parent">Analytics Dashboard</span></a>
+                    </li>
+                    <li class="@Html.RouteIf("social", "active")">
+                        <a href="@Url.Action("social", "home")" title="Dashboard"><span class="menu-item-parent">Social Wall</span></a>
+                    </li>
+                </ul>
+            </li>-->
+            @*@if (expire != true)
+            {*@
+
+
             <li class="@Html.RouteIf("admin", "active")">
-                <a href="#"><i class="fa fa-lg fa-fw fa-user fa-spin-hover"></i> <span class="menu-item-parent">Administrator</span></a>
+                <a href="#"><i class="fa fa-lg fa-fw fa-user fa-spin-hover txt-color-red"></i> <span class="menu-item-parent">Administrator</span></a>
                 <ul>
                     <li class="@Html.RouteIf("Search", "active")">
                         <a href="@Url.Action("Search", "Admin")">Pengguna</a>
@@ -54,26 +64,33 @@
             </li>
 
             <li class="@Html.RouteIf("Audit", "active")">
-                <a href="@Url.Action("Audit", "Audit")"><i class="fa fa-lg fa-fw fa-video-camera fa-spin-hover"></i> <span class="menu-item-parent">Audit Trail</span></a>
+                <a href="@Url.Action("Audit", "Audit")"><i class="fa fa-lg fa-fw fa-video-camera fa-spin-hover txt-color-orangeDark"></i> <span class="menu-item-parent">Audit Trail</span></a>
             </li>
-            <li class="@Html.RouteIf("maklumatkakitangan", "active")">
-                <a href="@Url.Action("Index", "MaklumatKakitangan")"><i class="fa fa-lg fa-fw  fa-group"></i> <span class="menu-item-parent">Maklumat Kakitangan</span></a>
+			<li class="@Html.RouteIf("maklumatkakitangan", "active")">
+				<a href="@Url.Action("Index", "MaklumatKakitangan")"><i class="fa fa-lg fa-fw fa-group fa-spin-hover txt-color-purple"></i> <span class="menu-item-parent">Maklumat Kakitangan</span></a>
+			</li>
+
+            <li class="@Html.RouteIf("BorangJawatanBaru", "active")">
+                <a href="#"><i class="fa fa-lg fa-fw  fa-flash fa-spin-hover txt-color-blue"></i> <span class="menu-item-parent">Borang Jawatan Baru</span></a>
+                <ul>
+                    <li class="@Html.RouteIf("LantikanJawatanBaru", "active")">
+                        <a href="@Url.Action("LantikanJawatanBaru", "LantikanJawatanBaru")">Lantikan Jawatan Baru</a>
+                    </li>
+                    <li class="@Html.RouteIf("LantikanJawatanBaruManual", "active")">
+                        <a href="@Url.Action("LantikanJawatanBaruManual", "LantikanJawatanBaru")">Lantikan Jawatan Baru Manual</a>
+                    </li>
+                </ul>
             </li>
-            <li class="@Html.RouteIf("maklumatkakitanganbak", "active")">
-                <a href="@Url.Action("Index", "MaklumatKakitanganBak")"><i class="fa fa-lg fa-fw  fa-group"></i> <span class="menu-item-parent">M Kakitangan Bak</span></a>
-            </li>
-            <li class="@Html.RouteIf("LantikanJawatanBaru", "active")">
-                <a href="@Url.Action("LantikanJawatanBaru", "LantikanJawatanBaru")"><i class="fa fa-lg fa-fw  fa-flash"></i> <span class="menu-item-parent">Lantikan Jawatan Baru</span></a>
-            </li>
+
             <li class="@Html.RouteIf("pengurusankakitangan", "active")">
-                <a href="#"><i class="fa fa-lg fa-fw fa-male"></i> <span class="menu-item-parent">Kakitangan Sambilan</span></a>
+                <a href="#"><i class="fa fa-lg fa-fw fa-male fa-spin-hover txt-color-teal"></i> <span class="menu-item-parent">Kakitangan Sambilan</span></a>
                 <ul>
                     <li class="@Html.RouteIf("ListTransaksiSambilan", "active")">
                         <a href="@Url.Action("ListTransaksiSambilan", "PengurusanKakitanganSambilan")"><i class=""></i> Sejarah Transaksi Sambilan </a>
                     </li>
                     @*<li class="@Html.RouteIf("BonusSambilan", "active")">
-            <a href="@Url.Action("BonusSambilan", "PengurusanKakitanganSambilan")"><i class=""></i>Pengurusan Bonus Sambilan </a>
-        </li>*@
+                        <a href="@Url.Action("BonusSambilan", "PengurusanKakitanganSambilan")"><i class=""></i>Pengurusan Bonus Sambilan </a>
+                    </li>*@
                     <li class="@Html.RouteIf("UrusBonus", "active")">
                         <a href="@Url.Action("UrusBonus", "PengurusanKakitanganSambilan")"><i class=""></i>Pengurusan Bonus Sambilan </a>
                     </li>
@@ -87,13 +104,13 @@
                         <a href="@Url.Action("MasSambilan", "PengurusanKakitanganSambilan")"><i class=""></i>MAS Sambilan</a>
                     </li>
                     <!--<li class="@Html.RouteIf("PembayaranAutomatik", "active")">
-        <a href="@Url.Action("PembayaranAutomatik", "PengurusanKakitanganSambilan")"><i class=""></i>Pemprosesan Pembayaran Automatik </a>
-    </li>-->
+                        <a href="@Url.Action("PembayaranAutomatik", "PengurusanKakitanganSambilan")"><i class=""></i>Pemprosesan Pembayaran Automatik </a>
+                    </li>-->
                 </ul>
             </li>
 
             <li class="@Html.RouteIf("", "active")">
-                <a href="#"><i class="fa fa-lg fa-fw fa-book"></i> <span class="menu-item-parent">Fail Konfigurasi</span></a>
+                <a href="#"><i class="fa fa-lg fa-fw fa-book fa-spin-hover txt-color-magenta"></i> <span class="menu-item-parent">Fail Konfigurasi</span></a>
                 <ul>
                     <li class="@Html.RouteIf("", "active")">
                         <a href="#">Maklumat 1 </a>
@@ -104,12 +121,12 @@
                             <li class="@Html.RouteIf("JabatanBahagianUnit", "active")">
                                 <a href="@Url.Action("SenaraiJBU", "JabatanBahagianUnit")"><i class=""></i> Jabatan/Bahagian/Unit</a>
                             </li>
-                            <li class="@Html.RouteIf("Gred", "active")">
+                           <li class="@Html.RouteIf("Gred", "active")">
                                 <a href="@Url.Action("SenaraiGred", "Gred")"><i class=""></i> Gred</a>
                             </li>
-                            <!--  <li class="@Html.RouteIf("GredJawatan", "active")">
-                         <a href="@Url.Action("SenaraiGredJawatan", "GredJawatan")"><i class=""></i> Gred Jawatan</a>
-                     </li>-->
+                           <!--  <li class="@Html.RouteIf("GredJawatan", "active")">
+                                <a href="@Url.Action("SenaraiGredJawatan", "GredJawatan")"><i class=""></i> Gred Jawatan</a>
+                            </li>-->
                             <li class="@Html.RouteIf("Caruman", "active")">
                                 <a href="@Url.Action("SenaraiCaruman", "Caruman")"><i class=""></i> Caruman</a>
                             </li>
@@ -211,17 +228,20 @@
             </li>
 
             <li class="@Html.RouteIf("", "active")">
-                <a href="#"><i class="fa fa-lg fa-fw  fa-sitemap"></i> <span class="menu-item-parent">Jadual</span></a>
+                <a href="#"><i class="fa fa-lg fa-fw  fa-sitemap fa-spin-hover txt-color-green"></i> <span class="menu-item-parent">Jadual</span></a>
                 <ul>
 
-                    <!-- <li class="@Html.RouteIf("MatriksGaji","active")">
-                <a href="@Url.Action("Index","MatriksGaji")"><i class=""></i> Pergerakan Gaji SSB/SSM </a>
+                    <!-- <li class="@Html.RouteIf("MatriksGaji", "active")">
+                <a href="@Url.Action("Index", "MatriksGaji")"><i class=""></i> Pergerakan Gaji SSB/SSM </a>
             </li> -->
                     <li class="@Html.RouteIf("KWSP", "active")">
                         <a href="@Url.Action("SenaraiKWSP", "KWSP")"><i class=""></i> Jadual KWSP</a>
                     </li>
                     <li class="@Html.RouteIf("JadualGaji", "active")">
                         <a href="@Url.Action("SenaraiGaji", "JadualGaji")"><i class=""></i> Jadual Gaji</a>
+                    </li>
+                    <li class="@Html.RouteIf("MatrikGaji", "active")">
+                        <a href="@Url.Action("SenaraiGaji", "MatrikGaji")"><i class=""></i> Matrik Gaji</a>
                     </li>
                     <li class="@Html.RouteIf("JadualSOCSO", "active")">
                         <a href="@Url.Action("SenaraiSOCSO", "JadualSOCSO")"><i class=""></i> SOCSO</a>
@@ -238,179 +258,194 @@
                 </ul>
             </li>
 
-
-            <li class="@Html.RouteIf("borangkewangan", "active")">
-                <a href="#"><i class="fa fa-lg fa-fw   fa-file-text"></i> <span class="menu-item-parent">Transaksi</span></a>
+            <li class="@Html.RouteIf("transaksi", "active")">
+                <a href="#"><i class="fa fa-lg fa-fw   fa-file-text  fa-spin-hover text-info"></i> <span class="menu-item-parent">Transaksi</span></a>
                 <ul>
-                    <li class="@Html.RouteIf("Pemotongan", "active")">
-                        <a href="@Url.Action("Pemotongan", "Pemotongan")"> Pemotongan</a>
-                    </li>
+                    @*<li class="@Html.RouteIf("Pemotongan", "active")">
+                    <a href="@Url.Action("Pemotongan", "Pemotongan")"> Pemotongan</a>
+                </li>*@
                     <li class="@Html.RouteIf("TuntutanInsuran", "active")">
                         <a href="@Url.Action("Index", "TuntutanInsuran")"> Tuntutan Insurans</a>
                     </li>
-
-                    <li class="@Html.RouteIf("LantikanBaru", "active")">
-                        <a href="#">Lantikan Baru </a>
-                        <ul>
-                            <li class="@Html.RouteIf("Create", "active")">
-                                <a href="@Url.Action("Create", "LantikanBaru")"><i class=""></i>Justifikasi Jawatan Baru  </a>
-                            </li>
-                            <li class="@Html.RouteIf("Dalaman", "active")">
-                                <a href="@Url.Action("Dalaman", "LantikanBaru")"><i class=""></i>Calon Dalaman </a>
-                            </li>
-                            <li class="@Html.RouteIf("Luaran", "active")">
-                                <a href="@Url.Action("Luaran", "LantikanBaru")"><i class=""></i>Calon Luaran </a>
-                            </li>
-                            <li class="@Html.RouteIf("blank", "active")">
-                                <a href="@Url.Action("", "")"><i class=""></i>Kalendar Temuduga </a>
-                            </li>
-                            <li class="@Html.RouteIf("PenilaianTemuduga", "active")">
-                                <a href="@Url.Action("PenilaianTemuduga", "LantikanBaru")"><i class=""></i>Penilaian Temuduga </a>
-                            </li>
-                        </ul>
+                    <li class="@Html.RouteIf("PendahuluanDiri", "active")">
+                        <a href="@Url.Action("SenaraiPendahuluanDiri", "PendahuluanDiri")"><i class=""></i> Pendahuluan Diri</a>
                     </li>
-                    <li class="@Html.RouteIf("Pemohonan", "active")">
-                        <a href="#">Pemohonan </a>
-                        <ul>
-                            <li class="@Html.RouteIf("Pemohonan", "active")">
-                                <a href="#"> Cuti </a>
-                                <ul>
-                                    <li class="@Html.RouteIf("Berekod", "active")">
-                                        <a href="@Url.Action("Berekod", "PemohonanCuti")"><i class=""></i>Cuti Berekod</a>
-                                    </li>
-                                    <li class="@Html.RouteIf("TidakBerekod", "active")">
-                                        <a href="@Url.Action("TidakBerekod", "PemohonanCuti")"><i class=""></i>Cuti Tidak Berekod </a>
-                                    </li>
-                                    <li class="@Html.RouteIf("TanpaRekod", "active")">
-                                        <a href="@Url.Action("TanpaRekod", "PemohonanCuti")"><i class=""></i>Cuti Tanpa Rekod</a>
-                                    </li>
-                                    <li class="@Html.RouteIf("CutiRehat", "active")">
-                                        <a href="@Url.Action("CutiRehat", "PemohonanCuti")"><i class=""></i>Pengumpulan Cuti Rehat </a>
-                                    </li>
-                                    <li class="@Html.RouteIf("BatalCutiRehat", "active")">
-                                        <a href="@Url.Action("BatalCutiRehat", "PemohonanCuti")"><i class=""></i>Pembatalan Cuti Rehat </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="@Html.RouteIf("", "active")">
-                                <a href="#">Pengurusan Latihan </a>
-                                <ul>
-                                    <li class="@Html.RouteIf("KalendarPerancanganLatihan", "active")">
-                                        <a href="@Url.Action("KalendarPerancanganLatihan", "PengurusanLatihan")"><i class=""></i>Kalendar Perancangan Latihan</a>
-                                    </li>
-                                    <li class="@Html.RouteIf("PerancanganLatihan", "active")">
-                                        <a href="@Url.Action("PerancanganLatihan", "PengurusanLatihan")"><i class=""></i>Perancangan Latihan</a>
-                                    </li>
-                                    <li class="@Html.RouteIf("Pemohonan", "active")">
-                                        <a href="#">Pemohonan</a>
-                                        <ul>
-                                            <li class="@Html.RouteIf("PemohonanLatihan", "active")">
-                                                <a href="@Url.Action("PemohonanLatihan", "PengurusanLatihan")"><i class=""></i> Latihan </a>
-                                            </li>
-                                            <li class="@Html.RouteIf("PendahuluanDiri", "active")">
-                                                <a href="@Url.Action("SenaraiPendahuluanDiri","PendahuluanDiri")"><i class=""></i> Pendahuluan Diri</a>
-                                            </li>
 
-                                            <li class="@Html.RouteIf("PemohonanBaruLuar", "active")">
-                                                <a href="@Url.Action("CariPemohon", "PemohonanBaruLuar")"><i class=""></i> Ke Luar Negeri </a>
-                                            </li>
-                                            <li class="@Html.RouteIf("PerbatuanPink", "active")">
-                                                <a href="@Url.Action("SenaraiPerbatuanPink","PerbatuanPink")"><i class=""></i> Perbatuan </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="@Html.RouteIf("PembayaranLatihan", "active")">
-                                        <a href="@Url.Action("PembayaranLatihan", "PengurusanLatihan")"><i class=""></i>Pembayaran Latihan </a>
-                                    </li>
-                                    <li class="@Html.RouteIf("", "active")">
-                                        <a href="#">Pengesahan HR </a>
-                                        <ul>
-                                            <li class="@Html.RouteIf("SenaraiPengesahanHR", "active")">
-                                                <a href="@Url.Action("SenaraiPengesahanHR", "PengesahanPerbatuanPink")"><i class=""></i> Pengesahan Perbatuan </a>
-                                            </li>
-                                            <li class="@Html.RouteIf("SenaraiPendahuluanHR", "active")">
-                                                <a href="@Url.Action("SenaraiPendahuluanHR","PengesahanPendahuluanDiri")"><i class=""></i> Pengesahan Pendahuluan Diri</a>
-                                            </li>
-                                            <li class="@Html.RouteIf("LuarNegaraPengesahan", "active")">
-                                                <a href="@Url.Action("SenaraiLuarNegara", "LuarNegaraPengesahan")"><i class=""></i> Pengesahan Ke Luar Negeri </a>
-                                            </li>
+                    <li class="@Html.RouteIf("PemohonanBaruLuar", "active")">
+                        <a href="@Url.Action("CariPemohon", "PemohonanBaruLuar")"><i class=""></i> Ke Luar Negeri </a>
+                    </li>
+                    <li class="@Html.RouteIf("PerbatuanPink", "active")">
+                        <a href="@Url.Action("SenaraiPerbatuanPink", "PerbatuanPink")"><i class=""></i> Perbatuan </a>
+                    </li>
+                    <li class="@Html.RouteIf("SenaraiPengesahanHR", "active")">
+                        <a href="@Url.Action("SenaraiPengesahanHR", "PengesahanPerbatuanPink")"><i class=""></i> Pengesahan Perbatuan </a>
+                    </li>
+                    <li class="@Html.RouteIf("SenaraiPendahuluanHR", "active")">
+                        <a href="@Url.Action("SenaraiPendahuluanHR", "PengesahanPendahuluanDiri")"><i class=""></i> Pengesahan Pendahuluan Diri</a>
+                    </li>
+                    <li class="@Html.RouteIf("LuarNegaraPengesahan", "active")">
+                        <a href="@Url.Action("SenaraiLuarNegara", "LuarNegaraPengesahan")"><i class=""></i> Pengesahan Ke Luar Negeri </a>
+                    </li>
 
-                                        </ul>
-                                    </li>
-                                    <li class="@Html.RouteIf("", "active")">
-                                        <a href="#">Pengesahan </a>
-                                        <ul>
-                                            <li class="@Html.RouteIf("Pembayaran", "active")">
-                                                <a href="@Url.Action("Pembayaran", "PengesahanPengurusanLatihan")"><i class=""></i> Pembayaran </a>
-                                            </li>
-                                            <li class="@Html.RouteIf("PengesahanLatihan", "active")">
-                                                <a href="@Url.Action("PengesahanLatihan", "PengesahanPengurusanLatihan")"><i class=""></i> Pemohonan Latihan</a>
-                                            </li>
-                                            <li class="@Html.RouteIf("PengesahanPendahuluan", "active")">
-                                                <a href="@Url.Action("PengesahanPendahuluan", "PengesahanPengurusanLatihan")"><i class=""></i> Pemohonan Pendahuluan Diri</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="@Html.RouteIf("PenilaianLatihan", "active")">
-                                        <a href="@Url.Action("PenilaianLatihan", "PengesahanPengurusanLatihan")"><i class=""></i>Penilaian Latihan </a>
-                                    </li>
-                                    <li class="@Html.RouteIf("KemaskiniStatusLatihan", "active")">
-                                        <a href="@Url.Action("KemaskiniStatusLatihan", "PengesahanPengurusanLatihan")"><i class=""></i>Pengemaskini Status Latihan</a>
-                                    </li>
-                                    <li class="@Html.RouteIf("PenyelenggaraanLatihan", "active")">
-                                        <a href="@Url.Action("PenyelenggaraanLatihan", "PengesahanPengurusanLatihan")"><i class=""></i>Penyelenggaraan Penyertaan Latihan </a>
-                                    </li>
-                                    <li class="@Html.RouteIf("", "active")">
-                                        <a href="#">Pengurusan Pinjaman </a>
-                                        <ul>
-                                            <li class="@Html.RouteIf("Kenderaan", "active")">
-                                                <a href="@Url.Action("Kenderaan", "PengurusanPinjaman")"><i class=""></i> Kenderaan </a>
-                                            </li>
-                                            <li class="@Html.RouteIf("Komputer", "active")">
-                                                <a href="@Url.Action("Komputer", "PengurusanPinjaman")"><i class=""></i> Komputer </a>
-                                            </li>
-                                            <li class="@Html.RouteIf("Perumahan", "active")">
-                                                <a href="@Url.Action("Perumahan", "PengurusanPinjaman")"><i class=""></i> Perumahan </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+                    @*<li class="@Html.RouteIf("LantikanBaru", "active")">
+                    <a href="#">Lantikan Baru </a>
+                    <ul>
+                        <li class="@Html.RouteIf("Create", "active")">
+                            <a href="@Url.Action("Create", "LantikanBaru")"><i class=""></i>Justifikasi Jawatan Baru  </a>
+                        </li>
+                        <li class="@Html.RouteIf("Dalaman", "active")">
+                            <a href="@Url.Action("Dalaman", "LantikanBaru")"><i class=""></i>Calon Dalaman </a>
+                        </li>
+                        <li class="@Html.RouteIf("Luaran", "active")">
+                            <a href="@Url.Action("Luaran", "LantikanBaru")"><i class=""></i>Calon Luaran </a>
+                        </li>
+                        <li class="@Html.RouteIf("blank", "active")">
+                            <a href="@Url.Action("", "")"><i class=""></i>Kalendar Temuduga </a>
+                        </li>
+                        <li class="@Html.RouteIf("PenilaianTemuduga", "active")">
+                            <a href="@Url.Action("PenilaianTemuduga", "LantikanBaru")"><i class=""></i>Penilaian Temuduga </a>
+                        </li>
+                    </ul>
+                </li>*@
+                    @*<li class="@Html.RouteIf("Pemohonan", "active")">
+                    <a href="#">Pemohonan </a>
+                    <ul>
+                        <li class="@Html.RouteIf("Pemohonan", "active")">
+                            <a href="#"> Cuti </a>
+                            <ul>
+                                <li class="@Html.RouteIf("Berekod", "active")">
+                                    <a href="@Url.Action("Berekod", "PemohonanCuti")"><i class=""></i>Cuti Berekod</a>
+                                </li>
+                                <li class="@Html.RouteIf("TidakBerekod", "active")">
+                                    <a href="@Url.Action("TidakBerekod", "PemohonanCuti")"><i class=""></i>Cuti Tidak Berekod </a>
+                                </li>
+                                <li class="@Html.RouteIf("TanpaRekod", "active")">
+                                    <a href="@Url.Action("TanpaRekod", "PemohonanCuti")"><i class=""></i>Cuti Tanpa Rekod</a>
+                                </li>
+                                <li class="@Html.RouteIf("CutiRehat", "active")">
+                                    <a href="@Url.Action("CutiRehat", "PemohonanCuti")"><i class=""></i>Pengumpulan Cuti Rehat </a>
+                                </li>
+                                <li class="@Html.RouteIf("BatalCutiRehat", "active")">
+                                    <a href="@Url.Action("BatalCutiRehat", "PemohonanCuti")"><i class=""></i>Pembatalan Cuti Rehat </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="@Html.RouteIf("", "active")">
+                            <a href="#">Pengurusan Latihan </a>
+                            <ul>
+                                <li class="@Html.RouteIf("KalendarPerancanganLatihan", "active")">
+                                    <a href="@Url.Action("KalendarPerancanganLatihan", "PengurusanLatihan")"><i class=""></i>Kalendar Perancangan Latihan</a>
+                                </li>
+                                <li class="@Html.RouteIf("PerancanganLatihan", "active")">
+                                    <a href="@Url.Action("PerancanganLatihan", "PengurusanLatihan")"><i class=""></i>Perancangan Latihan</a>
+                                </li>
+                                <li class="@Html.RouteIf("PemohonanLatihan", "active")">
+                                    <a href="@Url.Action("PemohonanLatihan", "PengurusanLatihan")"><i class=""></i> Latihan </a>
+                                </li>
+                                <li class="@Html.RouteIf("PembayaranLatihan", "active")">
+                                    <a href="@Url.Action("PembayaranLatihan", "PengurusanLatihan")"><i class=""></i>Pembayaran Latihan </a>
+                                </li>
+                                <li class="@Html.RouteIf("Pemohonan", "active")">
+                                    <a href="#">Pemohonan</a>
+                                    <ul>
+                                        <li class="@Html.RouteIf("PemohonanLatihan", "active")">
+                                            <a href="@Url.Action("PemohonanLatihan", "PengurusanLatihan")"><i class=""></i> Latihan </a>
+                                        </li>
 
-                        </ul>
-                    </li>
-                    <li class="@Html.RouteIf("MaklumatDisiplinPekerja", "active")">
-                        <a href="@Url.Action("MaklumatDisiplinPekerja", "TindakanDisiplin")"><i class=""></i>Maklumat Tindakan Disiplin </a>
-                    </li>
-                    <!-- <li class="@Html.RouteIf("", "active")">
-                      <a href="#">Penilaian Prestasi </a>
-                      <ul>
-                          <li class="@Html.RouteIf("", "active")">
-                              <a href="@Url.Action("", "")"><i class=""></i>Pengurusan dan Profesional </a>
-                          </li>
-                          <li class="@Html.RouteIf("", "active")">
-                              <a href="@Url.Action("", "")"><i class=""></i>Sokongan I </a>
-                          </li>
-                          <li class="@Html.RouteIf("", "active")">
-                              <a href="@Url.Action("", "")"><i class=""></i>Sokongan II </a>
-                          </li>
-                      </ul>
-                  </li>-->
-                    <li class="@Html.RouteIf("", "active")">
-                        <a href="#">Bantuan Jenazah </a>
-                        <ul>
-                            <li class="@Html.RouteIf("PengesahanKematian", "active")">
-                                <a href="@Url.Action("PengesahanKematian", "BantuanJenazah")"><i class=""></i>Pengesahan Kematian </a>
-                            </li>
-                            <li class="@Html.RouteIf("WangPanjar", "active")">
-                                <a href="@Url.Action("WangPanjar", "BantuanJenazah")"><i class=""></i>Penyedian Wang Panjar </a>
-                            </li>
-                        </ul>
-                    </li>
+                                    </ul>
+                                </li>
+                                <li class="@Html.RouteIf("PembayaranLatihan", "active")">
+                                    <a href="@Url.Action("PembayaranLatihan", "PengurusanLatihan")"><i class=""></i>Pembayaran Latihan </a>
+                                </li>
+                             <li class="@Html.RouteIf("", "active")">
+                                    <a href="#">Pengesahan HR </a>
+                                    <ul>
+                                        <li class="@Html.RouteIf("SenaraiPengesahanHR", "active")">
+                                            <a href="@Url.Action("SenaraiPengesahanHR", "PengesahanPerbatuanPink")"><i class=""></i> Pengesahan Perbatuan </a>
+                                        </li>
+                                        <li class="@Html.RouteIf("SenaraiPendahuluanHR", "active")">
+                                            <a href="@Url.Action("SenaraiPendahuluanHR","PengesahanPendahuluanDiri")"><i class=""></i> Pengesahan Pendahuluan Diri</a>
+                                        </li>
+                                        <li class="@Html.RouteIf("LuarNegaraPengesahan", "active")">
+                                            <a href="@Url.Action("SenaraiLuarNegara", "LuarNegaraPengesahan")"><i class=""></i> Pengesahan Ke Luar Negeri </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                             <li class="@Html.RouteIf("", "active")">
+                                    <a href="#">Pengesahan </a>
+                                    <ul>
+                                        <li class="@Html.RouteIf("Pembayaran", "active")">
+                                            <a href="@Url.Action("Pembayaran", "PengesahanPengurusanLatihan")"><i class=""></i> Pembayaran </a>
+                                        </li>
+                                        <li class="@Html.RouteIf("PengesahanLatihan", "active")">
+                                            <a href="@Url.Action("PengesahanLatihan", "PengesahanPengurusanLatihan")"><i class=""></i> Pemohonan Latihan</a>
+                                        </li>
+                                        <li class="@Html.RouteIf("PengesahanPendahuluan", "active")">
+                                            <a href="@Url.Action("PengesahanPendahuluan", "PengesahanPengurusanLatihan")"><i class=""></i> Pemohonan Pendahuluan Diri</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="@Html.RouteIf("PenilaianLatihan", "active")">
+                                    <a href="@Url.Action("PenilaianLatihan", "PengesahanPengurusanLatihan")"><i class=""></i>Penilaian Latihan </a>
+                                </li>
+                                <li class="@Html.RouteIf("KemaskiniStatusLatihan", "active")">
+                                    <a href="@Url.Action("KemaskiniStatusLatihan", "PengesahanPengurusanLatihan")"><i class=""></i>Pengemaskini Status Latihan</a>
+                                </li>
+                                <li class="@Html.RouteIf("PenyelenggaraanLatihan", "active")">
+                                    <a href="@Url.Action("PenyelenggaraanLatihan", "PengesahanPengurusanLatihan")"><i class=""></i>Penyelenggaraan Penyertaan Latihan </a>
+                                </li>
+                                <li class="@Html.RouteIf("", "active")">
+                                    <a href="#">Pengurusan Pinjaman </a>
+                                    <ul>
+                                        <li class="@Html.RouteIf("Kenderaan", "active")">
+                                            <a href="@Url.Action("Kenderaan", "PengurusanPinjaman")"><i class=""></i> Kenderaan </a>
+                                        </li>
+                                        <li class="@Html.RouteIf("Komputer", "active")">
+                                            <a href="@Url.Action("Komputer", "PengurusanPinjaman")"><i class=""></i> Komputer </a>
+                                        </li>
+                                        <li class="@Html.RouteIf("Perumahan", "active")">
+                                            <a href="@Url.Action("Perumahan", "PengurusanPinjaman")"><i class=""></i> Perumahan </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>*@
+                    @*<li class="@Html.RouteIf("MaklumatDisiplinPekerja", "active")">
+                    <a href="@Url.Action("MaklumatDisiplinPekerja", "TindakanDisiplin")"><i class=""></i>Maklumat Tindakan Disiplin </a>
+                </li>
+                 <li class="@Html.RouteIf("", "active")">
+                          <a href="#">Penilaian Prestasi </a>
+                          <ul>
+                              <li class="@Html.RouteIf("", "active")">
+                                  <a href="@Url.Action("", "")"><i class=""></i>Pengurusan dan Profesional </a>
+                              </li>
+                              <li class="@Html.RouteIf("", "active")">
+                                  <a href="@Url.Action("", "")"><i class=""></i>Sokongan I </a>
+                              </li>
+                              <li class="@Html.RouteIf("", "active")">
+                                  <a href="@Url.Action("", "")"><i class=""></i>Sokongan II </a>
+                              </li>
+                          </ul>
+                      </li>
+                <li class="@Html.RouteIf("", "active")">
+                    <a href="#">Bantuan Jenazah </a>
+                    <ul>
+                        <li class="@Html.RouteIf("PengesahanKematian", "active")">
+                            <a href="@Url.Action("PengesahanKematian", "BantuanJenazah")"><i class=""></i>Pengesahan Kematian </a>
+                        </li>
+                        <li class="@Html.RouteIf("WangPanjar", "active")">
+                            <a href="@Url.Action("WangPanjar", "BantuanJenazah")"><i class=""></i>Penyedian Wang Panjar </a>
+                        </li>
+                    </ul>
+                </li>*@
                 </ul>
             </li>
             <li class="@Html.RouteIf("kewangan8", "active")">
-                <a href="#"><i class="fa fa-lg fa-fw fa-pencil-square-o"></i> <span class="menu-item-parent">Borang Kewangan 8</span></a>
+                <a href="#"><i class="fa fa-lg fa-fw fa-pencil-square-o  fa-spin-hover txt-color-pinkDark"></i> <span class="menu-item-parent">Borang Kewangan 8</span></a>
                 <ul>
                     <li class="@Html.RouteIf("SenaraiPergerakanGaji", "active")">
                         <a href="@Url.Action("SenaraiPergerakanGaji", "Kewangan8")"><i class=""></i>Senarai Pergerakan Gaji Pekerja</a>
@@ -474,7 +509,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="@Html.RouteIf("ahlimajlis", "active")">
+            @*<li class="@Html.RouteIf("ahlimajlis", "active")">
                 <a href="#"><i class="fa fa-lg fa-fw fa-table"></i> <span class="menu-item-parent">Ahli Majlis CO-OPT</span></a>
                 <ul>
                     <li class="@Html.RouteIf("MaklumatPeribadi", "active")">
@@ -499,9 +534,9 @@
                         <a href="@Url.Action("ProsesKelayakan", "AhliMajlis")"><i class=""></i> Pemprosesan Kelayakan Elaun Ahli Majlis/CO-OPT</a>
                     </li>
                 </ul>
-            </li>
+            </li>*@
 
-            <li class="@Html.RouteIf("pertanyaan", "active")">
+            @*<li class="@Html.RouteIf("pertanyaan", "active")">
                 <a href="#"><i class="fa fa-lg fa-fw fa-puzzle-piece"></i> <span class="menu-item-parent">Pertanyaan</span></a>
                 <ul>
                     <li class="@Html.RouteIf("AnugerahHaji", "active")">
@@ -529,15 +564,15 @@
                         <a href="@Url.Action("StatusPeminjam", "Pertanyaan")"><i class=""></i>Senarai Status Pinjaman</a>
                     </li>
                 </ul>
-            </li>
+            </li>*@
             <li class="@Html.RouteIf("laporan", "active")">
-                <a href="#"><i class="fa fa-lg fa-fw fa-windows"></i> <span class="menu-item-parent">Laporan</span></a>
+                <a href="#"><i class="fa fa-lg fa-fw fa-windows fa-spin-hover txt-color-blueLight"></i> <span class="menu-item-parent">Laporan</span></a>
                 <ul>
                     <li class="@Html.RouteIf("penyediansuratrasmi", "active")">
                         <a href="#">Penyedian Surat Rasmi</a>
                         <ul>
-                            <li class="@Html.RouteIf("Search", "active")">
-                                <a href="@Url.Action("Search", "Laporan")"><i class=""></i>Surat Pengesahan Hospital/Klinik</a>
+                            <li class="@Html.RouteIf("SuratPengesahanHospital", "active")">
+                                <a href="@Url.Action("SuratPengesahanHospital", "Laporan")"><i class=""></i>Surat Pengesahan Hospital/Klinik</a>
                             </li>
                             <li class="@Html.RouteIf("TawaranLantikan", "active")">
                                 <a href="@Url.Action("TawaranLantikan", "Laporan")"><i class=""></i>Surat Tawaran Perlantikan</a>
@@ -557,32 +592,32 @@
                         <a href="@Url.Action("LaporanAhliMajlis", "Laporan")">Laporan Ahli Majlis/CO-OPT</a>
 
                         <!--    <ul>
-                       <li class="@Html.RouteIf("LaporanAhliMajlis", "active")">
-                           <a href="@Url.Action("LaporanAhliMajlis", "Laporan")"><i class=""></i>Laporan Ahli Majlis/CO-OPT</a>
-                       </li>
-                      <li class="@Html.RouteIf("", "active")">
-                           <a href="@Url.Action("", "")"><i class=""></i>Senarai Ahli-ahli CO-OPT yang Menghadiri Mensyuarat MBPJ</a>
-                       </li>
-                       <li class="@Html.RouteIf("", "active")">
-                           <a href="@Url.Action("", "")"><i class=""></i>Laporan Terperinci Ahli Majlis</a>
-                       </li>
-                       <li class="@Html.RouteIf("", "active")">
-                           <a href="@Url.Action("", "")"><i class=""></i>Laporan Ahli Majlis</a>
-                       </li>
-                       <li class="@Html.RouteIf("", "active")">
-                           <a href="@Url.Action("", "")"><i class=""></i>Laporan Ahli CO-OPT</a>
-                       </li>
-                       <li class="@Html.RouteIf("", "active")">
-                           <a href="@Url.Action("", "")"><i class=""></i>Surat Bayaran Elaun Tetap Mensyuarat Ahli Majlis</a>
-                       </li>
-                       <li class="@Html.RouteIf("", "active")">
-                           <a href="@Url.Action("", "")"><i class=""></i>Surat Bayaran Elaun Ahli CO-OPT</a>
-                   </ul> </li>-->
+                               <li class="@Html.RouteIf("LaporanAhliMajlis", "active")">
+                                   <a href="@Url.Action("LaporanAhliMajlis", "Laporan")"><i class=""></i>Laporan Ahli Majlis/CO-OPT</a>
+                               </li>
+                              <li class="@Html.RouteIf("", "active")">
+                                   <a href="@Url.Action("", "")"><i class=""></i>Senarai Ahli-ahli CO-OPT yang Menghadiri Mensyuarat MBPJ</a>
+                               </li>
+                               <li class="@Html.RouteIf("", "active")">
+                                   <a href="@Url.Action("", "")"><i class=""></i>Laporan Terperinci Ahli Majlis</a>
+                               </li>
+                               <li class="@Html.RouteIf("", "active")">
+                                   <a href="@Url.Action("", "")"><i class=""></i>Laporan Ahli Majlis</a>
+                               </li>
+                               <li class="@Html.RouteIf("", "active")">
+                                   <a href="@Url.Action("", "")"><i class=""></i>Laporan Ahli CO-OPT</a>
+                               </li>
+                               <li class="@Html.RouteIf("", "active")">
+                                   <a href="@Url.Action("", "")"><i class=""></i>Surat Bayaran Elaun Tetap Mensyuarat Ahli Majlis</a>
+                               </li>
+                               <li class="@Html.RouteIf("", "active")">
+                                   <a href="@Url.Action("", "")"><i class=""></i>Surat Bayaran Elaun Ahli CO-OPT</a>
+                           </ul> </li>-->
                     </li>
                 </ul>
             </li>
             <li class="@Html.RouteIf("bantuan", "active")">
-                <a href="#"><i class="fa fa-lg fa-fw fa-desktop"></i> <span class="menu-item-parent">Bantuan</span></a>
+                <a href="#"><i class="fa fa-lg fa-fw fa-desktop fa-spin-hover txt-color-yellow"></i> <span class="menu-item-parent">Bantuan</span></a>
                 <ul>
 
                     <li class="@Html.RouteIf("MengenaiSPP", "active")">
@@ -593,7 +628,7 @@
                     </li>
                 </ul>
             </li>
-
+            @*}*@
         </ul>
         <!--
         <li class="top-menu-invisible @Html.RouteIf(" intel", "active" )">
