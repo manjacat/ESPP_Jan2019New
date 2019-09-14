@@ -498,6 +498,7 @@ namespace eSPP.Models
         {
             GajiPekerja gajiPekerja = ListPekerjaBerkecuali
                 .Where(s => s.NoPekerja == HR_PEKERJA).FirstOrDefault();
+            //kalau gaji pekerja ada dalam list berkecuali, ambik value yang ni
             if (gajiPekerja != null)
             {
                 return gajiPekerja.GajiSehari;
