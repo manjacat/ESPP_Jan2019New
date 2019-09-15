@@ -817,7 +817,7 @@ namespace eSPP.Controllers
         }
 
         [HttpPost]
-        public ActionResult MasSambilan(string bulan, string tahun)
+        public ActionResult MasSambilan(string bulan, string tahun, string Command)
         {
             ObjectParameter text = new ObjectParameter("text", typeof(Guid));
 
@@ -826,17 +826,32 @@ namespace eSPP.Controllers
 
             var procedure = db2.SP_SAMBILAN_SALARY(intBulan, intTahun, text);
 
-            MemoryStream memoryStream = new MemoryStream();
-            TextWriter tw = new StreamWriter(memoryStream);
+            if (Command == "CSV")
+            {
+                MemoryStream memoryStream = new MemoryStream();
+                TextWriter tw = new StreamWriter(memoryStream);
 
-            tw.WriteLine(text.Value);
-            tw.Flush();
-            tw.Close();
+                tw.WriteLine(text.Value);
+                tw.Flush();
+                tw.Close();
 
-            string fileName = "masSambilan_" + bulan + "_" + tahun;
-            string fileNamefull = fileName + ".txt";
+                return File(memoryStream.GetBuffer(), "text/csv", "masSambilan_.csv");
+            }
+            else
+            {
+                
+                MemoryStream memoryStream = new MemoryStream();
+                TextWriter tw = new StreamWriter(memoryStream);
 
-            return File(memoryStream.GetBuffer(), "text/txt", fileNamefull);
+                tw.WriteLine(text.Value);
+                tw.Flush();
+                tw.Close();
+
+                string fileName = "masSambilan_" + bulan + "_" + tahun;
+                string fileNamefull = fileName + ".txt";
+
+                return File(memoryStream.GetBuffer(), "text/txt", fileNamefull);
+            }            
         }
 
         public ActionResult BonusSambilan()
@@ -1699,14 +1714,14 @@ namespace eSPP.Controllers
             {
                 if (Command == "Pdf")
                 {
-                    return GetGajiSambilan(bulan, Bulan, tahun);
+                    return GetGajiSambilanSukan(bulan, Bulan, tahun, "sambilan");
                 }
             }
             if (jenis == "6") //Gaji sukan
             {
                 if (Command == "Pdf")
                 {
-                    return GetGajiSukan(bulan, Bulan, tahun);
+                    return GetGajiSambilanSukan(bulan, Bulan, tahun, "sukan");
                 }
             }
             if (jenis == "7") //KSDK
@@ -1720,14 +1735,14 @@ namespace eSPP.Controllers
             {
                 if (Command == "Pdf")
                 {
-                    return GetPDFKwspSambilan(bulan, Bulan, tahun);
+                    return GetPDFKwspSambilanSukan(bulan, Bulan, tahun, true);
                 }
             }
             if (jenis == "9") //kwsp sambilan sukan
             {
                 if (Command == "Pdf")
                 {
-                    return GetPDFKwspSambilanSukan(bulan, Bulan, tahun);
+                    return GetPDFKwspSambilanSukan(bulan, Bulan, tahun, false);
                 }
             }
             if (jenis == "10") //perkeso sambilan
@@ -1758,8 +1773,23 @@ namespace eSPP.Controllers
 
         //Fixing Gaji Sambilan
         [NonAction]
-        private ActionResult GetGajiSambilan(int? bulan, string Bulan, int? tahun)
+        private ActionResult GetGajiSambilanSukan(int? bulan, string Bulan, int? tahun,string reportType)
         {
+            string reportTitle = string.Empty;
+
+            string sambilan = "SENARAI PENGIRAAN GAJI PEKERJA SAMBILAN UNTUK BULAN \n" + Bulan + " " + tahun + "";
+            string sambilanSukan = "SENARAI PENGIRAAN GAJI PEKERJA SUKAN UNTUK BULAN \n" + Bulan + " " + tahun + "";
+
+            if(sambilanSukan.ToLower() == "sambilan")
+            {
+                reportTitle = sambilan;
+            }
+            else
+            {
+                reportTitle = sambilanSukan;
+            }
+
+
             ApplicationDbContext db = new ApplicationDbContext();
             //PageSejarahModel gajiModel = new PageSejarahModel();
             var document = new iTextSharp.text.Document(PageSize.A4, 30, 30, 28, 28);
@@ -1864,7 +1894,8 @@ namespace eSPP.Controllers
                 List<HR_TRANSAKSI_SAMBILAN_DETAIL> potonganlain = userTransaksiDetail
                     .Where(s => s.HR_KOD_IND == "P" && (s.HR_KOD != "P0015" && s.HR_KOD != "P0035")).ToList();
                 HR_MAKLUMAT_ELAUN_POTONGAN potonganKWSP = 
-                    PageSejarahModel.GetPotonganKWSP(db, item.HR_NO_PEKERJA, gajiPokok);
+                    PageSejarahModel.GetPotonganKWSP(db, item.HR_NO_PEKERJA, gajiPokok)
+                    .Where(s => s.HR_ELAUN_POTONGAN_IND == "P").FirstOrDefault();
                 
                 var totalElaunka = elaunka.Sum(s => s.HR_JUMLAH);
                 var totalElaunLain = elaunlain.Sum(s => s.HR_JUMLAH);
@@ -1967,7 +1998,8 @@ namespace eSPP.Controllers
 
                 iTextSharp.text.Image pic = iTextSharp.text.Image.GetInstance(Server.MapPath("~/Content/img/logo-mbpj.gif"));
                 iTextSharp.text.Font contentFont = iTextSharp.text.FontFactory.GetFont("Arial", 7, iTextSharp.text.Font.BOLD);
-                iTextSharp.text.Paragraph paragraph = new iTextSharp.text.Paragraph("SENARAI PENGIRAAN GAJI PEKERJA SAMBILAN UNTUK BULAN \n" + Bulan + " " + tahun + "")
+                iTextSharp.text.Paragraph paragraph 
+                    = new iTextSharp.text.Paragraph(reportTitle)
                 {
                     Alignment = Element.ALIGN_CENTER
                 };
@@ -1989,9 +2021,12 @@ namespace eSPP.Controllers
             }
         }
 
+        //not used
+        //use GetGajiSambilan instead.        
         [NonAction]
         private ActionResult GetGajiSukan(int? bulan, string Bulan, int? tahun)
         {
+            #region
             ApplicationDbContext db = new ApplicationDbContext();
             var document = new iTextSharp.text.Document(PageSize.A4, 30, 30, 28, 28);
             int i = 0;
@@ -2010,11 +2045,12 @@ namespace eSPP.Controllers
             {
                 HR_MAKLUMAT_PERIBADI peribadi = db.HR_MAKLUMAT_PERIBADI.AsEnumerable().Where(s => s.HR_NO_PEKERJA == item.HR_NO_PEKERJA).SingleOrDefault();
                 HR_MAKLUMAT_PEKERJAAN pekerjaan = db.HR_MAKLUMAT_PEKERJAAN.AsEnumerable().Where(s => s.HR_NO_PEKERJA == item.HR_NO_PEKERJA).SingleOrDefault();
-                HR_TRANSAKSI_SAMBILAN_DETAIL listgaji = db.HR_TRANSAKSI_SAMBILAN_DETAIL.AsEnumerable().SingleOrDefault(s => s.HR_KOD == "GAJPS" && s.HR_NO_PEKERJA == item.HR_NO_PEKERJA && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) >= date) && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) <= date));
-                HR_TRANSAKSI_SAMBILAN_DETAIL listovertime = db.HR_TRANSAKSI_SAMBILAN_DETAIL.AsEnumerable().SingleOrDefault(s => s.HR_KOD == "E0164" && s.HR_NO_PEKERJA == item.HR_NO_PEKERJA && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) >= date) && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) <= date));
-                HR_TRANSAKSI_SAMBILAN_DETAIL listkwsp = db.HR_TRANSAKSI_SAMBILAN_DETAIL.AsEnumerable().SingleOrDefault(s => s.HR_KOD == "P0035" && s.HR_NO_PEKERJA == item.HR_NO_PEKERJA && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) >= date) && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) <= date));
+                //TODO
+                HR_TRANSAKSI_SAMBILAN_DETAIL listgaji = db.HR_TRANSAKSI_SAMBILAN_DETAIL.AsEnumerable().FirstOrDefault(s => s.HR_KOD == "GAJPS" && s.HR_NO_PEKERJA == item.HR_NO_PEKERJA && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) >= date) && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) <= date));
+                HR_TRANSAKSI_SAMBILAN_DETAIL listovertime = db.HR_TRANSAKSI_SAMBILAN_DETAIL.AsEnumerable().FirstOrDefault(s => s.HR_KOD == "E0164" && s.HR_NO_PEKERJA == item.HR_NO_PEKERJA && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) >= date) && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) <= date));
+                HR_TRANSAKSI_SAMBILAN_DETAIL listkwsp = db.HR_TRANSAKSI_SAMBILAN_DETAIL.AsEnumerable().FirstOrDefault(s => s.HR_KOD == "P0035" && s.HR_NO_PEKERJA == item.HR_NO_PEKERJA && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) >= date) && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) <= date));
                 List<HR_TRANSAKSI_SAMBILAN_DETAIL> listcola = db.HR_TRANSAKSI_SAMBILAN_DETAIL.AsEnumerable().Where(s => s.HR_KOD == "E0234" && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) >= date) && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) <= date)).ToList();
-                HR_TRANSAKSI_SAMBILAN_DETAIL listksdk = db.HR_TRANSAKSI_SAMBILAN_DETAIL.AsEnumerable().SingleOrDefault(s => s.HR_KOD == "P0015" && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) >= date) && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) <= date));
+                HR_TRANSAKSI_SAMBILAN_DETAIL listksdk = db.HR_TRANSAKSI_SAMBILAN_DETAIL.AsEnumerable().FirstOrDefault(s => s.HR_KOD == "P0015" && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) >= date) && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) <= date));
 
                 if (listovertime == null)
                 {
@@ -2043,14 +2079,28 @@ namespace eSPP.Controllers
                     gajibersih = subtotal - listkwsp.HR_JUMLAH - listksdk.HR_JUMLAH;
                 }
 
+                //html += "<table width='100%'>";
+                //html += "<tr>";
+                //html += "<td font-size: '7%' width='2%'>Bil</td><td font-size: '7%'>Nama</td><td font-size: 7%' width='7%'>No. Pekerja</td><td font-size: 7%' width='10%'>No. K/P</td><td font-size: 7%' width='7%'>Hari Bekerja</td>";
+                //html += "</tr>";
+                //html += "<tr>";
+                //html += "<td font-size: 7%' width='2%'>" + count + "</td><td font-size: 7%'>" + peribadi.HR_NAMA_PEKERJA + "</td>";
+                //html += "<td font-size: 7%' width='7%'>" + item.HR_NO_PEKERJA + "</td><td font-size: 7%' width='10%'>" + peribadi.HR_NO_KPBARU + "</td>";
+                //html += "<td font-size: 7%' width='7%'>" + item.HR_JAM_HARI + "</td>";
+                //html += "</tr>";
+                //html += "</table>";
+
                 html += "<table width='100%'>";
                 html += "<tr>";
-                html += "<td font-size: '7%' width='2%'>Bil</td><td font-size: '7%'>Nama</td><td font-size: 7%' width='7%'>No. Pekerja</td><td font-size: 7%' width='10%'>No. K/P</td><td font-size: 7%' width='7%'>Hari Bekerja</td>";
+                html += "<td font-size: '7%' width='2%'>Bil</td><td font-size: '7%'>Nama</td><td font-size: 7%' width='7%'>No. Pekerja</td><td font-size: 7%' width='10%'>No. K/P</td><td font-size: 7%' width='7%'>Hari Bekerja</td>"
+                        + "<td font-size: '7%'>Bulan Bekerja</td><td font-size: '7%'>Tahun Bekerja</td>";
                 html += "</tr>";
                 html += "<tr>";
                 html += "<td font-size: 7%' width='2%'>" + count + "</td><td font-size: 7%'>" + peribadi.HR_NAMA_PEKERJA + "</td>";
                 html += "<td font-size: 7%' width='7%'>" + item.HR_NO_PEKERJA + "</td><td font-size: 7%' width='10%'>" + peribadi.HR_NO_KPBARU + "</td>";
                 html += "<td font-size: 7%' width='7%'>" + item.HR_JAM_HARI + "</td>";
+                html += "<td font-size: 7%' width='7%'>" + item.HR_BULAN_BEKERJA + "</td>";
+                html += "<td font-size: 7%' width='7%'>" + item.HR_TAHUN_BEKERJA + "</td>";
                 html += "</tr>";
                 html += "</table>";
 
@@ -2140,7 +2190,9 @@ namespace eSPP.Controllers
 
                 return new FileStreamResult(output, "application/pdf");
             }
+            #endregion
         }
+
 
         [NonAction]
         private ActionResult GetPDFKsdk(int? bulan, string Bulan, int? tahun)
@@ -2224,25 +2276,62 @@ namespace eSPP.Controllers
         }
 
         [NonAction]
-        private ActionResult GetPDFKwspSambilan(int? bulan, string Bulan, int? tahun)
+        private ActionResult GetPDFKwspSambilanSukan(int? bulan, string Bulan, int? tahun, bool isFilterSukan)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             var document = new iTextSharp.text.Document(PageSize.A4, 30, 30, 28, 28);
             int i = 0;
 
             var html = "<html><head>";
-            html += "<title>Senarai KWSP Sambilan</title><link rel='shortcut icon' href='~/Content/img/lpktn.jpeg' type='image/x-icon'/></head>";
+            if (isFilterSukan)
+            {
+                html += "<title>Senarai KWSP Sambilan</title><link rel='shortcut icon' href='~/Content/img/lpktn.jpeg' type='image/x-icon'/></head>";
+            }
+            else
+            {
+                html += "<title>Senarai KWSP Sambilan Sukan</title><link rel='shortcut icon' href='~/Content/img/lpktn.jpeg' type='image/x-icon'/></head>";
+            }
             html += "<body>";
+            //var datebulan = "01/" + bulan + "/" + tahun;
+            //var date = Convert.ToDateTime(datebulan);
+            //List<HR_TRANSAKSI_SAMBILAN_DETAIL> listbulan = db.HR_TRANSAKSI_SAMBILAN_DETAIL.AsEnumerable().Where(s => s.HR_KOD == "C0020" && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) >= date) && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) <= date)).ToList();
+            //var maklumat = listbulan.OrderBy(s => s.HR_NO_PEKERJA);
+            //List<HR_KWSP> listkwsp = db.HR_KWSP.ToList();
+            //decimal? sum = 0;
+            //decimal? sum1 = 0;
+            //decimal? sum2 = 0;
+            //decimal? sum3 = 0;
 
-            var datebulan = "01/" + bulan + "/" + tahun;
-            var date = Convert.ToDateTime(datebulan);
-            List<HR_TRANSAKSI_SAMBILAN_DETAIL> listbulan = db.HR_TRANSAKSI_SAMBILAN_DETAIL.AsEnumerable().Where(s => s.HR_KOD == "C0020" && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) >= date) && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) <= date)).ToList();
-            var maklumat = listbulan.OrderBy(s => s.HR_NO_PEKERJA);
-            List<HR_KWSP> listkwsp = db.HR_KWSP.ToList();
-            decimal? sum = 0;
-            decimal? sum1 = 0;
-            decimal? sum2 = 0;
-            decimal? sum3 = 0;
+            int bulanInt = Convert.ToInt32(bulan);
+            int tahunInt = Convert.ToInt32(tahun);
+            decimal sumGajiPokok = 0;
+            decimal sumCarumanPekerja = 0;
+            decimal sumCarumanMajikan = 0;
+            decimal sumJumlah = 0;
+
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> userTransaksiDetail = db.HR_TRANSAKSI_SAMBILAN_DETAIL
+                    .Where(s => s.HR_BULAN_DIBAYAR == bulanInt
+                    && s.HR_TAHUN == tahunInt
+                    && s.HR_KOD_IND == "G").ToList();
+
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> elaunTransaksiDetail = db.HR_TRANSAKSI_SAMBILAN_DETAIL
+                .Where(s => s.HR_BULAN_DIBAYAR == bulanInt
+                && s.HR_TAHUN == tahunInt
+                && s.HR_KOD_IND == "E").ToList();
+
+            //taraf jawatan N = sambilan
+            List<string> noPekerja_JawatanN = db.HR_MAKLUMAT_PEKERJAAN
+                .Where(s => s.HR_TARAF_JAWATAN == "N")
+                .Select(s => s.HR_NO_PEKERJA).ToList();
+
+            if (isFilterSukan)
+            {
+                userTransaksiDetail = userTransaksiDetail
+                    .Where(s => noPekerja_JawatanN.Contains(s.HR_NO_PEKERJA)).ToList();
+
+                userTransaksiDetail = elaunTransaksiDetail
+                    .Where(s => noPekerja_JawatanN.Contains(s.HR_NO_PEKERJA)).ToList();
+            }
 
             html += "<table width='100%'>";
             html += "<tr>";
@@ -2255,37 +2344,78 @@ namespace eSPP.Controllers
             html += "<td style='font-size:11px;'><strong>CARUMAN MAJIKAN (RM)</strong></td>";
             html += "<td style='font-size:11px;'><strong>JUMLAH (RM)</strong></td>";
             html += "</tr>";
-            foreach (var item in maklumat)
+            foreach (var item in userTransaksiDetail)
             {
                 i++;
-                HR_MAKLUMAT_PERIBADI peribadi = db.HR_MAKLUMAT_PERIBADI.AsEnumerable().Where(s => s.HR_NO_PEKERJA == item.HR_NO_PEKERJA).SingleOrDefault();
-                HR_MAKLUMAT_PEKERJAAN pekerjaan = db.HR_MAKLUMAT_PEKERJAAN.AsEnumerable().Where(s => s.HR_NO_PEKERJA == item.HR_NO_PEKERJA).SingleOrDefault();
-                if (pekerjaan.HR_TARAF_JAWATAN == "N")
+                HR_MAKLUMAT_PERIBADI peribadi = db.HR_MAKLUMAT_PERIBADI.AsEnumerable().Where(s => s.HR_NO_PEKERJA == item.HR_NO_PEKERJA).FirstOrDefault();
+                HR_MAKLUMAT_PEKERJAAN pekerjaan = db.HR_MAKLUMAT_PEKERJAAN.AsEnumerable()
+                    .Where(s => s.HR_NO_PEKERJA == item.HR_NO_PEKERJA).FirstOrDefault();
+
+                decimal hariBekerja = item.HR_JAM_HARI.Value;
+
+                //get elaunFromDB
+                //decimal totalElaunka = elaunTransaksiDetail
+                //    .Where(s => s.HR_NO_PEKERJA == item.HR_NO_PEKERJA
+                //    && PageSejarahModel.ListElaunKa.Contains(s.HR_KOD))
+                //    .Select(s => s.HR_JUMLAH).Sum().Value;
+
+                //decimal totalElaunot = elaunTransaksiDetail
+                //    .Where(s => s.HR_NO_PEKERJA == item.HR_NO_PEKERJA
+                //    && s.HR_KOD == "E0164").Select(s => s.HR_JUMLAH).FirstOrDefault().Value;
+
+                //decimal totalElaunLain = totalElaunka = elaunTransaksiDetail
+                //    .Where(s => s.HR_NO_PEKERJA == item.HR_NO_PEKERJA
+                //    && !PageSejarahModel.ListElaunKa.Contains(s.HR_KOD)
+                //    && s.HR_KOD != "E0164")
+                //    .Select(s => s.HR_JUMLAH).Sum().Value;
+
+                //decimal gajikasar = PageSejarahModel.GetGajiKasar
+                //   (gajiPokok,
+                //   totalElaunka,
+                //   totalElaunLain,
+                //   totalElaunot, hariBekerja);
+                //var gajiSebelumKWSP = gajikasar
+                //  - potonganSocso
+                //  - potonganksdk.Sum(s => s.HR_JUMLAH)
+                //  - potonganlain.Sum(s => s.HR_JUMLAH);
+
+                decimal gajipokok = decimal.Round(item.HR_JUMLAH.Value, 2);
+                HR_KWSP kwspData = PageSejarahModel.GetKWSPData(db, gajipokok);
+
+                if (kwspData == null)
                 {
-                    html += "<tr>";
-                    html += "<td style='font-size:11px;' align='left' width='3%'>" + i + "</td>";
-                    html += "<td style='font-size:11px;' align='left' width='20%'>" + peribadi.HR_NAMA_PEKERJA + "</td>";
-                    html += "<td style='font-size:11px;' align='left' width='10%'>" + peribadi.HR_NO_KPBARU + "</td>";
-                    html += "<td style='font-size:11px;' align='left' width='10%'>" + pekerjaan.HR_NO_KWSP + "</td>";
-                    html += "<td style='font-size:11px;' align='left' width='10%'>" + pekerjaan.HR_GAJI_POKOK.Value.ToString("0.00") + "</td>";
-                    foreach (var kwsp in listkwsp)
+                    kwspData = new HR_KWSP
                     {
-                        if (pekerjaan.HR_GAJI_POKOK >= kwsp.HR_UPAH_DARI && pekerjaan.HR_GAJI_POKOK <= kwsp.HR_UPAH_HINGGA)
-                        {
-                            html += "<td style='font-size:11px;' align='left' width='10%'>" + kwsp.HR_CARUMAN_PEKERJA.ToString("0.00") + "</td>";
-                            html += "<td style='font-size:11px;' align='left' width='10%'>" + kwsp.HR_CARUMAN_MAJIKAN.ToString("0.00") + "</td>";
-                            var tambah = kwsp.HR_CARUMAN_MAJIKAN + kwsp.HR_CARUMAN_PEKERJA;
-                            html += "<td style='font-size:11px;' align='left'  width='10%'>" + tambah.ToString("0.00") + "</td>";
-                            sum1 = sum1 + kwsp.HR_CARUMAN_PEKERJA;
-                            sum2 = sum2 + kwsp.HR_CARUMAN_MAJIKAN;
-                        }
-                    }
-                    sum = sum + pekerjaan.HR_GAJI_POKOK;
-                    sum3 = sum1 + sum2;
-                    html += "</tr>";
+                        HR_CARUMAN_MAJIKAN = 0,
+                        HR_TOTAL_CARUMAN = 0,
+                        HR_CARUMAN_PEKERJA = 0,
+                        HR_UPAH_DARI = 0,
+                        HR_UPAH_HINGGA = 0
+                    };
                 }
+
+                html += "<tr>";
+                html += "<td style='font-size:11px;' align='left' width='3%'>" + i + "</td>";
+                html += "<td style='font-size:11px;' align='left' width='20%'>" + peribadi.HR_NAMA_PEKERJA + "</td>";
+                html += "<td style='font-size:11px;' align='left' width='10%'>" + peribadi.HR_NO_KPBARU + "</td>";
+                html += "<td style='font-size:11px;' align='left' width='10%'>" + pekerjaan.HR_NO_KWSP + "</td>";
+                //fix gaji pokok, caruman pekerja & caruman majikan
+                html += "<td style='font-size:11px;' align='left' width='10%'>" + item.HR_JUMLAH.Value.ToString("0.00") + "</td>";
+                html += "<td style='font-size:11px;' align='left' width='10%'>" + kwspData.HR_CARUMAN_PEKERJA.ToString("0.00") + "</td>";
+                html += "<td style='font-size:11px;' align='left' width='10%'>" + kwspData.HR_CARUMAN_MAJIKAN.ToString("0.00") + "</td>";
+                html += "<td style='font-size:11px;' align='left'  width='10%'>" + kwspData.HR_TOTAL_CARUMAN.Value.ToString("0.00") + "</td>";
+                sumGajiPokok += item.HR_JUMLAH.Value;
+                sumCarumanPekerja += kwspData.HR_CARUMAN_PEKERJA;
+                sumCarumanMajikan += kwspData.HR_CARUMAN_MAJIKAN;
+                sumJumlah += kwspData.HR_TOTAL_CARUMAN.Value;
+                html += "</tr>";
+
             }
-            html += "<tr><td></td><td style='font-size:11px;'><strong>JUMLAH KESELURUHAN</strong></td><td></td><td></td><td style='font-size:11px;'><strong>" + sum.Value.ToString("0.00") + "</strong></td><td style='font-size:11px;'><strong>" + sum1.Value.ToString("0.00") + "</strong></td><td style='font-size:11px;'><strong>" + sum2.Value.ToString("0.00") + "</strong></td><td style='font-size:11px;'><strong>" + sum3.Value.ToString("0.00") + "</strong></td></tr>";
+            html += "<tr><td></td><td style='font-size:11px;'><strong>JUMLAH KESELURUHAN</strong></td><td></td><td></td><td style='font-size:11px;'><strong>" 
+                + sumGajiPokok.ToString("0.00") + "</strong></td><td style='font-size:11px;'><strong>" 
+                + sumCarumanPekerja.ToString("0.00") + "</strong></td><td style='font-size:11px;'><strong>" 
+                + sumCarumanMajikan.ToString("0.00") + "</strong></td><td style='font-size:11px;'><strong>" 
+                + sumJumlah.ToString("0.00") + "</strong></td></tr>";
             html += "</table>";
             html += "<table><tr><td>&nbsp;</td></tr></table>";
             html += "<table><tr><td>&nbsp;</td></tr></table>";
@@ -2335,9 +2465,11 @@ namespace eSPP.Controllers
             }
         }
 
+        //not used. 
         [NonAction]
-        private ActionResult GetPDFKwspSambilanSukan(int? bulan, string Bulan, int? tahun)
+        private ActionResult GetPDFKwspSambilanSukanNotUsed(int? bulan, string Bulan, int? tahun)
         {
+            #region
             ApplicationDbContext db = new ApplicationDbContext();
             var document = new iTextSharp.text.Document(PageSize.A4, 30, 30, 28, 28);
             int i = 1;
@@ -2348,7 +2480,12 @@ namespace eSPP.Controllers
 
             var datebulan = "01/" + bulan + "/" + tahun;
             var date = Convert.ToDateTime(datebulan);
-            List<HR_TRANSAKSI_SAMBILAN_DETAIL> listbulan = db.HR_TRANSAKSI_SAMBILAN_DETAIL.AsEnumerable().Where(s => s.HR_KOD == "C0020" && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) >= date) && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) <= date)).ToList();
+            
+
+
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> listbulan = 
+                db.HR_TRANSAKSI_SAMBILAN_DETAIL.AsEnumerable()
+                .Where(s => s.HR_KOD == "C0020" && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) >= date) && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) <= date)).ToList();
             var maklumat = listbulan.OrderBy(s => s.HR_NO_PEKERJA);
             List<HR_KWSP> listkwsp = db.HR_KWSP.ToList();
             decimal? sum = 0;
@@ -2445,6 +2582,7 @@ namespace eSPP.Controllers
 
                 return new FileStreamResult(output, "application/pdf");
             }
+            #endregion
         }
 
         [NonAction]

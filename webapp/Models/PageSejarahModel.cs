@@ -413,7 +413,8 @@ namespace eSPP.Models
         {
             List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganSemua = new List<HR_MAKLUMAT_ELAUN_POTONGAN>();
             potonganSemua.AddRange(GetPotonganKSDK(db, HR_PEKERJA));
-            HR_MAKLUMAT_ELAUN_POTONGAN potonganKWSP = GetPotonganKWSP(db, HR_PEKERJA, gajiPokok);
+            HR_MAKLUMAT_ELAUN_POTONGAN potonganKWSP = GetPotonganKWSP(db, HR_PEKERJA, gajiPokok)
+                .Where(s => s.HR_ELAUN_POTONGAN_IND == "P").FirstOrDefault();
             if(potonganKWSP != null)
             {
                 potonganSemua.Add(potonganKWSP);
@@ -448,7 +449,17 @@ namespace eSPP.Models
             return elaunSukan;
         }
 
-        public static HR_MAKLUMAT_ELAUN_POTONGAN GetPotonganKWSP(ApplicationDbContext db, string HR_PEKERJA, decimal gajiPokok)
+        public static HR_KWSP GetKWSPData(ApplicationDbContext db, decimal gajiPokok)
+        {
+            decimal gajipokok = decimal.Round(gajiPokok, 2);
+            HR_KWSP kwsp = db.HR_KWSP
+               .Where(s => gajipokok >= s.HR_UPAH_DARI
+               && gajipokok <= s.HR_UPAH_HINGGA).FirstOrDefault();
+            return kwsp;
+        }
+
+        public static List<HR_MAKLUMAT_ELAUN_POTONGAN> GetPotonganKWSP
+            (ApplicationDbContext db, string HR_PEKERJA, decimal gajiPokok)
         {
             //HR_MAKLUMAT_ELAUN_POTONGAN userCaruman = db.HR_MAKLUMAT_ELAUN_POTONGAN
             //            .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA && s.HR_ELAUN_POTONGAN_IND == "C").First();
@@ -457,10 +468,7 @@ namespace eSPP.Models
                         .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA).ToList();
 
             //Caruman Pekerja = Kira dari Gaji POKOK? or Kira dari Gaji POKOK + elaun
-            decimal gajipokok = decimal.Round(gajiPokok, 2);
-            HR_KWSP kwsp = db.HR_KWSP
-               .Where(s => gajipokok >= s.HR_UPAH_DARI
-               && gajipokok <= s.HR_UPAH_HINGGA).SingleOrDefault();
+            HR_KWSP kwsp = GetKWSPData(db, gajiPokok);
 
             decimal carumanPekerja = 0;
             if(kwsp != null)
@@ -477,7 +485,20 @@ namespace eSPP.Models
                 HR_JUMLAH = carumanPekerja
             };
 
-            return userCaruman;
+            HR_MAKLUMAT_ELAUN_POTONGAN userCaruman2 = new HR_MAKLUMAT_ELAUN_POTONGAN
+            {
+                HR_NO_PEKERJA = HR_PEKERJA,
+                HR_ELAUN_POTONGAN_IND = "C",
+                HR_KOD_ELAUN_POTONGAN = "C0020",
+                HR_AKTIF_IND = "Y",
+                HR_JUMLAH = carumanPekerja
+            };
+
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> userCarumanTotal = new List<HR_MAKLUMAT_ELAUN_POTONGAN>();
+            userCarumanTotal.Add(userCaruman);
+            userCarumanTotal.Add(userCaruman2);
+
+            return userCarumanTotal;
         }
 
         public static decimal GetGajiPokok(ApplicationDbContext db, string HR_PEKERJA, int hariBekerja)
@@ -511,17 +532,28 @@ namespace eSPP.Models
             {
                 // kalau gred > 19, gaji RM54
                 // kalau gaji < 19, gaji RM72
-                //int gred = Convert.ToInt32(mpekerjaan.HR_GRED);
+                //List<string> gred54 = new List<string>
+                //{
+                //    "C",
+                //    "D",
+                //    "E"
+                //};
+                //new rule:
+                //Kumpulan A = RM100 gaji sehari
+                //Kumpulan A = RM72 gaji sehari
+                //Kumpulan C (+D+E?) = RM54 gaji sehari
                 string gred = mpekerjaan.HR_KUMPULAN;
-                List<string> gred54 = new List<string>
+                switch (gred)
                 {
-                    "C",
-                    "D",
-                    "E"
-                };
-                if (!gred54.Contains(gred))
-                {
-                    gajiSehari = 72.00M;
+                    case "A" :
+                        gajiSehari = 100.00M;
+                        break;
+                    case "B":
+                        gajiSehari = 72.00M;
+                        break;
+                    default :
+                        gajiSehari = 54.00M;
+                        break;
                 }
             }
             return gajiSehari;
@@ -588,6 +620,13 @@ namespace eSPP.Models
                     return 0;
                 }
             }
+            return 0;
+        }
+
+        //new functions 15/09/2019
+        public static decimal GetElaunKA_fromDB()
+        {
+            //todo
             return 0;
         }
 

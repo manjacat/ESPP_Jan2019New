@@ -83,7 +83,9 @@ namespace eSPP.Models
                         .Where(s => s.HR_KOD == "P0015").ToList();
                     List<HR_TRANSAKSI_SAMBILAN_DETAIL> potonganlain = userTransaksiDetail
                         .Where(s => s.HR_KOD_IND == "P" && (s.HR_KOD != "P0015" && s.HR_KOD != "P0035")).ToList();
-                    HR_MAKLUMAT_ELAUN_POTONGAN potonganKWSP = PageSejarahModel.GetPotonganKWSP(db, HR_PEKERJA, kerjaelaun.GAJIPOKOK.Value);
+                    HR_MAKLUMAT_ELAUN_POTONGAN potonganKWSP = 
+                        PageSejarahModel.GetPotonganKWSP(db, HR_PEKERJA, kerjaelaun.GAJIPOKOK.Value)
+                        .Where(s => s.HR_ELAUN_POTONGAN_IND == "P").FirstOrDefault();
                                                             
                     kerjaelaun.JABATAN = userJabatan.GE_KETERANGAN_JABATAN;
                     kerjaelaun.BAHAGIAN = userBahagian.GE_KETERANGAN;
@@ -156,7 +158,8 @@ namespace eSPP.Models
 
                     List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganksdk = PageSejarahModel.GetPotonganKSDK(db, HR_PEKERJA);
                     List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganlain = PageSejarahModel.GetPotonganLain(db, HR_PEKERJA);
-                    HR_MAKLUMAT_ELAUN_POTONGAN potonganKWSP = PageSejarahModel.GetPotonganKWSP(db, HR_PEKERJA, kerjaelaun.GAJIPOKOK.Value);
+                    HR_MAKLUMAT_ELAUN_POTONGAN potonganKWSP = PageSejarahModel.GetPotonganKWSP(db, HR_PEKERJA, kerjaelaun.GAJIPOKOK.Value)
+                        .Where(s => s.HR_ELAUN_POTONGAN_IND == "P").FirstOrDefault();
                     List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunka = PageSejarahModel.GetElaunKa(db, HR_PEKERJA);
                     List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunLain = PageSejarahModel.GetElaunLain(db, HR_PEKERJA);
                     
