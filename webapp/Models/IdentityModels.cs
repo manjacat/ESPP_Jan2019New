@@ -195,5 +195,8 @@ namespace eSPP.Models
         public System.Data.Entity.DbSet<eSPP.Models.PA_TRANSAKSI_CARUMAN> PA_TRANSAKSI_CARUMAN { get; set; }
 		public System.Data.Entity.DbSet<eSPP.Models.PA_TRANSAKSI_PEMOTONGAN> PA_TRANSAKSI_PEMOTONGAN { get; set; }
         public System.Data.Entity.DbSet<eSPP.Models.PA_TRANSAKSI_GAJI> PA_TRANSAKSI_GAJI { get; set; }
+
+        //added utk pump data ke SPG
+        public System.Data.Entity.DbSet<eSPP.Models.PA_REPORT> PA_REPORT { get; set; }
     }
 }

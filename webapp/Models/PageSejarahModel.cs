@@ -471,9 +471,11 @@ namespace eSPP.Models
             HR_KWSP kwsp = GetKWSPData(db, gajiPokok);
 
             decimal carumanPekerja = 0;
-            if(kwsp != null)
+            decimal carumanMajikan = 0;
+            if (kwsp != null)
             {
                 carumanPekerja = decimal.Round(kwsp.HR_CARUMAN_PEKERJA, 2);
+                carumanMajikan = decimal.Round(kwsp.HR_CARUMAN_MAJIKAN, 2);
             }
 
             HR_MAKLUMAT_ELAUN_POTONGAN userCaruman = new HR_MAKLUMAT_ELAUN_POTONGAN
@@ -491,7 +493,7 @@ namespace eSPP.Models
                 HR_ELAUN_POTONGAN_IND = "C",
                 HR_KOD_ELAUN_POTONGAN = "C0020",
                 HR_AKTIF_IND = "Y",
-                HR_JUMLAH = carumanPekerja
+                HR_JUMLAH = carumanMajikan
             };
 
             List<HR_MAKLUMAT_ELAUN_POTONGAN> userCarumanTotal = new List<HR_MAKLUMAT_ELAUN_POTONGAN>();

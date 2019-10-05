@@ -21,6 +21,7 @@ using System.Text;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using eSPP.App_Helpers.ExcelHelper;
+using System.Threading;
 
 namespace eSPP.Controllers
 {
@@ -678,15 +679,41 @@ namespace eSPP.Controllers
             return PartialView("_Tunggakan", agree);
         }
 
+        public ActionResult EditAcara(string bulanTahun)
+        {
+            //pause for 2000 milli second
+            //Thread.Sleep(2000);
+            try
+            {
+                string[] bulantahuntunggakanstring = bulanTahun.Split('/');
+                int[] intbulantahuntunggakanstring = Array.ConvertAll(bulantahuntunggakanstring, int.Parse);
+            }
+            catch(Exception err)
+            {
+                Console.Write(err.ToString());
+            }
+            SPGContext spgDb = new SPGContext();
+            ApplicationDbContext sppDb = new ApplicationDbContext();
+            //PA_TRANSAKSI_GAJI.PumpGajiFromSPP(spgDb);
+            //List<PA_REPORT> reports = PA_REPORT.TestSelect(spgDb);
+            //PA_REPORT.TestInsert(sppDb, spgDb);
+            PA_TRANSAKSI_CARUMAN.TestInsert(sppDb, spgDb);
+
+            SelectListItem ayoma = new SelectListItem { Text = "6", Value = "10" };
+            return Json(ayoma, JsonRequestBehavior.AllowGet);
+
+        }
+
         public ActionResult ProsesGajiSambilan()
         {
             List<SelectListItem> jenis = new List<SelectListItem>
             {
-                new SelectListItem { Text = "GAJI", Value = "1" },
-                new SelectListItem { Text = "SOCSO", Value = "2" },
-                new SelectListItem { Text = "KWSP", Value = "3" },
+                new SelectListItem { Text = "Jangan Klik", Value = "1" },
+                //new SelectListItem { Text = "SOCSO", Value = "2" },
+                //new SelectListItem { Text = "KWSP", Value = "3" },
+                new SelectListItem { Text = "Test Insert", Value = "4" }
             };
-            ViewBag.jenis = new SelectList(jenis, "Value", "Text", null);
+            ViewBag.jenis = new SelectList(jenis, "Value", "Text", "1");
 
             return View();
         }
@@ -694,12 +721,12 @@ namespace eSPP.Controllers
         [HttpPost]
         public ActionResult ProsesGajiSambilan(AgreementModels agree, string bulantahun, string Command, string jenis)
         {
-            ApplicationDbContext db = new ApplicationDbContext();
-            string[] bulantahuntunggakanstring = bulantahun.Split('/');
-
-            int[] intbulantahuntunggakanstring = Array.ConvertAll(bulantahuntunggakanstring, int.Parse);
-            for (int i = 0; i < intbulantahuntunggakanstring.Length; i++)
+            try
             {
+                ApplicationDbContext db = new ApplicationDbContext();
+                string[] bulantahuntunggakanstring = bulantahun.Split('/');
+
+                int[] intbulantahuntunggakanstring = Array.ConvertAll(bulantahuntunggakanstring, int.Parse);
                 if (jenis == "1")
                 {
                     ObjectParameter text = new ObjectParameter("text", typeof(Guid));
@@ -708,14 +735,14 @@ namespace eSPP.Controllers
                     var tahun = intbulantahuntunggakanstring[1];
                     var procedure = db2.SP_SAMBILAN_SALARY_TEST(bulan, tahun, text);
 
-                    MemoryStream memoryStream = new MemoryStream();
-                    TextWriter tw = new StreamWriter(memoryStream);
+                    //MemoryStream memoryStream = new MemoryStream();
+                    //TextWriter tw = new StreamWriter(memoryStream);
 
-                    tw.WriteLine(text.Value);
-                    tw.Flush();
-                    tw.Close();
+                    //tw.WriteLine(text.Value);
+                    //tw.Flush();
+                    //tw.Close();
 
-                    return File(memoryStream.GetBuffer(), "text/csv", "file.csv");
+                    //return File(memoryStream.GetBuffer(), "text/csv", "file.csv");
                 }
                 if (jenis == "2")
                 {
@@ -723,16 +750,16 @@ namespace eSPP.Controllers
 
                     var bulan = intbulantahuntunggakanstring[0];
                     var tahun = intbulantahuntunggakanstring[1];
-                    var procedure1 = db3.SP_SOCSO_SAMBILAN(bulan, tahun, text);
+                    //var procedure1 = db3.SP_SOCSO_SAMBILAN(bulan, tahun, text);
 
-                    MemoryStream memoryStream = new MemoryStream();
-                    TextWriter tw = new StreamWriter(memoryStream);
+                    //MemoryStream memoryStream = new MemoryStream();
+                    //TextWriter tw = new StreamWriter(memoryStream);
 
-                    tw.WriteLine(text.Value);
-                    tw.Flush();
-                    tw.Close();
+                    //tw.WriteLine(text.Value);
+                    //tw.Flush();
+                    //tw.Close();
 
-                    return File(memoryStream.GetBuffer(), "text/csv", "file.csv");
+                    //return File(memoryStream.GetBuffer(), "text/csv", "file.csv");
                 }
                 if (jenis == "3")
                 {
@@ -742,18 +769,33 @@ namespace eSPP.Controllers
                     var tahun = intbulantahuntunggakanstring[1];
                     var procedure2 = db3.SP_EFT_KWSP_SAMBILAN(bulan, tahun, text);
 
-                    MemoryStream memoryStream = new MemoryStream();
-                    TextWriter tw = new StreamWriter(memoryStream);
+                    //MemoryStream memoryStream = new MemoryStream();
+                    //TextWriter tw = new StreamWriter(memoryStream);
 
-                    tw.WriteLine(text.Value);
-                    tw.Flush();
-                    tw.Close();
+                    //tw.WriteLine(text.Value);
+                    //tw.Flush();
+                    //tw.Close();
 
-                    return File(memoryStream.GetBuffer(), "text/csv", "file.csv");
+                    //return File(memoryStream.GetBuffer(), "text/csv", "file.csv");
                 }
+                if (jenis == "4")
+                {
+                    SPGContext spgDb = new SPGContext();
+                    PA_TRANSAKSI_GAJI.PumpGajiFromSPP(spgDb);
+                }
+                //for (int i = 0; i < intbulantahuntunggakanstring.Length; i++)
+                //{
+
+                //}
+            }
+            catch
+            {
+
             }
 
-            return new FileStreamResult(new FileStream("../", FileMode.Open), "application/pdf");
+            return RedirectToAction("prosesgajisambilan", "pengurusankakitangansambilan", 
+                new { HR_PEKERJA = "01595", Message = ManageMessageId.ChangePasswordSuccess });
+            //return new FileStreamResult(new FileStream("../", FileMode.Open), "application/pdf");
         }
 
         //laporan

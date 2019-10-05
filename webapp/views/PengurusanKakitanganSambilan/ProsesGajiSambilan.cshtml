@@ -26,50 +26,143 @@
                     <div>
                         <div class="jarviswidget-editbox">
                         </div>
-						<div class="widget-body no-padding">
-							@using (Html.BeginForm("ProsesGajiSambilan", "PengurusanKakitanganSambilan", FormMethod.Post, new { @class = "smart-form", id = "smart-form-register", enctype = "multipart/form-data", target = "_blank" }))
-							{
-								<fieldset>
-									<div class="row">
-										<section class="col col-lg-2 col-md-2 col-sm-12">
-											<label class="label">
-												Jenis<font color="red">*</font>
-											</label>
-										</section>
-										<section class="col col-lg-2 col-md-2 col-sm-12">
-											<label class="input">
+                        <div class="widget-body no-padding">
+                            @using (Html.BeginForm("ProsesGajiSambilan", "PengurusanKakitanganSambilan", FormMethod.Post, new { @class = "smart-form", id = "smart-form-register", enctype = "multipart/form-data", target = "_blank" }))
+                            {
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Jenis<font color="red">*</font>
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="input">
 
-												@Html.DropDownList("jenis", null, String.Empty, htmlAttributes: new { @class = "form-control" })
-												@Html.ValidationMessage("a", "", new { @class = "text-danger" })
-											</label>
-										</section>
-									</div>
-									<div class="row">
-										<section class="col col-lg-2 col-md-2 col-sm-12">
-											<label class="label">
-												Bulan & Tahun<font color="red">*</font>
-											</label>
-										</section>
-										<section class="col col-lg-2 col-md-2 col-sm-12">
-											<label class="input">
-												<input class="form-control" name="bulantahun" id="tahunproses" data-mask="99/9999" data-mask-placeholder="-">
-												<label class="note">
-													Data format mm/yyyy
-												</label>
-												@Html.ValidationMessage("a", "", new { @class = "text-danger" })
-											</label>
-										</section>
-									</div>
-								</fieldset>
-								<footer>
-									<button type="submit" class="btn btn-default" id="Jana" name="Command" target="_blank" value="Jana"><i class="fa fa-search"></i> Jana</button>
-								</footer>
-							}
-						</div>
-						</div>
+                                                @Html.DropDownList("jenis", null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                                @Html.ValidationMessage("a", "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="label">
+                                                Bulan & Tahun<font color="red">*</font>
+                                            </label>
+                                        </section>
+                                        <section class="col col-lg-2 col-md-2 col-sm-12">
+                                            <label class="input">
+                                                <input class="form-control" name="bulantahun" id="tahunproses" data-mask="99/9999" data-mask-placeholder="-">
+                                                <label class="note">
+                                                    Data format mm/yyyy
+                                                </label>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-4 col-md-4 col-sm-12">
+                                            <div class="progress" id="progressbar" style="display:none;">
+                                                <div id="progressbar-Label" class="progress-bar bg-info" role="progressbar"
+                                                     style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                    Uploading...
+                                                </div>
+                                            </div>
+                                        </section>                                        
+                                    </div>
+                                </fieldset>
+                                <footer>
+                                    <button type="submit" class="btn btn-default" id="Jana" name="Command" target="_blank"
+                                            value="Jana" style="display:none;">
+                                        <i class="fa fa-search"></i> Jana
+                                    </button>
+                                    <button type="submit" class="btn btn-default" id="testSubmit" name="Command" target="_blank"
+                                            value="testSubmit">
+                                        <i class="fa fa-search" style="display:none"></i> Run Script
+                                    </button>
+                                    <button type="button" class="btn btn-default" id="Tambah">
+                                        <i class="fa fa-search"></i> Test Button
+                                    </button>
+                                </footer>
+                            }
+                        </div>
+                    </div>
                 </div>
             </article>
 
         </div>
     </section>
 </div>
+
+<!-- end row -->
+<!-- ui-dialog -->
+<!-- END MAIN CONTENT -->
+@section pagespecific {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //alert('muncul');
+            var progressbarDiv = $("#progressbar");
+            var progressbarLabel = $("#progressbar-label");
+
+            var Edit = "../PengurusanKakitanganSambilan/EditAcara";
+            $("#Tambah").click(function () {
+                //debugger;
+                var reset = 0;
+                $('#progressbar-Label').css('width', reset + '%').attr('aria-valuenow', reset);
+                $('#progressbar-Label').text(reset + '%');
+                progressbarDiv.fadeIn(500);
+                var totalRows = 1;
+                var id = $("#tahunproses").val();
+                var counter = 0;
+
+                if (totalRows > 0) {
+
+                    for (var i = 0; i < totalRows; i++) {  
+                        $.ajax({                            
+                            type: 'POST',
+                            url: Edit,
+                            //contentType: "application/json; charset=utf-8",
+                            data: { "bulanTahun": id },
+                            datatype: "json",
+                            success: function (data) {
+                                //debugger;
+                                counter++;
+                                var valeur = Math.ceil((counter / totalRows) * 100);
+                                console.log('i value is ' + valeur);
+                                $('#progressbar-Label').css('width', valeur + '%').attr('aria-valuenow', valeur);
+                                $('#progressbar-Label').text(valeur + '%');
+                                //alert('Text:' + data.Text + ', Value:' + data.Value);
+                                if (counter == totalRows) {
+                                    $('#progressbar-Label').text('Complete!');
+                                    progressbarDiv.fadeOut(2000);
+                                }
+                            },
+                            error: function (err) {
+                                alert(err.statusText);
+                            }
+                        });
+                    }
+                    
+                }
+
+                //$.ajax({                    
+                //    type: 'POST',
+                //    url: Edit,
+                //    //contentType: "application/json; charset=utf-8",
+                //    data: { "Id": id },
+                //    datatype: "json",
+                //    success: function (data) {
+                //        $('#progressbar-Label').text('Complete!');
+                //        console.log('fading out');
+                //        progressbarDiv.fadeOut(2000);
+                //    },
+                //    error: function (err) {
+                //        alert(err.statusText);
+                //    }
+                //});
+
+                //$('#progressbar-Label').text('Uploading.. Please wait');
+                //progressbarDiv.fadeIn(500);
+            });
+        })
+    </script>
+}

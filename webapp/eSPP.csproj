@@ -1989,6 +1989,7 @@
     <Compile Include="Models\PanelHospitalModels.cs" />
     <Compile Include="Models\ParameterKew8Models.cs" />
     <Compile Include="Models\ParamTableBulanGajiModels.cs" />
+    <Compile Include="Models\PAReportModels.cs" />
     <Compile Include="Models\PasswordExpiredModels.cs" />
     <Compile Include="Models\PelarasanModels.cs" />
     <Compile Include="Models\PemohonanPinkModels.cs" />
