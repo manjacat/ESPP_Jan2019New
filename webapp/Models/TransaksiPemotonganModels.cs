@@ -46,11 +46,123 @@ namespace eSPP.Models
 
             foreach (string noPekerja in listPekerja)
             {
-                InsertP005(sppDb, spgDb, noPekerja, tahun, bulan);
-                InsertP0163(sppDb, spgDb, noPekerja, tahun, bulan);
+                //InsertP005(sppDb, spgDb, noPekerja, tahun, bulan);
+                //InsertP0163(sppDb, spgDb, noPekerja, tahun, bulan);
+                DeleteSpgPotongan(sppDb, spgDb, noPekerja, tahun, bulan);
+                ReinsertSpgPotongan(sppDb, spgDb, noPekerja, tahun, bulan);
             }
 
         }
+
+        private static void DeleteSpgPotongan(ApplicationDbContext sppDb, SPGContext spgDb,
+            string noPekerja, int tahun, int bulan)
+        {
+            List<PA_TRANSAKSI_PEMOTONGAN> spgPotongan = spgDb.PA_TRANSAKSI_PEMOTONGAN
+                  .Where(s => s.PA_NO_PEKERJA == noPekerja
+                  && s.PA_TAHUN_POTONGAN == tahun
+                  && s.PA_BULAN_POTONGAN == bulan).ToList();
+            if(spgPotongan != null)
+            {
+                try
+                {
+                    spgDb.PA_TRANSAKSI_PEMOTONGAN.RemoveRange(spgPotongan);
+                    spgDb.SaveChanges();
+                }
+                catch(Exception ex)
+                {
+                    Console.Write(ex.ToString());
+                }
+            }
+        }
+
+        private static void ReinsertSpgPotongan(ApplicationDbContext sppDb, SPGContext spgDb,
+            string noPekerja, int tahun, int bulan)
+        {
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> sppPotongan =
+                sppDb.HR_TRANSAKSI_SAMBILAN_DETAIL
+                .Where(s => s.HR_NO_PEKERJA == noPekerja
+                && s.HR_TAHUN == tahun
+                && s.HR_BULAN_DIBAYAR == bulan
+                && s.HR_KOD_IND == "P").ToList();
+
+            //get potongan SOCSO sebab potongan SOCSO takda dalam DB
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> sppTrans =
+            HR_TRANSAKSI_SAMBILAN_DETAIL.GetTransaksi(sppDb, tahun, bulan);
+
+            decimal totalElaunOT = sppTrans
+               .Where(s => s.HR_KOD_IND == "E"
+               && s.HR_KOD == "E0164"
+               && s.HR_NO_PEKERJA == noPekerja)
+               .Select(s => s.HR_JUMLAH).Sum().Value;
+
+            decimal gajiPokok = sppTrans
+                .Where(s => s.HR_KOD == "GAJPS"
+                && s.HR_NO_PEKERJA == noPekerja)
+                .Select(s => s.HR_JUMLAH).Sum().Value;
+
+            decimal potonganSocso = PageSejarahModel
+               .GetPotonganSocso(sppDb, gajiPokok, totalElaunOT);
+            decimal jumlahSocso = 0;
+
+            //add potonganSocso to sppPotongan
+            HR_TRANSAKSI_SAMBILAN_DETAIL sppSocso = new HR_TRANSAKSI_SAMBILAN_DETAIL
+            {
+                HR_NO_PEKERJA = noPekerja,
+                HR_BULAN_DIBAYAR = bulan,
+                HR_TAHUN = tahun,
+                HR_JAM_HARI = 0,
+                HR_JUMLAH = potonganSocso,
+                HR_KOD = "P0163",
+                HR_KOD_IND = "P",
+                HR_MUKTAMAD = null
+            };
+
+            sppPotongan.Add(sppSocso);
+            jumlahSocso = sppSocso.HR_JUMLAH.Value;
+
+            var sppPotonganGroup = sppPotongan.GroupBy(s => s.HR_KOD).ToList();
+            
+            //get total potongan
+            decimal jumlahPotongan = sppPotongan.Select(s => s.HR_JUMLAH).Sum().Value;
+
+            List<PA_TRANSAKSI_PEMOTONGAN> spgPotonganList = 
+                new List<PA_TRANSAKSI_PEMOTONGAN>();
+
+            foreach(var p in sppPotonganGroup)
+            {
+                //insert
+                string test = p.Select(s => s.HR_KOD).FirstOrDefault();
+
+                PA_TRANSAKSI_PEMOTONGAN spgPotongan = new PA_TRANSAKSI_PEMOTONGAN
+                {
+                    PA_NO_PEKERJA = noPekerja,
+                    PA_KOD_PEMOTONGAN = p.Select(s => s.HR_KOD).FirstOrDefault(),
+                    PA_TARIKH_PROSES = DateTime.Now,
+                    PA_JUMLAH_PEMOTONGAN = p.Select(s => s.HR_JUMLAH).Sum().Value,
+                    PA_BULAN_POTONGAN = (byte)bulan,
+                    PA_TAHUN_POTONGAN = (short)tahun,
+                    PA_PROSES_IND = "P",
+                    //ambik dari HR_POTONGAN.HR_VOT_POTONGAN_P
+                    PA_VOT_PEMOTONGAN = "41-02-01-00-03501",
+                    PA_TARIKH_KEYIN = DateTime.Now,
+                };
+                spgPotonganList.Add(spgPotongan);
+            }
+            if(spgPotonganList.Count > 0)
+            {
+                try
+                {
+                    spgDb.PA_TRANSAKSI_PEMOTONGAN.AddRange(spgPotonganList);
+                    spgDb.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex.ToString());
+                }
+            }
+
+        }
+
 
         private static void InsertP0163(ApplicationDbContext sppDb, SPGContext spgDb,
             string noPekerja, int tahun, int bulan)
