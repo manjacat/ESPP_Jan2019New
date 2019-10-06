@@ -34,11 +34,11 @@ namespace eSPP.Models
         public Nullable<decimal> PA_JUMLAH_PELARASAN { get; set; }
         public string PA_PROSES_IND { get; set; }
 
-        public static void PumpGajiFromSPP(SPGContext spgDb)
+        public static void InsertSPGGaji(ApplicationDbContext sppDb, SPGContext spgDb, int tahun, int bulanDibayar)
         {
-            ApplicationDbContext sppDb = new ApplicationDbContext();
-            int tahun = 2019;
-            int bulanDibayar = 4;
+            //ApplicationDbContext sppDb = new ApplicationDbContext();
+            //int tahun = 2019;
+            //int bulanDibayar = 4;
             //string noPekerja = "01595";
 
             List<HR_TRANSAKSI_SAMBILAN_DETAIL> sppTrans = 

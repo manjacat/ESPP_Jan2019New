@@ -61,10 +61,11 @@ namespace eSPP.Models
         }
 
         //TODO InsertData
-        public static void TestInsert(ApplicationDbContext sppDb, SPGContext spgDb)
+        public static void InsertSpgReport(ApplicationDbContext sppDb, SPGContext spgDb,
+            int tahun, int bulan)
         {
-            int tahun = 2019;
-            int bulan = 4;
+            //int tahun = 2019;
+            //int bulan = 4;
 
             List<string> listPekerja = sppDb.HR_TRANSAKSI_SAMBILAN_DETAIL
                 .Where(s => s.HR_TAHUN == tahun

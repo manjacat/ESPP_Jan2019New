@@ -503,6 +503,36 @@ namespace eSPP.Models
             return userCarumanTotal;
         }
 
+        public static decimal GetJamBekerja(ApplicationDbContext db, string HR_PEKERJA, int tahun, int bulan)
+        {
+            HR_TRANSAKSI_SAMBILAN_DETAIL elaunOT = db.HR_TRANSAKSI_SAMBILAN_DETAIL
+                .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA
+                && s.HR_BULAN_DIBAYAR == bulan
+                && s.HR_TAHUN == tahun
+                && s.HR_KOD == "E0164").FirstOrDefault();
+            decimal jamBekerja = 0;
+            if (elaunOT != null)
+            {
+                jamBekerja = elaunOT.HR_JAM_HARI.Value;
+            }
+            return jamBekerja;
+        }
+
+        public static decimal GetHariBekerja(ApplicationDbContext db, string HR_PEKERJA, int tahun, int bulan)
+        {
+            HR_TRANSAKSI_SAMBILAN_DETAIL gaji = db.HR_TRANSAKSI_SAMBILAN_DETAIL
+                .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA
+                && s.HR_BULAN_DIBAYAR == bulan
+                && s.HR_TAHUN == tahun
+                && s.HR_KOD == "GAJPS").FirstOrDefault();
+            decimal hariBekerja = 0;
+            if(gaji != null)
+            {
+                hariBekerja = gaji.HR_JAM_HARI.Value;
+            }
+            return hariBekerja;
+        }
+
         public static decimal GetGajiPokok(ApplicationDbContext db, string HR_PEKERJA, int hariBekerja)
         {
             //add new condition: no need to go to DB if hari bekerja is 0
@@ -561,7 +591,8 @@ namespace eSPP.Models
             return gajiSehari;
         }
 
-        public static decimal GetElaunOT(ApplicationDbContext db, string HR_PEKERJA, int jumlahHari, decimal jumlahJamOT)
+        public static decimal GetElaunOT(ApplicationDbContext db, string HR_PEKERJA, 
+            int jumlahHari, decimal jumlahJamOT)
         {
             //add new condition: no need to calculate if hari or jam OT is 0
             if(jumlahJamOT > 0 && jumlahHari > 0)

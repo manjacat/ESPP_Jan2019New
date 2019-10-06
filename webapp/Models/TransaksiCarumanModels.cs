@@ -31,10 +31,11 @@ namespace eSPP.Models
 		public Nullable<System.DateTime> PA_TARIKH_KEYIN { get; set; }
 
         //TODO InsertData
-        public static void TestInsert(ApplicationDbContext sppDb, SPGContext spgDb)
+        public static void InsertSpgCaruman(ApplicationDbContext sppDb, SPGContext spgDb,
+            int tahun, int bulan)
         {
-            int tahun = 2019;
-            int bulan = 4;
+            //int tahun = 2019;
+            //int bulan = 4;
 
             List<string> listPekerja = sppDb.HR_TRANSAKSI_SAMBILAN_DETAIL
                 .Where(s => s.HR_TAHUN == tahun
@@ -70,7 +71,8 @@ namespace eSPP.Models
                         PA_PROSES_IND = "P",
                         PA_TAHUN_CARUMAN = (short)tahun,
                         PA_TARIKH_KEYIN = DateTime.Now,
-                        PA_VOT_CARUMAN = "11-03-01-00-13102"
+                        //ambik dari HR_CARUMAN.HR_VOT_CARUMAN
+                        PA_VOT_CARUMAN = "11-03-01-00-29301"
                     };
                     try
                     {
