@@ -2152,6 +2152,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Reports\ITextEvents.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

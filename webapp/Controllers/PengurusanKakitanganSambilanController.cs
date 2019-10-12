@@ -2078,6 +2078,8 @@ namespace eSPP.Controllers
             {
                 var output = new MemoryStream();
                 var writer = PdfWriter.GetInstance(document, output);
+                writer.PageEvent = new eSPP.Reports.ITextEvents();
+
                 writer.CloseStream = false;
                 document.Open();
 
