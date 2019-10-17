@@ -683,6 +683,7 @@
     <None Include="Properties\PublishProfiles\eSPP.pubxml" />
     <None Include="Properties\PublishProfiles\SmartAdmin - Release.pubxml" />
     <None Include="Properties\PublishProfiles\SmartAdmin - Debug.pubxml" />
+    <Content Include="Reports\ReportGajiSambilan.html" />
     <Content Include="Reports\SuratPengesahanHospital.html" />
     <Content Include="Scripts\app.config.js" />
     <Content Include="Scripts\app.min.js" />

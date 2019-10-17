@@ -40,18 +40,19 @@ namespace eSPP.Models
         public int? HR_MUKTAMAD { get; set; }
 
         public static List<HR_TRANSAKSI_SAMBILAN_DETAIL> GetTransaksi
-        (ApplicationDbContext db, int tahun, int bulanDibayar)
+        (ApplicationDbContext db, int tahunBekerja, int bulanBekerja)
         {
-            if (tahun == 0 || bulanDibayar == 0)
+            if (tahunBekerja == 0 || bulanBekerja == 0)
             {
                 return null;
             }
-            List<HR_TRANSAKSI_SAMBILAN_DETAIL> allTransaksi = new List<HR_TRANSAKSI_SAMBILAN_DETAIL>();
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> allTransaksi 
+                = new List<HR_TRANSAKSI_SAMBILAN_DETAIL>();
             try
             {
                 allTransaksi = db.HR_TRANSAKSI_SAMBILAN_DETAIL
-                    .Where(s => s.HR_TAHUN == tahun
-                    && s.HR_BULAN_DIBAYAR == bulanDibayar).ToList();
+                    .Where(s => s.HR_TAHUN_BEKERJA == tahunBekerja
+                    && s.HR_BULAN_BEKERJA == bulanBekerja).ToList();
             }
             catch (Exception ex)
             {

@@ -67,27 +67,40 @@ namespace eSPP.Models
             //int tahun = 2019;
             //int bulan = 4;
 
-            List<string> listPekerja = sppDb.HR_TRANSAKSI_SAMBILAN_DETAIL
-                .Where(s => s.HR_TAHUN == tahun
-                && s.HR_BULAN_DIBAYAR == bulan)
-                .Select(s => s.HR_NO_PEKERJA).Distinct().ToList();
+            //List<string> listPekerja = sppDb.HR_TRANSAKSI_SAMBILAN_DETAIL
+            //    .Where(s => s.HR_TAHUN == tahun
+            //    && s.HR_BULAN_DIBAYAR == bulan)
+            //    .Select(s => s.HR_NO_PEKERJA).Distinct().ToList();
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> gajiAll =
+               sppDb.HR_TRANSAKSI_SAMBILAN_DETAIL
+               .Where(s => s.HR_KOD == "GAJPS"
+               && s.HR_TAHUN == tahun
+               && s.HR_BULAN_DIBAYAR == bulan).ToList();
 
-            foreach(string noPekerja in listPekerja)
+            foreach (var item in gajiAll)
             {
+                string noPekerja = item.HR_NO_PEKERJA;
+                int bulanBekerja = item.HR_BULAN_BEKERJA;
+                int bulanDibayar = item.HR_BULAN_DIBAYAR;
+                int tahunBekerja = item.HR_TAHUN_BEKERJA;
+                int tahunDibayar = item.HR_TAHUN;
+
                 HR_MAKLUMAT_PEKERJAAN mPekerjaan = sppDb.HR_MAKLUMAT_PEKERJAAN
                     .Where(s => s.HR_NO_PEKERJA == noPekerja).FirstOrDefault();
                 HR_MAKLUMAT_PERIBADI mPeribadi = sppDb.HR_MAKLUMAT_PERIBADI
                     .Where(s => s.HR_NO_PEKERJA == noPekerja).FirstOrDefault();
                 PA_REPORT spgReport = spgDb.PA_REPORT
                     .Where(s => s.PA_NO_PEKERJA == noPekerja
-                    && s.PA_TAHUN == tahun
-                    && s.PA_BULAN == bulan).FirstOrDefault();
+                    && s.PA_TAHUN == tahunBekerja
+                    && s.PA_BULAN == bulanBekerja).FirstOrDefault();
 
                 decimal gajiPokok = sppDb.HR_TRANSAKSI_SAMBILAN_DETAIL
                     .Where(s => s.HR_KOD == "GAJPS"
                     && s.HR_NO_PEKERJA == noPekerja
-                    && s.HR_BULAN_DIBAYAR == bulan
-                    && s.HR_TAHUN == tahun)
+                    && s.HR_BULAN_DIBAYAR == bulanDibayar
+                    && s.HR_TAHUN == tahunDibayar
+                    && s.HR_BULAN_BEKERJA == bulanBekerja
+                    && s.HR_TAHUN_BEKERJA == tahunBekerja)
                     .Select(s => s.HR_JUMLAH).Sum().Value;
 
                 if (spgReport == null)
@@ -96,8 +109,8 @@ namespace eSPP.Models
                     spgReport = new PA_REPORT
                     {
                         PA_NO_PEKERJA = noPekerja,
-                        PA_BULAN = (byte)bulan,
-                        PA_TAHUN = (short)tahun,
+                        PA_BULAN = (byte)bulanBekerja,
+                        PA_TAHUN = (short)tahunBekerja,
                         PA_JABATAN = mPekerjaan.HR_JABATAN,
                         PA_BAHAGIAN = mPekerjaan.HR_BAHAGIAN,
                         PA_UNIT = mPekerjaan.HR_UNIT,
@@ -135,8 +148,8 @@ namespace eSPP.Models
                 {
                     //update
                     spgReport.PA_NO_PEKERJA = noPekerja;
-                    spgReport.PA_BULAN = (byte)bulan;
-                    spgReport.PA_TAHUN = (short)tahun;
+                    spgReport.PA_BULAN = (byte)bulanBekerja;
+                    spgReport.PA_TAHUN = (short)tahunBekerja;
                     spgReport.PA_JABATAN = mPekerjaan.HR_JABATAN;
                     spgReport.PA_BAHAGIAN = mPekerjaan.HR_BAHAGIAN;
                     spgReport.PA_UNIT = mPekerjaan.HR_UNIT;

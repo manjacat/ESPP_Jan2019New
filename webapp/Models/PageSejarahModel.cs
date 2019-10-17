@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -15,13 +16,57 @@ namespace eSPP.Models
         public decimal GajiSehari { get; set; }
     }
 
+    #region Variables: ConstHariBekerja, ListElaunKa, ListElaunLain, ListPekerjaBerkecuali etc
     public class PageSejarahModel
     {
+        public static string CurrencyFormat
+        {
+            get
+            {
+                //return comma delimited string
+                return "#,##0.00";
+                //return "{0:#,0.####}";
+            }
+        }
+
         public static int ConstHariBekerja
         {
             get
             {
                 return 21;
+            }
+        }
+
+        public static string KodGajiPokok
+        {
+            get
+            {
+                string kodGaji = "GAJPS";
+                return kodGaji;
+            }
+        }
+
+        public static string KodKWSPPekerja
+        {
+            get
+            {
+                ApplicationDbContext db = new ApplicationDbContext();
+                string kodKWSP = db.HR_POTONGAN
+                    .Where(s => s.HR_PENERANGAN_POTONGAN == "KUMPULAN WANG SIMPANAN PEKERJA")
+                    .Select(s => s.HR_KOD_POTONGAN).FirstOrDefault();
+                return kodKWSP;
+            }
+        }
+
+        public static string KodKWSPMajikan
+        {
+            get
+            {
+                ApplicationDbContext db = new ApplicationDbContext();
+                string kodKWSP = db.HR_CARUMAN
+                    .Where(s => s.HR_PENERANGAN_CARUMAN == "KWSP - SAMBILAN (MAJIKAN)")
+                    .Select(s => s.HR_KOD_CARUMAN).FirstOrDefault();
+                return kodKWSP;
             }
         }
 
@@ -44,6 +89,31 @@ namespace eSPP.Models
             }
         }
 
+        public static List<string> ListKodKWSP
+        {
+            get
+            {
+                ApplicationDbContext db = new ApplicationDbContext();
+                List<string> kodKWSP = db.HR_POTONGAN
+                    .Where(s => s.HR_PENERANGAN_POTONGAN
+                    .Contains("KUMPULAN WANG SIMPANAN PEKERJA"))
+                    .Select(s => s.HR_KOD_POTONGAN).ToList();
+                return kodKWSP; //should return P0035
+            }
+        }
+
+        public static List<string> ListKodPerkeso
+        {
+            get
+            {
+                ApplicationDbContext db = new ApplicationDbContext();
+                List<string> kodSocso = db.HR_POTONGAN
+                    .Where(s => s.HR_PENERANGAN_POTONGAN.Contains("PERKESO"))
+                    .Select(s => s.HR_KOD_POTONGAN).ToList();
+                return kodSocso;
+            }
+        }
+
         //temporary not used. treated elaunlain = elauncola.
         public static List<string> ListElaunCola
         {
@@ -57,6 +127,31 @@ namespace eSPP.Models
             }
         }
 
+        //List Pekerja
+        public static List<string> ListPekerjaSambilan
+        {
+            get
+            {
+                ApplicationDbContext db = new ApplicationDbContext();
+                List<string> list_pekerja = db.HR_MAKLUMAT_PEKERJAAN
+                .Where(s => s.HR_TARAF_JAWATAN == "N")
+                .Select(x => x.HR_NO_PEKERJA).ToList();
+                return list_pekerja;
+            }
+        }
+
+        //List Pekerja
+        public static List<string> ListPekerjaSukan
+        {
+            get
+            {
+                ApplicationDbContext db = new ApplicationDbContext();
+                List<string> list_pekerja = db.HR_MAKLUMAT_PEKERJAAN
+                .Where(s => s.HR_TARAF_JAWATAN == "A")
+                .Select(x => x.HR_NO_PEKERJA).ToList();
+                return list_pekerja;
+            }
+        }
 
         /// <summary>
         /// No Pekerja with Pengecualian by Individu
@@ -104,6 +199,7 @@ namespace eSPP.Models
             }
 
         }
+        #endregion
 
         public PageSejarahModel()
         {
@@ -176,7 +272,7 @@ namespace eSPP.Models
         [Display(Name = "Elaun Khidmat Awam")]
         public decimal elaunkhidmatawam { get; set; }
         [Display(Name = "Jumlah OT")]
-        public int jumlahot { get; set; }
+        public decimal jumlahot { get; set; }
         [Display(Name = "Elaun Lain")]
         [DisplayFormat(DataFormatString = "{0:0.00}")]
         public decimal elaunlain { get; set; }
@@ -192,6 +288,9 @@ namespace eSPP.Models
         [Display(Name = "Potongan KSWP")]
         [DisplayFormat(DataFormatString = "{0:n2}")]
         public decimal potongankwsp { get; set; }
+        [Display(Name = "Caruman Majikan")]
+        [DisplayFormat(DataFormatString = "{0:n2}")]
+        public decimal carumanMajikan { get; set; }
         [Display(Name = "SOCSO")]
         [DisplayFormat(DataFormatString = "{0:0.00}")]
         public decimal socso { get; set; }
@@ -300,9 +399,28 @@ namespace eSPP.Models
 
         public bool IsMuktamad { get; set; }
 
-        //List Sjarah Pembayaran?
+        //List Sejarah Pembayaran?
 
         //Methods
+
+        public string GetBulanMalayString(int bulanInt)
+        {
+            var associativeArray = new Dictionary<int?, string>() { { 1, "JANUARI" }, { 2, "FEBRUARI" }, { 3, "MAC" }, { 4, "APRIL" }, { 5, "MEI" }, { 6, "JUN" }, { 7, "JULAI" }, { 8, "OGOS" }, { 9, "SEPTEMBER" }, { 10, "OKTOBER" }, { 11, "NOVEMBER" }, { 12, "DISEMBER" } };
+            var bulanString = string.Empty;
+            foreach (var m in associativeArray)
+            {
+                if (bulanInt == m.Key)
+                {
+                    bulanString = m.Value;
+                }
+            }
+            return bulanString;
+        }
+
+        /// <summary>
+        /// only for PageSejarahModel. Not for HR_TRANSAKSI_SAMBILAN_DETAIL
+        /// </summary>
+        /// <returns></returns>
         public int GetJumlahHari()
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -311,7 +429,8 @@ namespace eSPP.Models
                 && x.HR_TAHUN_BEKERJA == tahunbekerja
                 && x.HR_BULAN_DIBAYAR == bulandibayar
                 && x.HR_TAHUN == tahundibayar
-                && x.HR_KOD == "GAJPS").Select(x => x.HR_JAM_HARI).FirstOrDefault();
+                && x.HR_KOD == "GAJPS")
+                .Select(x => x.HR_JAM_HARI).FirstOrDefault();
             jumlahHari = jumlahHari == null ? 0 : jumlahHari;
             return Convert.ToInt32(jumlahHari);
         }
@@ -325,12 +444,42 @@ namespace eSPP.Models
                 && x.HR_TAHUN_BEKERJA == tahunbekerja
                 && x.HR_BULAN_DIBAYAR == bulandibayar
                 && x.HR_TAHUN == tahundibayar
-                && x.HR_KOD == "E0164").Select(x => x.HR_JAM_HARI).FirstOrDefault();
+                && x.HR_KOD == "E0164")
+                .Select(x => x.HR_JAM_HARI).FirstOrDefault();
             jumlahHari = jumlahHari == null ? 0 : jumlahHari;
             return Convert.ToInt32(jumlahHari);
         }
 
-        public static List<HR_MAKLUMAT_ELAUN_POTONGAN> GetElaunKa(ApplicationDbContext db, string HR_PEKERJA)
+        //above methods only related to PageSejarahModel
+        //Static Methods Below
+
+        //guna utk Insert. masukkan semua elaun termasuk elaun KA
+        //all elaun except elaun E0164 (elaun OT)
+        public static List<HR_MAKLUMAT_ELAUN_POTONGAN> GetElaunSemua
+            (ApplicationDbContext db, string HR_PEKERJA)
+        {
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> userMaklumatPotongan =
+                db.HR_MAKLUMAT_ELAUN_POTONGAN
+                .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA).ToList();
+
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunSemua = userMaklumatPotongan
+                .Where(s => s.HR_ELAUN_POTONGAN_IND == "E"
+                && DateTime.Now >= s.HR_TARIKH_MULA && DateTime.Now <= s.HR_TARIKH_AKHIR
+                && s.HR_AKTIF_IND == "Y"
+                && (s.HR_KOD_ELAUN_POTONGAN != "E0164"))
+                .ToList();
+
+            return elaunSemua;
+        }
+
+        /// <summary>
+        /// Get ElaunKA sehari from HR Maklumat Elaun Potongan
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="HR_PEKERJA"></param>
+        /// <returns>List HR_MAKLUMAT_ELAUN_POTONGAN</returns>
+        public static List<HR_MAKLUMAT_ELAUN_POTONGAN>
+            GetElaunKa(ApplicationDbContext db, string HR_PEKERJA)
         {
             List<HR_MAKLUMAT_ELAUN_POTONGAN> userMaklumatPotongan = db.HR_MAKLUMAT_ELAUN_POTONGAN
                         .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA).ToList();
@@ -339,42 +488,30 @@ namespace eSPP.Models
             return elaunka;
         }
 
-        //guna utk Insert. masukkan semua elaun termasuk elaun KA
-        //all elaun except elaun E0164 (elaun OT)
-        public static List<HR_MAKLUMAT_ELAUN_POTONGAN> GetElaunSemua(ApplicationDbContext db, string HR_PEKERJA)
+        public static List<HR_MAKLUMAT_ELAUN_POTONGAN>
+            GetElaunLain(ApplicationDbContext db, string HR_PEKERJA)
         {
-            List<HR_MAKLUMAT_ELAUN_POTONGAN> userMaklumatPotongan = db.HR_MAKLUMAT_ELAUN_POTONGAN
-                        .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA).ToList();
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> userMaklumatPotongan =
+                db.HR_MAKLUMAT_ELAUN_POTONGAN
+                .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA).ToList();
 
             List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunLain = userMaklumatPotongan
                 .Where(s => s.HR_ELAUN_POTONGAN_IND == "E"
                 && DateTime.Now >= s.HR_TARIKH_MULA && DateTime.Now <= s.HR_TARIKH_AKHIR
                 && s.HR_AKTIF_IND == "Y"
-                && (s.HR_KOD_ELAUN_POTONGAN != "E0164"))
+                && (!ListElaunKa.Contains(s.HR_KOD_ELAUN_POTONGAN)
+                && s.HR_KOD_ELAUN_POTONGAN != "E0164"))
                 .ToList();
 
             return elaunLain;
         }
 
-        public static List<HR_MAKLUMAT_ELAUN_POTONGAN> GetElaunLain(ApplicationDbContext db, string HR_PEKERJA)
+        public static List<HR_MAKLUMAT_ELAUN_POTONGAN> GetPotonganKSDK
+            (ApplicationDbContext db, string HR_PEKERJA)
         {
-            List<HR_MAKLUMAT_ELAUN_POTONGAN> userMaklumatPotongan = db.HR_MAKLUMAT_ELAUN_POTONGAN
-                        .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA).ToList();
-
-            List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunLain = userMaklumatPotongan
-                .Where(s => s.HR_ELAUN_POTONGAN_IND == "E"
-                && DateTime.Now >= s.HR_TARIKH_MULA && DateTime.Now <= s.HR_TARIKH_AKHIR
-                && s.HR_AKTIF_IND == "Y"
-                && (!ListElaunKa.Contains(s.HR_KOD_ELAUN_POTONGAN) && s.HR_KOD_ELAUN_POTONGAN != "E0164"))
-                .ToList();
-
-            return elaunLain;
-        }
-
-        public static List<HR_MAKLUMAT_ELAUN_POTONGAN> GetPotonganKSDK(ApplicationDbContext db, string HR_PEKERJA)
-        {
-            List<HR_MAKLUMAT_ELAUN_POTONGAN> userMaklumatPotongan = db.HR_MAKLUMAT_ELAUN_POTONGAN
-                        .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA).ToList();
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> userMaklumatPotongan =
+                db.HR_MAKLUMAT_ELAUN_POTONGAN
+                .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA).ToList();
 
             List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganKSDK = userMaklumatPotongan
                 .Where(s => s.HR_KOD_ELAUN_POTONGAN == "P0015"
@@ -385,22 +522,29 @@ namespace eSPP.Models
         }
 
         /// <summary>
-        /// Get Potongan Lain Where KOD Potongan is not P0015 (Potongan KSDK) and not P0035 (KWSP)
+        /// Get Potongan Lain Where KOD Potongan is not P0015 (Potongan KSDK) 
+        /// and not P0035 (KWSP)
         /// </summary>
         /// <param name="HR_PEKERJA"></param>
         /// <returns></returns>
-        public static List<HR_MAKLUMAT_ELAUN_POTONGAN> GetPotonganLain(ApplicationDbContext db, string HR_PEKERJA)
+        public static List<HR_MAKLUMAT_ELAUN_POTONGAN> GetPotonganLain
+            (ApplicationDbContext db, string HR_PEKERJA)
         {
             List<HR_MAKLUMAT_ELAUN_POTONGAN> userMaklumatPotongan = db.HR_MAKLUMAT_ELAUN_POTONGAN
                         .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA).ToList();
 
+            //include SOCSO (P0160 into list of exlude)
             List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganlain = userMaklumatPotongan
                 .Where(s => s.HR_ELAUN_POTONGAN_IND == "P"
-                && DateTime.Now >= s.HR_TARIKH_MULA && DateTime.Now <= s.HR_TARIKH_AKHIR
+                && DateTime.Now >= s.HR_TARIKH_MULA
+                && DateTime.Now <= s.HR_TARIKH_AKHIR
                 && s.HR_AKTIF_IND == "Y"
-                && (s.HR_KOD_ELAUN_POTONGAN != "P0015" && s.HR_KOD_ELAUN_POTONGAN != "P0035")).ToList();
+                && (s.HR_KOD_ELAUN_POTONGAN != "P0015"
+                && s.HR_KOD_ELAUN_POTONGAN != "P0160"
+                && s.HR_KOD_ELAUN_POTONGAN != "P0035")).ToList();
 
-            HR_MAKLUMAT_ELAUN_POTONGAN potonganSukan = GetPotonganElaunSukan(HR_PEKERJA);
+            HR_MAKLUMAT_ELAUN_POTONGAN potonganSukan =
+                GetPotonganElaunSukan(HR_PEKERJA);
             if (potonganSukan != null)
             {
                 potonganlain.Add(potonganSukan);
@@ -409,27 +553,34 @@ namespace eSPP.Models
             return potonganlain;
         }
 
-        public static List<HR_MAKLUMAT_ELAUN_POTONGAN> GetPotonganSemua(ApplicationDbContext db, string HR_PEKERJA, decimal gajiPokok)
+        public static List<HR_MAKLUMAT_ELAUN_POTONGAN>
+            GetPotonganSemua(ApplicationDbContext db,
+            string HR_PEKERJA,
+            int tahunDibayar, int bulanDibayar,
+            int tahunBekerja, int BulanBekerja)
         {
             List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganSemua = new List<HR_MAKLUMAT_ELAUN_POTONGAN>();
             potonganSemua.AddRange(GetPotonganKSDK(db, HR_PEKERJA));
-            HR_MAKLUMAT_ELAUN_POTONGAN potonganKWSP = GetPotonganKWSP(db, HR_PEKERJA, gajiPokok)
-                .Where(s => s.HR_ELAUN_POTONGAN_IND == "P").FirstOrDefault();
-            if(potonganKWSP != null)
-            {
-                potonganSemua.Add(potonganKWSP);
-            }
+            //HR_MAKLUMAT_ELAUN_POTONGAN potonganKWSP = GetPotonganKWSP
+            //    (db, HR_PEKERJA, tahunDibayar, bulanDibayar, tahunBekerja, BulanBekerja)
+            //    .Where(s => s.HR_ELAUN_POTONGAN_IND == "P")
+            //    .FirstOrDefault();
+            //if (potonganKWSP != null)
+            //{
+            //    potonganSemua.Add(potonganKWSP);
+            //}
             potonganSemua.AddRange(GetPotonganLain(db, HR_PEKERJA));
-            HR_MAKLUMAT_ELAUN_POTONGAN potonganSukan = GetPotonganElaunSukan(HR_PEKERJA);
-            if ( potonganSukan != null)
-            {
-                potonganSemua.Add(potonganSukan);
-            }
+            //HR_MAKLUMAT_ELAUN_POTONGAN potonganSukan = GetPotonganElaunSukan(HR_PEKERJA);
+            //if (potonganSukan != null)
+            //{
+            //    potonganSemua.Add(potonganSukan);
+            //}
 
             return potonganSemua;
         }
 
-        public static HR_MAKLUMAT_ELAUN_POTONGAN GetPotonganElaunSukan(string HR_PEKERJA)
+        public static HR_MAKLUMAT_ELAUN_POTONGAN GetPotonganElaunSukan
+            (string HR_PEKERJA)
         {
             HR_MAKLUMAT_ELAUN_POTONGAN elaunSukan = null;
             //only certain number of ppl need to pay elaun sukan
@@ -449,26 +600,345 @@ namespace eSPP.Models
             return elaunSukan;
         }
 
-        public static HR_KWSP GetKWSPData(ApplicationDbContext db, decimal gajiPokok)
+        public static HR_KWSP GetPotonganKWSP(ApplicationDbContext db,
+            decimal gajiKasar)
         {
-            decimal gajipokok = decimal.Round(gajiPokok, 2);
+            decimal gajipokok = decimal.Round(gajiKasar, 2);
             HR_KWSP kwsp = db.HR_KWSP
                .Where(s => gajipokok >= s.HR_UPAH_DARI
                && gajipokok <= s.HR_UPAH_HINGGA).FirstOrDefault();
             return kwsp;
         }
 
-        public static List<HR_MAKLUMAT_ELAUN_POTONGAN> GetPotonganKWSP
-            (ApplicationDbContext db, string HR_PEKERJA, decimal gajiPokok)
+        private static HR_TRANSAKSI_SAMBILAN_DETAIL GetTransaksiGaji
+            (ApplicationDbContext db, PageSejarahModel agree)
         {
-            //HR_MAKLUMAT_ELAUN_POTONGAN userCaruman = db.HR_MAKLUMAT_ELAUN_POTONGAN
-            //            .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA && s.HR_ELAUN_POTONGAN_IND == "C").First();
+            HR_TRANSAKSI_SAMBILAN_DETAIL gaji = new HR_TRANSAKSI_SAMBILAN_DETAIL
+            {
+                HR_BULAN_BEKERJA = agree.bulanbekerja,
+                HR_BULAN_DIBAYAR = agree.bulandibayar,
+                HR_JAM_HARI = agree.jumlahhari,
+                HR_JUMLAH = agree.gajipokok,
+                HR_KOD = "GAJPS",
+                HR_KOD_IND = "G",
+                HR_MUKTAMAD = 0,
+                HR_NO_PEKERJA = agree.HR_PEKERJA,
+                HR_POTONGAN_IND = null,
+                HR_TAHUN = agree.tahundibayar,
+                HR_TAHUN_BEKERJA = agree.tahunbekerja,
+                HR_TUNGGAKAN_IND = agree.tunggakan,
+                HR_YDP_LULUS_IND = agree.kelulusanydp
+            };
+            if (agree.tunggakan == "Y")
+            {
+                gaji.HR_BULAN_BEKERJA = agree.tunggakanbulanbekerja;
+                gaji.HR_BULAN_DIBAYAR = agree.tunggakanbulandibayar;
+                gaji.HR_TAHUN_BEKERJA = agree.tunggakantahunbekerja;
+                gaji.HR_TAHUN = agree.tunggakantahundibayar;
+                gaji.HR_YDP_LULUS_IND = agree.kelulusanydptunggakan;
+            }
+            return gaji;
+        }
 
-            List<HR_MAKLUMAT_ELAUN_POTONGAN> userMaklumatPotongan = db.HR_MAKLUMAT_ELAUN_POTONGAN
-                        .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA).ToList();
+        private static List<HR_TRANSAKSI_SAMBILAN_DETAIL> GetTransaksiElaun
+            (ApplicationDbContext db, PageSejarahModel agree,
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunList)
+        {
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> elaunSemua =
+                new List<HR_TRANSAKSI_SAMBILAN_DETAIL>();
+            foreach (HR_MAKLUMAT_ELAUN_POTONGAN elaun in elaunList)
+            {
+                HR_TRANSAKSI_SAMBILAN_DETAIL tElaun =
+                    new HR_TRANSAKSI_SAMBILAN_DETAIL
+                    {
+                        HR_BULAN_BEKERJA = agree.bulanbekerja,
+                        HR_BULAN_DIBAYAR = agree.bulandibayar,
+                        HR_JAM_HARI = null,
+                        HR_JUMLAH = elaun.HR_JUMLAH,
+                        HR_KOD = elaun.HR_KOD_ELAUN_POTONGAN,
+                        HR_KOD_IND = "E",
+                        HR_MUKTAMAD = 0,
+                        HR_NO_PEKERJA = agree.HR_PEKERJA,
+                        HR_POTONGAN_IND = null,
+                        HR_TAHUN = agree.tahundibayar,
+                        HR_TAHUN_BEKERJA = agree.tahunbekerja,
+                        HR_TUNGGAKAN_IND = agree.tunggakan,
+                        HR_YDP_LULUS_IND = agree.kelulusanydp
+                    };
+                if (agree.tunggakan == "Y")
+                {
+                    tElaun.HR_BULAN_BEKERJA = agree.tunggakanbulanbekerja;
+                    tElaun.HR_BULAN_DIBAYAR = agree.tunggakanbulandibayar;
+                    tElaun.HR_TAHUN_BEKERJA = agree.tunggakantahunbekerja;
+                    tElaun.HR_TAHUN = agree.tunggakantahundibayar;
+                    tElaun.HR_YDP_LULUS_IND = agree.kelulusanydptunggakan;
+                }
+                elaunSemua.Add(tElaun);
+            }
+            return elaunSemua;
+        }
 
-            //Caruman Pekerja = Kira dari Gaji POKOK? or Kira dari Gaji POKOK + elaun
-            HR_KWSP kwsp = GetKWSPData(db, gajiPokok);
+        public static HR_TRANSAKSI_SAMBILAN_DETAIL
+            GetTransaksiSocso(ApplicationDbContext db, PageSejarahModel agree)
+        {
+            //kira socso dari gaji kasar
+            decimal socso = GetPotonganSocso(db, agree.gajikasar);
+            HR_TRANSAKSI_SAMBILAN_DETAIL tSosco =
+            new HR_TRANSAKSI_SAMBILAN_DETAIL
+            {
+                HR_BULAN_BEKERJA = agree.bulanbekerja,
+                HR_BULAN_DIBAYAR = agree.bulandibayar,
+                HR_TAHUN = agree.tahundibayar,
+                HR_TAHUN_BEKERJA = agree.tahunbekerja,
+                HR_JAM_HARI = null,
+                HR_JUMLAH = agree.socso,
+                HR_KOD = "P0160",
+                HR_KOD_IND = "P",
+                HR_MUKTAMAD = 0,
+                HR_NO_PEKERJA = agree.HR_PEKERJA,
+                HR_POTONGAN_IND = null,
+                HR_TUNGGAKAN_IND = agree.tunggakan,
+                HR_YDP_LULUS_IND = agree.kelulusanydp
+            };
+            if (agree.tunggakan == "Y")
+            {
+                tSosco.HR_BULAN_BEKERJA = agree.tunggakanbulanbekerja;
+                tSosco.HR_BULAN_DIBAYAR = agree.tunggakanbulandibayar;
+                tSosco.HR_TAHUN_BEKERJA = agree.tunggakantahunbekerja;
+                tSosco.HR_TAHUN = agree.tunggakantahundibayar;
+                tSosco.HR_YDP_LULUS_IND = agree.kelulusanydptunggakan;
+            }
+            return tSosco;
+        }
+
+        private static List<HR_TRANSAKSI_SAMBILAN_DETAIL> GetTransaksiPotongan
+            (ApplicationDbContext db, PageSejarahModel agree,
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganList)
+        {
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> potonganSemua =
+                new List<HR_TRANSAKSI_SAMBILAN_DETAIL>();
+            foreach (HR_MAKLUMAT_ELAUN_POTONGAN potongan in potonganList)
+            {
+                HR_TRANSAKSI_SAMBILAN_DETAIL tPotong =
+                    new HR_TRANSAKSI_SAMBILAN_DETAIL
+                    {
+                        HR_BULAN_BEKERJA = agree.bulanbekerja,
+                        HR_BULAN_DIBAYAR = agree.bulandibayar,
+                        HR_TAHUN = agree.tahundibayar,
+                        HR_TAHUN_BEKERJA = agree.tahunbekerja,
+                        HR_JAM_HARI = null,
+                        HR_JUMLAH = potongan.HR_JUMLAH,
+                        HR_KOD = potongan.HR_KOD_ELAUN_POTONGAN,
+                        HR_KOD_IND = "P",
+                        HR_MUKTAMAD = 0,
+                        HR_NO_PEKERJA = agree.HR_PEKERJA,
+                        HR_POTONGAN_IND = null,
+                        HR_TUNGGAKAN_IND = agree.tunggakan,
+                        HR_YDP_LULUS_IND = agree.kelulusanydp
+                    };
+                if (agree.tunggakan == "Y")
+                {
+                    tPotong.HR_BULAN_BEKERJA = agree.tunggakanbulanbekerja;
+                    tPotong.HR_BULAN_DIBAYAR = agree.tunggakanbulandibayar;
+                    tPotong.HR_TAHUN_BEKERJA = agree.tunggakantahunbekerja;
+                    tPotong.HR_TAHUN = agree.tunggakantahundibayar;
+                    tPotong.HR_YDP_LULUS_IND = agree.kelulusanydptunggakan;
+                }
+                potonganSemua.Add(tPotong);
+            }
+            return potonganSemua;
+        }
+
+        private static HR_TRANSAKSI_SAMBILAN_DETAIL GetCarumanPekerja
+            (ApplicationDbContext db, PageSejarahModel agree,
+            HR_KWSP kwsp)
+        {
+            HR_TRANSAKSI_SAMBILAN_DETAIL carumanPekerja =
+                    new HR_TRANSAKSI_SAMBILAN_DETAIL
+                    {
+                        HR_BULAN_BEKERJA = agree.bulanbekerja,
+                        HR_BULAN_DIBAYAR = agree.bulandibayar,
+                        HR_TAHUN = agree.tahundibayar,
+                        HR_TAHUN_BEKERJA = agree.tahunbekerja,
+                        HR_JAM_HARI = null,
+                        HR_JUMLAH = kwsp.HR_CARUMAN_PEKERJA,
+                        HR_KOD = KodKWSPPekerja,
+                        HR_KOD_IND = "P",
+                        HR_MUKTAMAD = 0,
+                        HR_NO_PEKERJA = agree.HR_PEKERJA,
+                        HR_POTONGAN_IND = null,
+                        HR_TUNGGAKAN_IND = agree.tunggakan,
+                        HR_YDP_LULUS_IND = agree.kelulusanydp
+                    };
+            if (agree.tunggakan == "Y")
+            {
+                carumanPekerja.HR_BULAN_BEKERJA = agree.tunggakanbulanbekerja;
+                carumanPekerja.HR_BULAN_DIBAYAR = agree.tunggakanbulandibayar;
+                carumanPekerja.HR_TAHUN_BEKERJA = agree.tunggakantahunbekerja;
+                carumanPekerja.HR_TAHUN = agree.tunggakantahundibayar;
+                carumanPekerja.HR_YDP_LULUS_IND = agree.kelulusanydptunggakan;
+            }
+
+            return carumanPekerja;
+        }
+
+        private static HR_TRANSAKSI_SAMBILAN_DETAIL GetCarumanMajikan
+            (ApplicationDbContext db, PageSejarahModel agree,
+            HR_KWSP kwsp)
+        {
+            HR_TRANSAKSI_SAMBILAN_DETAIL carumanMajikan =
+                    new HR_TRANSAKSI_SAMBILAN_DETAIL
+                    {
+                        HR_BULAN_BEKERJA = agree.bulanbekerja,
+                        HR_BULAN_DIBAYAR = agree.bulandibayar,
+                        HR_TAHUN = agree.tahundibayar,
+                        HR_TAHUN_BEKERJA = agree.tahunbekerja,
+                        HR_JAM_HARI = null,
+                        HR_JUMLAH = kwsp.HR_CARUMAN_MAJIKAN,
+                        HR_KOD = KodKWSPMajikan,
+                        HR_KOD_IND = "C",
+                        HR_MUKTAMAD = 0,
+                        HR_NO_PEKERJA = agree.HR_PEKERJA,
+                        HR_POTONGAN_IND = null,
+                        HR_TUNGGAKAN_IND = agree.tunggakan,
+                        HR_YDP_LULUS_IND = agree.kelulusanydp
+                    };
+            if (agree.tunggakan == "Y")
+            {
+                carumanMajikan.HR_BULAN_BEKERJA = agree.tunggakanbulanbekerja;
+                carumanMajikan.HR_BULAN_DIBAYAR = agree.tunggakanbulandibayar;
+                carumanMajikan.HR_TAHUN_BEKERJA = agree.tunggakantahunbekerja;
+                carumanMajikan.HR_TAHUN = agree.tunggakantahundibayar;
+                carumanMajikan.HR_YDP_LULUS_IND = agree.kelulusanydptunggakan;
+            }
+            return carumanMajikan;
+        }
+
+        private static List<HR_TRANSAKSI_SAMBILAN_DETAIL> GetTransaksiCaruman
+        (ApplicationDbContext db, PageSejarahModel agree)
+        {
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> carumanSemua =
+                new List<HR_TRANSAKSI_SAMBILAN_DETAIL>();
+            HR_KWSP kwsp = GetPotonganKWSP(db, agree.gajikasar);
+
+            HR_TRANSAKSI_SAMBILAN_DETAIL carumanPekerja = GetCarumanPekerja
+                (db, agree, kwsp);
+            HR_TRANSAKSI_SAMBILAN_DETAIL carumanMajikan = GetCarumanMajikan
+                (db, agree, kwsp);
+            carumanSemua.Add(carumanPekerja);
+            carumanSemua.Add(carumanMajikan);
+
+            return carumanSemua;
+        }
+
+        private static HR_TRANSAKSI_SAMBILAN_DETAIL GetTransaksiOT
+            (ApplicationDbContext db, PageSejarahModel agree)
+        {
+            HR_TRANSAKSI_SAMBILAN_DETAIL elaunOT =
+            new HR_TRANSAKSI_SAMBILAN_DETAIL
+            {
+                HR_BULAN_BEKERJA = agree.bulanbekerja,
+                HR_BULAN_DIBAYAR = agree.bulandibayar,
+                HR_TAHUN = agree.tahundibayar,
+                HR_TAHUN_BEKERJA = agree.tahunbekerja,
+                HR_JAM_HARI = agree.jumlahot,
+                HR_JUMLAH = agree.jumlahbayaranot,
+                HR_KOD = "E0164",
+                HR_KOD_IND = "E",
+                HR_MUKTAMAD = 0,
+                HR_NO_PEKERJA = agree.HR_PEKERJA,
+                HR_POTONGAN_IND = null,
+                HR_TUNGGAKAN_IND = agree.tunggakan,
+                HR_YDP_LULUS_IND = agree.kelulusanydp
+            };
+            if (agree.tunggakan == "Y")
+            {
+                elaunOT.HR_BULAN_BEKERJA = agree.tunggakanbulanbekerja;
+                elaunOT.HR_BULAN_DIBAYAR = agree.tunggakanbulandibayar;
+                elaunOT.HR_TAHUN_BEKERJA = agree.tunggakantahunbekerja;
+                elaunOT.HR_TAHUN = agree.tunggakantahundibayar;
+                elaunOT.HR_YDP_LULUS_IND = agree.kelulusanydptunggakan;
+            }
+            return elaunOT;
+        }
+
+        private static List<HR_TRANSAKSI_SAMBILAN_DETAIL> GetNewTRANSAKSI_SAMBILAN_DETAIL
+            (ApplicationDbContext db, PageSejarahModel agree,
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunList,
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganList)
+        {
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> detail =
+                new List<HR_TRANSAKSI_SAMBILAN_DETAIL>();
+            //gaji
+            HR_TRANSAKSI_SAMBILAN_DETAIL gaji = GetTransaksiGaji(db, agree);
+            HR_TRANSAKSI_SAMBILAN_DETAIL elaunOT = GetTransaksiOT(db, agree);
+            HR_TRANSAKSI_SAMBILAN_DETAIL socso = GetTransaksiSocso(db, agree);
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> elaunSemua = GetTransaksiElaun(db, agree, elaunList);
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> potonganSemua = GetTransaksiPotongan(db, agree, potonganList);
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> carumanSemua = GetTransaksiCaruman(db, agree);
+
+            detail.Add(gaji);
+            detail.Add(elaunOT);
+            detail.Add(socso);
+            detail.AddRange(elaunSemua);
+            detail.AddRange(potonganSemua);
+            detail.AddRange(carumanSemua);
+
+            return detail;
+        }
+
+        public static List<HR_TRANSAKSI_SAMBILAN_DETAIL> GetTRANSAKSI_SAMBILAN_DETAIL
+            (ApplicationDbContext db, string noPekerja,
+            int tahunDibayar, int bulanDibayar,
+            int tahunBekerja = 0, int bulanBekerja = 0)
+        {
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> detail =
+                new List<HR_TRANSAKSI_SAMBILAN_DETAIL>();
+            if (tahunBekerja == 0 && bulanBekerja == 0)
+            {
+                //kalau takde bulan bekerja/tahun bekerja
+                detail = db.HR_TRANSAKSI_SAMBILAN_DETAIL
+                .Where(s => s.HR_NO_PEKERJA == noPekerja
+                && s.HR_BULAN_DIBAYAR == bulanDibayar
+                && s.HR_TAHUN == tahunDibayar).ToList();
+            }
+            else
+            {
+                //kalau ada bulan bekerja/tahun bekerja
+                detail = db.HR_TRANSAKSI_SAMBILAN_DETAIL
+                .Where(s => s.HR_NO_PEKERJA == noPekerja
+                && s.HR_BULAN_DIBAYAR == bulanDibayar
+                && s.HR_TAHUN == tahunDibayar
+                && s.HR_BULAN_BEKERJA == bulanBekerja
+                && s.HR_TAHUN_BEKERJA == tahunBekerja)
+                .ToList();
+            }
+
+            return detail;
+        }
+
+        public static decimal GetGajiKasar
+             (ApplicationDbContext db, string noPekerja,
+            int tahunDibayar, int bulanDibayar,
+            int tahunBekerja = 0, int bulanBekerja = 0)
+        {
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> detail =
+                GetTRANSAKSI_SAMBILAN_DETAIL(db, noPekerja, tahunDibayar, bulanDibayar,
+                tahunBekerja, bulanBekerja);
+            decimal gajiKasar = GetGajiKasar(db, detail);
+            return gajiKasar;
+        }
+
+        public static List<HR_MAKLUMAT_ELAUN_POTONGAN> GetPotonganKWSP
+            (ApplicationDbContext db, string noPekerja,
+            int tahunDibayar, int bulanDibayar,
+            int tahunBekerja = 0, int bulanBekerja = 0)
+        {
+            decimal gajiKasar = GetGajiKasar(db, noPekerja, tahunDibayar,
+                bulanDibayar, tahunBekerja, bulanBekerja);
+
+            //kira KWSP dari gaji kasar
+            HR_KWSP kwsp = GetPotonganKWSP(db, gajiKasar);
 
             decimal carumanPekerja = 0;
             decimal carumanMajikan = 0;
@@ -478,32 +948,34 @@ namespace eSPP.Models
                 carumanMajikan = decimal.Round(kwsp.HR_CARUMAN_MAJIKAN, 2);
             }
 
-            HR_MAKLUMAT_ELAUN_POTONGAN userCaruman = new HR_MAKLUMAT_ELAUN_POTONGAN
+            HR_MAKLUMAT_ELAUN_POTONGAN potongan1 = new HR_MAKLUMAT_ELAUN_POTONGAN
             {
-                HR_NO_PEKERJA = HR_PEKERJA,
+                HR_NO_PEKERJA = noPekerja,
                 HR_ELAUN_POTONGAN_IND = "P",
                 HR_KOD_ELAUN_POTONGAN = "P0035",
                 HR_AKTIF_IND = "Y",
                 HR_JUMLAH = carumanPekerja
             };
 
-            HR_MAKLUMAT_ELAUN_POTONGAN userCaruman2 = new HR_MAKLUMAT_ELAUN_POTONGAN
+            HR_MAKLUMAT_ELAUN_POTONGAN potongan2 = new HR_MAKLUMAT_ELAUN_POTONGAN
             {
-                HR_NO_PEKERJA = HR_PEKERJA,
+                HR_NO_PEKERJA = noPekerja,
                 HR_ELAUN_POTONGAN_IND = "C",
                 HR_KOD_ELAUN_POTONGAN = "C0020",
                 HR_AKTIF_IND = "Y",
                 HR_JUMLAH = carumanMajikan
             };
 
-            List<HR_MAKLUMAT_ELAUN_POTONGAN> userCarumanTotal = new List<HR_MAKLUMAT_ELAUN_POTONGAN>();
-            userCarumanTotal.Add(userCaruman);
-            userCarumanTotal.Add(userCaruman2);
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> userCarumanTotal =
+                new List<HR_MAKLUMAT_ELAUN_POTONGAN>();
+            userCarumanTotal.Add(potongan1);
+            userCarumanTotal.Add(potongan2);
 
             return userCarumanTotal;
         }
 
-        public static decimal GetJamBekerja(ApplicationDbContext db, string HR_PEKERJA, int tahun, int bulan)
+        public static decimal GetJamBekerja(ApplicationDbContext db,
+            string HR_PEKERJA, int tahun, int bulan)
         {
             HR_TRANSAKSI_SAMBILAN_DETAIL elaunOT = db.HR_TRANSAKSI_SAMBILAN_DETAIL
                 .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA
@@ -518,25 +990,27 @@ namespace eSPP.Models
             return jamBekerja;
         }
 
-        public static decimal GetHariBekerja(ApplicationDbContext db, string HR_PEKERJA, int tahun, int bulan)
+        public static decimal GetHariBekerja(ApplicationDbContext db,
+            string HR_PEKERJA, int tahunDibayar, int bulanDibayar)
         {
             HR_TRANSAKSI_SAMBILAN_DETAIL gaji = db.HR_TRANSAKSI_SAMBILAN_DETAIL
                 .Where(s => s.HR_NO_PEKERJA == HR_PEKERJA
-                && s.HR_BULAN_DIBAYAR == bulan
-                && s.HR_TAHUN == tahun
+                && s.HR_BULAN_DIBAYAR == bulanDibayar
+                && s.HR_TAHUN == tahunDibayar
                 && s.HR_KOD == "GAJPS").FirstOrDefault();
             decimal hariBekerja = 0;
-            if(gaji != null)
+            if (gaji != null)
             {
                 hariBekerja = gaji.HR_JAM_HARI.Value;
             }
             return hariBekerja;
         }
 
-        public static decimal GetGajiPokok(ApplicationDbContext db, string HR_PEKERJA, int hariBekerja)
+        public static decimal GetGajiPokok(ApplicationDbContext db,
+            string HR_PEKERJA, int hariBekerja)
         {
             //add new condition: no need to go to DB if hari bekerja is 0
-            if(hariBekerja > 0)
+            if (hariBekerja > 0)
             {
                 decimal gajiSehari = GetGajiSehari(db, HR_PEKERJA);
                 decimal gajiPokok = gajiSehari * hariBekerja;
@@ -544,7 +1018,7 @@ namespace eSPP.Models
 
                 return gajiPokok;
             }
-            return 0.00M;            
+            return 0.00M;
         }
 
         public static decimal GetGajiSehari(ApplicationDbContext db, string HR_PEKERJA)
@@ -577,13 +1051,13 @@ namespace eSPP.Models
                 string gred = mpekerjaan.HR_KUMPULAN;
                 switch (gred)
                 {
-                    case "A" :
+                    case "A":
                         gajiSehari = 100.00M;
                         break;
                     case "B":
                         gajiSehari = 72.00M;
                         break;
-                    default :
+                    default:
                         gajiSehari = 54.00M;
                         break;
                 }
@@ -591,18 +1065,18 @@ namespace eSPP.Models
             return gajiSehari;
         }
 
-        public static decimal GetElaunOT(ApplicationDbContext db, string HR_PEKERJA, 
+        public static decimal GetElaunOT(ApplicationDbContext db, string HR_PEKERJA,
             int jumlahHari, decimal jumlahJamOT)
         {
             //add new condition: no need to calculate if hari or jam OT is 0
-            if(jumlahJamOT > 0 && jumlahHari > 0)
+            if (jumlahJamOT > 0 && jumlahHari > 0)
             {
                 var gajiSehari = GetGajiSehari(db, HR_PEKERJA);
                 var gajisehariot = (gajiSehari * jumlahHari) * 12 / 2504;
                 var elaunOT = gajisehariot * jumlahJamOT;
                 return elaunOT;
             }
-            return 0;            
+            return 0;
         }
 
         //9/5/2019 - added Extra calculaction to calculate GajiKasar
@@ -630,22 +1104,67 @@ namespace eSPP.Models
             catch
             {
                 return 0;
-            }            
+            }
         }
 
-        public static decimal GetPotonganSocso(ApplicationDbContext db, decimal gajiPokok, decimal elaunOT)
+        //public static decimal GetGajiKasar(ApplicationDbContext db,
+        //    List<HR_TRANSAKSI_SAMBILAN_DETAIL> detail,
+        //    decimal hariBekerja, decimal jamBekerja)
+        //{
+
+        //}
+
+        public static decimal GetGajiKasar(ApplicationDbContext db,
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> detail,
+            bool isNew = false, decimal hariBekerja = 0, decimal jamBekerja = 0)
         {
-            //gaji kasar here means gaji kasar - elaun
-            decimal gajiKasar = gajiPokok + elaunOT;
-            if(gajiKasar > 0)
+            decimal gajiPokok = detail.Where(s => s.HR_KOD == KodGajiPokok)
+                .Select(s => s.HR_JUMLAH).Sum().Value;
+            hariBekerja = detail.Where(s => s.HR_KOD == KodGajiPokok)
+                .Select(s => s.HR_JAM_HARI).Sum().Value;
+            decimal elaunOT = detail.Where(s => s.HR_KOD == "E0164")
+                .Select(s => s.HR_JUMLAH).Sum().Value;
+
+            decimal elaunKAsehari = detail.Where(s => ListElaunKa.Contains(s.HR_KOD))
+                .Select(s => s.HR_JUMLAH).Sum().Value;
+            decimal elaunLainsehari = detail
+                .Where(s => s.HR_KOD_IND == "E"
+                && !ListElaunKa.Contains(s.HR_KOD)
+                && s.HR_KOD != "E0164")
+                .Select(s => s.HR_JUMLAH).Sum().Value;
+
+            decimal gajiKasar = 0;
+            gajiKasar = gajiPokok
+                + elaunOT
+                + ((elaunKAsehari + elaunLainsehari) * hariBekerja);
+            return gajiKasar;
+        }
+
+        public static HR_SOCSO GetPotonganSocso
+           (ApplicationDbContext db, List<HR_TRANSAKSI_SAMBILAN_DETAIL>
+            detail)
+        {
+            decimal gajiKasar = GetGajiKasar(db, detail);
+            HR_SOCSO sosco = db.HR_SOCSO
+                .Where(s => s.HR_GAJI_DARI <= gajiKasar
+                && s.HR_GAJI_HINGGA >= gajiKasar).FirstOrDefault();
+            return sosco;
+        }
+
+        public static decimal GetPotonganSocso(ApplicationDbContext db,
+            decimal gajiKasar)
+        {
+            //decimal gajiKasar = gajiPokok + elaunOT;
+            if (gajiKasar > 0)
             {
                 try
                 {
                     //fix issue userSocso keluar error kalau user taip hari = 1
-                    HR_SOCSO userSocso = db.HR_SOCSO.Where(s => s.HR_GAJI_DARI <= gajiKasar
-                       && gajiKasar <= s.HR_GAJI_HINGGA).SingleOrDefault();
+                    HR_SOCSO userSocso = db.HR_SOCSO
+                        .Where(s => s.HR_GAJI_DARI <= gajiKasar
+                       && gajiKasar <= s.HR_GAJI_HINGGA).FirstOrDefault();
 
-                    return userSocso.HR_JUMLAH;
+                    return userSocso.HR_CARUMAN_PEKERJA;
                 }
                 catch (Exception ex)
                 {
@@ -663,28 +1182,35 @@ namespace eSPP.Models
             return 0;
         }
 
-        public static PageSejarahModel Insert(PageSejarahModel agree, string user, string command)
+        public static PageSejarahModel Insert(PageSejarahModel agree, string user,
+            string command)
         {
             var testVal = agree.tunggakangajipokok;
 
             ApplicationDbContext db = new ApplicationDbContext();
             //MajlisContext mc = new MajlisContext();
-            HR_MAKLUMAT_PEKERJAAN mpekerjaan = db.HR_MAKLUMAT_PEKERJAAN.Where(s => s.HR_NO_PEKERJA == agree.HR_PEKERJA).SingleOrDefault();
+            HR_MAKLUMAT_PEKERJAAN mpekerjaan = db.HR_MAKLUMAT_PEKERJAAN
+                .Where(s => s.HR_NO_PEKERJA == agree.HR_PEKERJA).FirstOrDefault();
 
             //Only add elaun lain (including elaun KA), do not add ElaunOT
-            List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunsemua = GetElaunSemua(db, agree.HR_PEKERJA);
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunsemua =
+                GetElaunSemua(db, agree.HR_PEKERJA);
 
             //TODO: make sure bila insert, semua maklumat potongan masuk
-            List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganSemua = GetPotonganSemua(db, agree.HR_PEKERJA, agree.gajipokok);
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganSemua =
+                GetPotonganSemua(db, agree.HR_PEKERJA, agree.tahundibayar,
+                agree.bulandibayar, agree.tahunbekerja, agree.bulanbekerja);
 
-            //Add Caruman
-            //List<HR_MAKLUMAT_ELAUN_POTONGAN> maklumatcaruman = GetCaruman(db, agree.HR_PEKERJA);
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> newDetail
+                = GetNewTRANSAKSI_SAMBILAN_DETAIL
+                (db, agree, elaunsemua, potonganSemua);
 
             //For Logging
             try
             {
                 var tbl = db.Users.Where(p => p.Id == user).FirstOrDefault();
-                var emel = db.HR_MAKLUMAT_PERIBADI.Where(s => s.HR_NO_KPBARU == tbl.UserName).FirstOrDefault();
+                var emel = db.HR_MAKLUMAT_PERIBADI
+                    .Where(s => s.HR_NO_KPBARU == tbl.UserName).FirstOrDefault();
                 var role1 = db.UserRoles.Where(d => d.UserId == tbl.Id).FirstOrDefault();
                 var role = db.Roles.Where(e => e.Id == role1.RoleId).FirstOrDefault();
 
@@ -696,12 +1222,12 @@ namespace eSPP.Models
                 switch (command.ToLower())
                 {
                     case ("hantar"):
-                        InsertHantar(db, agree, elaunsemua, potonganSemua, agree.gajipokok);
+                        InsertHantar(db, agree, newDetail);
                         TrailLog(emel, role,
                             emel.HR_NAMA_PEKERJA + " Telah menambah data untuk pekerja " + agree.HR_PEKERJA);
                         break;
                     case ("kemaskini"):
-                        InsertHantar(db, agree, elaunsemua, potonganSemua, agree.gajipokok);
+                        InsertHantar(db, agree, newDetail);
                         //InsertKemaskini(db, agree, listkwsp, elaunLain, potonganSemua,
                         //    maklumatcaruman, agree.gajipokok);
                         TrailLog(emel, role,
@@ -720,7 +1246,7 @@ namespace eSPP.Models
             {
 
             }
-           
+
             return agree;
         }
 
@@ -853,10 +1379,15 @@ namespace eSPP.Models
         {
             try
             {
+                string roleName = "USER";
+                if (role != null)
+                {
+                    roleName = role.Name;
+                }
                 System.Web.HttpContext httpContext = System.Web.HttpContext.Current;
                 new AuditTrailModels().Log(emel.HR_EMAIL, emel.HR_NAMA_PEKERJA,
                    httpContext.Request.UserHostAddress,
-                   role.Name,
+                   roleName,
                    message,
                    System.Net.Dns.GetHostName(),
                    emel.HR_TELBIMBIT, httpContext.Request.RawUrl, "Sejarah");
@@ -869,49 +1400,51 @@ namespace eSPP.Models
         }
 
         private static void InsertHantar(ApplicationDbContext db, PageSejarahModel agree,
-            List<HR_MAKLUMAT_ELAUN_POTONGAN> maklumatelaun,
-            List<HR_MAKLUMAT_ELAUN_POTONGAN> maklumatpotongan,
+            //List<HR_MAKLUMAT_ELAUN_POTONGAN> maklumatelaun,
+            //List<HR_MAKLUMAT_ELAUN_POTONGAN> maklumatpotongan,
             //List<HR_MAKLUMAT_ELAUN_POTONGAN> maklumatcaruman,
-            decimal gajipokok)
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> detail)
         {
             //instead of looping 401 records, a LINQ is used here to get the correct KWSP based on gaji pokok
             //KWSP based on gaji pokok? or KWSP based on gaji pokok + elaun
-            HR_KWSP kwsp = db.HR_KWSP
-                .Where(s => gajipokok >= s.HR_UPAH_DARI
-                && gajipokok <= s.HR_UPAH_HINGGA).SingleOrDefault();
+            //HR_KWSP kwsp = db.HR_KWSP
+            //    .Where(s => gajipokok >= s.HR_UPAH_DARI
+            //    && gajipokok <= s.HR_UPAH_HINGGA).SingleOrDefault();
             try
             {
                 InsertHRSAMBILAN(db, agree);
-                InsertMAJIKANKWSP(db, agree, kwsp);
-                InsertPEKERJAKSWP(db, agree, kwsp);
-                if (maklumatpotongan != null)
-                {
-                    InsertMAKLUMATPOTONGAN(db, agree, maklumatpotongan);
-                }
-                InsertELAUNOT(db, agree);
-                InsertGAJIPEKERJA(db, agree);
-                InsertELAUNLAIN(db, agree, maklumatelaun);
+                InsertHRSAMBILANDETAIL(db, agree, detail);
+
+                //InsertMAJIKANKWSP(db, agree, kwsp);
+                //InsertPEKERJAKSWP(db, agree, kwsp);
+                //if (maklumatpotongan != null)
+                //{
+                //    InsertMAKLUMATPOTONGAN(db, agree, maklumatpotongan);
+                //}
+                //InsertELAUNOT(db, agree);
+                //InsertGAJIPEKERJA(db, agree);
+                //InsertELAUNLAIN(db, agree, maklumatelaun);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
-
             if (agree.tunggakan == "Y")
             {
                 try
                 {
                     InsertHRSAMBILAN(db, agree, true);
-                    InsertMAJIKANKWSP(db, agree, kwsp, true);
-                    InsertPEKERJAKSWP(db, agree, kwsp, true);
+                    InsertHRSAMBILANDETAIL(db, agree, detail, true);
+                    //InsertMAJIKANKWSP(db, agree, kwsp, true);
+                    //InsertPEKERJAKSWP(db, agree, kwsp, true);
 
-                    if (maklumatpotongan != null)
-                    {
-                        InsertMAKLUMATPOTONGAN(db, agree, maklumatpotongan, true);
-                    }
-                    InsertELAUNOT(db, agree, true);
-                    InsertGAJIPEKERJA(db, agree, true);
-                    InsertELAUNLAIN(db, agree, maklumatelaun, true);
+                    //if (maklumatpotongan != null)
+                    //{
+                    //    InsertMAKLUMATPOTONGAN(db, agree, maklumatpotongan, true);
+                    //}
+                    //InsertELAUNOT(db, agree, true);
+                    //InsertGAJIPEKERJA(db, agree, true);
+                    //InsertELAUNLAIN(db, agree, maklumatelaun, true);
                     //InsertMAKLUMATCARUMAN(db, agree, maklumatcaruman, true);
                 }
                 catch (Exception ex)
@@ -929,8 +1462,68 @@ namespace eSPP.Models
 
         #region Insert Into HR SAMBILAN DETAIL
 
-        private static void InsertHRSAMBILAN(ApplicationDbContext db, PageSejarahModel agree,
+        private static void InsertHRSAMBILANDETAIL(ApplicationDbContext db,
+            PageSejarahModel agree, List<HR_TRANSAKSI_SAMBILAN_DETAIL> detail,
             bool isTunggakan = false)
+        {
+            int bulanDibayar = agree.bulandibayar;
+            int tahunDibayar = agree.tahundibayar;
+            int bulanBekerja = agree.bulanbekerja;
+            int tahunBekerja = agree.tahunbekerja;
+            string kelulusanYDP = agree.kelulusanydp;
+
+            if (isTunggakan)
+            {
+                bulanDibayar = agree.tunggakanbulandibayar;
+                tahunDibayar = agree.tunggakantahundibayar;
+                bulanBekerja = agree.tunggakanbulanbekerja;
+                tahunBekerja = agree.tunggakantahunbekerja;
+                kelulusanYDP = agree.kelulusanydptunggakan;
+            }
+
+            //TODO: delete semua transaksi, masukkan transaksi baru
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> toEdit =
+                db.HR_TRANSAKSI_SAMBILAN_DETAIL
+                .Where(s => s.HR_NO_PEKERJA == agree.HR_PEKERJA
+                && s.HR_BULAN_BEKERJA == agree.bulanbekerja
+                && s.HR_BULAN_DIBAYAR == agree.bulandibayar
+                && s.HR_TAHUN_BEKERJA == agree.tahunbekerja
+                && s.HR_TAHUN == agree.tahundibayar).ToList();
+            try
+            {
+                Debug.WriteLine("Adding " + detail.Count + " records");
+                foreach (var toIns in detail)
+                {
+                    var dkod = toEdit
+                        .Where(s => s.HR_KOD == toIns.HR_KOD).FirstOrDefault();
+                    if (dkod != null)
+                    {
+                        //kalau ada, kita edit row itu.
+                        dkod.HR_JAM_HARI = toIns.HR_JAM_HARI;
+                        dkod.HR_JUMLAH = toIns.HR_JUMLAH;
+                        dkod.HR_MUKTAMAD = toIns.HR_MUKTAMAD;
+                        dkod.HR_TUNGGAKAN_IND = toIns.HR_TUNGGAKAN_IND;
+                        dkod.HR_YDP_LULUS_IND = toIns.HR_YDP_LULUS_IND;
+                        db.Entry(dkod).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        //kalau takde, kita insert
+                        db.HR_TRANSAKSI_SAMBILAN_DETAIL.Add(toIns);
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error:" + ex.ToString());
+            }
+        }
+
+
+        private static void InsertHRSAMBILAN(ApplicationDbContext db,
+            PageSejarahModel agree, bool isTunggakan = false)
         {
             int bulanDibayar = agree.bulandibayar;
             int tahunDibayar = agree.tahundibayar;
@@ -950,11 +1543,11 @@ namespace eSPP.Models
             }
 
             HR_TRANSAKSI_SAMBILAN sambilan = db.HR_TRANSAKSI_SAMBILAN
-                       .Where(s => s.HR_NO_PEKERJA == agree.HR_PEKERJA
-                       && s.HR_BULAN_DIBAYAR == bulanDibayar
-                       && s.HR_BULAN_BEKERJA == bulanBekerja
-                       && s.HR_TAHUN == tahunDibayar
-                       && s.HR_TAHUN_BEKERJA == tahunBekerja).FirstOrDefault();
+                .Where(s => s.HR_NO_PEKERJA == agree.HR_PEKERJA
+                && s.HR_BULAN_DIBAYAR == bulanDibayar
+                && s.HR_BULAN_BEKERJA == bulanBekerja
+                && s.HR_TAHUN == tahunDibayar
+                && s.HR_TAHUN_BEKERJA == tahunBekerja).FirstOrDefault();
             if (sambilan == null)
             {
                 try

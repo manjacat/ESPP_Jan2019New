@@ -205,7 +205,8 @@ namespace eSPP.Models
 		public string JUMLAHBAYARANOT { get; set; }
 		public string KIRATUNGGAKAN { get; set; }
 		public decimal? JAMBEKERJA { get; set; }
-		public decimal? HARIBEKERJA { get; set; }
+        public string JAMBEKERJASTRING { get; set; }
+        public decimal? HARIBEKERJA { get; set; }
 		public string HR_KOD { get; set; }
 		public int HR_BULAN_DIBAYAR_TUNGGAKAN { get; set; }
 		public int HR_TAHUN_TUNGGAKAN { get; set; }

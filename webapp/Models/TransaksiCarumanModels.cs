@@ -37,23 +37,38 @@ namespace eSPP.Models
             //int tahun = 2019;
             //int bulan = 4;
 
-            List<string> listPekerja = sppDb.HR_TRANSAKSI_SAMBILAN_DETAIL
-                .Where(s => s.HR_TAHUN == tahun
-                && s.HR_BULAN_DIBAYAR == bulan)
-                .Select(s => s.HR_NO_PEKERJA).Distinct().ToList();
+            //List<string> listPekerja = sppDb.HR_TRANSAKSI_SAMBILAN_DETAIL
+            //    .Where(s => s.HR_TAHUN == tahun
+            //    && s.HR_BULAN_DIBAYAR == bulan)
+            //    .Select(s => s.HR_NO_PEKERJA).Distinct().ToList();
 
-            foreach(string noPekerja in listPekerja)
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> gajiAll =
+                sppDb.HR_TRANSAKSI_SAMBILAN_DETAIL
+                .Where(s => s.HR_KOD == "GAJPS"
+                && s.HR_TAHUN == tahun
+                && s.HR_BULAN_DIBAYAR == bulan).ToList();
+
+            foreach (var item in gajiAll)
             {
+                string noPekerja = item.HR_NO_PEKERJA;
+                int bulanBekerja = item.HR_BULAN_BEKERJA;
+                int bulanDibayar = item.HR_BULAN_DIBAYAR;
+                int tahunBekerja = item.HR_TAHUN_BEKERJA;
+                int tahunDibayar = item.HR_TAHUN;
+
                 PA_TRANSAKSI_CARUMAN spgCaruman = spgDb.PA_TRANSAKSI_CARUMAN
                     .Where(s => s.PA_NO_PEKERJA == noPekerja
-                    && s.PA_TAHUN_CARUMAN == tahun
-                    && s.PA_BULAN_CARUMAN == bulan
+                    && s.PA_TAHUN_CARUMAN == tahunBekerja
+                    && s.PA_BULAN_CARUMAN == bulanBekerja
                     && s.PA_KOD_CARUMAN == "C0020").FirstOrDefault();
 
-                HR_TRANSAKSI_SAMBILAN_DETAIL sppCaruman = sppDb.HR_TRANSAKSI_SAMBILAN_DETAIL
+                HR_TRANSAKSI_SAMBILAN_DETAIL sppCaruman = 
+                    sppDb.HR_TRANSAKSI_SAMBILAN_DETAIL
                     .Where(s => s.HR_NO_PEKERJA == noPekerja
-                    && s.HR_TAHUN == tahun
-                    && s.HR_BULAN_DIBAYAR == bulan
+                    && s.HR_BULAN_BEKERJA == bulanBekerja
+                    && s.HR_TAHUN_BEKERJA == tahunBekerja
+                    && s.HR_TAHUN == tahunDibayar
+                    && s.HR_BULAN_DIBAYAR == bulanDibayar
                     && s.HR_KOD == "C0020").FirstOrDefault();
                 decimal jumlahCaruman = sppCaruman.HR_JUMLAH == null 
                     ? 0 : sppCaruman.HR_JUMLAH.Value;
@@ -67,9 +82,9 @@ namespace eSPP.Models
                         PA_KOD_CARUMAN = "C0020",
                         PA_TARIKH_PROSES = DateTime.Now,
                         PA_JUMLAH_CARUMAN = jumlahCaruman,
-                        PA_BULAN_CARUMAN = (byte)bulan,
+                        PA_BULAN_CARUMAN = (byte)bulanBekerja,
                         PA_PROSES_IND = "P",
-                        PA_TAHUN_CARUMAN = (short)tahun,
+                        PA_TAHUN_CARUMAN = (short)tahunBekerja,
                         PA_TARIKH_KEYIN = DateTime.Now,
                         //ambik dari HR_CARUMAN.HR_VOT_CARUMAN
                         PA_VOT_CARUMAN = "11-03-01-00-29301"
@@ -91,9 +106,9 @@ namespace eSPP.Models
                     spgCaruman.PA_KOD_CARUMAN = "C0020";
                     //spgCaruman.PA_TARIKH_PROSES = DateTime.Now;
                     spgCaruman.PA_JUMLAH_CARUMAN = jumlahCaruman;
-                    spgCaruman.PA_BULAN_CARUMAN = (byte)bulan;
+                    spgCaruman.PA_BULAN_CARUMAN = (byte)bulanBekerja;
                     spgCaruman.PA_PROSES_IND = "P";
-                    spgCaruman.PA_TAHUN_CARUMAN = (short)tahun;
+                    spgCaruman.PA_TAHUN_CARUMAN = (short)tahunBekerja;
                     spgCaruman.PA_TARIKH_KEYIN = DateTime.Now;
                     //spgCaruman.PA_VOT_CARUMAN = null;
                     try
