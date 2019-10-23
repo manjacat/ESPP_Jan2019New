@@ -543,12 +543,12 @@ namespace eSPP.Models
                 && s.HR_KOD_ELAUN_POTONGAN != "P0160"
                 && s.HR_KOD_ELAUN_POTONGAN != "P0035")).ToList();
 
-            HR_MAKLUMAT_ELAUN_POTONGAN potonganSukan =
-                GetPotonganElaunSukan(HR_PEKERJA);
-            if (potonganSukan != null)
-            {
-                potonganlain.Add(potonganSukan);
-            }
+            //HR_MAKLUMAT_ELAUN_POTONGAN potonganSukan =
+            //    GetPotonganElaunSukan(HR_PEKERJA);
+            //if (potonganSukan != null)
+            //{
+            //    potonganlain.Add(potonganSukan);
+            //}
 
             return potonganlain;
         }
@@ -579,6 +579,7 @@ namespace eSPP.Models
             return potonganSemua;
         }
 
+        //removed from calculation
         public static HR_MAKLUMAT_ELAUN_POTONGAN GetPotonganElaunSukan
             (string HR_PEKERJA)
         {

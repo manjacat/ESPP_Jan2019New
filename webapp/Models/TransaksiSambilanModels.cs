@@ -204,7 +204,7 @@ namespace eSPP.Models
                     decimal potonganSocso = PageSejarahModel
                         .GetPotonganSocso(db, gajiKasar);
                     kerjaelaun.POTONGANSOCSO = potonganSocso;
-                    kerjaelaun.POTONGANKWSP = potonganKWSP.HR_CARUMAN_PEKERJA;
+                    kerjaelaun.POTONGANKWSP = potonganKWSP != null ? potonganKWSP.HR_CARUMAN_PEKERJA : 0.00M;
                     kerjaelaun.POTONGANKSDK = potonganksdk.Sum(s => s.HR_JUMLAH).Value.ToString("0.00");
                     kerjaelaun.POTONGLAIN = potonganlain.Sum(s => s.HR_JUMLAH).Value.ToString("0.00");
 
@@ -213,7 +213,7 @@ namespace eSPP.Models
                     //gaji bersih = gaji pokok + elaun - potongan
                     var bersih = gajiKasar
                         - potonganSocso
-                        - potonganKWSP.HR_CARUMAN_PEKERJA
+                        - (potonganKWSP == null? 0.00M : potonganKWSP.HR_CARUMAN_PEKERJA)
                         - potonganksdk.Sum(s => s.HR_JUMLAH)
                         - potonganlain.Sum(s => s.HR_JUMLAH);
                     kerjaelaun.GAJIBERSIH = decimal.Parse(bersih.Value.ToString("0.00"));

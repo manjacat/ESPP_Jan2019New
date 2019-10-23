@@ -1852,11 +1852,11 @@ namespace eSPP.Controllers
 
             if (isFilterSukan)
             {
-                reportTitle = sambilan;
+                reportTitle = sambilanSukan;
             }
             else
             {
-                reportTitle = sambilanSukan;
+                reportTitle = sambilan;
             }
 
             ApplicationDbContext db = new ApplicationDbContext();
@@ -1896,6 +1896,12 @@ namespace eSPP.Controllers
         {
             string root = Server.MapPath("~");
             string rootURL = Request.Url.Host;
+
+            var endOfStr = root.Substring(root.Length -1);
+            if ( endOfStr != @"\")
+            {
+                root += @"\";
+            }
 
             string htmlFileLocation = root + @"Reports\ReportGajiSambilan.html";
             //string imageRootURL = rootURL + "/Images/";
