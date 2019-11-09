@@ -1,0 +1,48 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+
+<div class="tab-pane" id="TanggungKerja">
+    <div class="row">
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Senarai Kesalahan Disiplin
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                    <table id="datatable_TanggungKerja" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Pekerja Ditanggung</th>
+                                <th>Tarikh Mula</th>
+                                <th>Tarikh Akhir</th>
+                                <th>Butiran</th>
+                                <th>Catatan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_TANGGUNG_KERJA.Count(); item++)
+                            {
+
+                                <tr id="no1">
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td>@Model.HR_MAKLUMAT_TANGGUNG_KERJA.ElementAt(item).HR_NAMA_PT</td>
+                                    <td>@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_TANGGUNG_KERJA.ElementAt(item).HR_TARIKH_MULA)</td>
+                                    <td>@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_TANGGUNG_KERJA.ElementAt(item).HR_TARIKH_AKHIR)</td>
+                                    <td>@Model.HR_MAKLUMAT_TANGGUNG_KERJA.ElementAt(item).HR_BUTIR_PERUBAHAN</td>
+                                    <td>@Model.HR_MAKLUMAT_TANGGUNG_KERJA.ElementAt(item).HR_CATATAN</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <br />
+    <br />
+    <br />
+</div>
+

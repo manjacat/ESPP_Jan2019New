@@ -17,6 +17,8 @@ namespace eSPP.Models
     [Table("HR_MAKLUMAT_PERIBADI")]
     public class HR_MAKLUMAT_PERIBADI
     {
+        ApplicationDbContext db = new ApplicationDbContext();
+
         [Key]
         [ForeignKey("HR_MAKLUMAT_PEKERJAAN")]
         public string HR_NO_PEKERJA { get; set; }
@@ -68,10 +70,34 @@ namespace eSPP.Models
         public bool CreateUserInfo()
         {
             bool bReturn = false;
-            ApplicationDbContext db = new ApplicationDbContext();
+            
             db.HR_MAKLUMAT_PERIBADI.Add(this);
             db.SaveChanges();
             return bReturn;
+        }
+
+        public List<HR_MAKLUMAT_PERIBADI> CariPekerja(string key, string value, string status)
+        {
+            List<HR_MAKLUMAT_PERIBADI> mPeribadi = new List<HR_MAKLUMAT_PERIBADI>();
+            if (key == "1" || key == "4")
+            {
+                mPeribadi = db.HR_MAKLUMAT_PERIBADI.Where(s => s.HR_NO_PEKERJA == value).ToList();
+
+            }
+            else if (key == "2")
+            {
+                mPeribadi = db.HR_MAKLUMAT_PERIBADI.Where(s => s.HR_NAMA_PEKERJA.StartsWith(value)).ToList();
+            }
+            else if (key == "3")
+            {
+                mPeribadi = db.HR_MAKLUMAT_PERIBADI.Where(s => s.HR_NO_KPBARU.StartsWith(value)).ToList();
+            }
+
+            if (status != null && status != "")
+            {
+                mPeribadi = mPeribadi.Where(s => s.HR_AKTIF_IND == status).ToList();
+            }
+            return mPeribadi;
         }
 
     }

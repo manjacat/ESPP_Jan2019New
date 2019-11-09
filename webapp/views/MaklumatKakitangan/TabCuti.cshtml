@@ -1,0 +1,827 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+<div class="tab-pane" id="Cuti">
+    <div class="row">
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Maklumat Cuti
+            </legend>
+
+            <div id="KategoriCuti">
+
+                <div class="row smart-form">
+                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="row">
+                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kategori</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="select">
+                                        @Html.DropDownListFor(model => model.HR_MAKLUMAT_CUTI.HR_KATEGORI_CUTI, (SelectList)ViewBag.HR_KATEGORI_CUTI, string.Empty, new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                    </div>
+                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="row smart-form">
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Tarikh Memohon</label>
+                                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <input type="text" name="HR_MAKLUMAT_CUTI.HR_TARIKH_PERMOHONAN" id="HR_MAKLUMAT_CUTI_HR_TARIKH_PERMOHONAN" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_CUTI.HR_TARIKH_PERMOHONAN)" disabled="disabled" />
+                                            </label>
+                                        </div>
+                                    </section>
+
+                                    <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tahun</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_TAHUN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+                                    </section>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row smart-form">
+
+                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="row smart-form">
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jenis Cuti</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="select">
+                                                @Html.DropDownListFor(model => model.HR_MAKLUMAT_CUTI.HR_KOD_CUTI, new SelectList(ViewBag.HR_KOD_CUTI, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                <i></i>
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="row smart-form">
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+
+                                    <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Kod Cuti</label>
+                                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <input type="text" name="HR_MAKLUMAT_CUTI.HR_KOD_CUTI2" id="HR_MAKLUMAT_CUTI_HR_KOD_CUTI2" class="form-control" value="@Model.HR_MAKLUMAT_CUTI.HR_KOD_CUTI" disabled="disabled" />
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                    <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Baki Terkini</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_BAKI_TERKINI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row smart-form">
+
+                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="row smart-form">
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Tarikh Mula Cuti</label>
+                                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <input type="text" name="HR_MAKLUMAT_CUTI.HR_TARIKH_MULA_CUTI" id="HR_MAKLUMAT_CUTI_HR_TARIKH_MULA_CUTI" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_CUTI.HR_TARIKH_MULA_CUTI)" disabled="disabled" />
+                                            </label>
+                                        </div>
+
+                                    </section>
+
+                                    <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Hingga</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <input type="text" name="HR_MAKLUMAT_CUTI.HR_TARIKH_TAMAT_CUTI" id="HR_MAKLUMAT_CUTI_HR_TARIKH_TAMAT_CUTI" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_CUTI.HR_TARIKH_TAMAT_CUTI)" disabled="disabled" />
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Bil. Hari Bercuti</label>
+                                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_BIL_CUTI_TEMP, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="row smart-form">
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Jumlah Maksimum</label>
+                                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_JUMLAH_MAKSIMUM, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+
+                                    </section>
+
+                                    <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jum Telah Diambil</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_BIL_CUTI_DIAMBIL, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                </div>
+                                <div class="row" id="CutiBerekod2">
+                                    <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Baki Cuti Dibawa Ke Hadapan</label>
+                                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_BAKI_TAHUN_LEPAS, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="CutiBerekod" class="hide">
+
+                <div class="row smart-form">
+                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Senarai Tarikh Bercuti</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="textarea">
+                                        @Html.DropDownListFor(model => model.HR_MAKLUMAT_CUTI.HR_SENARAI_TARIKH, (MultiSelectList)ViewBag.HR_SENARAI_TARIKH, new { multiple = "multiple", @class = "form-control custom-scroll", size = 5 })
+                                    </label>
+                                </div>
+
+                            </section>
+
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Senarai Batal Tarikh Cuti</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="textarea">
+                                        @Html.DropDownListFor(model => model.HR_MAKLUMAT_CUTI.HR_TARIKH_BATAL, (MultiSelectList)ViewBag.HR_TARIKH_BATAL, new { multiple = "multiple", @class = "form-control custom-scroll", size = 5 })
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div class="row smart-form">
+                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="row">
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Kelayakan Cuti Bulanan</label>
+                                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_KELAYAKAN_BULANAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="row">
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Kelayakan Cuti Tahunan</label>
+                                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                @Html.Editor("HR_MAKLUMAT_CUTI.HR_KELAYAKAN_TAHUNAN", new { htmlAttributes = new { @class = "form-control", disabled = "disabled", id = "HR_MAKLUMAT_CUTI_HR_KELAYAKAN_TAHUNAN" } })
+                                            </label>
+                                        </div>
+
+                                    </section>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row smart-form">
+                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="row smart-form">
+                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Alasan</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_ALASAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                        <div class="row smart-form">
+                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tetap</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_CALAMAT1, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                        <div class="row smart-form">
+                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_CALAMAT2, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="row smart-form">
+                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_CALAMAT3, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+
+                        <div class="row smart-form">
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Poskod</label>
+                                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-question-circle"></i>
+                                                @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_CPOSKOD, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 5 } })
+                                                <b class="tooltip tooltip-top-right">
+                                                    <i class="fa fa-warning txt-color-teal"></i>
+                                                    Sila isi hanya nombor sahaja
+                                                </b>
+                                            </label>
+                                        </div>
+
+                                    </section>
+
+                                    <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bandar</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_CBANDAR, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="row smart-form">
+                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Negeri</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="select">
+                                        @Html.DropDownListFor(model => model.HR_MAKLUMAT_CUTI.HR_CNEGERI, new SelectList(ViewBag.Negeri, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                    </div>
+                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="row smart-form">
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                <div class="row">
+
+                                    <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">No. Telefon</label>
+                                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_TEL, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama Pengganti</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                            <label class="select">
+                                                @Html.DropDownListFor(model => model.HR_MAKLUMAT_CUTI.HR_NP_PENGGANTI, new SelectList(ViewBag.HR_NO_PENYELIA, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control select2", disabled = "disabled", width = "100%" })
+
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                </div>
+                                <div class="row">
+                                    <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">No. Pekerja</label>
+                                        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                            <label class="input">
+                                                @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_NP_PENGGANTI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            </label>
+                                        </div>
+
+                                    </section>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div id="CutiTidakBerekod" class="hide">
+                <div class="row smart-form">
+                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama Program</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_NAMA_PROGRAM, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+
+                            </section>
+                            <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Anjuran</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_ANJURAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div class="row smart-form">
+                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="row smart-form">
+                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bertempat</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_TEMPAT_PROGRAM, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="CutiBersalin" class="hide">
+                <div class="row smart-form">
+                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="row">
+                            <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Tarikh Isteri Bersalin</label>
+                                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        <input type="text" name="HR_MAKLUMAT_CUTI.HR_TARIKH_ISTERI_BERSALIN" id="HR_MAKLUMAT_CUTI_HR_TARIKH_ISTERI_BERSALIN" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_CUTI.HR_TARIKH_ISTERI_BERSALIN)" disabled="disabled" />
+                                    </label>
+                                </div>
+                            </section>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="CutiKematian" class="hide">
+                <div class="row smart-form">
+                    <div class="col col-lg-6 col-md-6col-sm-6 col-xs-6">
+                        <div class="row">
+                            <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Kematian</label>
+                                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                    <label class="select">
+                                        @Html.DropDownListFor(model => model.HR_MAKLUMAT_CUTI.HR_HUBUNGAN, new SelectList(ViewBag.HR_MAKLUMAT_CUTI_HR_HUBUNGAN, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>
+                                    </label>
+                                </div>
+                            </section>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-6 col-md-6 col-sm-6 col-xs-6 hide" id="Sokongan">
+            <legend>Sokongan Ketua Bahagian</legend>
+            <div class="row smart-form">
+                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama</label>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <label class="select">
+                            @Html.DropDownListFor(model => model.HR_MAKLUMAT_CUTI.HR_NP_KJ, new SelectList(ViewBag.HR_NO_PENYELIA, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control select2", disabled = "disabled", width = "100%" })
+
+                        </label>
+                    </div>
+
+                </section>
+            </div>
+            <div class="row smart-form">
+                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">No. Pekerja</label>
+                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <label class="input">
+                            @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_NP_KJ, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </label>
+                    </div>
+
+                </section>
+
+                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh</label>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <label class="input">
+                            <input type="text" name="HR_MAKLUMAT_CUTI.HR_TARIKH_SOKONG" id="HR_MAKLUMAT_CUTI_HR_TARIKH_SOKONG" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_CUTI.HR_TARIKH_SOKONG)" disabled="disabled" />
+                        </label>
+                    </div>
+                </section>
+            </div>
+            <div class="row smart-form">
+                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Status</label>
+                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <div class="inline-group">
+                            <label class="radio">
+                                @Html.RadioButtonFor(model => model.HR_MAKLUMAT_CUTI.HR_SOKONG_IND, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                <i></i>Sokong
+                            </label>
+                            <label class="radio">
+                                @Html.RadioButtonFor(model => model.HR_MAKLUMAT_CUTI.HR_SOKONG_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                <i></i>Tiada
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-6 col-md-6 col-sm-6 col-xs-6 hide" id="KelulusanYDP">
+            <legend>Kelulusan Yang Dipertua (YDP)</legend>
+            <div class="row smart-form">
+                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama</label>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <label class="select">
+                            @Html.DropDownListFor(model => model.HR_MAKLUMAT_CUTI.HR_NO_PEKERJA_YDP, new SelectList(ViewBag.HR_NO_PENYELIA, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control select2", disabled = "disabled", width = "100%" })
+                        </label>
+                    </div>
+
+                </section>
+            </div>
+            <div class="row smart-form">
+                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">No. Pekerja</label>
+                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <label class="input">
+                            @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_NO_PEKERJA_YDP, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </label>
+                    </div>
+
+                </section>
+
+                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh</label>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <label class="input">
+                            <input type="text" name="HR_MAKLUMAT_CUTI.HR_TARIKH_YDP" id="HR_MAKLUMAT_CUTI_HR_TARIKH_YDP" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_CUTI.HR_TARIKH_YDP)" disabled="disabled" />
+                        </label>
+                    </div>
+
+                </section>
+            </div>
+            <div class="row smart-form">
+                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Status</label>
+                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <div class="inline-group">
+                            <label class="radio">
+                                @Html.RadioButtonFor(model => model.HR_MAKLUMAT_CUTI.HR_LULUS_YDP_IND, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                <i></i>Lulus
+                            </label>
+                            <label class="radio">
+                                @Html.RadioButtonFor(model => model.HR_MAKLUMAT_CUTI.HR_LULUS_YDP_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                <i></i>Tiada
+                            </label>
+                        </div>
+                    </div>
+
+                </section>
+
+            </div>
+
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-6 col-md-6 col-sm-6 col-xs-6 hide" id="KelulusanHR">
+            <legend>Kelulusan Ketua Jabatan</legend>
+            <div class="row smart-form">
+                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama</label>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <label class="select">
+                            @Html.DropDownListFor(model => model.HR_MAKLUMAT_CUTI.HR_NO_PEKERJA_LULUS, new SelectList(ViewBag.HR_NO_PENYELIA, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control select2", disabled = "disabled", width = "100%" })
+                        </label>
+                    </div>
+
+                </section>
+            </div>
+            <div class="row smart-form">
+                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">No. Pekerja</label>
+                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <label class="input">
+                            @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_NO_PEKERJA_LULUS, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </label>
+                    </div>
+
+                </section>
+
+                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh</label>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <label class="input">
+                            <input type="text" name="HR_MAKLUMAT_CUTI.HR_TARIKH_LULUS_HR" id="HR_MAKLUMAT_CUTI_HR_TARIKH_LULUS_HR" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_CUTI.HR_TARIKH_LULUS_HR)" disabled="disabled" />
+                        </label>
+                    </div>
+
+                </section>
+            </div>
+            <div class="row smart-form" id="Ulasan">
+                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Ulasan Bahagian Sumber Manusia</label>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <label class="textarea textarea-resizable">
+                            @Html.TextAreaFor(model => model.HR_MAKLUMAT_CUTI.HR_ULASAN, new { @class = "form-control custom-scroll", disabled = "disabled", row = 5 })
+                        </label>
+                    </div>
+
+                </section>
+            </div>
+            <div class="row smart-form">
+                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Status</label>
+                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <div class="inline-group">
+                            <label class="radio">
+                                @Html.RadioButtonFor(model => model.HR_MAKLUMAT_CUTI.HR_HR_LULUS_IND, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                <i></i>Lulus
+                            </label>
+                            <label class="radio">
+                                @Html.RadioButtonFor(model => model.HR_MAKLUMAT_CUTI.HR_HR_LULUS_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                <i></i>Tiada
+                            </label>
+                        </div>
+                    </div>
+
+                </section>
+
+            </div>
+
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-6 col-md-6 col-sm-6 col-xs-6 hide" id="Kelulusan">
+            <legend>Kelulusan Ketua Jabatan</legend>
+            <div class="row smart-form">
+                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama</label>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <label class="select">
+                            @Html.DropDownListFor(model => model.HR_MAKLUMAT_CUTI.HR_NO_PEKERJA_LULUS, new SelectList(ViewBag.HR_NO_PENYELIA, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control select2", disabled = "disabled", width = "100%" })
+
+                        </label>
+                    </div>
+
+                </section>
+            </div>
+            <div class="row smart-form">
+                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">No. Pekerja</label>
+                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <label class="input">
+                            @Html.EditorFor(model => model.HR_MAKLUMAT_CUTI.HR_NP_KJ, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                        </label>
+                    </div>
+
+                </section>
+
+                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh</label>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <label class="input">
+                            <input type="text" name="HR_MAKLUMAT_CUTI.HR_TARIKH_LULUS" id="HR_MAKLUMAT_CUTI_HR_TARIKH_LULUS" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_CUTI.HR_TARIKH_LULUS)" disabled="disabled" />
+                        </label>
+                    </div>
+
+                </section>
+            </div>
+            <div class="row smart-form">
+                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Status</label>
+                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <div class="inline-group">
+                            <label class="radio">
+                                @Html.RadioButtonFor(model => model.HR_MAKLUMAT_CUTI.HR_LULUS_IND, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                <i></i>Lulus
+                            </label>
+                            <label class="radio">
+                                @Html.RadioButtonFor(model => model.HR_MAKLUMAT_CUTI.HR_LULUS_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                <i></i>Tiada
+                            </label>
+                        </div>
+                    </div>
+
+                </section>
+
+            </div>
+
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>Senarai Cuti</legend>
+            <table id="datatable_Cuti" class="table table-striped table-bordered table-hover " width="100%">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Jenis Cuti</th>
+                        <th>Tarikh Mohon</th>
+                        <th>Tarikh Mula</th>
+                        <th>Tarikh Tamat</th>
+                        <th>Kelulusan</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var noCuti = 0;
+                    }
+                    @if (ViewBag.SenaraiCutiCount > 0)
+                    {
+                        foreach (MaklumatCuti cuti in ViewBag.SenaraiCuti)
+                        {
+                            noCuti++;
+
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="KATEGORI_CUTI_dt" id="KATEGORI_CUTI_dt" value="@cuti.HR_KATEGORI_CUTI" />
+                                    <input type="hidden" name="TAHUN_dt" id="TAHUN_dt" value="@cuti.HR_TAHUN" />
+                                    <input type="hidden" name="TARIKH_PERMOHONAN_dt" id="TARIKH_PERMOHONAN_dt" value="@cuti.HR_TARIKH_PERMOHONAN" />
+                                    <input type="hidden" name="JUMLAH_MAKSIMUM_dt" id="JUMLAH_MAKSIMUM_dt" value="@cuti.HR_JUMLAH_MAKSIMUM" />
+                                    <input type="hidden" name="KOD_CUTI_dt" id="KOD_CUTI_dt" value="@cuti.HR_KOD_CUTI" />
+                                    @noCuti
+                                </td>
+                                <td>
+                                    @foreach (HR_CUTI KodCuti in ViewBag.KodCuti)
+                                    {
+                                        if (cuti.HR_KOD_CUTI == KodCuti.HR_KOD_CUTI)
+                                        {
+                                            @KodCuti.HR_KETERANGAN;
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @string.Format("{0:dd/MM/yyyy}", cuti.HR_TARIKH_PERMOHONAN)
+                                </td>
+                                <td>
+                                    @string.Format("{0:dd/MM/yyyy}", cuti.HR_TARIKH_MULA_CUTI)
+                                </td>
+                                <td>
+                                    @string.Format("{0:dd/MM/yyyy}", cuti.HR_TARIKH_TAMAT_CUTI)
+                                </td>
+                                <td>
+                                    @{
+                                        var label = "label-danger";
+                                        var txtLabel = "Tidak Diluluskan";
+                                    }
+                                    @if (cuti.HR_LULUS_IND == "Y")
+                                    {
+                                        label = "label-success";
+                                        txtLabel = "Diluluskan";
+                                    }
+                                    <span class="label @label">@txtLabel</span>
+                                </td>
+                                <td>
+                                    @{
+                                        var label2 = "label-danger";
+                                        var txtLabel2 = "Cuti Telah Tamat";
+                                    }
+
+                                    @if (cuti.HR_TARIKH_MULA_CUTI > DateTime.Now)
+                                    {
+                                        label2 = "label-success";
+                                        txtLabel2 = "Belum Bercuti";
+                                    }
+                                    @if (cuti.HR_TARIKH_MULA_CUTI <= DateTime.Now && cuti.HR_TARIKH_TAMAT_CUTI >= DateTime.Now)
+                                    {
+                                        label2 = "label-success";
+                                        txtLabel2 = "Sedang Bercuti";
+                                    }
+                                    @if (cuti.HR_TARIKH_MULA_CUTI <= DateTime.Now && cuti.HR_TARIKH_TAMAT_CUTI >= DateTime.Now && cuti.HR_KOD_CUTI == "CU018")
+                                    {
+                                        label2 = "label-success";
+                                        txtLabel2 = "Aktif";
+                                    }
+                                    else
+                                    {
+                                        label = "label-danger";
+                                        txtLabel = "Tidak Aktif";
+                                    }
+                                    <span class="label @label2">@txtLabel2</span>
+                                </td>
+                            </tr>
+                                            }
+                                        }
+
+                </tbody>
+            </table>
+        </fieldset>
+        <br />
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <label class="">Kemaskini : </label>
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mCuti-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mCuti-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" name="kemaskini" id="kemaskini" class="form-control" value="off">
+                @Html.HiddenFor(model => model.HR_MAKLUMAT_CUTI.DISABLED)
+            </div>
+        </div>
+    </div>
+</div>
+

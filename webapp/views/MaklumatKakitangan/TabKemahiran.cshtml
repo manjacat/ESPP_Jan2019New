@@ -1,0 +1,307 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+@{ 
+    SelectList HR_BAHASA = ViewBag.HR_BAHASA;
+    SelectList P_TAHAP_KEMAHIRAN = ViewBag.P_TAHAP_KEMAHIRAN;
+}
+<div class="tab-pane fade" id="Kemahiran">
+    <div class="row">
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Pengalaman Bekerja
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mKemahiran-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mKemahiran-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Kemahiran1" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row">
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalPengalamanKerja")
+                    <table id="datatable_PengalamanKerja" class="table table-striped table-bordered table-hover " width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Syarikat</th>
+                                <th>Jawatan</th>
+                                <th>Tarikh Mula</th>
+                                <th>Tarikh Tamat</th>
+                                <th>Alasan Berhenti</th>
+                                <th>Padam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_PENGALAMAN_KERJA.Count(); item++)
+                            {
+                                <tr>
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_PENGALAMAN_KERJA.ElementAt(item).HR_NAMA_SYARIKAT</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_PENGALAMAN_KERJA[@item].HR_NAMA_SYARIKAT" class='form-control HR_MAKLUMAT_PENGALAMAN_KERJA_HR_NAMA_SYARIKAT' value='@Model.HR_MAKLUMAT_PENGALAMAN_KERJA.ElementAt(item).HR_NAMA_SYARIKAT' disabled="disabled" data-msg-required='Sila masukkan nama syarikat'  />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_PENGALAMAN_KERJA.ElementAt(item).HR_JAWATAN</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_PENGALAMAN_KERJA[@item].HR_JAWATAN" class='form-control HR_MAKLUMAT_PENGALAMAN_KERJA_HR_JAWATAN' value='@Model.HR_MAKLUMAT_PENGALAMAN_KERJA.ElementAt(item).HR_JAWATAN' disabled="disabled" data-msg-required='Sila masukkan jawatan' />
+                                        </label>
+
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_PENGALAMAN_KERJA.ElementAt(item).HR_TARIKH_MULA)</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_PENGALAMAN_KERJA[@item].HR_TARIKH_MULA" class='form-control HR_MAKLUMAT_PENGALAMAN_KERJA_HR_TARIKH_MULA' value='@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_PENGALAMAN_KERJA.ElementAt(item).HR_TARIKH_MULA)' disabled="disabled" data-msg-required='Sila masukkan tarikh mula' />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_PENGALAMAN_KERJA.ElementAt(item).HR_TARIKH_TAMAT)</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_PENGALAMAN_KERJA[@item].HR_TARIKH_TAMAT" class='form-control HR_MAKLUMAT_PENGALAMAN_KERJA_HR_TARIKH_TAMAT' value='@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_PENGALAMAN_KERJA.ElementAt(item).HR_TARIKH_TAMAT)' disabled="disabled" data-msg-required='Sila masukkan tarikh tamat' />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_PENGALAMAN_KERJA.ElementAt(item).HR_ALASAN_BERHENTI</div>
+                                        <label class="textarea textarea-resizable">
+                                            <textarea style="display:none;" name="HR_MAKLUMAT_PENGALAMAN_KERJA[@item].HR_ALASAN_BERHENTI" class="form-control" disabled="disabled">@Model.HR_MAKLUMAT_PENGALAMAN_KERJA.ElementAt(item).HR_ALASAN_BERHENTI</textarea>
+                                        </label>
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-danger btn-remove-PengalamanKerja" id="btn-remove-PengalamanKerja" name="remove-PengalamanKerja" type="button" disabled="disabled">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </fieldset>
+
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Kemahiran Bahasa
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mKemahiran2-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mKemahiran2-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Kemahiran2" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalKemahiranBahasa")
+                    <table id="datatable_KemahiranBahasa" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Bahasa</th>
+                                <th>Pembacaan</th>
+                                <th>Penulisan</th>
+                                <th>Pertuturan</th>
+
+                                <th>Padam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.Count(); item++)
+                            {
+                                <tr>
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{ 
+                                                string bhs = null;
+                                                if(HR_BAHASA.Where(s => s.Value == Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.ElementAt(item).HR_BAHASA).Count() > 0)
+                                                {
+                                                    bhs = HR_BAHASA.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.ElementAt(item).HR_BAHASA).Text;
+                                                }
+                                            }
+                                            @bhs
+                                        </div>
+                                        <label class="select">
+                                            <select name = "HR_MAKLUMAT_KEMAHIRAN_BAHASA[@item].HR_BAHASA" class = "form-control HR_MAKLUMAT_KEMAHIRAN_BAHASA_HR_BAHASA" id = "HR_BAHASA" style="display:none;" disabled="disabled" data-msg-required = "Sila pilih bahasa">
+                                                @foreach(var op in HR_BAHASA)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.ElementAt(item).HR_BAHASA ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string thp = null;
+                                                if (P_TAHAP_KEMAHIRAN.Where(s => s.Value == Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.ElementAt(item).HR_PEMBACAAN).Count() > 0)
+                                                {
+                                                    thp = P_TAHAP_KEMAHIRAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.ElementAt(item).HR_PEMBACAAN).Text;
+                                                }
+                                            }
+                                            @thp
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_KEMAHIRAN_BAHASA[@item].HR_PEMBACAAN" class="form-control HR_MAKLUMAT_KEMAHIRAN_BAHASA_HR_PEMBACAAN" style="display:none;" disabled="disabled" data-msg-required="Sila pilih pembacaan">
+                                                @foreach (var op in P_TAHAP_KEMAHIRAN)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.ElementAt(item).HR_PEMBACAAN ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string thp2 = null;
+                                                if (P_TAHAP_KEMAHIRAN.Where(s => s.Value == Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.ElementAt(item).HR_PENULISAN).Count() > 0)
+                                                {
+                                                    thp2 = P_TAHAP_KEMAHIRAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.ElementAt(item).HR_PENULISAN).Text;
+                                                }
+                                            }
+                                            @thp2
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_KEMAHIRAN_BAHASA[@item].HR_PENULISAN" class="form-control HR_MAKLUMAT_KEMAHIRAN_BAHASA_HR_PENULISAN" style="display:none;" disabled="disabled" data-msg-required="Sila pilih penulisan">
+                                                @foreach (var op in P_TAHAP_KEMAHIRAN)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.ElementAt(item).HR_PENULISAN ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string thp3 = null;
+                                                if (P_TAHAP_KEMAHIRAN.Where(s => s.Value == Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.ElementAt(item).HR_PERTUTURAN).Count() > 0)
+                                                {
+                                                    thp3 = P_TAHAP_KEMAHIRAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.ElementAt(item).HR_PERTUTURAN).Text;
+                                                }
+                                            }
+                                            @thp3
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_KEMAHIRAN_BAHASA[@item].HR_PERTUTURAN" class="form-control HR_MAKLUMAT_KEMAHIRAN_BAHASA_HR_PERTUTURAN" style="display:none;" disabled="disabled" data-msg-required="Sila pilih pertuturan">
+                                                @foreach (var op in P_TAHAP_KEMAHIRAN)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_KEMAHIRAN_BAHASA.ElementAt(item).HR_PERTUTURAN ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-danger btn-remove-KemahiranBahasa" id="btn-remove-KemahiranBahasa" name="remove-KemahiranBahasa" type="button" disabled="disabled">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </fieldset>
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Kemahiran Teknikal
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mKemahiran3-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mKemahiran3-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Kemahiran3" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row">
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalKemahiranTeknikal")
+                    <table id="datatable_KemahiranTeknikal" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kemahiran</th>
+                                <th>Tahap</th>
+                                <th>Padam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL.Count(); item++)
+                            {
+                                <tr id="no1">
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL.ElementAt(item).HR_KEMAHIRAN</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL[@item].HR_KEMAHIRAN" class='form-control HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL_HR_KEMAHIRAN' value='@Model.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL.ElementAt(item).HR_KEMAHIRAN' disabled="disabled" data-msg-required='Sila masukkan kemahiran' />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string thp = null;
+                                                if (P_TAHAP_KEMAHIRAN.Where(s => s.Value == Model.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL.ElementAt(item).HR_TAHAP).Count() > 0)
+                                                {
+                                                    thp = P_TAHAP_KEMAHIRAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL.ElementAt(item).HR_TAHAP).Text;
+                                                }
+                                            }
+                                            @thp
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL[@item].HR_TAHAP" class="form-control HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL_HR_TAHAP" style="display:none;" disabled="disabled" data-msg-required="Sila pilih tahap">
+                                                @foreach (var op in P_TAHAP_KEMAHIRAN)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL.ElementAt(item).HR_TAHAP ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-danger btn-remove-KemahiranTeknikal" id="btn-remove-KemahiranTeknikal" name="remove-KemahiranTeknikal" type="button" disabled="disabled">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </fieldset>
+
+    </div>
+    <br />
+    <br />
+    <br />
+    @*<div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <label class="">Kemaskini : </label>
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mKemahiran-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mKemahiran-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" name="kemaskini" class="form-control" value="off">
+            </div>
+        </div>
+    </div>*@
+</div>
+

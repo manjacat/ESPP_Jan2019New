@@ -1,0 +1,224 @@
+﻿@model IEnumerable<eSPP.Models.PergerakanGajiModels>
+
+<div id="content">
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa-fw fa fa-pencil-square-o"></i>
+                Kewangan 8
+                <span>
+                    >
+                    Pergerakan Gaji
+                </span>
+            </h1>
+        </div>
+    </div>
+
+    <section id="widget-grid" class="">
+
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <!-- WIDGET END -->
+
+        </div>
+
+        <!-- end row -->
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <article class="col-sm-12">
+
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-align-justify"></i> </span>
+                        <h2>Pergerakan Gaji</h2>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body">
+
+                            <div class="row">
+
+                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="well">
+                                        @using (Html.BeginForm("SenaraiSuratKewangan8Test", "Kewangan8", FormMethod.Get))
+                                        {
+                                            List<HR_MAKLUMAT_PERIBADI> sPegawai = (List<HR_MAKLUMAT_PERIBADI>)ViewBag.sPegawai;
+                                            @Html.Hidden("key", "4")
+                                            <div class="row">
+                                                <div class="col col-lg-3 col-md-6 col-sm-12 col-xs-12 smart-form">
+                                                    <div class="row">
+                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
+                                                            <b>Taraf pekerja : </b>
+                                                        </div>
+                                                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                            <div class="inline-group">
+                                                                <label class="radio">
+                                                                    <input type="radio" id="tarafpekerja" name="tarafpekerja" value="Y" @(ViewBag.tarafpekerja == "Y" ? "checked" : "")>
+                                                                    <i></i>Kakitangan
+                                                                </label>
+                                                                <label class="radio">
+                                                                    <input type="radio" id="tarafpekerja" name="tarafpekerja" value="T" @(ViewBag.tarafpekerja == "T" ? "checked" : "")>
+                                                                    <i></i>Pekerja
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col col-lg-3 col-md-6 col-sm-12 col-xs-12 smart-form">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left smart-form">
+                                                        <b>Bulan : </b>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 smart-form">
+                                                        <label class="select">
+                                                            @Html.DropDownList("bulan", new SelectList(ViewBag.month, "Value", "Text", null), new { @class = "form-control", id = "bulan" })
+                                                            <i></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col col-lg-3 col-md-6 col-sm-12 col-xs-12" style="padding-top:16px">
+                                                    <button type="button" name="Surat" id="btn-surat" class="btn btn-default btn-surat" formtarget="_blank" title="Cetak Surat"><i class="fa fa-file-text"></i></button>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal fade" id="Modal" tabindex="-1" role="dialog">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div id='ModalContent'>
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" aria-hidden="true">
+                                                                    &times;
+                                                                </button>
+                                                                <h4 class="modal-title">
+                                                                    <span id="tajukModel">Cetak</span> Pergerakan Gaji <span class="error"></span>
+                                                                </h4>
+                                                            </div>
+                                                            <div class="modal-body no-padding smart-form">
+                                                                <fieldset>
+                                                                    <section>
+                                                                        <div class="row">
+                                                                            <label class="label col col-4">Tarikh Mesyuarat PPSM</label>
+                                                                            <div class="col col-4">
+                                                                                <label class="input">
+                                                                                    @Html.TextBox("TARIKH_BERSIDANG", null, new { @class = "form-control", id = "TARIKH_BERSIDANG" })
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </section>
+                                                                </fieldset>
+
+                                                                <footer>
+                                                                    <button type="submit" id="btn" class="btn btn-primary">
+                                                                        <span class="fa fa-download"></span> Muat Turun
+                                                                    </button>
+                                                                    <button type="reset" class="btn btn-default">
+                                                                        Reset
+                                                                    </button>
+                                                                    <button type="button" id="btn-back" class="btn btn-default">
+                                                                        Kembali
+                                                                    </button>
+                                                                </footer>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+</div>
+@section pagespecific {
+    <script type="text/javascript">
+
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+        $('#TARIKH_BERSIDANG').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                //$('#HR_TARIKH_MULA').datepicker('option', 'maxDate', selectedDate);
+            }
+        });
+
+        $(document).ready(function () {
+            $('#btn-surat').on('click', function (e) {
+                //$('#Modal').modal('show');
+                $("#Modal").modal({
+                    show: true,
+                    backdrop: 'static'
+                });
+                //form.submit();
+            });
+        });
+
+        $("#btn-back, button.close").on("click", function () {
+            $("#errorMsg").html('Adakah anda pasti tidak ingin meneruskannya?');
+            $("#Modal").modal('hide');
+            $("#errorMsg").dialog({
+                open: function (event, ui) {   // It'll hide Close button
+                    $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                },
+                closeOnEscape: false,        // Do not close dialog on press Esc button
+                modal: true,
+                title: 'Mesej',
+                buttons: {
+                    "Ya": function () {
+                        $(this).dialog("close")
+                        $("#errorMsg").html('');
+                    },
+                    "Tidak": function () {
+                        $(this).dialog("close")
+                        $("#errorMsg").html('');
+                        $('#Modal').modal('show');
+                    }
+                }
+            });
+        })
+    </script>
+}

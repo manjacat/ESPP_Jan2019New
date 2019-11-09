@@ -213,7 +213,7 @@ namespace eSPP.Models
                     //gaji bersih = gaji pokok + elaun - potongan
                     var bersih = gajiKasar
                         - potonganSocso
-                        - (potonganKWSP == null? 0.00M : potonganKWSP.HR_CARUMAN_PEKERJA)
+                        - potonganKWSP.HR_CARUMAN_PEKERJA
                         - potonganksdk.Sum(s => s.HR_JUMLAH)
                         - potonganlain.Sum(s => s.HR_JUMLAH);
                     kerjaelaun.GAJIBERSIH = decimal.Parse(bersih.Value.ToString("0.00"));

@@ -1,0 +1,291 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+<div class="tab-pane fade" id="Pewaris">
+    @for (var item = 0; item < Model.HR_MAKLUMAT_PEWARIS.Count(); item++)
+    {
+        <div class="row" id="form-Pewaris">
+            <div id="clone-pewaris">
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="text-right">
+                        <button type="button" name="padamtxt" class="btn btn-warning padamtxt" disabled="disabled" title="Padam Text">
+                            <i class="fa fa-file-text"></i><i class="fa fa-times"></i>
+                        </button>
+                        <button type="button" name="tambah-waris" class="btn btn-success tambah-waris" disabled="disabled">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <legend>
+                        Maklumat Pewaris <span id="text-pewaris"></span>
+                    </legend>
+                    <div class="row smart-form">
+
+                        <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="row">
+                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-user"></i>
+                                            <input type="text" name="HR_MAKLUMAT_PEWARIS[@(item)].HR_NAMA_PEWARIS" class="form-control HR_MAKLUMAT_PEWARIS_HR_NAMA_PEWARIS" id="HR_MAKLUMAT_PEWARIS_@(item)__HR_NAMA_PEWARIS" disabled = "disabled" value="@Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_NAMA_PEWARIS" data-msg-required='Sila masukkan nama'/>
+                                            <b class="tooltip tooltip-top-right">
+                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                Sila penuhkan ruangan ini
+                                            </b>
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+
+                            <div class="row">
+                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Alamat</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_PEWARIS[" + item + "].HR_PALAMAT1", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_PALAMAT1, new { @class = "form-control", id = "HR_MAKLUMAT_PEWARIS_" + item + "__HR_PALAMAT1", disabled = "disabled" })
+                                        </label>
+                                    </div>
+
+                                </section>
+
+
+                            </div>
+                            <div class="row">
+                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_PEWARIS[" + item + "].HR_PALAMAT2", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_PALAMAT2, new { @class = "form-control", id = "HR_MAKLUMAT_PEWARIS_" + item + "__HR_PALAMAT2", disabled = "disabled" })
+                                        </label>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="row">
+                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            @Html.TextBox("HR_MAKLUMAT_PEWARIS[" + item + "].HR_PALAMAT3", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_PALAMAT3, new { @class = "form-control", id = "HR_MAKLUMAT_PEWARIS_" + item + "__HR_PALAMAT3", disabled = "disabled" })
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+
+                            <div class="row">
+                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Negeri</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_PEWARIS[" + item + "].HR_PNEGERI", new SelectList(ViewBag.Negeri, "Value", "Text", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_PNEGERI), string.Empty, new { @class = "form-control", id = "HR_MAKLUMAT_PEWARIS_" + item + "__HR_PNEGERI", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+
+                            <div class="row">
+                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row">
+                                        <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                            <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Poskod</label>
+                                            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                                <label class="input">
+                                                    <i class="icon-append fa fa-question-circle"></i>
+                                                    @Html.TextBox("HR_MAKLUMAT_PEWARIS[" + item + "].HR_PPOSKOD", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_PPOSKOD, new { @class = "form-control", id = "HR_MAKLUMAT_PEWARIS_" + item + "__HR_PPOSKOD", disabled = "disabled" })
+                                                    <b class="tooltip tooltip-top-right">
+                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                        Sila masukkan nombor sahaja
+                                                    </b>
+                                                </label>
+                                            </div>
+
+                                        </section>
+
+                                        <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bandar</label>
+                                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                <label class="input">
+                                                    <i class="icon-append fa fa-question-circle"></i>
+                                                    @Html.TextBox("HR_MAKLUMAT_PEWARIS[" + item + "].HR_PBANDAR", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_PBANDAR, new { @class = "form-control", id = "HR_MAKLUMAT_PEWARIS_" + item + "__HR_PBANDAR", disabled = "disabled" })
+                                                    <b class="tooltip tooltip-top-right">
+                                                        <i class="fa fa-warning txt-color-teal"></i>
+                                                        Sila penuhkan ruangan ini
+                                                    </b>
+                                                </label>
+                                            </div>
+
+                                        </section>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+
+                            <div class="row">
+                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. KP(Baru/Lama)</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-list-alt"></i>
+                                            <input type="text" name="HR_MAKLUMAT_PEWARIS[@(item)].HR_NO_KP" class="form-control HR_MAKLUMAT_PEWARIS_HR_NO_KP" id="HR_MAKLUMAT_PEWARIS_@(item)__HR_NO_KP" disabled="disabled" value="@Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_NO_KP" data-msg-required='Sila masukkan no. KP' />
+                                            <b class="tooltip tooltip-top-right">
+                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                Sila penuhkan ruangan ini
+                                            </b>
+                                        </label>
+                                    </div>
+
+                                </section>
+
+
+                            </div>
+                            <div class="row">
+                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Hubungan</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_PEWARIS[" + item + "].HR_HUBUNGAN", new SelectList(ViewBag.HR_HUBUNGAN, "Value", "Text", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_HUBUNGAN), string.Empty, new { @class = "form-control", id = "HR_MAKLUMAT_PEWARIS_" + item + "__HR_HUBUNGAN", disabled = "disabled" })
+                                            <i></i>
+                                        </label>
+                                    </div>
+
+                                </section>
+
+
+                            </div>
+
+                            <div class="row">
+                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Lahir</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-calendar"></i>
+                                            <input type="text" name="HR_MAKLUMAT_PEWARIS[@(item)].HR_TARIKH_LAHIR" class="form-control HR_MAKLUMAT_PEWARIS_HR_TARIKH_LAHIR" disabled="disabled" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_TARIKH_LAHIR)" data-msg-required='Sila masukkan tarikh lahir' />
+                                            <b class="tooltip tooltip-top-right">
+                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                Sila penuhkan ruangan ini
+                                            </b>
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+
+                            <div class="row">
+                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tempat Lahir</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_PEWARIS[" + item + "].HR_TEMPAT_LAHIR", new SelectList(ViewBag.TempatLahir, "Value", "Text", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_TEMPAT_LAHIR), string.Empty, new { @class = "form-control", id = "HR_MAKLUMAT_PEWARIS_" + item + "__HR_TEMPAT_LAHIR", disabled = "disabled" })
+
+                                            <i></i>
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+
+                            <div class="row">
+                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jantina</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="select">
+                                            @Html.DropDownList("HR_MAKLUMAT_PEWARIS[" + item + "].HR_JANTINA", new SelectList(ViewBag.HR_JANTINA, "Value", "Text", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_JANTINA), string.Empty, new { @class = "form-control", id = "HR_MAKLUMAT_PEWARIS_" + item + "__HR_TEMPAT_LAHIR", disabled = "disabled" })
+
+                                            <i></i>
+                                        </label>
+
+                                    </div>
+
+                                </section>
+                            </div>
+                        </div>
+
+                    </div>
+                </fieldset>
+                <br />
+
+                <br />
+                <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <legend>Telefon</legend>
+
+                    <div class="row smart-form">
+                        <section class="col col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Rumah</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-phone"></i>
+                                    @Html.TextBox("HR_MAKLUMAT_PEWARIS[" + item + "].HR_TELRUMAH", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_TELRUMAH, new { @class = "form-control", id = "HR_MAKLUMAT_PEWARIS_" + item + "__HR_TELRUMAH", disabled = "disabled" })
+                                    <b class="tooltip tooltip-top-right">
+                                        <i class="fa fa-warning txt-color-teal"></i>
+                                        Sila penuhkan ruangan ini
+                                    </b>
+                                </label>
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Pejabat</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-phone"></i>
+                                    @Html.TextBox("HR_MAKLUMAT_PEWARIS[" + item + "].HR_TELPEJABAT", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_TELPEJABAT, new { @class = "form-control", id = "HR_MAKLUMAT_PEWARIS_" + item + "__HR_TELPEJABAT", disabled = "disabled" })
+                                    <b class="tooltip tooltip-top-right">
+                                        <i class="fa fa-warning txt-color-teal"></i>
+                                        Sila penuhkan ruangan ini
+                                    </b>
+                                </label>
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bimbit</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-mobile-phone"></i>
+                                    @Html.TextBox("HR_MAKLUMAT_PEWARIS[" + item + "].HR_TELBIMBIT", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_TELBIMBIT, new { @class = "form-control", id = "HR_MAKLUMAT_PEWARIS_" + item + "__HR_TELBIMBIT", disabled = "disabled" })
+                                    <b class="tooltip tooltip-top-right">
+                                        <i class="fa fa-warning txt-color-teal"></i>
+                                        Sila penuhkan ruangan ini
+                                    </b>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                </fieldset>
+
+            </div>
+
+        </div>
+    }
+
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <label class="">Kemaskini : </label>
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mPewaris-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mPewaris-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+
+                </span>
+                <input type="hidden" name="kemaskini" class="form-control" value="off">
+            </div>
+        </div>
+    </div>
+</div>

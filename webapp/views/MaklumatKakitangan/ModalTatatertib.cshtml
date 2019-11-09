@@ -1,0 +1,90 @@
+﻿<div class="modal fade" id="ModalTatatertib" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    Tambah Tatatertib <span class="error"></span>
+                </h4>
+            </div>
+            <div class="modal-body no-padding smart-form">
+
+                @Html.Hidden("HR_TINDAKAN_DISIPLIN_HR_NO_PEKERJA", null, new { @class = "form-control" })
+                <fieldset>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Jenis Kesalahan</label>
+                            <div class="col col-8">
+                                <label class="textarea textarea-resizable">
+                                    @Html.TextArea("HR_TINDAKAN_DISIPLIN_HR_KESALAHAN", null, htmlAttributes: new { @class = "form-control", rows = 5 })
+
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Tarikh Mula Tindakan</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    @Html.TextBox("HR_TINDAKAN_DISIPLIN_HR_TARIKH_KESALAHAN", null, new { @class = "form-control", size = 9 })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Jenis Hukuman</label>
+                            <div class="col col-8">
+                                <label class="select">
+                                    @Html.DropDownList("HR_TINDAKAN_DISIPLIN_HR_KOD_TINDAKAN", new SelectList(ViewBag.HR_TINDAKAN, "Value", "Text"), string.Empty, new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Tarikh Hukuman</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    @Html.TextBox("HR_TINDAKAN_DISIPLIN_HR_TARIKH_MULA", null, new { @class = "form-control", size = 9 })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Tarikh Tamat</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    @Html.TextBox("HR_TINDAKAN_DISIPLIN_HR_TARIKH_AKHIR", null, new { @class = "form-control", size = 9 })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    
+                </fieldset>
+                <footer>
+                    <button type="button" id="btn-Tatatertib" class="btn btn-primary">
+                        <span class="fa fa-plus"></span> Tambah
+                    </button>
+                    <button type="reset" class="btn btn-default">
+                        Reset
+                    </button>
+                    <button type="button" id="btn-back" class="btn btn-default" data-dismiss="modal">
+                        Kembali
+                    </button>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

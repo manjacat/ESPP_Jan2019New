@@ -255,6 +255,21 @@
                         </div>
 
                         <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            @if (ViewBag.Kod == "00032")
+                            {
+                                @Html.Hidden("HR_NO_PEKERJA_PT", null)
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Nama Tanggung</label>
+                                        <div class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-search"></i>
+                                                @Html.TextBox("HR_NAMA_PT", null, new { @class = "form-control", @readonly = "readonly" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            }
                             @if (ViewBag.Kod == "TMK" || ViewBag.Kod == "00032" || ViewBag.Kod == "00004")
                             {
                                 <section>
@@ -1297,6 +1312,13 @@
                         }
                     }
                 },
+                HR_NAMA_PT: {
+                    required: function (element) {
+                        if ('@ViewBag.Kod' == "00032") {
+                            return true;
+                        }
+                    }
+                },
                 HR_JAWATAN_BARU: {
                     required: true
                 },
@@ -1429,6 +1451,9 @@
                     required: "Diperlukan",
                     number: "Sila masukkan hanya nombor sahaja",
                     remote: "Gaji tidak wujud"
+                },
+                HR_NAMA_PT: {
+                    required: "Diperlukan"
                 },
                 HR_JAWATAN_BARU: {
                     required: "Diperlukan"
@@ -1710,7 +1735,7 @@
             else {
                 FormSubmit(e, "Y");
             }
-            
+
             return true;
         })
 
@@ -1730,7 +1755,7 @@
                         waitMsg()
                         history.go(0);
                         $("#errorMsg").html('');
-                        
+
                     },
                     "Tidak": function () {
                         $(this).dialog("close")

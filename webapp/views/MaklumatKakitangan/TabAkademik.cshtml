@@ -1,0 +1,427 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+@{ 
+    List<SelectListItem> HR_KEPUTUSAN = ViewBag.HR_KEPUTUSAN;
+    List<HR_KURSUS> HR_KURSUS = ViewBag.HR_KURSUS;
+    List<SelectListItem> HR_PERINGKAT = ViewBag.HR_PERINGKAT;
+}
+<div class="tab-pane fade" id="Akademik">
+    <div class="row">
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Keputusan Subjek Bahasa Malaysia - Sijil Pelajaran Malaysia (SPM)
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mAkademik-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mAkademik-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Akademik1" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row smart-form">
+                <div class="row smart-form" id="xmodel">
+                    <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="row">
+                            <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Tahun Ambil SPM</label>
+                                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_MAKLUMAT_PERIBADI.HR_TAHUN_SPM, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", maxlength = 4 } })
+                                    </label>
+                                </div>
+
+                            </section>
+
+                            <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Gred BM</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        @Html.EditorFor(model => model.HR_MAKLUMAT_PERIBADI.HR_GRED_BM, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Kelayakan
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mAkademik2-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mAkademik2-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Akademik2" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalKelayakan")
+                    <table id="datatable_Kelayakan" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kelayakan Akademik</th>
+                                <th>Kelulusan</th>
+                                <th>Tahun Mula</th>
+                                <th>Tahun Tamat</th>
+                                <th>Sekolah/IPT</th>
+                                <th>Padam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_KELAYAKAN.Count(); item++)
+                            {
+                                <tr>
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_KELAYAKAN.ElementAt(item).HR_KEPUTUSAN</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_KELAYAKAN[@item].HR_KEPUTUSAN" class='form-control HR_MAKLUMAT_KELAYAKAN_HR_KEPUTUSAN' value='@Model.HR_MAKLUMAT_KELAYAKAN.ElementAt(item).HR_KEPUTUSAN' disabled="disabled" data-msg-required='Sila masukkan kelayakan akademik' />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_KELAYAKAN.ElementAt(item).HR_PANGKAT</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_KELAYAKAN[@item].HR_PANGKAT" class='form-control HR_MAKLUMAT_KELAYAKAN_HR_PANGKAT' value='@Model.HR_MAKLUMAT_KELAYAKAN.ElementAt(item).HR_PANGKAT' disabled="disabled" data-msg-required='Sila masukkan keputusan' />
+                                        </label>
+
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@string.Format("{0:yyyy}", Model.HR_MAKLUMAT_KELAYAKAN.ElementAt(item).HR_TAHUN_MULA)</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_KELAYAKAN[@item].HR_TAHUN_MULA" class='form-control HR_MAKLUMAT_KELAYAKAN_HR_TAHUN_MULA' value='@string.Format("{0:yyyy}", Model.HR_MAKLUMAT_KELAYAKAN.ElementAt(item).HR_TAHUN_MULA)' disabled="disabled" data-msg-required='Sila masukkan tahun mula' data-msg-number='Sila masukkan hanya nombor sahaja' data-msg-minlength='Tahun tidak betul' maxlength = 4 />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@string.Format("{0:yyyy}", Model.HR_MAKLUMAT_KELAYAKAN.ElementAt(item).HR_TAHUN_TAMAT)</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_KELAYAKAN[@item].HR_TAHUN_TAMAT" class='form-control HR_MAKLUMAT_KELAYAKAN_HR_TAHUN_TAMAT' value='@string.Format("{0:yyyy}", Model.HR_MAKLUMAT_KELAYAKAN.ElementAt(item).HR_TAHUN_TAMAT)' disabled="disabled" data-msg-required='Sila masukkan tahun tamat' data-msg-number='Sila masukkan hanya nombor sahaja' data-msg-minlength='Tahun tidak betul' maxlength=4 />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_KELAYAKAN.ElementAt(item).HR_SEKOLAH_INSTITUSI</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_KELAYAKAN[@item].HR_SEKOLAH_INSTITUSI" class='form-control HR_MAKLUMAT_KELAYAKAN_HR_SEKOLAH_INSTITUSI' value='@Model.HR_MAKLUMAT_KELAYAKAN.ElementAt(item).HR_SEKOLAH_INSTITUSI' disabled="disabled" data-msg-required='Sila masukkan sekolah/IPT' />
+                                        </label>
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-danger btn-remove-Kelayakan" id="btn-remove-Kelayakan" name="remove-Kelayakan" type="button" disabled="disabled">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Sijil-Sijil Khas / Peperiksaan
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mAkademik3-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mAkademik3-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Akademik3" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalSijil")
+                    <table id="datatable_Sijil" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Sijil Peperiksaan</th>
+                                <th>Tarikh Diperolehi</th>
+                                <th>Anjuran</th>
+                                <th>Keputusan</th>
+                                <th>Tambah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_SIJIL.Count(); item++)
+                            {
+                                <tr>
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_SIJIL.ElementAt(item).HR_NAMA_SIJIL_PEPERIKSAAN</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_SIJIL[@item].HR_NAMA_SIJIL_PEPERIKSAAN" class='form-control HR_MAKLUMAT_SIJIL_HR_NAMA_SIJIL_PEPERIKSAAN' value='@Model.HR_MAKLUMAT_SIJIL.ElementAt(item).HR_NAMA_SIJIL_PEPERIKSAAN' disabled="disabled" data-msg-required='Sila masukkan sijil peperiksaan' />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_SIJIL.ElementAt(item).HR_TARIKH_DIPEROLEHI)</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_SIJIL[@item].HR_TARIKH_DIPEROLEHI" class='form-control HR_MAKLUMAT_SIJIL_HR_TARIKH_DIPEROLEHI' value='@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_SIJIL.ElementAt(item).HR_TARIKH_DIPEROLEHI)' disabled="disabled" data-msg-required='Sila masukkan tarikh diperolehi' />
+                                        </label>
+
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_SIJIL.ElementAt(item).HR_ANJURAN</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_SIJIL[@item].HR_ANJURAN" class='form-control HR_MAKLUMAT_SIJIL_HR_ANJURAN' value='@Model.HR_MAKLUMAT_SIJIL.ElementAt(item).HR_ANJURAN' disabled="disabled" data-msg-required='Sila masukkan anjuran' />
+                                        </label>
+                                    </td>
+                                    <td class="smart-form">
+                                        <div id="rowtxt">
+                                            @{
+                                                string keputusan = null;
+                                                if (HR_KEPUTUSAN.Where(s => s.Value == Model.HR_MAKLUMAT_SIJIL.ElementAt(item).HR_KEPUTUSAN).Count() > 0)
+                                                {
+                                                    keputusan = HR_KEPUTUSAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_SIJIL.ElementAt(item).HR_KEPUTUSAN).Text;
+                                                }
+                                            }
+                                            @keputusan
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_SIJIL[@item].HR_KEPUTUSAN" class="form-control HR_MAKLUMAT_SIJIL_HR_KEPUTUSAN" style="display:none;" disabled="disabled" data-msg-required="Sila pilih keputusan">
+                                                @foreach (var op in HR_KEPUTUSAN)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_SIJIL.ElementAt(item).HR_KEPUTUSAN ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-danger btn-remove-Sijil" id="btn-remove-Sijil" name="remove-Sijil" type="button" disabled="disabled">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Kursus / Latihan Yang Telah Dihadiri
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mAkademik4-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mAkademik4-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Akademik4" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalKursusLatihan")
+                    <table id="datatable_Kursus" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Kursus</th>
+                                <th>Tarikh Mula</th>
+                                <th>Tarikh Tamat</th>
+                                <th>Anjuran</th>
+                                <th>Keputusan</th>
+                                <th>Padam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_KURSUS_LATIHAN.Count(); item++)
+                            {
+                                <tr>
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td class="smart-form">
+                                        <div id="rowtxt">
+                                            @{
+                                                string kod = null;
+                                                if (HR_KURSUS.Where(s => s.HR_KOD_KURSUS == Model.HR_MAKLUMAT_KURSUS_LATIHAN.ElementAt(item).HR_KOD_KURSUS).Count() > 0)
+                                                {
+                                                    kod = HR_KURSUS.FirstOrDefault(s => s.HR_KOD_KURSUS == Model.HR_MAKLUMAT_KURSUS_LATIHAN.ElementAt(item).HR_KOD_KURSUS).HR_NAMA_KURSUS;
+                                                }
+                                            }
+                                            @kod
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_KURSUS_LATIHAN[@item].HR_KOD_KURSUS" class="form-control HR_MAKLUMAT_KURSUS_LATIHAN_HR_KOD_KURSUS" style="display:none;" disabled="disabled" data-msg-required="Sila pilih kursus">
+                                                @foreach (var op in HR_KURSUS)
+                                                {
+                                                    <option value="@op.HR_KOD_KURSUS" @(op.HR_KOD_KURSUS == Model.HR_MAKLUMAT_KURSUS_LATIHAN.ElementAt(item).HR_KOD_KURSUS ? "selected" : "")>@op.HR_NAMA_KURSUS</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_KURSUS_LATIHAN.ElementAt(item).HR_TARIKH_MULA)</div>
+                                        <label class="input">
+                                            <input type='hidden' name='HR_MAKLUMAT_KURSUS_LATIHAN[@item].HR_TARIKH_MULA' class='form-control HR_MAKLUMAT_KURSUS_LATIHAN_HR_TARIKH_MULA' value='@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_KURSUS_LATIHAN.ElementAt(item).HR_TARIKH_MULA)' disabled="disabled" data-msg-required='Sila masukkan tarikh mula'  />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_KURSUS_LATIHAN.ElementAt(item).HR_TARIKH_TAMAT)</div>
+                                        <label class="input">
+                                            <input type='hidden' name='HR_MAKLUMAT_KURSUS_LATIHAN[@item].HR_TARIKH_TAMAT' class='form-control HR_MAKLUMAT_KURSUS_LATIHAN_HR_TARIKH_TAMAT' value='@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_KURSUS_LATIHAN.ElementAt(item).HR_TARIKH_TAMAT)' disabled="disabled" data-msg-required='Sila masukkan tarikh tamat'  />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_KURSUS_LATIHAN.ElementAt(item).HR_ANJURAN</div>
+                                        <label class="input">
+                                            <input type='hidden' name='HR_MAKLUMAT_KURSUS_LATIHAN[@item].HR_ANJURAN' class='form-control HR_MAKLUMAT_KURSUS_LATIHAN_HR_ANJURAN' value='@Model.HR_MAKLUMAT_KURSUS_LATIHAN.ElementAt(item).HR_ANJURAN' disabled="disabled" data-msg-required='Sila masukkan anjuran' />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string keputusan = null;
+                                                if (HR_KEPUTUSAN.Where(s => s.Value == Model.HR_MAKLUMAT_KURSUS_LATIHAN.ElementAt(item).HR_KEPUTUSAN).Count() > 0)
+                                                {
+                                                    keputusan = HR_KEPUTUSAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_KURSUS_LATIHAN.ElementAt(item).HR_KEPUTUSAN).Text;
+                                                }
+                                            }
+                                            @keputusan
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_KURSUS_LATIHAN[@item].HR_KEPUTUSAN" class="form-control HR_MAKLUMAT_KURSUS_LATIHAN_HR_KEPUTUSAN" style="display:none;" disabled="disabled" data-msg-required="Sila pilih keputusan">
+                                                @foreach (var op in HR_KEPUTUSAN)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_KURSUS_LATIHAN.ElementAt(item).HR_KEPUTUSAN ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-danger btn-remove-Kursus" id="btn-remove-Kursus" name="remove-Kursus" type="button" disabled="disabled">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Aktiviti Luar Yang Disertai
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mAkademik5-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mAkademik5-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Akademik5" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalAktivitiLuar")
+                    <table id="datatable_AktivitiLuar" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Peringkat</th>
+                                <th>Tarikh</th>
+                                <th>Nama Aktiviti</th>
+                                <th>Anjuran</th>
+                                <th>Padam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_AKTIVITI.Count(); item++)
+                            {
+                                <tr>
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string peringkat = null;
+                                                if (HR_PERINGKAT.Where(s => s.Value == Model.HR_MAKLUMAT_AKTIVITI.ElementAt(item).HR_PERINGKAT).Count() > 0)
+                                                {
+                                                    peringkat = HR_PERINGKAT.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_AKTIVITI.ElementAt(item).HR_PERINGKAT).Text;
+                                                }
+                                            }
+                                            @peringkat
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_AKTIVITI[@item].HR_PERINGKAT" class="form-control HR_MAKLUMAT_AKTIVITI_HR_PERINGKAT" style="display:none;" disabled="disabled" data-msg-required="Sila pilih peringkat">
+                                                @foreach (var op in HR_PERINGKAT)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_AKTIVITI.ElementAt(item).HR_PERINGKAT ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_AKTIVITI.ElementAt(item).HR_TARIKH_AKTIVITI)</div>
+                                        <label class="input">
+                                            <input type='hidden' name='HR_MAKLUMAT_AKTIVITI[@item].HR_TARIKH_AKTIVITI' class='form-control HR_MAKLUMAT_AKTIVITI_HR_TARIKH_AKTIVITI' value='@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_AKTIVITI.ElementAt(item).HR_TARIKH_AKTIVITI)' disabled="disabled" data-msg-required='Sila masukkan tarikh aktiviti' />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_AKTIVITI.ElementAt(item).HR_NAMA_AKTIVITI</div>
+                                        <label class="input">
+                                            <input type='hidden' name='HR_MAKLUMAT_AKTIVITI[@item].HR_NAMA_AKTIVITI' class='form-control HR_MAKLUMAT_AKTIVITI_HR_NAMA_AKTIVITI' value='@Model.HR_MAKLUMAT_AKTIVITI.ElementAt(item).HR_NAMA_AKTIVITI' disabled="disabled" data-msg-required='Sila masukkan nama aktiviti' />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_AKTIVITI.ElementAt(item).HR_ANJURAN</div>
+                                        <label class="input">
+                                            <input type='hidden' name='HR_MAKLUMAT_AKTIVITI[@item].HR_ANJURAN' class='form-control HR_MAKLUMAT_AKTIVITI_HR_ANJURAN' value='@Model.HR_MAKLUMAT_AKTIVITI.ElementAt(item).HR_ANJURAN' disabled="disabled" data-msg-required='Sila masukkan anjuran' />
+                                        </label>
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-danger btn-remove-AktivitiLuar" id="btn-remove-AktivitiLuar" name="remove-AktivitiLuar" type="button" disabled="disabled">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </fieldset>
+    </div>
+    <br />
+    <br />
+    <br />
+    @*<div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <label class="">Kemaskini : </label>
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mAkademik-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mAkademik-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" name="kemaskini" class="form-control" value="off">
+            </div>
+        </div>
+    </div>*@
+</div>
+

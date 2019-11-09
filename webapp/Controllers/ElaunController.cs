@@ -14,6 +14,7 @@ namespace eSPP.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private MajlisContext db2 = new MajlisContext();
+        private FMSContext FMS = new FMSContext();
 
         // GET: Elaun
         public ActionResult SenaraiElaun()
@@ -41,7 +42,7 @@ namespace eSPP.Controllers
 
             ViewBag.HR_KOD_KATEGORI = new SelectList(db.HR_KATEGORI_ELAUN, "HR_KOD_KATEGORI", "HR_PENERANGAN");
             ViewBag.HR_KOD_POTONGAN = new SelectList(db.HR_POTONGAN, "HR_KOD_POTONGAN", "HR_PENERANGAN_POTONGAN");
-            ViewBag.HR_KOD_KREDITOR = new SelectList(db.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
+            ViewBag.HR_KOD_KREDITOR = new SelectList(FMS.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
             ViewBag.HR_JAWATAN_IND = new SelectList(db2.GE_PARAMTABLE.Where(s => s.GROUPID == 110), "STRING_PARAM", "SHORT_DESCRIPTION");
             ViewBag.HR_ELAUN = db.HR_ELAUN.ToList();
             return PartialView("_InfoElaun", maklumatelaun);
@@ -51,7 +52,7 @@ namespace eSPP.Controllers
         {
             ViewBag.HR_KOD_KATEGORI = new SelectList(db.HR_KATEGORI_ELAUN, "HR_KOD_KATEGORI", "HR_PENERANGAN");
             ViewBag.HR_KOD_POTONGAN = new SelectList(db.HR_POTONGAN, "HR_KOD_POTONGAN", "HR_PENERANGAN_POTONGAN");
-            ViewBag.HR_KOD_KREDITOR = new SelectList(db.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
+            ViewBag.HR_KOD_KREDITOR = new SelectList(FMS.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
             ViewBag.HR_JAWATAN_IND = new SelectList(db2.GE_PARAMTABLE.Where(s => s.GROUPID == 110), "STRING_PARAM", "SHORT_DESCRIPTION");
             ViewBag.HR_ELAUN = db.HR_ELAUN.ToList();
             return PartialView("_TambahElaun");
@@ -95,7 +96,7 @@ namespace eSPP.Controllers
 
             ViewBag.HR_KOD_KATEGORI = new SelectList(db.HR_KATEGORI_ELAUN, "HR_KOD_KATEGORI", "HR_PENERANGAN");
             ViewBag.HR_KOD_POTONGAN = new SelectList(db.HR_POTONGAN, "HR_KOD_POTONGAN", "HR_PENERANGAN_POTONGAN");
-            ViewBag.HR_KOD_KREDITOR = new SelectList(db.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
+            ViewBag.HR_KOD_KREDITOR = new SelectList(FMS.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
             ViewBag.HR_JAWATAN_IND = new SelectList(db2.GE_PARAMTABLE.Where(s => s.GROUPID == 110), "STRING_PARAM", "SHORT_DESCRIPTION");
             ViewBag.HR_ELAUN = db.HR_ELAUN.ToList();
             return PartialView("_EditElaun", maklumatelaun);
@@ -113,7 +114,7 @@ namespace eSPP.Controllers
             }
             ViewBag.HR_KOD_KATEGORI = new SelectList(db.HR_KATEGORI_ELAUN, "HR_KOD_KATEGORI", "HR_PENERANGAN");
             ViewBag.HR_KOD_POTONGAN = new SelectList(db.HR_POTONGAN, "HR_KOD_POTONGAN", "HR_PENERANGAN_POTONGAN");
-            ViewBag.HR_KOD_KREDITOR = new SelectList(db.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
+            ViewBag.HR_KOD_KREDITOR = new SelectList(FMS.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
             ViewBag.HR_JAWATAN_IND = new SelectList(db2.GE_PARAMTABLE.Where(s => s.GROUPID == 110), "STRING_PARAM", "SHORT_DESCRIPTION");
             return View(maklumatelaun);
         }
@@ -134,7 +135,7 @@ namespace eSPP.Controllers
 
             ViewBag.HR_KOD_KATEGORI = new SelectList(db.HR_KATEGORI_ELAUN, "HR_KOD_KATEGORI", "HR_PENERANGAN");
             ViewBag.HR_KOD_POTONGAN = new SelectList(db.HR_POTONGAN, "HR_KOD_POTONGAN", "HR_PENERANGAN_POTONGAN");
-            ViewBag.HR_KOD_KREDITOR = new SelectList(db.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
+            ViewBag.HR_KOD_KREDITOR = new SelectList(FMS.AP_CREDITORMASTER, "CREDITORCODE", "CREDITORNAME");
             ViewBag.HR_JAWATAN_IND = new SelectList(db2.GE_PARAMTABLE.Where(s => s.GROUPID == 110), "STRING_PARAM", "SHORT_DESCRIPTION");
             ViewBag.HR_ELAUN = db.HR_ELAUN.ToList();
             return PartialView("_PadamElaun", maklumatelaun);

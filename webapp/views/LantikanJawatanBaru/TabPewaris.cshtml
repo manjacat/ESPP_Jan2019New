@@ -25,8 +25,7 @@
                                     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                                         <label class="input">
                                             <i class="icon-append fa fa-user"></i>
-                                            @Html.TextBox("HR_MAKLUMAT_PEWARIS[" + item + "].HR_NO_PEKERJA", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_NO_PEKERJA, new { @class = "form-control hide", id = "HR_MAKLUMAT_PEWARIS_" + item + "__HR_NO_PEKERJA", disabled = "disabled" })
-                                            @Html.TextBox("HR_MAKLUMAT_PEWARIS[" + item + "].HR_NAMA_PEWARIS", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_NAMA_PEWARIS, new { @class = "form-control", id = "HR_MAKLUMAT_PEWARIS_" + item + "__HR_NAMA_PEWARIS", disabled = "disabled" })
+                                            <input type="text" name="HR_MAKLUMAT_PEWARIS[@(item)].HR_NAMA_PEWARIS" class="form-control HR_MAKLUMAT_PEWARIS_HR_NAMA_PEWARIS" id="HR_MAKLUMAT_PEWARIS_@(item)__HR_NAMA_PEWARIS" disabled="disabled" value="@Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_NAMA_PEWARIS" data-msg-required='Sila masukkan nama' />
                                             <b class="tooltip tooltip-top-right">
                                                 <i class="fa fa-warning txt-color-teal"></i>
                                                 Sila penuhkan ruangan ini
@@ -132,7 +131,7 @@
                                     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                                         <label class="input">
                                             <i class="icon-append fa fa-list-alt"></i>
-                                            @Html.TextBox("HR_MAKLUMAT_PEWARIS[" + item + "].HR_NO_KP", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_NO_KP, new { @class = "form-control", id = "HR_MAKLUMAT_PEWARIS_" + item + "__HR_NO_KP", disabled = "disabled" })
+                                            <input type="text" name="HR_MAKLUMAT_PEWARIS[@(item)].HR_NO_KP" class="form-control HR_MAKLUMAT_PEWARIS_HR_NO_KP" id="HR_MAKLUMAT_PEWARIS_@(item)__HR_NO_KP" disabled="disabled" value="@Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_NO_KP" data-msg-required='Sila masukkan no. KP' />
                                             <b class="tooltip tooltip-top-right">
                                                 <i class="fa fa-warning txt-color-teal"></i>
                                                 Sila penuhkan ruangan ini
@@ -165,7 +164,7 @@
                                     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                                         <label class="input">
                                             <i class="icon-append fa fa-calendar"></i>
-                                            @Html.TextBox("HR_MAKLUMAT_PEWARIS[" + item + "].HR_TARIKH_LAHIR", string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_TARIKH_LAHIR), new { @class = "form-control HR_MAKLUMAT_PEWARIS_HR_TARIKH_LAHIR", disabled = "disabled" })
+                                            <input type="text" name="HR_MAKLUMAT_PEWARIS[@(item)].HR_TARIKH_LAHIR" class="form-control HR_MAKLUMAT_PEWARIS_HR_TARIKH_LAHIR" disabled="disabled" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_PEWARIS.ElementAt(item).HR_TARIKH_LAHIR)" data-msg-required='Sila masukkan tarikh lahir' />
                                             <b class="tooltip tooltip-top-right">
                                                 <i class="fa fa-warning txt-color-teal"></i>
                                                 Sila penuhkan ruangan ini

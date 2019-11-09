@@ -39,7 +39,7 @@ namespace eSPP.Models
         public string HR_POTONGAN_IND { get; set; }
         public int? HR_MUKTAMAD { get; set; }
 
-        public static List<HR_TRANSAKSI_SAMBILAN_DETAIL> GetTransaksi
+        public static List<HR_TRANSAKSI_SAMBILAN_DETAIL> GetTransaksiBekerja
         (ApplicationDbContext db, int tahunBekerja, int bulanBekerja)
         {
             if (tahunBekerja == 0 || bulanBekerja == 0)
@@ -53,6 +53,28 @@ namespace eSPP.Models
                 allTransaksi = db.HR_TRANSAKSI_SAMBILAN_DETAIL
                     .Where(s => s.HR_TAHUN_BEKERJA == tahunBekerja
                     && s.HR_BULAN_BEKERJA == bulanBekerja).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return allTransaksi;
+        }
+
+        public static List<HR_TRANSAKSI_SAMBILAN_DETAIL> GetTransaksiDibayar
+        (ApplicationDbContext db, int tahunDibayar, int bulanDibayar)
+        {
+            if (tahunDibayar == 0 || bulanDibayar == 0)
+            {
+                return null;
+            }
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> allTransaksi
+                = new List<HR_TRANSAKSI_SAMBILAN_DETAIL>();
+            try
+            {
+                allTransaksi = db.HR_TRANSAKSI_SAMBILAN_DETAIL
+                    .Where(s => s.HR_TAHUN == tahunDibayar
+                    && s.HR_BULAN_DIBAYAR == bulanDibayar).ToList();
             }
             catch (Exception ex)
             {

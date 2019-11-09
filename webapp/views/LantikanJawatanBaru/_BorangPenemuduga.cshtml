@@ -1,0 +1,216 @@
+﻿@model eSPP.Models.HR_MAKLUMAT_PENEMUDUGA
+
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            @(ViewBag.HR_JENIS) Penemuduga <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("BorangPenemuduga", "LantikanJawatanBaru", FormMethod.Post, new { id = "form", @class = "smart-form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_TARIKH_TEMUDUGA)
+            @Html.HiddenFor(model => model.HR_KOD_JAWATAN)
+            @Html.HiddenFor(model => model.HR_TARAF_JAWATAN)
+            @Html.HiddenFor(model => model.HR_PENEMUDUGA)
+            @Html.Hidden("HR_JENIS")
+
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Penemuduga</label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-search"></i>
+                                @Html.Editor("HR_NAMA_PENEMUDUGA", new { htmlAttributes = new { @class = "form-control", id= "HR_NAMA_PENEMUDUGA" } })
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Catatan</label>
+                        <div class="col col-8">
+                            <label class="textarea textarea-resizable">
+                                <i class="icon-append fa fa-briefcase"></i>
+                                @Html.TextAreaFor(model => model.HR_CATATAN, new { @class = "form-control custom-scroll", rows = "6" })
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+            </fieldset>
+            <footer>
+                <button type="button" id="btn-sub" class="btn btn-primary">
+                    <span class="fa fa-send-o"></span> Hantar
+                </button>
+                <button class="btn btn-default" id="btn-close" data-dismiss="modal" aria-hidden="true">
+                    Kembali
+                </button>
+            </footer>
+        }
+
+    </div>
+    
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var breakpointDefinition = {
+            tablet: 1024,
+            phone: 480
+        };
+
+        var responsiveHelper_datatable_CariPekerja = undefined;
+
+        /* TABLETOOLS */
+        function Cari(nilai) {
+            var CariPekerja = $('#datatable_CariPekerja').DataTable({
+
+                // Tabletools options:
+                //   https://datatables.net/extensions/tabletools/button_options
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'l>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                "language": {
+                    "zeroRecords": "Tiada data dijumpai",
+                    "info": "Memaparkan <span class='txt-color-darken'>_START_</span> hingga <span class='txt-color-darken'>_END_</span> daripada <span class='text-primary'>_TOTAL_</span> rekod",
+                    "infoEmpty": "Tiada data",
+                    "infoFiltered": "(ditapis daripada <span class='text-primary'>_MAX_</span> jumlah rekod)"
+                },
+                "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "Semua"]],
+                'columnDefs': [{
+                    'targets': 0,
+                    'searchable': false,
+                    'orderable': false,
+                    'className': 'dt-body-center smart-form',
+                    'render': function (data, type, full, meta) {
+                        var html = '<label class="radio"><input type="radio" name="HR_NO_PEKERJA" value="' + data + '" class="HR_NO_PEKERJA"><i></i></label>';
+                        return html;
+                    }
+                }],
+                'order': [[1, 'asc']],
+                "searching": false,
+                "autoWidth": true,
+                'retrieve': true,
+                "ajax": {
+                    "destroy": true,
+                    "url": "../MaklumatKakitangan/SenaraiPekerja",
+                    "data": { "nilai": nilai },
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columns": [
+                { "data": "HR_NO_PEKERJA" },
+                { "data": "HR_NO_PEKERJA" },
+                { "data": "HR_NO_KPBARU" },
+                { "data": "HR_NAMA_PEKERJA" }
+
+                ],
+                //"preDrawCallback": function () {
+                //    // Initialize the responsive datatables helper once.
+                //    if (!responsiveHelper_datatable_CariPekerja) {
+                //        responsiveHelper_datatable_CariPekerja = new ResponsiveDatatablesHelper($('#datatable_CariPekerja'), breakpointDefinition);
+                //    }
+                //},
+                //"rowCallback": function (nRow) {
+                //    responsiveHelper_datatable_CariPekerja.createExpandIcon(nRow);
+                //},
+                //"drawCallback": function (oSettings) {
+                //    responsiveHelper_datatable_CariPekerja.respond();
+                //}
+            });
+
+            return CariPekerja;
+        }
+        Cari($("#nilai").val())
+
+        $("#CariPenyelia2").on("click", function () {
+            $('#datatable_CariPekerja').DataTable().destroy();
+            Cari($("#nilai").val()).draw()
+        })
+
+        $(document).on("click", "#HR_NAMA_PENEMUDUGA", function () {
+            $("#ModalPekerja").modal({
+                show: true,
+                backdrop: 'static'
+            });
+        }).on("click", "#btn-done", function () {
+            //$('#datatable_CariCalon').DataTable().destroy();
+            Cari("").draw().$("input[type='radio']").each(function () {
+                if (this.checked) {
+                    var VIEW = $(this).parents("tr");
+                    var HR_NAMA_PENEMUDUGA = VIEW.find("td:eq(3)").text()
+                    var HR_PENEMUDUGA = this.value
+
+                    //console.log(HR_NO_PENYELIA);
+
+                    $("#HR_NAMA_PENEMUDUGA").val(HR_NAMA_PENEMUDUGA);
+                    $("#HR_PENEMUDUGA").val(HR_PENEMUDUGA);
+
+                    $("#ModalPekerja").modal("hide")
+                }
+            })
+        })
+
+        var $elaunForm = $("#form").validate({
+            // Rules for form validation
+            rules: {
+                HR_NAMA_PENEMUDUGA: {
+                    required: true,
+                    remote: {
+                        url: "../LantikanJawatanBaru/SemakPenemuduga",
+                        type: "get",
+                        data: {
+                            HR_TARIKH_TEMUDUGA: function () {
+                                return $("#HR_TARIKH_TEMUDUGA").val();
+                            },
+                            HR_KOD_JAWATAN: function () {
+                                return $("#HR_KOD_JAWATAN").val();
+                            },
+                            HR_TARAF_JAWATAN: function () {
+                                return $("#HR_TARAF_JAWATAN").val();
+                            },
+                            HR_PENEMUDUGA: function () {
+                                return $("#HR_PENEMUDUGA").val();
+                            },
+                            HR_JENIS: function () {
+                                return $("#HR_JENIS").val();
+                            }
+
+                        }
+
+                    }
+                },
+                HR_CATATAN: {
+                    required: true,
+                    
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                HR_NAMA_PENEMUDUGA: {
+                    required: 'Penemuduga  diperlukan'
+                },
+                HR_CATATAN: {
+                    required: 'Catatan diperlukan',
+                }
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+
+    })
+</script>
+

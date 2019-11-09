@@ -92,7 +92,7 @@ namespace eSPP.Models
                 PA_REPORT spgReport = spgDb.PA_REPORT
                     .Where(s => s.PA_NO_PEKERJA == noPekerja
                     && s.PA_TAHUN == tahunBekerja
-                    && s.PA_BULAN == bulanBekerja).FirstOrDefault();
+                    && s.PA_BULAN == bulanDibayar).FirstOrDefault();
 
                 decimal gajiPokok = sppDb.HR_TRANSAKSI_SAMBILAN_DETAIL
                     .Where(s => s.HR_KOD == "GAJPS"
@@ -134,15 +134,8 @@ namespace eSPP.Models
                         //number 8,2
                         PA_GAJI_POKOK = gajiPokok
                     };
-                    try
-                    {
-                        spgDb.PA_REPORT.Add(spgReport);
-                        spgDb.SaveChanges();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.Write(ex.ToString());
-                    }
+                    spgDb.PA_REPORT.Add(spgReport);
+                    spgDb.SaveChanges();
                 }
                 else
                 {

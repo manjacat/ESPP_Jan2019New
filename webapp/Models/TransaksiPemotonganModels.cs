@@ -70,7 +70,7 @@ namespace eSPP.Models
                   .Where(s => s.PA_NO_PEKERJA == noPekerja
                   && s.PA_TAHUN_POTONGAN == tahun
                   && s.PA_BULAN_POTONGAN == bulan).ToList();
-            if(spgPotongan != null)
+            if(spgPotongan.Count > 0)
             {
                 try
                 {
@@ -95,19 +95,19 @@ namespace eSPP.Models
                 && s.HR_KOD_IND == "P").ToList();
 
             //get potongan SOCSO sebab potongan SOCSO takda dalam DB
-            List<HR_TRANSAKSI_SAMBILAN_DETAIL> sppTrans =
-            HR_TRANSAKSI_SAMBILAN_DETAIL.GetTransaksi(sppDb, tahun, bulan);
+            //List<HR_TRANSAKSI_SAMBILAN_DETAIL> sppTrans =
+            //HR_TRANSAKSI_SAMBILAN_DETAIL.GetTransaksiDibayar(sppDb, tahun, bulan);
 
-            decimal totalElaunOT = sppTrans
-               .Where(s => s.HR_KOD_IND == "E"
-               && s.HR_KOD == "E0164"
-               && s.HR_NO_PEKERJA == noPekerja)
-               .Select(s => s.HR_JUMLAH).Sum().Value;
+            //decimal totalElaunOT = sppTrans
+            //   .Where(s => s.HR_KOD_IND == "E"
+            //   && s.HR_KOD == "E0164"
+            //   && s.HR_NO_PEKERJA == noPekerja)
+            //   .Select(s => s.HR_JUMLAH).Sum().Value;
 
-            decimal gajiPokok = sppTrans
-                .Where(s => s.HR_KOD == "GAJPS"
-                && s.HR_NO_PEKERJA == noPekerja)
-                .Select(s => s.HR_JUMLAH).Sum().Value;
+            //decimal gajiPokok = sppTrans
+            //    .Where(s => s.HR_KOD == "GAJPS"
+            //    && s.HR_NO_PEKERJA == noPekerja)
+            //    .Select(s => s.HR_JUMLAH).Sum().Value;
 
             //decimal potonganSocso = PageSejarahModel
             //   .GetPotonganSocso(sppDb, gajiPokok, totalElaunOT);
@@ -155,23 +155,28 @@ namespace eSPP.Models
                     PA_TAHUN_POTONGAN = (short)tahun,
                     PA_PROSES_IND = "P",
                     //ambik dari HR_POTONGAN.HR_VOT_POTONGAN_P
-                    PA_VOT_PEMOTONGAN = "41-02-01-00-03501",
+                    //PA_VOT_PEMOTONGAN = "41-02-01-00-03501",
+                    PA_VOT_PEMOTONGAN = "41-02-01-00-03502",
                     PA_TARIKH_KEYIN = DateTime.Now,
                 };
+                spgDb.PA_TRANSAKSI_PEMOTONGAN.Add(spgPotongan);
+                spgDb.SaveChanges();
                 spgPotonganList.Add(spgPotongan);
             }
-            if(spgPotonganList.Count > 0)
-            {
-                try
-                {
-                    spgDb.PA_TRANSAKSI_PEMOTONGAN.AddRange(spgPotonganList);
-                    spgDb.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex.ToString());
-                }
-            }
+            //if(spgPotonganList.Count > 0)
+            //{
+            //    //spgDb.PA_TRANSAKSI_PEMOTONGAN.AddRange(spgPotonganList);
+            //    //spgDb.SaveChanges();
+            //    //try
+            //    //{
+            //    //    spgDb.PA_TRANSAKSI_PEMOTONGAN.AddRange(spgPotonganList);
+            //    //    spgDb.SaveChanges();
+            //    //}
+            //    //catch (Exception ex)
+            //    //{
+            //    //    Console.Write(ex.ToString());
+            //    //}
+            //}
 
         }
 

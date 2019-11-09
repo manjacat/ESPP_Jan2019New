@@ -1,7 +1,7 @@
 ﻿@model eSPP.Models.HR_MAKLUMAT_KEWANGAN8
 <div>
     <div class="modal-header">
-        <button type="button" class="close" aria-hidden="true">
+        <button type="button" class="close closekew8" aria-hidden="true">
             &times;
         </button>
         <h4 class="modal-title">
@@ -250,6 +250,21 @@
                         </div>
 
                         <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            @if (ViewBag.Kod == "00032")
+                            {
+                                @Html.Hidden("HR_NO_PEKERJA_PT", null)
+                                <section>
+                                    <div class="row">
+                                        <label class="label col col-4">Nama Tanggung</label>
+                                        <div class="col col-8">
+                                            <label class="input">
+                                                <i class="icon-append fa fa-search"></i>
+                                                @Html.TextBox("HR_NAMA_PT", null, new { @class = "form-control", @readonly = "readonly" })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+                            }
                             @if (ViewBag.Kod == "TMK" || ViewBag.Kod == "00032" || ViewBag.Kod == "00004")
                             {
                                 <section>
@@ -304,6 +319,7 @@
                             </section>
                             @if (ViewBag.Kod != "00032" && ViewBag.Kod != "00004")
                             {
+                                @Html.Hidden("HR_GAJI_BARU", null)
                                 <section>
                                     <div class="row">
                                         @if (ViewBag.Kod != "00032" && ViewBag.Kod != "00004")
@@ -1248,6 +1264,13 @@
                         }
                     }
                 },
+                HR_NAMA_PT: {
+                    required: function (element) {
+                        if ('@ViewBag.Kod' == "00032") {
+                            return true;
+                        }
+                    }
+                },
                 HR_JAWATAN_BARU: {
                     required: true
                 },
@@ -1381,6 +1404,9 @@
                     number: "Sila masukkan hanya nombor sahaja",
                     remote: "Gaji tidak wujud"
                 },
+                HR_NAMA_PT: {
+                    required: "Diperlukan"
+                },
                 HR_JAWATAN_BARU: {
                     required: "Diperlukan"
                 },
@@ -1501,6 +1527,12 @@
                 }
 
                 if ('@ViewBag.Kod' == "00036" || '@ViewBag.Kod' == "TMK" || '@ViewBag.Kod' == "00032" || '@ViewBag.Kod' == "00004") {
+                    if ('@ViewBag.Kod' == "00032") {
+                        $('#HR_NAMA_PT').valid();
+                        if ($('#HR_NAMA_PT').valid() == false) {
+                            isValid++;
+                        }
+                    }
                     if ('@ViewBag.Kod' == "TMK" || '@ViewBag.Kod' == "00032" || '@ViewBag.Kod' == "00004") {
                         $('#HR_JAWATAN_BARU').valid();
                         if ($('#HR_JAWATAN_BARU').valid() == false) {
@@ -1611,7 +1643,7 @@
                 $("#btn").removeAttr('disabled');
                 $("button[type='reset']").removeAttr('disabled');
                 $("#btn-back").removeAttr('disabled');
-                $("button.close").removeAttr('disabled');
+                $("button.closekew8").removeAttr('disabled');
                 $('#Modal').modal('show');
                 return "T";
             }
@@ -1630,7 +1662,7 @@
                         }
                     });
                 }
-                
+
             }
             return "Y";
         }
@@ -1639,7 +1671,7 @@
             $("#btn").attr('disabled', 'disabled');
             $("button[type='reset']").attr('disabled', 'disabled');
             $("#btn-back").attr('disabled', 'disabled');
-            $("button.close").attr('disabled', 'disabled');
+            $("button.closekew8").attr('disabled', 'disabled');
 
             if ($("#HR_FINALISED_IND_HR").val() == "Y") {
                 if (FormSubmit(e, "T") == "Y") {
@@ -1664,7 +1696,7 @@
                                 $("#btn").removeAttr('disabled');
                                 $("button[type='reset']").removeAttr('disabled');
                                 $("#btn-back").removeAttr('disabled');
-                                $("button.close").removeAttr('disabled');
+                                $("button.closekew8").removeAttr('disabled');
                                 $("#errorMsg").html('');
                                 $('#Modal').modal('show');
                             }
@@ -1678,7 +1710,7 @@
             return true;
         })
 
-        $("#btn-back, button.close").on("click", function () {
+        $("#btn-back, button.closekew8").on("click", function () {
             $("#errorMsg").html('Adakah anda pasti tidak ingin meneruskannya?');
             $('#Modal').modal('hide');
             $("#errorMsg").dialog({
@@ -3414,7 +3446,7 @@
                         $('#HR_JUMLAH_POTONGAN').valid()
                     }
 
-                    
+
                     $('#tableElaun2').on("input", '#HR_NILAI_PELARASAN', function () {
                         TukarJumlah(this)
                     })

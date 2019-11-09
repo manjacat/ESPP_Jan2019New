@@ -1,0 +1,131 @@
+﻿<div class="modal fade" id="ModalCaruman" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    Tambah Caruman <span class="error"></span>
+                </h4>
+            </div>
+            <div class="modal-body no-padding smart-form">
+                @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_NP_UBAH", null, new { @class = "form-control hide" })
+                @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_NP_KEYIN", null, new { @class = "form-control hide" })
+                @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_MATRIKS_GAJI_PT", null, new { @class = "form-control hide" })
+                @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_GRED_PT", null, new { @class = "form-control hide" })
+                @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_UBAH_IND", null, new { @class = "form-control hide" })
+                @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_TARIKH_UBAH", null, new { @class = "form-control hide" })
+                @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_TARIKH_KEYIN", null, new { @class = "form-control hide" })
+                @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_NO_PEKERJA_PT", null, new { @class = "form-control hide" })
+                @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_HARI_BEKERJA", null, new { @class = "form-control hide" })
+                @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_BAKI", null, new { @class = "form-control hide" })
+                @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_TUNTUTAN_MAKSIMA", null, new { @class = "form-control hide" })
+                @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_PENERANGAN", null, new { @class = "form-control hide" })
+                @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_JUMLAH", null, new { @class = "form-control hide" })
+                @*@Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_NO_PEKERJA", null, new { @class = "form-control hide" })*@
+                <fieldset>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Kod</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_KOD", null, new { @class = "form-control", size = 5, maxlength = '5', @readonly = "readonly" })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Penerangan</label>
+                            <div class="col col-8">
+                                <label class="select">
+                                    @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_KOD_ELAUN_POTONGAN", new SelectList(ViewBag.Caruman, "HR_KOD_CARUMAN", "HR_PENERANGAN_CARUMAN"), string.Empty, new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">No. Rujukan / No. Akaun</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_NO_FAIL", null, new { @class = "form-control" })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Tarikh Mula</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_TARIKH_MULA", null, new { @class = "form-control", size = 9 })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Tarikh Akhir</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    @Html.TextBox("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_TARIKH_AKHIR", null, new { @class = "form-control", size = 9 })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Mod Bayaran</label>
+                            <div class="col col-8">
+                                <label class="select">
+                                    @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_MOD_BAYARAN", new SelectList(ViewBag.HR_MOD_BAYARAN, "Value", "Text"), string.Empty, new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Status</label>
+                            <div class="col col-8">
+                                <label class="select">
+                                    @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_AKTIF_IND", new SelectList(ViewBag.HR_AKTIF_IND_PEKERJAAN, "Value", "Text"), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_AKTIF_IND" })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Auto</label>
+                            <div class="col col-8">
+                                <label class="select">
+                                    @Html.DropDownList("HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_AUTO_IND", new SelectList(ViewBag.HR_AUTO_IND, "Value", "Text"), new { @class = "form-control HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_AUTO_IND" })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                </fieldset>
+                <footer>
+                    <button type="button" id="btn-Caruman" class="btn btn-primary">
+                        <span class="fa fa-plus"></span> Tambah
+                    </button>
+                    <button type="reset" class="btn btn-default">
+                        Reset
+                    </button>
+                    <button type="button" id="btn-back" class="btn btn-default" data-dismiss="modal">
+                        Kembali
+                    </button>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>
+
+

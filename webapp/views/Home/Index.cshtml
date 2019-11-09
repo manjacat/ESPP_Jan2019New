@@ -392,7 +392,7 @@
             editable: true,
             droppable: true, // this allows things to be dropped onto the calendar !!!
             eventClick: function (event) {
-                $(".closon").click(function () {
+                $(".closeon").click(function () {
 
                     var defaultDuration = moment.duration($('#calendar').fullCalendar('option', 'defaultTimedEventDuration')); // get the default and convert it to proper type
                     var end = event.end || event.start.clone().add(defaultDuration); // If there is no end, compute it
@@ -486,81 +486,92 @@
             },
 
             eventDrop: function (event, delta, revertFunc) {
-                //inner column movement drop so get start and call the ajax function......
-                var defaultDuration = moment.duration($('#calendar').fullCalendar('option', 'defaultTimedEventDuration')); // get the default and convert it to proper type
-                var end = event.end || event.start.clone().add(defaultDuration); // If there is no end, compute it
-                $.get("Home/CariCuti", { HR_KOD_ACARA: event.kod, HR_TAJUK: event.title, HR_KETERANGAN: event.description, HR_ICON: event.icon, HR_WARNA: event.className[1], HR_TARIKH: event.start.format("DD/MM/YYYY"), HR_WAKTU_MULA: event.start.format("HH:mm:ss"), HR_WAKTU_AKHIR: end.format("HH:mm:ss"), HR_KATEGORI: event.category, HR_JENIS: "Edit" }, function (json) {
-                    if (json.error == true) {
-                        //$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-                        alert(json.msg)
-                    }
-                    else {
-                        if (!confirm("Adakah anda pasti untuk mengubah ini?")) {
-                            revertFunc();
-                        }
-                        else {
-                            var HR_KOD_ACARA = event.kod;
-                            var HR_KOD_TARIKH_ACARA = event.id;
-                            var HR_TAJUK = event.title;
-                            var HR_KETERANGAN = event.description;
-                            var HR_ICON = event.icon;
-                            var HR_WARNA = event.className[1];
-                            var HR_TARIKH = event.start.format("DD/MM/YYYY");
-                            var HR_WAKTU_MULA = event.start.format("HH:mm");
-                            var HR_WAKTU_AKHIR = end.format("HH:mm");
-                            var HR_KATEGORI = event.category;
-                            var HR_JENIS = "Edit";
-
-                            $.post("Home/Aktiviti", { HR_KOD_ACARA: HR_KOD_ACARA, HR_KOD_TARIKH_ACARA: HR_KOD_TARIKH_ACARA, HR_TAJUK: HR_TAJUK, HR_KETERANGAN: HR_KETERANGAN, HR_ICON: HR_ICON, HR_WARNA: HR_WARNA, HR_TARIKH: HR_TARIKH, HR_WAKTU_MULA: HR_WAKTU_MULA, HR_WAKTU_AKHIR: HR_WAKTU_AKHIR, HR_KATEGORI: HR_KATEGORI, HR_JENIS: HR_JENIS }, function (json) {
-                                if (json.error == false) {
-                                    alert(json.msg)
-                                }
-                                else {
-                                    alert(json.msg)
-                                }
-                                $('#calendar').fullCalendar('rerenderEvents');
-                                $('#calendar').fullCalendar('refetchEvents');
-                            }, "json");
-                        }
-                    }
-                },"json")
-                
-            },
-
-            eventResize: function (event, delta, revertFunc) {
-
-                if (!confirm("Adakah anda pasti untuk mengubah ini?")) {
-                    revertFunc();
+                if (event.category == "T") {
+                    alert("Maaf!. Temuduga tidak boleh diubah")
+                    $('#calendar').fullCalendar('rerenderEvents');
+                    $('#calendar').fullCalendar('refetchEvents');
                 }
                 else {
                     //inner column movement drop so get start and call the ajax function......
                     var defaultDuration = moment.duration($('#calendar').fullCalendar('option', 'defaultTimedEventDuration')); // get the default and convert it to proper type
                     var end = event.end || event.start.clone().add(defaultDuration); // If there is no end, compute it
-
-                    var HR_KOD_ACARA = event.kod;
-                    var HR_KOD_TARIKH_ACARA = event.id;
-                    var HR_TAJUK = event.title;
-                    var HR_KETERANGAN = event.description;
-                    var HR_ICON = event.icon;
-                    var HR_WARNA = event.className[1];
-                    var HR_TARIKH = event.start.format("DD/MM/YYYY");
-                    var HR_WAKTU_MULA = event.start.format("HH:mm");
-                    var HR_WAKTU_AKHIR = end.format("HH:mm");
-                    var HR_KATEGORI = event.category;
-                    var HR_JENIS = "Edit";
-
-                    $.post("Home/Aktiviti", { HR_KOD_ACARA: HR_KOD_ACARA, HR_KOD_TARIKH_ACARA: HR_KOD_TARIKH_ACARA, HR_TAJUK: HR_TAJUK, HR_KETERANGAN: HR_KETERANGAN, HR_ICON: HR_ICON, HR_WARNA: HR_WARNA, HR_TARIKH: HR_TARIKH, HR_WAKTU_MULA: HR_WAKTU_MULA, HR_WAKTU_AKHIR: HR_WAKTU_AKHIR, HR_KATEGORI: HR_KATEGORI, HR_JENIS: HR_JENIS }, function (json) {
-                        if (json.error == false) {
+                    $.get("Home/CariCuti", { HR_KOD_ACARA: event.kod, HR_TAJUK: event.title, HR_KETERANGAN: event.description, HR_ICON: event.icon, HR_WARNA: event.className[1], HR_TARIKH: event.start.format("DD/MM/YYYY"), HR_WAKTU_MULA: event.start.format("HH:mm:ss"), HR_WAKTU_AKHIR: end.format("HH:mm:ss"), HR_KATEGORI: event.category, HR_JENIS: "Edit" }, function (json) {
+                        if (json.error == true) {
+                            //$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
                             alert(json.msg)
                         }
                         else {
-                            alert(json.msg)
-                        }
-                        $('#calendar').fullCalendar('rerenderEvents');
-                        $('#calendar').fullCalendar('refetchEvents');
-                    }, "json");
-                }
+                            if (!confirm("Adakah anda pasti untuk mengubah ini?")) {
+                                revertFunc();
+                            }
+                            else {
+                                var HR_KOD_ACARA = event.kod;
+                                var HR_KOD_TARIKH_ACARA = event.id;
+                                var HR_TAJUK = event.title;
+                                var HR_KETERANGAN = event.description;
+                                var HR_ICON = event.icon;
+                                var HR_WARNA = event.className[1];
+                                var HR_TARIKH = event.start.format("DD/MM/YYYY");
+                                var HR_WAKTU_MULA = event.start.format("HH:mm");
+                                var HR_WAKTU_AKHIR = end.format("HH:mm");
+                                var HR_KATEGORI = event.category;
+                                var HR_JENIS = "Edit";
 
+                                $.post("Home/Aktiviti", { HR_KOD_ACARA: HR_KOD_ACARA, HR_KOD_TARIKH_ACARA: HR_KOD_TARIKH_ACARA, HR_TAJUK: HR_TAJUK, HR_KETERANGAN: HR_KETERANGAN, HR_ICON: HR_ICON, HR_WARNA: HR_WARNA, HR_TARIKH: HR_TARIKH, HR_WAKTU_MULA: HR_WAKTU_MULA, HR_WAKTU_AKHIR: HR_WAKTU_AKHIR, HR_KATEGORI: HR_KATEGORI, HR_JENIS: HR_JENIS }, function (json) {
+                                    if (json.error == false) {
+                                        alert(json.msg)
+                                    }
+                                    else {
+                                        alert(json.msg)
+                                    }
+                                    $('#calendar').fullCalendar('rerenderEvents');
+                                    $('#calendar').fullCalendar('refetchEvents');
+                                }, "json");
+                            }
+                        }
+                    }, "json")
+                }
+            },
+
+            eventResize: function (event, delta, revertFunc) {
+                if (event.category == "T") {
+                    alert("Maaf!. Temuduga tidak boleh diubah")
+                    $('#calendar').fullCalendar('rerenderEvents');
+                    $('#calendar').fullCalendar('refetchEvents');
+                }
+                else {
+                    if (!confirm("Adakah anda pasti untuk mengubah ini?")) {
+                        revertFunc();
+                    }
+                    else {
+                        //inner column movement drop so get start and call the ajax function......
+                        var defaultDuration = moment.duration($('#calendar').fullCalendar('option', 'defaultTimedEventDuration')); // get the default and convert it to proper type
+                        var end = event.end || event.start.clone().add(defaultDuration); // If there is no end, compute it
+
+                        var HR_KOD_ACARA = event.kod;
+                        var HR_KOD_TARIKH_ACARA = event.id;
+                        var HR_TAJUK = event.title;
+                        var HR_KETERANGAN = event.description;
+                        var HR_ICON = event.icon;
+                        var HR_WARNA = event.className[1];
+                        var HR_TARIKH = event.start.format("DD/MM/YYYY");
+                        var HR_WAKTU_MULA = event.start.format("HH:mm");
+                        var HR_WAKTU_AKHIR = end.format("HH:mm");
+                        var HR_KATEGORI = event.category;
+                        var HR_JENIS = "Edit";
+
+                        $.post("Home/Aktiviti", { HR_KOD_ACARA: HR_KOD_ACARA, HR_KOD_TARIKH_ACARA: HR_KOD_TARIKH_ACARA, HR_TAJUK: HR_TAJUK, HR_KETERANGAN: HR_KETERANGAN, HR_ICON: HR_ICON, HR_WARNA: HR_WARNA, HR_TARIKH: HR_TARIKH, HR_WAKTU_MULA: HR_WAKTU_MULA, HR_WAKTU_AKHIR: HR_WAKTU_AKHIR, HR_KATEGORI: HR_KATEGORI, HR_JENIS: HR_JENIS }, function (json) {
+                            if (json.error == false) {
+                                alert(json.msg)
+                            }
+                            else {
+                                alert(json.msg)
+                            }
+                            $('#calendar').fullCalendar('rerenderEvents');
+                            $('#calendar').fullCalendar('refetchEvents');
+                        }, "json");
+                    }
+                }
             },
 
             select: function (start, end, allDay) {
@@ -619,39 +630,41 @@
                         " '></i>");
                 }
 
-                element.append("<span class='hidden-mobile hidden-tablet' id='activity2'><b class='badge bg-color-white bounceIn animated closeon' title = 'Padam'><i class='glyphicon glyphicon-remove-circle text-danger'></i></b> </span>");
-                element.find("#activity2 b.badge").css({ "position": "absolute", "bottom": "-5px", "right": "-5px", "cursor": "pointer", "background": "white", "display": "inline-block", "size-font": "20px", "box-shadow": "inset 1px 1px 0 rgba(0,0,0,.1), inset 0 -1px 0 rgba(0,0,0,.07)", "color": "red", "font-weight": "700", "padding": "2px 4px 3px", "text-align": "center", "line-height": "normal" })
-                
-                element.find(".closeon").click(function () {
-                    if (confirm("Adakah anda pasti untuk padam ini?")) {
-                        var defaultDuration = moment.duration($('#calendar').fullCalendar('option', 'defaultTimedEventDuration')); // get the default and convert it to proper type
-                        var end = event.end || event.start.clone().add(defaultDuration); // If there is no end, compute it
+                if (event.category != "T") {
+                    element.append("<span class='hidden-mobile hidden-tablet' id='activity2'><b class='badge bg-color-white bounceIn animated closeon' title = 'Padam'><i class='glyphicon glyphicon-remove-circle text-danger'></i></b> </span>");
+                    element.find("#activity2 b.badge").css({ "position": "absolute", "bottom": "-5px", "right": "-5px", "cursor": "pointer", "background": "white", "display": "inline-block", "size-font": "20px", "box-shadow": "inset 1px 1px 0 rgba(0,0,0,.1), inset 0 -1px 0 rgba(0,0,0,.07)", "color": "red", "font-weight": "700", "padding": "2px 4px 3px", "text-align": "center", "line-height": "normal" })
 
-                        var HR_KOD_ACARA = event.kod;
-                        var HR_KOD_TARIKH_ACARA = event.id;
-                        var HR_TAJUK = event.title;
-                        var HR_KETERANGAN = event.description;
-                        var HR_ICON = event.icon;
-                        var HR_WARNA = event.className;
-                        var HR_TARIKH = event.start.format("DD/MM/YYYY");
-                        var HR_WAKTU_MULA = event.start.format("HH:mm");
-                        var HR_WAKTU_AKHIR = end.format("HH:mm");
-                        var HR_KATEGORI = event.category;
-                        var HR_JENIS = "Padam";
+                    element.find(".closeon").click(function () {
+                        if (confirm("Adakah anda pasti untuk padam ini?")) {
+                            var defaultDuration = moment.duration($('#calendar').fullCalendar('option', 'defaultTimedEventDuration')); // get the default and convert it to proper type
+                            var end = event.end || event.start.clone().add(defaultDuration); // If there is no end, compute it
 
-                        $.post("Home/Aktiviti", { HR_KOD_ACARA: HR_KOD_ACARA, HR_KOD_TARIKH_ACARA: HR_KOD_TARIKH_ACARA, HR_TAJUK: HR_TAJUK, HR_KETERANGAN: HR_KETERANGAN, HR_ICON: HR_ICON, HR_WARNA: HR_WARNA, HR_TARIKH: HR_TARIKH, HR_WAKTU_MULA: HR_WAKTU_MULA, HR_WAKTU_AKHIR: HR_WAKTU_AKHIR, HR_KATEGORI: HR_KATEGORI, HR_JENIS: HR_JENIS }, function (json) {
-                            if (json.error == false) {
-                                $('#calendar').fullCalendar('removeEvents', event._id);
-                                alert(json.msg)
-                            }
-                            else {
-                                alert(json.msg)
-                            }
-                            $('#calendar').fullCalendar('rerenderEvents');
-                            $('#calendar').fullCalendar('refetchEvents');
-                        }, "json");
-                    }
-                });
+                            var HR_KOD_ACARA = event.kod;
+                            var HR_KOD_TARIKH_ACARA = event.id;
+                            var HR_TAJUK = event.title;
+                            var HR_KETERANGAN = event.description;
+                            var HR_ICON = event.icon;
+                            var HR_WARNA = event.className;
+                            var HR_TARIKH = event.start.format("DD/MM/YYYY");
+                            var HR_WAKTU_MULA = event.start.format("HH:mm");
+                            var HR_WAKTU_AKHIR = end.format("HH:mm");
+                            var HR_KATEGORI = event.category;
+                            var HR_JENIS = "Padam";
+
+                            $.post("Home/Aktiviti", { HR_KOD_ACARA: HR_KOD_ACARA, HR_KOD_TARIKH_ACARA: HR_KOD_TARIKH_ACARA, HR_TAJUK: HR_TAJUK, HR_KETERANGAN: HR_KETERANGAN, HR_ICON: HR_ICON, HR_WARNA: HR_WARNA, HR_TARIKH: HR_TARIKH, HR_WAKTU_MULA: HR_WAKTU_MULA, HR_WAKTU_AKHIR: HR_WAKTU_AKHIR, HR_KATEGORI: HR_KATEGORI, HR_JENIS: HR_JENIS }, function (json) {
+                                if (json.error == false) {
+                                    $('#calendar').fullCalendar('removeEvents', event._id);
+                                    alert(json.msg)
+                                }
+                                else {
+                                    alert(json.msg)
+                                }
+                                $('#calendar').fullCalendar('rerenderEvents');
+                                $('#calendar').fullCalendar('refetchEvents');
+                            }, "json");
+                        }
+                    });
+                }
             },
 
             windowResize: function (event, ui) {

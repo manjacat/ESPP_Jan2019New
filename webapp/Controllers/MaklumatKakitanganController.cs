@@ -9,6 +9,10 @@ using System.Web.Mvc;
 using eSPP.Models;
 using Microsoft.AspNet.Identity;
 using System.Drawing;
+using System.IO;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.tool.xml;
 
 namespace eSPP.Controllers
 {
@@ -18,11 +22,21 @@ namespace eSPP.Controllers
         private MajlisContext db2 = new MajlisContext();
 
         // GET: MaklumatKakitangan
-        public ActionResult Index(string key, string value, string status)
+        public ActionResult Index(string key, string value, string status, int? i)
         {
             ViewBag.photo = "";
             MaklumatKakitanganModels mKakitangan = new MaklumatKakitanganModels();
             ViewBag.key = "";
+
+            var username = User.Identity.Name;
+            string pekerjaLogin = null;
+            HR_MAKLUMAT_PERIBADI pekerja = db.HR_MAKLUMAT_PERIBADI.FirstOrDefault(s => s.HR_NO_KPBARU == username);
+            if(pekerja != null)
+            {
+                pekerjaLogin = pekerja.HR_NO_PEKERJA;
+            }
+            ViewBag.pekerjaLogin = pekerjaLogin;
+
 
             //Peribadi("", "");
             List<HR_MAKLUMAT_PERIBADI> mPeribadi = new List<HR_MAKLUMAT_PERIBADI>();
@@ -370,10 +384,10 @@ namespace eSPP.Controllers
                     mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NILAI_PCB = mPekerjaan.HR_NILAI_PCB;
                     mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_KOD_GELARAN_J = mPekerjaan.HR_KOD_GELARAN_J;
                     mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TANGGUH_GERAKGAJI_IND = mPekerjaan.HR_TANGGUH_GERAKGAJI_IND;
-                    mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_KEYIN2 = mPekerjaan.HR_TARIKH_KEYIN;
-                    mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_KEYIN2 = mPekerjaan.HR_NP_KEYIN;
-                    mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_UBAH2 = mPekerjaan.HR_TARIKH_UBAH;
-                    mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_UBAH2 = mPekerjaan.HR_NP_UBAH;
+                    mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_KEYIN = mPekerjaan.HR_TARIKH_KEYIN;
+                    mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_KEYIN = mPekerjaan.HR_NP_KEYIN;
+                    mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_UBAH = mPekerjaan.HR_TARIKH_UBAH;
+                    mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_UBAH = mPekerjaan.HR_NP_UBAH;
                     mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_SKIM = mPekerjaan.HR_SKIM;
                     mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_PERGERAKAN_GAJI = mPekerjaan.HR_PERGERAKAN_GAJI;
                     mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NO_KWSP = mPekerjaan.HR_NO_KWSP;
@@ -495,18 +509,7 @@ namespace eSPP.Controllers
                             mKakitangan.HR_MAKLUMAT_PENGALAMAN_KERJA = sKerja;
                         }
                     }
-                    else
-                    {
-                        MaklumatPengalamanKerja mKerja = new MaklumatPengalamanKerja();
-                        mKerja.HR_NO_PEKERJA = null;
-                        mKerja.HR_NAMA_SYARIKAT = null;
-                        mKerja.HR_JAWATAN = null;
-                        mKerja.HR_TARIKH_MULA = null;
-                        mKerja.HR_TARIKH_TAMAT = null;
-                        mKerja.HR_ALASAN_BERHENTI = null;
-                        sKerja.Add(mKerja);
-                        mKakitangan.HR_MAKLUMAT_PENGALAMAN_KERJA = sKerja;
-                    }
+                    
 
                     if (lKemahiranBahasa.Count() > 0)
                     {
@@ -522,17 +525,17 @@ namespace eSPP.Controllers
                             mKakitangan.HR_MAKLUMAT_KEMAHIRAN_BAHASA = sKemahiranBahasa;
                         }
                     }
-                    else
-                    {
-                        MaklumatKemahiranBahasa mKemahiranBahasa = new MaklumatKemahiranBahasa();
-                        mKemahiranBahasa.HR_BAHASA = null;
-                        mKemahiranBahasa.HR_NO_PEKERJA = null;
-                        mKemahiranBahasa.HR_PEMBACAAN = null;
-                        mKemahiranBahasa.HR_PENULISAN = null;
-                        mKemahiranBahasa.HR_PERTUTURAN = null;
-                        sKemahiranBahasa.Add(mKemahiranBahasa);
-                        mKakitangan.HR_MAKLUMAT_KEMAHIRAN_BAHASA = sKemahiranBahasa;
-                    }
+                    //else
+                    //{
+                    //    MaklumatKemahiranBahasa mKemahiranBahasa = new MaklumatKemahiranBahasa();
+                    //    mKemahiranBahasa.HR_BAHASA = null;
+                    //    mKemahiranBahasa.HR_NO_PEKERJA = null;
+                    //    mKemahiranBahasa.HR_PEMBACAAN = null;
+                    //    mKemahiranBahasa.HR_PENULISAN = null;
+                    //    mKemahiranBahasa.HR_PERTUTURAN = null;
+                    //    sKemahiranBahasa.Add(mKemahiranBahasa);
+                    //    mKakitangan.HR_MAKLUMAT_KEMAHIRAN_BAHASA = sKemahiranBahasa;
+                    //}
 
                     if (lKemahiranTeknikal.Count() > 0)
                     {
@@ -547,16 +550,16 @@ namespace eSPP.Controllers
                             mKakitangan.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL = sKemahiranTeknikal;
                         }
                     }
-                    else
-                    {
-                        MaklumatKemahiranTeknikal mKemahiranTeknikal = new MaklumatKemahiranTeknikal();
-                        mKemahiranTeknikal.HR_NO_PEKERJA = null;
-                        mKemahiranTeknikal.HR_KEMAHIRAN = null;
-                        mKemahiranTeknikal.HR_TAHAP = null;
-                        mKemahiranTeknikal.HR_SEQ_NO = 1;
-                        sKemahiranTeknikal.Add(mKemahiranTeknikal);
-                        mKakitangan.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL = sKemahiranTeknikal;
-                    }
+                    //else
+                    //{
+                    //    MaklumatKemahiranTeknikal mKemahiranTeknikal = new MaklumatKemahiranTeknikal();
+                    //    mKemahiranTeknikal.HR_NO_PEKERJA = null;
+                    //    mKemahiranTeknikal.HR_KEMAHIRAN = null;
+                    //    mKemahiranTeknikal.HR_TAHAP = null;
+                    //    mKemahiranTeknikal.HR_SEQ_NO = 1;
+                    //    sKemahiranTeknikal.Add(mKemahiranTeknikal);
+                    //    mKakitangan.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL = sKemahiranTeknikal;
+                    //}
 
                     if (lKelayakan.Count() > 0)
                     {
@@ -574,19 +577,19 @@ namespace eSPP.Controllers
                             mKakitangan.HR_MAKLUMAT_KELAYAKAN = sKelayakan;
                         }
                     }
-                    else
-                    {
-                        MaklumatKelayakan mKelayakan = new MaklumatKelayakan();
-                        mKelayakan.HR_NO_PEKERJA = null;
-                        mKelayakan.HR_SEQ_NO = 1;
-                        mKelayakan.HR_KEPUTUSAN = null;
-                        mKelayakan.HR_PANGKAT = null;
-                        mKelayakan.HR_TAHUN_MULA = null;
-                        mKelayakan.HR_TAHUN_TAMAT = null;
-                        mKelayakan.HR_SEKOLAH_INSTITUSI = null;
-                        sKelayakan.Add(mKelayakan);
-                        mKakitangan.HR_MAKLUMAT_KELAYAKAN = sKelayakan;
-                    }
+                    //else
+                    //{
+                    //    MaklumatKelayakan mKelayakan = new MaklumatKelayakan();
+                    //    mKelayakan.HR_NO_PEKERJA = null;
+                    //    mKelayakan.HR_SEQ_NO = 1;
+                    //    mKelayakan.HR_KEPUTUSAN = null;
+                    //    mKelayakan.HR_PANGKAT = null;
+                    //    mKelayakan.HR_TAHUN_MULA = null;
+                    //    mKelayakan.HR_TAHUN_TAMAT = null;
+                    //    mKelayakan.HR_SEKOLAH_INSTITUSI = null;
+                    //    sKelayakan.Add(mKelayakan);
+                    //    mKakitangan.HR_MAKLUMAT_KELAYAKAN = sKelayakan;
+                    //}
 
                     if (lSijil.Count() > 0)
                     {
@@ -602,17 +605,17 @@ namespace eSPP.Controllers
                             mKakitangan.HR_MAKLUMAT_SIJIL = sSijil;
                         }
                     }
-                    else
-                    {
-                        MaklumatSijil mSijil = new MaklumatSijil();
-                        mSijil.HR_NO_PEKERJA = null;
-                        mSijil.HR_TARIKH_DIPEROLEHI = null;
-                        mSijil.HR_NAMA_SIJIL_PEPERIKSAAN = null;
-                        mSijil.HR_ANJURAN = null;
-                        mSijil.HR_KEPUTUSAN = null;
-                        sSijil.Add(mSijil);
-                        mKakitangan.HR_MAKLUMAT_SIJIL = sSijil;
-                    }
+                    //else
+                    //{
+                    //    MaklumatSijil mSijil = new MaklumatSijil();
+                    //    mSijil.HR_NO_PEKERJA = null;
+                    //    mSijil.HR_TARIKH_DIPEROLEHI = null;
+                    //    mSijil.HR_NAMA_SIJIL_PEPERIKSAAN = null;
+                    //    mSijil.HR_ANJURAN = null;
+                    //    mSijil.HR_KEPUTUSAN = null;
+                    //    sSijil.Add(mSijil);
+                    //    mKakitangan.HR_MAKLUMAT_SIJIL = sSijil;
+                    //}
 
                     if (lKursusLatihan.Count() > 0)
                     {
@@ -629,18 +632,18 @@ namespace eSPP.Controllers
                             mKakitangan.HR_MAKLUMAT_KURSUS_LATIHAN = sKursusLatihan;
                         }
                     }
-                    else
-                    {
-                        MaklumatKursusLatihan mKursusLatihan = new MaklumatKursusLatihan();
-                        mKursusLatihan.HR_NO_PEKERJA = null;
-                        mKursusLatihan.HR_KOD_KURSUS = null;
-                        mKursusLatihan.HR_TARIKH_MULA = null;
-                        mKursusLatihan.HR_TARIKH_TAMAT = null;
-                        mKursusLatihan.HR_ANJURAN = null;
-                        mKursusLatihan.HR_KEPUTUSAN = null;
-                        sKursusLatihan.Add(mKursusLatihan);
-                        mKakitangan.HR_MAKLUMAT_KURSUS_LATIHAN = sKursusLatihan;
-                    }
+                    //else
+                    //{
+                    //    MaklumatKursusLatihan mKursusLatihan = new MaklumatKursusLatihan();
+                    //    mKursusLatihan.HR_NO_PEKERJA = null;
+                    //    mKursusLatihan.HR_KOD_KURSUS = null;
+                    //    mKursusLatihan.HR_TARIKH_MULA = null;
+                    //    mKursusLatihan.HR_TARIKH_TAMAT = null;
+                    //    mKursusLatihan.HR_ANJURAN = null;
+                    //    mKursusLatihan.HR_KEPUTUSAN = null;
+                    //    sKursusLatihan.Add(mKursusLatihan);
+                    //    mKakitangan.HR_MAKLUMAT_KURSUS_LATIHAN = sKursusLatihan;
+                    //}
 
                     if (lAktiviti.Count() > 0)
                     {
@@ -656,17 +659,17 @@ namespace eSPP.Controllers
                             mKakitangan.HR_MAKLUMAT_AKTIVITI = sAktiviti;
                         }
                     }
-                    else
-                    {
-                        MaklumatAktiviti mAktiviti = new MaklumatAktiviti();
-                        mAktiviti.HR_NO_PEKERJA = null;
-                        mAktiviti.HR_TARIKH_AKTIVITI = null;
-                        mAktiviti.HR_PERINGKAT = null;
-                        mAktiviti.HR_NAMA_AKTIVITI = null;
-                        mAktiviti.HR_ANJURAN = null;
-                        sAktiviti.Add(mAktiviti);
-                        mKakitangan.HR_MAKLUMAT_AKTIVITI = sAktiviti;
-                    }
+                    //else
+                    //{
+                    //    MaklumatAktiviti mAktiviti = new MaklumatAktiviti();
+                    //    mAktiviti.HR_NO_PEKERJA = null;
+                    //    mAktiviti.HR_TARIKH_AKTIVITI = null;
+                    //    mAktiviti.HR_PERINGKAT = null;
+                    //    mAktiviti.HR_NAMA_AKTIVITI = null;
+                    //    mAktiviti.HR_ANJURAN = null;
+                    //    sAktiviti.Add(mAktiviti);
+                    //    mKakitangan.HR_MAKLUMAT_AKTIVITI = sAktiviti;
+                    //}
 
                     if (lPewaris.Count() > 0)
                     {
@@ -769,51 +772,29 @@ namespace eSPP.Controllers
                             mKakitangan.HR_MAKLUMAT_TANGGUNGAN = sTanggungan;
                         }
                     }
-                    else
-                    {
-                        MaklumatTanggungan mTanggungan = new MaklumatTanggungan();
-                        mTanggungan.HR_NO_PEKERJA = null;
-                        mTanggungan.HR_NAMA_TANGGUNGAN = null;
-                        mTanggungan.HR_TARIKH_LAHIR = null;
-                        mTanggungan.HR_NO_KP = null;
-                        mTanggungan.HR_TEMPAT_LAHIR = null;
-                        mTanggungan.HR_SEK_IPT = null;
-                        mTanggungan.HR_HUBUNGAN = null;
-                        mTanggungan.HR_JANTINA = null;
-                        mTanggungan.HR_TARIKH_KEYIN = null;
-                        mTanggungan.HR_NP_KEYIN = null;
-                        mTanggungan.HR_TARIKH_UBAH = null;
-                        mTanggungan.HR_NP_UBAH = null;
-                        sTanggungan.Add(mTanggungan);
-                        mKakitangan.HR_MAKLUMAT_TANGGUNGAN = sTanggungan;
-                    }
+                    //else
+                    //{
+                    //    MaklumatTanggungan mTanggungan = new MaklumatTanggungan();
+                    //    mTanggungan.HR_NO_PEKERJA = null;
+                    //    mTanggungan.HR_NAMA_TANGGUNGAN = null;
+                    //    mTanggungan.HR_TARIKH_LAHIR = null;
+                    //    mTanggungan.HR_NO_KP = null;
+                    //    mTanggungan.HR_TEMPAT_LAHIR = null;
+                    //    mTanggungan.HR_SEK_IPT = null;
+                    //    mTanggungan.HR_HUBUNGAN = null;
+                    //    mTanggungan.HR_JANTINA = null;
+                    //    mTanggungan.HR_TARIKH_KEYIN = null;
+                    //    mTanggungan.HR_NP_KEYIN = null;
+                    //    mTanggungan.HR_TARIKH_UBAH = null;
+                    //    mTanggungan.HR_NP_UBAH = null;
+                    //    sTanggungan.Add(mTanggungan);
+                    //    mKakitangan.HR_MAKLUMAT_TANGGUNGAN = sTanggungan;
+                    //}
 
                     if (mKuarters == null)
                     {
                         mKakitangan.HR_MAKLUMAT_KUARTERS = new MaklumatKuarters();
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_NO_PEKERJA = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_KOD_KUARTERS = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_TARIKH_MASUK = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_TARIKH_KELUAR = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_NO_UNIT = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_GANDAAN2X = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_GERAI = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_CATATAN = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_IDP = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_AKTIF_IND = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_GANDAAN5X = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_JUMLAH_POTONGAN = null;
                         mKakitangan.HR_MAKLUMAT_KUARTERS.HR_KUARTERS = new HR_KUARTERS();
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_KUARTERS.HR_KOD_KUARTERS = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_KUARTERS.HR_AKTIF_IND = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_KUARTERS.HR_ALAMAT1 = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_KUARTERS.HR_ALAMAT2 = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_KUARTERS.HR_ALAMAT3 = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_KUARTERS.HR_BANDAR = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_KUARTERS.HR_BLOK_KUARTERS = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_KUARTERS.HR_MAKLUMAT_KUARTERS = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_KUARTERS.HR_NEGERI = null;
-                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_KUARTERS.HR_POSKOD = null;
                     }
                     else
                     {
@@ -821,6 +802,8 @@ namespace eSPP.Controllers
                         mKakitangan.HR_MAKLUMAT_KUARTERS.HR_NO_PEKERJA = mKuarters.HR_NO_PEKERJA;
                         mKakitangan.HR_MAKLUMAT_KUARTERS.HR_KOD_KUARTERS = mKuarters.HR_KOD_KUARTERS;
                         mKakitangan.HR_MAKLUMAT_KUARTERS.HR_TARIKH_MASUK = mKuarters.HR_TARIKH_MASUK;
+                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_KOD_KUARTERS2 = mKuarters.HR_KOD_KUARTERS;
+                        mKakitangan.HR_MAKLUMAT_KUARTERS.HR_TARIKH_MASUK2 = mKuarters.HR_TARIKH_MASUK;
                         mKakitangan.HR_MAKLUMAT_KUARTERS.HR_TARIKH_KELUAR = mKuarters.HR_TARIKH_KELUAR;
                         mKakitangan.HR_MAKLUMAT_KUARTERS.HR_NO_UNIT = mKuarters.HR_NO_UNIT;
                         mKakitangan.HR_MAKLUMAT_KUARTERS.HR_GANDAAN2X = mKuarters.HR_GANDAAN2X;
@@ -874,34 +857,34 @@ namespace eSPP.Controllers
                             mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_G = sElaunPotonganG;
                         }
                     }
-                    else
-                    {
-                        MaklumatElaunPotongan mElaunPotonganG = new MaklumatElaunPotongan();
-                        mElaunPotonganG.HR_NO_PEKERJA = null;
-                        mElaunPotonganG.HR_KOD_ELAUN_POTONGAN = null;
-                        mElaunPotonganG.HR_PENERANGAN = null;
-                        mElaunPotonganG.HR_NO_FAIL = null;
-                        mElaunPotonganG.HR_JUMLAH = null;
-                        mElaunPotonganG.HR_ELAUN_POTONGAN_IND = "G";
-                        mElaunPotonganG.HR_MOD_BAYARAN = null;
-                        mElaunPotonganG.HR_TARIKH_MULA = null;
-                        mElaunPotonganG.HR_TARIKH_AKHIR = null;
-                        mElaunPotonganG.HR_TUNTUTAN_MAKSIMA = null;
-                        mElaunPotonganG.HR_BAKI = null;
-                        mElaunPotonganG.HR_AKTIF_IND = "T";
-                        mElaunPotonganG.HR_HARI_BEKERJA = null;
-                        mElaunPotonganG.HR_NO_PEKERJA_PT = null;
-                        mElaunPotonganG.HR_TARIKH_KEYIN = null;
-                        mElaunPotonganG.HR_TARIKH_UBAH = null;
-                        mElaunPotonganG.HR_UBAH_IND = null;
-                        mElaunPotonganG.HR_GRED_PT = null;
-                        mElaunPotonganG.HR_MATRIKS_GAJI_PT = null;
-                        mElaunPotonganG.HR_NP_KEYIN = null;
-                        mElaunPotonganG.HR_NP_UBAH = null;
-                        mElaunPotonganG.HR_AUTO_IND = "Y";
-                        sElaunPotonganG.Add(mElaunPotonganG);
-                        mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_G = sElaunPotonganG;
-                    }
+                    //else
+                    //{
+                    //    MaklumatElaunPotongan mElaunPotonganG = new MaklumatElaunPotongan();
+                    //    mElaunPotonganG.HR_NO_PEKERJA = null;
+                    //    mElaunPotonganG.HR_KOD_ELAUN_POTONGAN = null;
+                    //    mElaunPotonganG.HR_PENERANGAN = null;
+                    //    mElaunPotonganG.HR_NO_FAIL = null;
+                    //    mElaunPotonganG.HR_JUMLAH = null;
+                    //    mElaunPotonganG.HR_ELAUN_POTONGAN_IND = "G";
+                    //    mElaunPotonganG.HR_MOD_BAYARAN = null;
+                    //    mElaunPotonganG.HR_TARIKH_MULA = null;
+                    //    mElaunPotonganG.HR_TARIKH_AKHIR = null;
+                    //    mElaunPotonganG.HR_TUNTUTAN_MAKSIMA = null;
+                    //    mElaunPotonganG.HR_BAKI = null;
+                    //    mElaunPotonganG.HR_AKTIF_IND = "T";
+                    //    mElaunPotonganG.HR_HARI_BEKERJA = null;
+                    //    mElaunPotonganG.HR_NO_PEKERJA_PT = null;
+                    //    mElaunPotonganG.HR_TARIKH_KEYIN = null;
+                    //    mElaunPotonganG.HR_TARIKH_UBAH = null;
+                    //    mElaunPotonganG.HR_UBAH_IND = null;
+                    //    mElaunPotonganG.HR_GRED_PT = null;
+                    //    mElaunPotonganG.HR_MATRIKS_GAJI_PT = null;
+                    //    mElaunPotonganG.HR_NP_KEYIN = null;
+                    //    mElaunPotonganG.HR_NP_UBAH = null;
+                    //    mElaunPotonganG.HR_AUTO_IND = "Y";
+                    //    sElaunPotonganG.Add(mElaunPotonganG);
+                    //    mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_G = sElaunPotonganG;
+                    //}
 
                     if (lElaunPotonganE.Count() > 0)
                     {
@@ -935,34 +918,34 @@ namespace eSPP.Controllers
                             mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_E = sElaunPotonganE;
                         }
                     }
-                    else
-                    {
-                        MaklumatElaunPotongan mElaunPotonganE = new MaklumatElaunPotongan();
-                        mElaunPotonganE.HR_NO_PEKERJA = null;
-                        mElaunPotonganE.HR_KOD_ELAUN_POTONGAN = null;
-                        mElaunPotonganE.HR_PENERANGAN = null;
-                        mElaunPotonganE.HR_NO_FAIL = null;
-                        mElaunPotonganE.HR_JUMLAH = null;
-                        mElaunPotonganE.HR_ELAUN_POTONGAN_IND = "E";
-                        mElaunPotonganE.HR_MOD_BAYARAN = null;
-                        mElaunPotonganE.HR_TARIKH_MULA = null;
-                        mElaunPotonganE.HR_TARIKH_AKHIR = null;
-                        mElaunPotonganE.HR_TUNTUTAN_MAKSIMA = null;
-                        mElaunPotonganE.HR_BAKI = null;
-                        mElaunPotonganE.HR_AKTIF_IND = "T";
-                        mElaunPotonganE.HR_HARI_BEKERJA = null;
-                        mElaunPotonganE.HR_NO_PEKERJA_PT = null;
-                        mElaunPotonganE.HR_TARIKH_KEYIN = null;
-                        mElaunPotonganE.HR_TARIKH_UBAH = null;
-                        mElaunPotonganE.HR_UBAH_IND = null;
-                        mElaunPotonganE.HR_GRED_PT = null;
-                        mElaunPotonganE.HR_MATRIKS_GAJI_PT = null;
-                        mElaunPotonganE.HR_NP_KEYIN = null;
-                        mElaunPotonganE.HR_NP_UBAH = null;
-                        mElaunPotonganE.HR_AUTO_IND = "Y";
-                        sElaunPotonganE.Add(mElaunPotonganE);
-                        mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_E = sElaunPotonganE;
-                    }
+                    //else
+                    //{
+                    //    MaklumatElaunPotongan mElaunPotonganE = new MaklumatElaunPotongan();
+                    //    mElaunPotonganE.HR_NO_PEKERJA = null;
+                    //    mElaunPotonganE.HR_KOD_ELAUN_POTONGAN = null;
+                    //    mElaunPotonganE.HR_PENERANGAN = null;
+                    //    mElaunPotonganE.HR_NO_FAIL = null;
+                    //    mElaunPotonganE.HR_JUMLAH = null;
+                    //    mElaunPotonganE.HR_ELAUN_POTONGAN_IND = "E";
+                    //    mElaunPotonganE.HR_MOD_BAYARAN = null;
+                    //    mElaunPotonganE.HR_TARIKH_MULA = null;
+                    //    mElaunPotonganE.HR_TARIKH_AKHIR = null;
+                    //    mElaunPotonganE.HR_TUNTUTAN_MAKSIMA = null;
+                    //    mElaunPotonganE.HR_BAKI = null;
+                    //    mElaunPotonganE.HR_AKTIF_IND = "T";
+                    //    mElaunPotonganE.HR_HARI_BEKERJA = null;
+                    //    mElaunPotonganE.HR_NO_PEKERJA_PT = null;
+                    //    mElaunPotonganE.HR_TARIKH_KEYIN = null;
+                    //    mElaunPotonganE.HR_TARIKH_UBAH = null;
+                    //    mElaunPotonganE.HR_UBAH_IND = null;
+                    //    mElaunPotonganE.HR_GRED_PT = null;
+                    //    mElaunPotonganE.HR_MATRIKS_GAJI_PT = null;
+                    //    mElaunPotonganE.HR_NP_KEYIN = null;
+                    //    mElaunPotonganE.HR_NP_UBAH = null;
+                    //    mElaunPotonganE.HR_AUTO_IND = "Y";
+                    //    sElaunPotonganE.Add(mElaunPotonganE);
+                    //    mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_E = sElaunPotonganE;
+                    //}
 
                     if (lElaunPotonganP.Count() > 0)
                     {
@@ -997,35 +980,35 @@ namespace eSPP.Controllers
 
                         }
                     }
-                    else
-                    {
-                        MaklumatElaunPotongan mElaunPotonganP = new MaklumatElaunPotongan();
-                        mElaunPotonganP.HR_NO_PEKERJA = null;
-                        mElaunPotonganP.HR_KOD_ELAUN_POTONGAN = null;
-                        mElaunPotonganP.HR_PENERANGAN = null;
-                        mElaunPotonganP.HR_NO_FAIL = null;
-                        mElaunPotonganP.HR_JUMLAH = null;
-                        mElaunPotonganP.HR_ELAUN_POTONGAN_IND = "P";
-                        mElaunPotonganP.HR_MOD_BAYARAN = null;
-                        mElaunPotonganP.HR_TARIKH_MULA = null;
-                        mElaunPotonganP.HR_TARIKH_AKHIR = null;
-                        mElaunPotonganP.HR_TUNTUTAN_MAKSIMA = null;
-                        mElaunPotonganP.HR_BAKI = null;
-                        mElaunPotonganP.HR_AKTIF_IND = "T";
-                        mElaunPotonganP.HR_HARI_BEKERJA = null;
-                        mElaunPotonganP.HR_NO_PEKERJA_PT = null;
-                        mElaunPotonganP.HR_TARIKH_KEYIN = null;
-                        mElaunPotonganP.HR_TARIKH_UBAH = null;
-                        mElaunPotonganP.HR_UBAH_IND = null;
-                        mElaunPotonganP.HR_GRED_PT = null;
-                        mElaunPotonganP.HR_MATRIKS_GAJI_PT = null;
+                    //else
+                    //{
+                    //    MaklumatElaunPotongan mElaunPotonganP = new MaklumatElaunPotongan();
+                    //    mElaunPotonganP.HR_NO_PEKERJA = null;
+                    //    mElaunPotonganP.HR_KOD_ELAUN_POTONGAN = null;
+                    //    mElaunPotonganP.HR_PENERANGAN = null;
+                    //    mElaunPotonganP.HR_NO_FAIL = null;
+                    //    mElaunPotonganP.HR_JUMLAH = null;
+                    //    mElaunPotonganP.HR_ELAUN_POTONGAN_IND = "P";
+                    //    mElaunPotonganP.HR_MOD_BAYARAN = null;
+                    //    mElaunPotonganP.HR_TARIKH_MULA = null;
+                    //    mElaunPotonganP.HR_TARIKH_AKHIR = null;
+                    //    mElaunPotonganP.HR_TUNTUTAN_MAKSIMA = null;
+                    //    mElaunPotonganP.HR_BAKI = null;
+                    //    mElaunPotonganP.HR_AKTIF_IND = "T";
+                    //    mElaunPotonganP.HR_HARI_BEKERJA = null;
+                    //    mElaunPotonganP.HR_NO_PEKERJA_PT = null;
+                    //    mElaunPotonganP.HR_TARIKH_KEYIN = null;
+                    //    mElaunPotonganP.HR_TARIKH_UBAH = null;
+                    //    mElaunPotonganP.HR_UBAH_IND = null;
+                    //    mElaunPotonganP.HR_GRED_PT = null;
+                    //    mElaunPotonganP.HR_MATRIKS_GAJI_PT = null;
 
-                        mElaunPotonganP.HR_NP_KEYIN = null;
-                        mElaunPotonganP.HR_NP_UBAH = null;
-                        mElaunPotonganP.HR_AUTO_IND = "Y";
-                        sElaunPotonganP.Add(mElaunPotonganP);
-                        mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_P = sElaunPotonganP;
-                    }
+                    //    mElaunPotonganP.HR_NP_KEYIN = null;
+                    //    mElaunPotonganP.HR_NP_UBAH = null;
+                    //    mElaunPotonganP.HR_AUTO_IND = "Y";
+                    //    sElaunPotonganP.Add(mElaunPotonganP);
+                    //    mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_P = sElaunPotonganP;
+                    //}
 
                     if (lElaunPotonganC.Count() > 0)
                     {
@@ -1058,34 +1041,34 @@ namespace eSPP.Controllers
                             mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_C = sElaunPotonganC;
                         }
                     }
-                    else
-                    {
-                        MaklumatElaunPotongan mElaunPotonganC = new MaklumatElaunPotongan();
-                        mElaunPotonganC.HR_NO_PEKERJA = null;
-                        mElaunPotonganC.HR_KOD_ELAUN_POTONGAN = null;
-                        mElaunPotonganC.HR_PENERANGAN = null;
-                        mElaunPotonganC.HR_NO_FAIL = null;
-                        mElaunPotonganC.HR_JUMLAH = null;
-                        mElaunPotonganC.HR_ELAUN_POTONGAN_IND = "C";
-                        mElaunPotonganC.HR_MOD_BAYARAN = null;
-                        mElaunPotonganC.HR_TARIKH_MULA = null;
-                        mElaunPotonganC.HR_TARIKH_AKHIR = null;
-                        mElaunPotonganC.HR_TUNTUTAN_MAKSIMA = null;
-                        mElaunPotonganC.HR_BAKI = null;
-                        mElaunPotonganC.HR_AKTIF_IND = "T";
-                        mElaunPotonganC.HR_HARI_BEKERJA = null;
-                        mElaunPotonganC.HR_NO_PEKERJA_PT = null;
-                        mElaunPotonganC.HR_TARIKH_KEYIN = null;
-                        mElaunPotonganC.HR_TARIKH_UBAH = null;
-                        mElaunPotonganC.HR_UBAH_IND = null;
-                        mElaunPotonganC.HR_GRED_PT = null;
-                        mElaunPotonganC.HR_MATRIKS_GAJI_PT = null;
-                        mElaunPotonganC.HR_NP_KEYIN = null;
-                        mElaunPotonganC.HR_NP_UBAH = null;
-                        mElaunPotonganC.HR_AUTO_IND = "Y";
-                        sElaunPotonganC.Add(mElaunPotonganC);
-                        mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_C = sElaunPotonganC;
-                    }
+                    //else
+                    //{
+                    //    MaklumatElaunPotongan mElaunPotonganC = new MaklumatElaunPotongan();
+                    //    mElaunPotonganC.HR_NO_PEKERJA = null;
+                    //    mElaunPotonganC.HR_KOD_ELAUN_POTONGAN = null;
+                    //    mElaunPotonganC.HR_PENERANGAN = null;
+                    //    mElaunPotonganC.HR_NO_FAIL = null;
+                    //    mElaunPotonganC.HR_JUMLAH = null;
+                    //    mElaunPotonganC.HR_ELAUN_POTONGAN_IND = "C";
+                    //    mElaunPotonganC.HR_MOD_BAYARAN = null;
+                    //    mElaunPotonganC.HR_TARIKH_MULA = null;
+                    //    mElaunPotonganC.HR_TARIKH_AKHIR = null;
+                    //    mElaunPotonganC.HR_TUNTUTAN_MAKSIMA = null;
+                    //    mElaunPotonganC.HR_BAKI = null;
+                    //    mElaunPotonganC.HR_AKTIF_IND = "T";
+                    //    mElaunPotonganC.HR_HARI_BEKERJA = null;
+                    //    mElaunPotonganC.HR_NO_PEKERJA_PT = null;
+                    //    mElaunPotonganC.HR_TARIKH_KEYIN = null;
+                    //    mElaunPotonganC.HR_TARIKH_UBAH = null;
+                    //    mElaunPotonganC.HR_UBAH_IND = null;
+                    //    mElaunPotonganC.HR_GRED_PT = null;
+                    //    mElaunPotonganC.HR_MATRIKS_GAJI_PT = null;
+                    //    mElaunPotonganC.HR_NP_KEYIN = null;
+                    //    mElaunPotonganC.HR_NP_UBAH = null;
+                    //    mElaunPotonganC.HR_AUTO_IND = "Y";
+                    //    sElaunPotonganC.Add(mElaunPotonganC);
+                    //    mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_C = sElaunPotonganC;
+                    //}
 
                     if (lPKurniaan.Count() > 0)
                     {
@@ -1118,21 +1101,21 @@ namespace eSPP.Controllers
                             noKurniaan++;
                         }
                     }
-                    else
-                    {
-                        MaklumatKurniaan mKurniaan = new MaklumatKurniaan();
-                        mKurniaan.HR_NO_PEKERJA = null;
-                        mKurniaan.HR_TARIKH_KURNIAAN = null;
-                        mKurniaan.HR_KOD_KURNIAAN = null;
-                        mKurniaan.HR_KURNIAAN_IND = null;
-                        mKurniaan.HR_NEGERI = null;
-                        mKurniaan.HR_STATUS = null;
+                    //else
+                    //{
+                    //    MaklumatKurniaan mKurniaan = new MaklumatKurniaan();
+                    //    mKurniaan.HR_NO_PEKERJA = null;
+                    //    mKurniaan.HR_TARIKH_KURNIAAN = null;
+                    //    mKurniaan.HR_KOD_KURNIAAN = null;
+                    //    mKurniaan.HR_KURNIAAN_IND = null;
+                    //    mKurniaan.HR_NEGERI = null;
+                    //    mKurniaan.HR_STATUS = null;
 
-                        mKurniaan.HR_TARIKH_PENCALONAN = null;
-                        mKurniaan.HR_NP_PENCALON = null;
-                        sKurniaan.Add(mKurniaan);
-                        mKakitangan.HR_MAKLUMAT_KURNIAAN = sKurniaan;
-                    }
+                    //    mKurniaan.HR_TARIKH_PENCALONAN = null;
+                    //    mKurniaan.HR_NP_PENCALON = null;
+                    //    sKurniaan.Add(mKurniaan);
+                    //    mKakitangan.HR_MAKLUMAT_KURNIAAN = sKurniaan;
+                    //}
 
                     if (lAnugerahCemerlang.Count() > 0)
                     {
@@ -1142,19 +1125,20 @@ namespace eSPP.Controllers
                             mAnugerahCemerlang.HR_NO_PEKERJA = item.HR_NO_PEKERJA;
                             mAnugerahCemerlang.HR_NAMA_ANUGERAH = item.HR_NAMA_ANUGERAH;
                             mAnugerahCemerlang.HR_TARIKH_PENERIMAAN = item.HR_TARIKH_PENERIMAAN;
+                            mAnugerahCemerlang.HR_TAHUN = item.HR_TAHUN;
                             sAnugerahCemerlang.Add(mAnugerahCemerlang);
                             mKakitangan.HR_ANUGERAH_CEMERLANG = sAnugerahCemerlang;
                         }
                     }
-                    else
-                    {
-                        MaklumatAnugerahCemerlang mAnugerahCemerlang = new MaklumatAnugerahCemerlang();
-                        mAnugerahCemerlang.HR_NO_PEKERJA = null;
-                        mAnugerahCemerlang.HR_NAMA_ANUGERAH = null;
-                        mAnugerahCemerlang.HR_TARIKH_PENERIMAAN = null;
-                        sAnugerahCemerlang.Add(mAnugerahCemerlang);
-                        mKakitangan.HR_ANUGERAH_CEMERLANG = sAnugerahCemerlang;
-                    }
+                    //else
+                    //{
+                    //    MaklumatAnugerahCemerlang mAnugerahCemerlang = new MaklumatAnugerahCemerlang();
+                    //    mAnugerahCemerlang.HR_NO_PEKERJA = null;
+                    //    mAnugerahCemerlang.HR_NAMA_ANUGERAH = null;
+                    //    mAnugerahCemerlang.HR_TARIKH_PENERIMAAN = null;
+                    //    sAnugerahCemerlang.Add(mAnugerahCemerlang);
+                    //    mKakitangan.HR_ANUGERAH_CEMERLANG = sAnugerahCemerlang;
+                    //}
 
                     if (mAnugerahHaji != null)
                     {
@@ -1167,17 +1151,17 @@ namespace eSPP.Controllers
                         mKakitangan.HR_ANUGERAH_HAJI.HR_NP_UP = mAnugerahHaji.HR_NP_UP;
                         mKakitangan.HR_ANUGERAH_HAJI.HR_NP_PEG = mAnugerahHaji.HR_NP_PEG;
                     }
-                    else
-                    {
-                        mKakitangan.HR_ANUGERAH_HAJI = new MaklumatAnugerahHaji();
-                        mKakitangan.HR_ANUGERAH_HAJI.HR_NO_PEKERJA = null;
-                        mKakitangan.HR_ANUGERAH_HAJI.HR_TAHUN_PERGI = null;
-                        mKakitangan.HR_ANUGERAH_HAJI.HR_STATUS_HAJI = null;
-                        mKakitangan.HR_ANUGERAH_HAJI.HR_NP_YDP = null;
-                        mKakitangan.HR_ANUGERAH_HAJI.HR_LULUS_IND = null;
-                        mKakitangan.HR_ANUGERAH_HAJI.HR_NP_UP = null;
-                        mKakitangan.HR_ANUGERAH_HAJI.HR_NP_PEG = null;
-                    }
+                    //else
+                    //{
+                    //    mKakitangan.HR_ANUGERAH_HAJI = new MaklumatAnugerahHaji();
+                    //    mKakitangan.HR_ANUGERAH_HAJI.HR_NO_PEKERJA = null;
+                    //    mKakitangan.HR_ANUGERAH_HAJI.HR_TAHUN_PERGI = null;
+                    //    mKakitangan.HR_ANUGERAH_HAJI.HR_STATUS_HAJI = null;
+                    //    mKakitangan.HR_ANUGERAH_HAJI.HR_NP_YDP = null;
+                    //    mKakitangan.HR_ANUGERAH_HAJI.HR_LULUS_IND = null;
+                    //    mKakitangan.HR_ANUGERAH_HAJI.HR_NP_UP = null;
+                    //    mKakitangan.HR_ANUGERAH_HAJI.HR_NP_PEG = null;
+                    //}
 
                     if (mPersaraan != null)
                     {
@@ -1246,19 +1230,19 @@ namespace eSPP.Controllers
                         }
 
                     }
-                    else
-                    {
-                        MaklumatTindakanDisiplin mTindakanDisiplin = new MaklumatTindakanDisiplin();
-                        mTindakanDisiplin.HR_NO_PEKERJA = null;
-                        mTindakanDisiplin.HR_TARIKH_KESALAHAN = null;
-                        mTindakanDisiplin.HR_KESALAHAN = null;
-                        mTindakanDisiplin.HR_KOD_TINDAKAN = null;
-                        mTindakanDisiplin.HR_TARIKH_MULA = null;
-                        mTindakanDisiplin.HR_TARIKH_AKHIR = null;
-                        sTindakanDisiplin.Add(mTindakanDisiplin);
-                        mKakitangan.HR_TINDAKAN_DISIPLIN = sTindakanDisiplin;
+                    //else
+                    //{
+                    //    MaklumatTindakanDisiplin mTindakanDisiplin = new MaklumatTindakanDisiplin();
+                    //    mTindakanDisiplin.HR_NO_PEKERJA = null;
+                    //    mTindakanDisiplin.HR_TARIKH_KESALAHAN = null;
+                    //    mTindakanDisiplin.HR_KESALAHAN = null;
+                    //    mTindakanDisiplin.HR_KOD_TINDAKAN = null;
+                    //    mTindakanDisiplin.HR_TARIKH_MULA = null;
+                    //    mTindakanDisiplin.HR_TARIKH_AKHIR = null;
+                    //    sTindakanDisiplin.Add(mTindakanDisiplin);
+                    //    mKakitangan.HR_TINDAKAN_DISIPLIN = sTindakanDisiplin;
 
-                    }
+                    //}
 
                     if (mKematian != null)
                     {
@@ -1320,6 +1304,7 @@ namespace eSPP.Controllers
                         mKakitangan.HR_PENILAIAN_PRESTASI = new MaklumatPenilaianPrestasi();
                         mKakitangan.HR_PENILAIAN_PRESTASI.HR_NO_PEKERJA = mPrestasi.HR_NO_PEKERJA;
                         mKakitangan.HR_PENILAIAN_PRESTASI.HR_TAHUN_PRESTASI = mPrestasi.HR_TAHUN_PRESTASI;
+                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_TAHUN_PRESTASI2 = mPrestasi.HR_TAHUN_PRESTASI;
                         mKakitangan.HR_PENILAIAN_PRESTASI.HR_PENGHASILAN_PPP = mPrestasi.HR_PENGHASILAN_PPP;
                         mKakitangan.HR_PENILAIAN_PRESTASI.HR_PENGHASILAN_PPK = mPrestasi.HR_PENGHASILAN_PPK;
                         mKakitangan.HR_PENILAIAN_PRESTASI.HR_PENGETAHUAN_PPP = mPrestasi.HR_PENGETAHUAN_PPP;
@@ -1345,30 +1330,10 @@ namespace eSPP.Controllers
                     else
                     {
                         mKakitangan.HR_PENILAIAN_PRESTASI = new MaklumatPenilaianPrestasi();
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_NO_PEKERJA = null;
                         mKakitangan.HR_PENILAIAN_PRESTASI.HR_TAHUN_PRESTASI = Convert.ToInt16(DateTime.Now.Year);
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_PENGHASILAN_PPP = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_PENGHASILAN_PPK = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_PENGETAHUAN_PPP = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_PENGETAHUAN_PPK = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_KUALITI_PPP = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_KUALITI_PPK = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_SUMBANGAN_PPP = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_SUMBANGAN_PPK = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_PURATA_PENGHASILAN = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_PURATA_PENGETAHUAN = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_PURATA_KUALITI = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_PURATA_SUMBANGAN = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_PERATUS_PENGHASILAN = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_PERATUS_PENGETAHUAN = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_PERATUS_KUALITI = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_PERATUS_SUMBANGAN = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_JUMLAH_BESAR = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_CEMERLANG_IND = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_JENIS_IND = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_CUTI_KERAJAAN = null;
-                        mKakitangan.HR_PENILAIAN_PRESTASI.HR_CUTI_SWASTA = null;
                     }
+
+                    mKakitangan.HR_MAKLUMAT_TANGGUNG_KERJA = db.HR_MAKLUMAT_TANGGUNG_KERJA.Where(s => s.HR_NO_PEKERJA == value && s.HR_FINALISED_IND_HR == "Y").ToList();
 
                     if (MaklumatCuti.Count() > 0)
                     {
@@ -1550,7 +1515,7 @@ namespace eSPP.Controllers
                     //END KEMAHIRAN
 
                     //START AKADEMIK
-                    ViewBag.HR_KURSUS = db.HR_KURSUS;
+                    ViewBag.HR_KURSUS = db.HR_KURSUS.ToList();
                     List<SelectListItem> HR_PERINGKAT = new List<SelectListItem>();
                     HR_PERINGKAT.Add(new SelectListItem { Text = "KEBANGSAAN", Value = "KEBANGSAAN" });
                     HR_PERINGKAT.Add(new SelectListItem { Text = "NEGERI", Value = "NEGERI" });
@@ -1593,7 +1558,7 @@ namespace eSPP.Controllers
                     {
                         ViewBag.jawatan = jawatan.HR_NAMA_JAWATAN;
                     }
-                    var gredEP = Convert.ToInt32(mPekerjaan.HR_GAJI_POKOK);
+                    var gredEP = Convert.ToInt32(mPekerjaan.HR_GRED);
                     var KumpulanGred = db2.GE_PARAMTABLE.SingleOrDefault(s => s.GROUPID == 109 && s.ORDINAL == gredEP);
                     ViewBag.KumpulanGred = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_KUMPULAN + " / ";
                     if (KumpulanGred != null)
@@ -1630,7 +1595,7 @@ namespace eSPP.Controllers
                     //ANUGERAH
                     ViewBag.Peringkat = new SelectList(db2.GE_PARAMTABLE.Where(s => s.GROUPID == 130).GroupBy(s => s.SHORT_DESCRIPTION).Select(s => s.FirstOrDefault()), "SHORT_DESCRIPTION", "SHORT_DESCRIPTION");
                     ViewBag.HR_KURNIAAN_IND = new SelectList(db2.GE_PARAMTABLE.Where(s => s.GROUPID == 130), "STRING_PARAM", "LONG_DESCRIPTION");
-                    ViewBag.Kurniaan = db.HR_KURNIAAN;
+                    ViewBag.Kurniaan = db.HR_KURNIAAN.ToList();
                     ViewBag.HR_NP_PENCALON = db.HR_MAKLUMAT_PERIBADI.ToList<HR_MAKLUMAT_PERIBADI>();
                     //
 
@@ -1871,7 +1836,8 @@ namespace eSPP.Controllers
 
             if (ModelState.IsValid)
             {
-
+                var username = User.Identity.Name;
+                HR_MAKLUMAT_PERIBADI pekerja = db.HR_MAKLUMAT_PERIBADI.FirstOrDefault(s => s.HR_NO_KPBARU == username);
                 foreach (var Kemaskini in kemaskini)
                 {
                     if (Kemaskini == "Info")
@@ -1979,8 +1945,8 @@ namespace eSPP.Controllers
                         mPeribadi.HR_JENIS_KENDERAAN = mKakitangan.HR_MAKLUMAT_PERIBADI.HR_JENIS_KENDERAAN;
                         mPeribadi.HR_ALASAN = mKakitangan.HR_MAKLUMAT_PERIBADI.HR_ALASAN;
                         mPeribadi.HR_IDPEKERJA = mKakitangan.HR_MAKLUMAT_PERIBADI.HR_IDPEKERJA;
-                        mPeribadi.HR_TARIKH_KEYIN = mKakitangan.HR_MAKLUMAT_PERIBADI.HR_TARIKH_KEYIN;
-                        mPeribadi.HR_NP_KEYIN = mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NP_KEYIN;
+                        //mPeribadi.HR_TARIKH_KEYIN = mKakitangan.HR_MAKLUMAT_PERIBADI.HR_TARIKH_KEYIN;
+                        //mPeribadi.HR_NP_KEYIN = mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NP_KEYIN;
                         mPeribadi.HR_TARIKH_UBAH = mKakitangan.HR_MAKLUMAT_PERIBADI.HR_TARIKH_UBAH;
                         mPeribadi.HR_NP_UBAH = mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NP_UBAH;
 
@@ -1991,6 +1957,8 @@ namespace eSPP.Controllers
                         {
                             mPekerjaan = new HR_MAKLUMAT_PEKERJAAN();
                             mPekerjaan.HR_NO_PEKERJA = mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA;
+                            mPekerjaan.HR_NP_KEYIN = pekerja.HR_NO_PEKERJA;
+                            mPekerjaan.HR_TARIKH_KEYIN = DateTime.Now;
                             db.HR_MAKLUMAT_PEKERJAAN.Add(mPekerjaan);
                             db.SaveChanges();
                         }
@@ -2008,13 +1976,11 @@ namespace eSPP.Controllers
                         {
                             mPekerjaan = new HR_MAKLUMAT_PEKERJAAN();
                             mPekerjaan.HR_NO_PEKERJA = mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA;
+                            mPekerjaan.HR_NP_KEYIN = pekerja.HR_NO_PEKERJA;
+                            mPekerjaan.HR_TARIKH_KEYIN = DateTime.Now;
                             db.HR_MAKLUMAT_PEKERJAAN.Add(mPekerjaan);
                             db.SaveChanges();
                         }
-
-                        mPekerjaan.HR_NO_PEKERJA = mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA;
-                        
-                 
 
                         mPekerjaan.HR_JABATAN = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN;
                         mPekerjaan.HR_BAHAGIAN = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_BAHAGIAN;
@@ -2127,29 +2093,15 @@ namespace eSPP.Controllers
                         {
                             mPekerjaan.HR_TANGGUH_GERAKGAJI_IND = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TANGGUH_GERAKGAJI_IND;
                         }
-                        if (mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_KEYIN2 != null)
-                        {
-                            mPekerjaan.HR_TARIKH_KEYIN = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_KEYIN2;
-                        }
-                        if (mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_KEYIN2 != null)
-                        {
-                            mPekerjaan.HR_NP_KEYIN = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_KEYIN2;
-                        }
-                        if (mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_UBAH2 != null)
-                        {
-                            mPekerjaan.HR_TARIKH_UBAH = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_UBAH2; 
-                        }
-                        if (mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_UBAH2 != null)
-                        {
-                            mPekerjaan.HR_NP_UBAH = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_UBAH2;
-                        }
+
+                        mPekerjaan.HR_TARIKH_UBAH = DateTime.Now;
+                        mPekerjaan.HR_NP_UBAH = pekerja.HR_NO_PEKERJA;
+
                         if (mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_SKIM != null)
                         {
                             mPekerjaan.HR_SKIM = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_SKIM;
                         }
 
-
-                     
                         mPekerjaan.HR_PERGERAKAN_GAJI = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_PERGERAKAN_GAJI;
                         mPekerjaan.HR_NO_KWSP = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NO_KWSP;
                         if (mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NO_PENCEN != null)
@@ -2183,6 +2135,7 @@ namespace eSPP.Controllers
                         if (mKakitangan.HR_MAKLUMAT_PEKERJAAN_HISTORY.Count() > 0)
                         {
                             db.HR_MAKLUMAT_PEKERJAAN_HISTORY.RemoveRange(db.HR_MAKLUMAT_PEKERJAAN_HISTORY.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
+                            db.SaveChanges();
                             foreach (var item in mKakitangan.HR_MAKLUMAT_PEKERJAAN_HISTORY)
                             {
                                 HR_MAKLUMAT_PEKERJAAN_HISTORY mKerja = new HR_MAKLUMAT_PEKERJAAN_HISTORY();
@@ -2243,7 +2196,6 @@ namespace eSPP.Controllers
                         
                         if (mKakitangan.HR_MAKLUMAT_PENGALAMAN_KERJA != null)
                         {
-
                             db.HR_MAKLUMAT_PENGALAMAN_KERJA.RemoveRange(db.HR_MAKLUMAT_PENGALAMAN_KERJA.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA && s.HR_NAMA_SYARIKAT != "MAJLIS PERBANDARAN PETALING JAYA"));
                             foreach (var item in mKakitangan.HR_MAKLUMAT_PENGALAMAN_KERJA)
                             {
@@ -2266,31 +2218,36 @@ namespace eSPP.Controllers
 
                     if (Kemaskini == "Kemahiran")
                     {
+                        db.HR_MAKLUMAT_PENGALAMAN_KERJA.RemoveRange(db.HR_MAKLUMAT_PENGALAMAN_KERJA.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA && s.HR_NAMA_SYARIKAT != "MAJLIS PERBANDARAN PETALING JAYA"));
+                        db.SaveChanges();
                         if (mKakitangan.HR_MAKLUMAT_PENGALAMAN_KERJA != null)
                         {
-                            db.HR_MAKLUMAT_PENGALAMAN_KERJA.RemoveRange(db.HR_MAKLUMAT_PENGALAMAN_KERJA.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA && s.HR_NAMA_SYARIKAT != "MAJLIS PERBANDARAN PETALING JAYA"));
                             foreach (var item in mKakitangan.HR_MAKLUMAT_PENGALAMAN_KERJA)
                             {
                                 if(item.HR_TARIKH_MULA.HasValue)
                                 {
+                                    HR_MAKLUMAT_PENGALAMAN_KERJA mKerja = new HR_MAKLUMAT_PENGALAMAN_KERJA();
+                                    mKerja.HR_NO_PEKERJA = mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA;
+                                    mKerja.HR_NAMA_SYARIKAT = item.HR_NAMA_SYARIKAT;
+                                    mKerja.HR_JAWATAN = item.HR_JAWATAN;
+                                    mKerja.HR_TARIKH_MULA = Convert.ToDateTime(item.HR_TARIKH_MULA);
+                                    mKerja.HR_TARIKH_TAMAT = Convert.ToDateTime(item.HR_TARIKH_TAMAT);
+                                    mKerja.HR_ALASAN_BERHENTI = item.HR_ALASAN_BERHENTI;
 
-                                        HR_MAKLUMAT_PENGALAMAN_KERJA mKerja = new HR_MAKLUMAT_PENGALAMAN_KERJA();
-                                        mKerja.HR_NO_PEKERJA = mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA;
-                                        mKerja.HR_NAMA_SYARIKAT = item.HR_NAMA_SYARIKAT;
-                                        mKerja.HR_JAWATAN = item.HR_JAWATAN;
-                                        mKerja.HR_TARIKH_MULA = Convert.ToDateTime(item.HR_TARIKH_MULA);
-                                        mKerja.HR_TARIKH_TAMAT = Convert.ToDateTime(item.HR_TARIKH_TAMAT);
-                                        mKerja.HR_ALASAN_BERHENTI = item.HR_ALASAN_BERHENTI;
-
-                                        db.HR_MAKLUMAT_PENGALAMAN_KERJA.Add(mKerja);
-                                        db.SaveChanges();
+                                    db.HR_MAKLUMAT_PENGALAMAN_KERJA.Add(mKerja);
+                                    db.SaveChanges();
                                 }
                                 
                             }
                         }
+                    }
+
+                    if (Kemaskini == "Kemahiran2")
+                    {
+                        db.HR_MAKLUMAT_KEMAHIRAN_BAHASA.RemoveRange(db.HR_MAKLUMAT_KEMAHIRAN_BAHASA.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
+                        db.SaveChanges();
                         if (mKakitangan.HR_MAKLUMAT_KEMAHIRAN_BAHASA != null)
                         {
-                            db.HR_MAKLUMAT_KEMAHIRAN_BAHASA.RemoveRange(db.HR_MAKLUMAT_KEMAHIRAN_BAHASA.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
                             foreach (var item in mKakitangan.HR_MAKLUMAT_KEMAHIRAN_BAHASA)
                             {
                                 if(item.HR_BAHASA != null)
@@ -2308,9 +2265,14 @@ namespace eSPP.Controllers
                                 
                             }
                         }
+                    }
+
+                    if (Kemaskini == "Kemahiran3")
+                    {
+                        db.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL.RemoveRange(db.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
+                        db.SaveChanges();
                         if (mKakitangan.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL != null)
                         {
-                            db.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL.RemoveRange(db.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
                             short value = 0;
                             var last_HR_SEQ_NO = db.HR_MAKLUMAT_KEMAHIRAN_TEKNIKAL.OrderByDescending(s => s.HR_SEQ_NO).FirstOrDefault();
                             if (last_HR_SEQ_NO != null)
@@ -2338,16 +2300,20 @@ namespace eSPP.Controllers
 
                     }
 
-                    if (Kemaskini == "Akademik")
+                    if (Kemaskini == "Akademik1")
                     {
                         mPeribadi.HR_TAHUN_SPM = mKakitangan.HR_MAKLUMAT_PERIBADI.HR_TAHUN_SPM;
                         mPeribadi.HR_GRED_BM = mKakitangan.HR_MAKLUMAT_PERIBADI.HR_GRED_BM;
                         db.Entry(mPekerjaan).State = EntityState.Modified;
                         db.SaveChanges();
+                    }
 
+                    if (Kemaskini == "Akademik2")
+                    {
+                        db.HR_MAKLUMAT_KELAYAKAN.RemoveRange(db.HR_MAKLUMAT_KELAYAKAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
+                        db.SaveChanges();
                         if (mKakitangan.HR_MAKLUMAT_KELAYAKAN != null)
                         {
-                            db.HR_MAKLUMAT_KELAYAKAN.RemoveRange(db.HR_MAKLUMAT_KELAYAKAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
                             short value = 0;
                             var last_HR_SEQ_NO = db.HR_MAKLUMAT_KELAYAKAN.OrderByDescending(s => s.HR_SEQ_NO).FirstOrDefault();
                             if (last_HR_SEQ_NO != null)
@@ -2367,13 +2333,19 @@ namespace eSPP.Controllers
                                 mKelayakan.HR_KEPUTUSAN = item.HR_KEPUTUSAN;
                                 mKelayakan.HR_TAHUN_MULA = item.HR_TAHUN_MULA;
                                 mKelayakan.HR_TAHUN_TAMAT = item.HR_TAHUN_TAMAT;
+                                mKelayakan.HR_SEKOLAH_INSTITUSI = item.HR_SEKOLAH_INSTITUSI;
                                 db.HR_MAKLUMAT_KELAYAKAN.Add(mKelayakan);
                                 db.SaveChanges();
                             }
                         }
+                    }
+
+                    if (Kemaskini == "Akademik3")
+                    {
+                        db.HR_MAKLUMAT_SIJIL.RemoveRange(db.HR_MAKLUMAT_SIJIL.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
+                        db.SaveChanges();
                         if (mKakitangan.HR_MAKLUMAT_SIJIL != null)
                         {
-                            db.HR_MAKLUMAT_SIJIL.RemoveRange(db.HR_MAKLUMAT_SIJIL.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
                             foreach (var item in mKakitangan.HR_MAKLUMAT_SIJIL)
                             {
                                 if(item.HR_TARIKH_DIPEROLEHI.HasValue)
@@ -2390,10 +2362,14 @@ namespace eSPP.Controllers
                                 
                             }
                         }
+                    }
 
+                    if (Kemaskini == "Akademik4")
+                    {
+                        db.HR_MAKLUMAT_KURSUS_LATIHAN.RemoveRange(db.HR_MAKLUMAT_KURSUS_LATIHAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
+                        db.SaveChanges();
                         if (mKakitangan.HR_MAKLUMAT_KURSUS_LATIHAN != null)
                         {
-                            db.HR_MAKLUMAT_KURSUS_LATIHAN.RemoveRange(db.HR_MAKLUMAT_KURSUS_LATIHAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
                             foreach (var item in mKakitangan.HR_MAKLUMAT_KURSUS_LATIHAN)
                             {
                                 if(item.HR_KOD_KURSUS != null)
@@ -2411,10 +2387,14 @@ namespace eSPP.Controllers
                                 
                             }
                         }
+                    }
+
+                    if (Kemaskini == "Akademik5")
+                    {
+                        db.HR_MAKLUMAT_AKTIVITI.RemoveRange(db.HR_MAKLUMAT_AKTIVITI.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
+                        db.SaveChanges();
                         if (mKakitangan.HR_MAKLUMAT_AKTIVITI != null)
                         {
-                            db.HR_MAKLUMAT_AKTIVITI.RemoveRange(db.HR_MAKLUMAT_AKTIVITI.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
-
                             foreach (var item in mKakitangan.HR_MAKLUMAT_AKTIVITI)
                             {
                                 if(item.HR_TARIKH_AKTIVITI.HasValue)
@@ -2436,13 +2416,14 @@ namespace eSPP.Controllers
 
                     if (Kemaskini == "Pewaris")
                     {
+                        db.HR_MAKLUMAT_PEWARIS.RemoveRange(db.HR_MAKLUMAT_PEWARIS.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
+                        db.SaveChanges();
                         if (mKakitangan.HR_MAKLUMAT_PEWARIS != null)
                         {
-                            db.HR_MAKLUMAT_PEWARIS.RemoveRange(db.HR_MAKLUMAT_PEWARIS.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
                             var no = 1;
                             foreach (var item in mKakitangan.HR_MAKLUMAT_PEWARIS)
                             {
-                                if(item.HR_NO_KP != null)
+                                if(item.HR_NO_KP != null && item.HR_NAMA_PEWARIS != null && item.HR_TARIKH_LAHIR != null)
                                 {
                                     HR_MAKLUMAT_PEWARIS mPewaris = new HR_MAKLUMAT_PEWARIS();
                                     mPewaris.HR_NO_PEKERJA = mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA;
@@ -2483,10 +2464,10 @@ namespace eSPP.Controllers
 
                     if (Kemaskini == "Tanggungan")
                     {
+                        db.HR_MAKLUMAT_TANGGUNGAN.RemoveRange(db.HR_MAKLUMAT_TANGGUNGAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
+                        db.SaveChanges();
                         if (mKakitangan.HR_MAKLUMAT_TANGGUNGAN != null)
                         {
-                            db.HR_MAKLUMAT_TANGGUNGAN.RemoveRange(db.HR_MAKLUMAT_TANGGUNGAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
-
                             foreach (var item in mKakitangan.HR_MAKLUMAT_TANGGUNGAN)
                             {
                                 if(item.HR_NO_KP != null)
@@ -2597,21 +2578,27 @@ namespace eSPP.Controllers
                                 db.Entry(mKuarters).State = EntityState.Modified;
                                 db.SaveChanges();
                             }
+                            else
+                            {
+                                HR_MAKLUMAT_KUARTERS pKuarters = db.HR_MAKLUMAT_KUARTERS.FirstOrDefault(s => s.HR_NO_PEKERJA == mPeribadi.HR_NO_PEKERJA && s.HR_KOD_KUARTERS == mKakitangan.HR_MAKLUMAT_KUARTERS.HR_KOD_KUARTERS2 && s.HR_TARIKH_MASUK == mKakitangan.HR_MAKLUMAT_KUARTERS.HR_TARIKH_MASUK2);
+                                if(pKuarters != null)
+                                {
+                                    db.HR_MAKLUMAT_KUARTERS.Remove(pKuarters);
+                                    db.SaveChanges();
+                                }
+                            }
                             
                         }
-                        
-
-                        
-
                     }
 
                     if (Kemaskini == "Gaji")
                     {
-                        db.HR_MAKLUMAT_ELAUN_POTONGAN.RemoveRange(db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
-                        db.HR_SEJARAH_ELAUN_POTONGAN.RemoveRange(db.HR_SEJARAH_ELAUN_POTONGAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
+                        db.HR_MAKLUMAT_ELAUN_POTONGAN.RemoveRange(db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA && s.HR_ELAUN_POTONGAN_IND == "G"));
+                        db.SaveChanges();
+                        //db.HR_MAKLUMAT_ELAUN_POTONGAN.RemoveRange(db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
+                        //db.HR_SEJARAH_ELAUN_POTONGAN.RemoveRange(db.HR_SEJARAH_ELAUN_POTONGAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
                         if (mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_G != null)
                         {
-                            //db.HR_MAKLUMAT_ELAUN_POTONGAN.RemoveRange(db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA && s.HR_ELAUN_POTONGAN_IND == "G"));
                             foreach (var item in mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_G)
                             {
                                 if (item.HR_KOD_ELAUN_POTONGAN != null)
@@ -2647,10 +2634,14 @@ namespace eSPP.Controllers
                                 
                             }
                         }
+                    }
 
+                    if (Kemaskini == "Gaji2")
+                    {
+                        db.HR_MAKLUMAT_ELAUN_POTONGAN.RemoveRange(db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA && s.HR_ELAUN_POTONGAN_IND == "E"));
+                        db.SaveChanges();
                         if (mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_E != null)
                         {
-                            //db.HR_MAKLUMAT_ELAUN_POTONGAN.RemoveRange(db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA && s.HR_ELAUN_POTONGAN_IND == "E"));
                             foreach (var item in mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_E)
                             {
                                 if (item.HR_KOD_ELAUN_POTONGAN != null)
@@ -2685,10 +2676,14 @@ namespace eSPP.Controllers
                                 }
                             }
                         }
+                    }
 
+                    if (Kemaskini == "Gaji3")
+                    {
+                        db.HR_MAKLUMAT_ELAUN_POTONGAN.RemoveRange(db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA && s.HR_ELAUN_POTONGAN_IND == "P"));
+                        db.SaveChanges();
                         if (mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_P != null)
                         {
-                            //db.HR_MAKLUMAT_ELAUN_POTONGAN.RemoveRange(db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA && s.HR_ELAUN_POTONGAN_IND == "P"));
                             foreach (var item in mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_P)
                             {
                                 if (item.HR_KOD_ELAUN_POTONGAN != null)
@@ -2723,10 +2718,14 @@ namespace eSPP.Controllers
                                 }
                             }
                         }
+                    }
 
+                    if (Kemaskini == "Gaji4")
+                    {
+                        db.HR_MAKLUMAT_ELAUN_POTONGAN.RemoveRange(db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA && s.HR_ELAUN_POTONGAN_IND == "C"));
+                        db.SaveChanges();
                         if (mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_C != null)
                         {
-                            //db.HR_MAKLUMAT_ELAUN_POTONGAN.RemoveRange(db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA && s.HR_ELAUN_POTONGAN_IND == "C"));
                             foreach (var item in mKakitangan.HR_MAKLUMAT_ELAUN_POTONGAN_C)
                             {
                                 if (item.HR_KOD_ELAUN_POTONGAN != null)
@@ -2762,12 +2761,14 @@ namespace eSPP.Controllers
                             }
                         }
                     }
+
                     if (Kemaskini == "Anugerah")
                     {
+                        db.HR_MAKLUMAT_KURNIAAN.RemoveRange(db.HR_MAKLUMAT_KURNIAAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
+                        db.HR_PENCALONAN_KURNIAAN.RemoveRange(db.HR_PENCALONAN_KURNIAAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
+                        db.SaveChanges();
                         if (mKakitangan.HR_MAKLUMAT_KURNIAAN.Count() > 0)
                         {
-                            db.HR_MAKLUMAT_KURNIAAN.RemoveRange(db.HR_MAKLUMAT_KURNIAAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
-                            db.HR_PENCALONAN_KURNIAAN.RemoveRange(db.HR_PENCALONAN_KURNIAAN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
                             foreach (var item in mKakitangan.HR_MAKLUMAT_KURNIAAN)
                             {
                                 if (item.HR_STATUS == "Y")
@@ -2796,53 +2797,111 @@ namespace eSPP.Controllers
                                 db.SaveChanges();
                             }
                         }
+                    }
 
-                        if (mAnugerahHaji == null)
-                        {
-                            mAnugerahHaji = new HR_ANUGERAH_HAJI();
-                            mAnugerahHaji.HR_NO_PEKERJA = mPeribadi.HR_NO_PEKERJA;
-                            mAnugerahHaji.HR_TAHUN_PERGI = mKakitangan.HR_ANUGERAH_HAJI.HR_TAHUN_PERGI;
-                            mAnugerahHaji.HR_STATUS_HAJI = mKakitangan.HR_ANUGERAH_HAJI.HR_STATUS_HAJI;
-                            mAnugerahHaji.HR_NP_YDP = mKakitangan.HR_ANUGERAH_HAJI.HR_NP_YDP;
-                            mAnugerahHaji.HR_LULUS_IND = mKakitangan.HR_ANUGERAH_HAJI.HR_LULUS_IND;
-                            mAnugerahHaji.HR_NP_UP = mKakitangan.HR_ANUGERAH_HAJI.HR_NP_UP;
-                            mAnugerahHaji.HR_NP_PEG = mKakitangan.HR_ANUGERAH_HAJI.HR_NP_PEG;
-                            db.HR_ANUGERAH_HAJI.Add(mAnugerahHaji);
-                            db.SaveChanges();
-                        }
-                        mAnugerahHaji.HR_NO_PEKERJA = mPeribadi.HR_NO_PEKERJA;
-                        mAnugerahHaji.HR_TAHUN_PERGI = mKakitangan.HR_ANUGERAH_HAJI.HR_TAHUN_PERGI;
-                        mAnugerahHaji.HR_STATUS_HAJI = mKakitangan.HR_ANUGERAH_HAJI.HR_STATUS_HAJI;
-                        mAnugerahHaji.HR_NP_YDP = mKakitangan.HR_ANUGERAH_HAJI.HR_NP_YDP;
-                        mAnugerahHaji.HR_LULUS_IND = mKakitangan.HR_ANUGERAH_HAJI.HR_LULUS_IND;
-                        mAnugerahHaji.HR_NP_UP = mKakitangan.HR_ANUGERAH_HAJI.HR_NP_UP;
-                        mAnugerahHaji.HR_NP_PEG = mKakitangan.HR_ANUGERAH_HAJI.HR_NP_PEG;
-                        db.Entry(mAnugerahHaji).State = EntityState.Modified;
+                    if (Kemaskini == "Anugerah2")
+                    {
+                        db.HR_ANUGERAH_CEMERLANG.RemoveRange(db.HR_ANUGERAH_CEMERLANG.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
                         db.SaveChanges();
-
                         if (mKakitangan.HR_ANUGERAH_CEMERLANG.Count() > 0)
                         {
-                            db.HR_ANUGERAH_CEMERLANG.RemoveRange(db.HR_ANUGERAH_CEMERLANG.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
                             foreach (var item in mKakitangan.HR_ANUGERAH_CEMERLANG)
                             {
-                                if(item.HR_NAMA_ANUGERAH != null)
+                                if (item.HR_NAMA_ANUGERAH != null)
                                 {
                                     HR_ANUGERAH_CEMERLANG mAnugerahCemerlang = new HR_ANUGERAH_CEMERLANG();
                                     mAnugerahCemerlang.HR_NO_PEKERJA = mPeribadi.HR_NO_PEKERJA;
                                     mAnugerahCemerlang.HR_NAMA_ANUGERAH = item.HR_NAMA_ANUGERAH;
                                     mAnugerahCemerlang.HR_TARIKH_PENERIMAAN = item.HR_TARIKH_PENERIMAAN;
+                                    mAnugerahCemerlang.HR_TAHUN = item.HR_TAHUN;
                                     db.HR_ANUGERAH_CEMERLANG.Add(mAnugerahCemerlang);
                                     db.SaveChanges();
                                 }
-                                
+
                             }
                         }
                     }
+
+                    if (Kemaskini == "Anugerah3")
+                    {
+                        if (mKakitangan.HR_ANUGERAH_HAJI.HR_TAHUN_PERGI == null && mKakitangan.HR_ANUGERAH_HAJI.HR_STATUS_HAJI == null && mKakitangan.HR_ANUGERAH_HAJI.HR_NP_YDP == null && mKakitangan.HR_ANUGERAH_HAJI.HR_LULUS_IND == null && mKakitangan.HR_ANUGERAH_HAJI.HR_NP_UP == null)
+                        {
+                            HR_ANUGERAH_HAJI pAnugerahHaji = db.HR_ANUGERAH_HAJI.FirstOrDefault(s => s.HR_NO_PEKERJA == mPeribadi.HR_NO_PEKERJA);
+                            if(pAnugerahHaji != null)
+                            {
+                                db.HR_ANUGERAH_HAJI.Remove(pAnugerahHaji);
+                                db.SaveChanges();
+                            }
+                        }
+                        else
+                        {
+                            if (mAnugerahHaji == null)
+                            {
+                                mAnugerahHaji = new HR_ANUGERAH_HAJI();
+                                mAnugerahHaji.HR_NO_PEKERJA = mPeribadi.HR_NO_PEKERJA;
+                                mAnugerahHaji.HR_TAHUN_PERGI = mKakitangan.HR_ANUGERAH_HAJI.HR_TAHUN_PERGI;
+                                mAnugerahHaji.HR_STATUS_HAJI = mKakitangan.HR_ANUGERAH_HAJI.HR_STATUS_HAJI;
+                                mAnugerahHaji.HR_NP_YDP = mKakitangan.HR_ANUGERAH_HAJI.HR_NP_YDP;
+                                mAnugerahHaji.HR_LULUS_IND = mKakitangan.HR_ANUGERAH_HAJI.HR_LULUS_IND;
+                                mAnugerahHaji.HR_NP_UP = mKakitangan.HR_ANUGERAH_HAJI.HR_NP_UP;
+                                mAnugerahHaji.HR_NP_PEG = mKakitangan.HR_ANUGERAH_HAJI.HR_NP_PEG;
+                                db.HR_ANUGERAH_HAJI.Add(mAnugerahHaji);
+                                db.SaveChanges();
+                            }
+                            else
+                            {
+                                mAnugerahHaji.HR_NO_PEKERJA = mPeribadi.HR_NO_PEKERJA;
+                                mAnugerahHaji.HR_TAHUN_PERGI = mKakitangan.HR_ANUGERAH_HAJI.HR_TAHUN_PERGI;
+                                mAnugerahHaji.HR_STATUS_HAJI = mKakitangan.HR_ANUGERAH_HAJI.HR_STATUS_HAJI;
+                                mAnugerahHaji.HR_NP_YDP = mKakitangan.HR_ANUGERAH_HAJI.HR_NP_YDP;
+                                mAnugerahHaji.HR_LULUS_IND = mKakitangan.HR_ANUGERAH_HAJI.HR_LULUS_IND;
+                                mAnugerahHaji.HR_NP_UP = mKakitangan.HR_ANUGERAH_HAJI.HR_NP_UP;
+                                mAnugerahHaji.HR_NP_PEG = mKakitangan.HR_ANUGERAH_HAJI.HR_NP_PEG;
+                                db.Entry(mAnugerahHaji).State = EntityState.Modified;
+                                db.SaveChanges();
+                            }
+                        }
+                        
+                    }
+
                     if (Kemaskini == "Persaraan")
                     {
-                        if (mPersaraan == null)
+                        if(mKakitangan.HR_PERSARAAN.HR_TARIKH_BERSARA == null)
                         {
-                            mPersaraan = new HR_PERSARAAN();
+                            HR_PERSARAAN pPersaraan = db.HR_PERSARAAN.FirstOrDefault(s => s.HR_NO_PEKERJA == mPeribadi.HR_NO_PEKERJA);
+                            if(pPersaraan != null)
+                            {
+                                db.HR_PERSARAAN.Remove(pPersaraan);
+                                db.SaveChanges();
+                            }
+                        }
+                        else
+                        {
+                            if (mPersaraan == null)
+                            {
+                                mPersaraan = new HR_PERSARAAN();
+                                mPersaraan.HR_NO_PEKERJA = mPeribadi.HR_NO_PEKERJA;
+                                mPersaraan.HR_TARIKH_BERSARA = mKakitangan.HR_PERSARAAN.HR_TARIKH_BERSARA;
+                                mPersaraan.HR_ALASAN = mKakitangan.HR_PERSARAAN.HR_ALASAN;
+                                mPersaraan.HR_BERSARA_IND = mKakitangan.HR_PERSARAAN.HR_BERSARA_IND;
+                                mPersaraan.HR_BAYARAN_IND = mKakitangan.HR_PERSARAAN.HR_BAYARAN_IND;
+                                mPersaraan.HR_JUMLAH_BAYARAN = mKakitangan.HR_PERSARAAN.HR_JUMLAH_BAYARAN;
+                                mPersaraan.HR_JUMLAH_CUTI = mKakitangan.HR_PERSARAAN.HR_JUMLAH_CUTI;
+                                mPersaraan.HR_PALAMAT1 = mKakitangan.HR_PERSARAAN.HR_PALAMAT1;
+                                mPersaraan.HR_PALAMAT2 = mKakitangan.HR_PERSARAAN.HR_PALAMAT2;
+                                mPersaraan.HR_PALAMAT3 = mKakitangan.HR_PERSARAAN.HR_PALAMAT3;
+                                mPersaraan.HR_PBANDAR = mKakitangan.HR_PERSARAAN.HR_PBANDAR;
+                                mPersaraan.HR_PPOSKOD = mKakitangan.HR_PERSARAAN.HR_PPOSKOD;
+                                mPersaraan.HR_PNEGERI = mKakitangan.HR_PERSARAAN.HR_PNEGERI;
+                                mPersaraan.HR_EKA = mKakitangan.HR_PERSARAAN.HR_EKA;
+                                mPersaraan.HR_ITP = mKakitangan.HR_PERSARAAN.HR_ITP;
+                                mPersaraan.HR_GAJI_POKOK = mKakitangan.HR_PERSARAAN.HR_GAJI_POKOK;
+                                mPersaraan.HR_TERIMA_BAYARAN_IND = mKakitangan.HR_PERSARAAN.HR_TERIMA_BAYARAN_IND;
+                                mPersaraan.HR_NP_PEGAWAI = mKakitangan.HR_PERSARAAN.HR_NP_PEGAWAI;
+                                mPersaraan.HR_JAWATAN_PEGAWAI = mKakitangan.HR_PERSARAAN.HR_JAWATAN_PEGAWAI;
+                                db.HR_PERSARAAN.Add(mPersaraan);
+                                db.SaveChanges();
+                            }
                             mPersaraan.HR_NO_PEKERJA = mPeribadi.HR_NO_PEKERJA;
                             mPersaraan.HR_TARIKH_BERSARA = mKakitangan.HR_PERSARAAN.HR_TARIKH_BERSARA;
                             mPersaraan.HR_ALASAN = mKakitangan.HR_PERSARAAN.HR_ALASAN;
@@ -2862,35 +2921,15 @@ namespace eSPP.Controllers
                             mPersaraan.HR_TERIMA_BAYARAN_IND = mKakitangan.HR_PERSARAAN.HR_TERIMA_BAYARAN_IND;
                             mPersaraan.HR_NP_PEGAWAI = mKakitangan.HR_PERSARAAN.HR_NP_PEGAWAI;
                             mPersaraan.HR_JAWATAN_PEGAWAI = mKakitangan.HR_PERSARAAN.HR_JAWATAN_PEGAWAI;
-                            db.HR_PERSARAAN.Add(mPersaraan);
+                            db.Entry(mPersaraan).State = EntityState.Modified;
                             db.SaveChanges();
                         }
-                        mPersaraan.HR_NO_PEKERJA = mPeribadi.HR_NO_PEKERJA;
-                        mPersaraan.HR_TARIKH_BERSARA = mKakitangan.HR_PERSARAAN.HR_TARIKH_BERSARA;
-                        mPersaraan.HR_ALASAN = mKakitangan.HR_PERSARAAN.HR_ALASAN;
-                        mPersaraan.HR_BERSARA_IND = mKakitangan.HR_PERSARAAN.HR_BERSARA_IND;
-                        mPersaraan.HR_BAYARAN_IND = mKakitangan.HR_PERSARAAN.HR_BAYARAN_IND;
-                        mPersaraan.HR_JUMLAH_BAYARAN = mKakitangan.HR_PERSARAAN.HR_JUMLAH_BAYARAN;
-                        mPersaraan.HR_JUMLAH_CUTI = mKakitangan.HR_PERSARAAN.HR_JUMLAH_CUTI;
-                        mPersaraan.HR_PALAMAT1 = mKakitangan.HR_PERSARAAN.HR_PALAMAT1;
-                        mPersaraan.HR_PALAMAT2 = mKakitangan.HR_PERSARAAN.HR_PALAMAT2;
-                        mPersaraan.HR_PALAMAT3 = mKakitangan.HR_PERSARAAN.HR_PALAMAT3;
-                        mPersaraan.HR_PBANDAR = mKakitangan.HR_PERSARAAN.HR_PBANDAR;
-                        mPersaraan.HR_PPOSKOD = mKakitangan.HR_PERSARAAN.HR_PPOSKOD;
-                        mPersaraan.HR_PNEGERI = mKakitangan.HR_PERSARAAN.HR_PNEGERI;
-                        mPersaraan.HR_EKA = mKakitangan.HR_PERSARAAN.HR_EKA;
-                        mPersaraan.HR_ITP = mKakitangan.HR_PERSARAAN.HR_ITP;
-                        mPersaraan.HR_GAJI_POKOK = mKakitangan.HR_PERSARAAN.HR_GAJI_POKOK;
-                        mPersaraan.HR_TERIMA_BAYARAN_IND = mKakitangan.HR_PERSARAAN.HR_TERIMA_BAYARAN_IND;
-                        mPersaraan.HR_NP_PEGAWAI = mKakitangan.HR_PERSARAAN.HR_NP_PEGAWAI;
-                        mPersaraan.HR_JAWATAN_PEGAWAI = mKakitangan.HR_PERSARAAN.HR_JAWATAN_PEGAWAI;
-                        db.Entry(mPersaraan).State = EntityState.Modified;
-                        db.SaveChanges();
                     }
 
                     if (Kemaskini == "Tatatertib")
                     {
                         db.HR_TINDAKAN_DISIPLIN.RemoveRange(db.HR_TINDAKAN_DISIPLIN.Where(s => s.HR_NO_PEKERJA == mKakitangan.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA));
+                        db.SaveChanges();
                         if (mKakitangan.HR_TINDAKAN_DISIPLIN.Count() > 0)
                         {
                             foreach (var item in mKakitangan.HR_TINDAKAN_DISIPLIN)
@@ -2928,11 +2967,47 @@ namespace eSPP.Controllers
                         }
 
                     }
+
                     if (Kemaskini == "Kematian")
                     {
-                        if (mKematian == null)
+                        if (mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_TARIKH_KEMATIAN == null)
                         {
-                            mKematian = new HR_MAKLUMAT_KEMATIAN();
+                            HR_MAKLUMAT_KEMATIAN pKematian = db.HR_MAKLUMAT_KEMATIAN.FirstOrDefault(s => s.HR_NO_PEKERJA == mPeribadi.HR_NO_PEKERJA);
+                            if(pKematian != null)
+                            {
+                                db.HR_MAKLUMAT_KEMATIAN.Remove(pKematian);
+                                db.SaveChanges();
+                            }
+                        }
+                        else
+                        {
+                            if (mKematian == null)
+                            {
+                                mKematian = new HR_MAKLUMAT_KEMATIAN();
+                                mKematian.HR_NO_PEKERJA = mPeribadi.HR_NO_PEKERJA;
+                                mKematian.HR_TARIKH_KEMATIAN = Convert.ToDateTime(mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_TARIKH_KEMATIAN);
+                                mKematian.HR_NO_KP_PEWARIS = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_NO_KP_PEWARIS;
+                                mKematian.HR_ALAMAT1 = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_ALAMAT1;
+                                mKematian.HR_ALAMAT2 = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_ALAMAT2;
+                                mKematian.HR_ALAMAT3 = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_ALAMAT3;
+                                mKematian.HR_BANDAR = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_BANDAR;
+                                mKematian.HR_NO_TELRUMAH = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_NO_TELRUMAH;
+                                mKematian.HR_HUBUNGAN = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_HUBUNGAN;
+                                mKematian.HR_POSKOD = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_POSKOD;
+                                mKematian.HR_NEGERI = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_NEGERI;
+                                mKematian.HR_NAMA_PEWARIS = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_NAMA_PEWARIS;
+                                mKematian.HR_NO_TELPEJABAT = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_NO_TELPEJABAT;
+                                mKematian.HR_NO_TELBIMBIT = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_NO_TELBIMBIT;
+                                mKematian.HR_NO_VOUCHER = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_NO_VOUCHER;
+                                mKematian.HR_NAMA_PEGAWAI = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_NAMA_PEGAWAI;
+                                mKematian.HR_JAWATAN_PEGAWAI = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_JAWATAN_PEGAWAI;
+                                mKematian.HR_TARIKH_BAYAR = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_TARIKH_BAYAR;
+                                mKematian.HR_MAKLUMAT_KHIDMAT = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_MAKLUMAT_KHIDMAT;
+                                mKematian.HR_JUMLAH_WANG = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_JUMLAH_WANG;
+                                mKematian.HR_VOT = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_VOT;
+                                db.HR_MAKLUMAT_KEMATIAN.Add(mKematian);
+                                db.SaveChanges();
+                            }
                             mKematian.HR_NO_PEKERJA = mPeribadi.HR_NO_PEKERJA;
                             mKematian.HR_TARIKH_KEMATIAN = Convert.ToDateTime(mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_TARIKH_KEMATIAN);
                             mKematian.HR_NO_KP_PEWARIS = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_NO_KP_PEWARIS;
@@ -2954,38 +3029,53 @@ namespace eSPP.Controllers
                             mKematian.HR_MAKLUMAT_KHIDMAT = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_MAKLUMAT_KHIDMAT;
                             mKematian.HR_JUMLAH_WANG = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_JUMLAH_WANG;
                             mKematian.HR_VOT = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_VOT;
-                            db.HR_MAKLUMAT_KEMATIAN.Add(mKematian);
+                            db.Entry(mKematian).State = EntityState.Modified;
                             db.SaveChanges();
                         }
-                        mKematian.HR_NO_PEKERJA = mPeribadi.HR_NO_PEKERJA;
-                        mKematian.HR_TARIKH_KEMATIAN = Convert.ToDateTime(mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_TARIKH_KEMATIAN);
-                        mKematian.HR_NO_KP_PEWARIS = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_NO_KP_PEWARIS;
-                        mKematian.HR_ALAMAT1 = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_ALAMAT1;
-                        mKematian.HR_ALAMAT2 = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_ALAMAT2;
-                        mKematian.HR_ALAMAT3 = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_ALAMAT3;
-                        mKematian.HR_BANDAR = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_BANDAR;
-                        mKematian.HR_NO_TELRUMAH = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_NO_TELRUMAH;
-                        mKematian.HR_HUBUNGAN = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_HUBUNGAN;
-                        mKematian.HR_POSKOD = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_POSKOD;
-                        mKematian.HR_NEGERI = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_NEGERI;
-                        mKematian.HR_NAMA_PEWARIS = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_NAMA_PEWARIS;
-                        mKematian.HR_NO_TELPEJABAT = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_NO_TELPEJABAT;
-                        mKematian.HR_NO_TELBIMBIT = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_NO_TELBIMBIT;
-                        mKematian.HR_NO_VOUCHER = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_NO_VOUCHER;
-                        mKematian.HR_NAMA_PEGAWAI = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_NAMA_PEGAWAI;
-                        mKematian.HR_JAWATAN_PEGAWAI = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_JAWATAN_PEGAWAI;
-                        mKematian.HR_TARIKH_BAYAR = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_TARIKH_BAYAR;
-                        mKematian.HR_MAKLUMAT_KHIDMAT = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_MAKLUMAT_KHIDMAT;
-                        mKematian.HR_JUMLAH_WANG = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_JUMLAH_WANG;
-                        mKematian.HR_VOT = mKakitangan.HR_MAKLUMAT_KEMATIAN.HR_VOT;
-                        db.Entry(mKematian).State = EntityState.Modified;
-                        db.SaveChanges();
                     }
+
                     if (Kemaskini == "Prestasi")
                     {
-                        if (mPrestasi == null)
+                        if(mKakitangan.HR_PENILAIAN_PRESTASI.HR_TAHUN_PRESTASI == null)
                         {
-                            mPrestasi = new HR_PENILAIAN_PRESTASI();
+                            HR_PENILAIAN_PRESTASI pPrestasi = db.HR_PENILAIAN_PRESTASI.FirstOrDefault(s => s.HR_TAHUN_PRESTASI == mKakitangan.HR_PENILAIAN_PRESTASI.HR_TAHUN_PRESTASI2 && s.HR_NO_PEKERJA == mPeribadi.HR_NO_PEKERJA);
+                            if(pPrestasi != null)
+                            {
+                                db.HR_PENILAIAN_PRESTASI.Remove(pPrestasi);
+                                db.SaveChanges();
+                            }
+                        }
+                        else
+                        {
+                            if (mPrestasi == null)
+                            {
+                                mPrestasi = new HR_PENILAIAN_PRESTASI();
+                                mPrestasi.HR_NO_PEKERJA = mPeribadi.HR_NO_PEKERJA;
+                                mPrestasi.HR_TAHUN_PRESTASI = Convert.ToInt16(mKakitangan.HR_PENILAIAN_PRESTASI.HR_TAHUN_PRESTASI);
+                                mPrestasi.HR_PENGHASILAN_PPP = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PENGHASILAN_PPP;
+                                mPrestasi.HR_PENGHASILAN_PPK = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PENGHASILAN_PPK;
+                                mPrestasi.HR_PENGETAHUAN_PPP = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PENGETAHUAN_PPP;
+                                mPrestasi.HR_PENGETAHUAN_PPK = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PENGETAHUAN_PPK;
+                                mPrestasi.HR_KUALITI_PPP = mKakitangan.HR_PENILAIAN_PRESTASI.HR_KUALITI_PPP;
+                                mPrestasi.HR_KUALITI_PPK = mKakitangan.HR_PENILAIAN_PRESTASI.HR_KUALITI_PPK;
+                                mPrestasi.HR_SUMBANGAN_PPP = mKakitangan.HR_PENILAIAN_PRESTASI.HR_SUMBANGAN_PPP;
+                                mPrestasi.HR_SUMBANGAN_PPK = mKakitangan.HR_PENILAIAN_PRESTASI.HR_SUMBANGAN_PPK;
+                                mPrestasi.HR_PURATA_PENGHASILAN = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PURATA_PENGHASILAN;
+                                mPrestasi.HR_PURATA_PENGETAHUAN = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PURATA_PENGETAHUAN;
+                                mPrestasi.HR_PURATA_KUALITI = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PURATA_KUALITI;
+                                mPrestasi.HR_PURATA_SUMBANGAN = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PURATA_SUMBANGAN;
+                                mPrestasi.HR_PERATUS_PENGHASILAN = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PERATUS_PENGHASILAN;
+                                mPrestasi.HR_PERATUS_PENGETAHUAN = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PERATUS_PENGETAHUAN;
+                                mPrestasi.HR_PERATUS_KUALITI = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PERATUS_KUALITI;
+                                mPrestasi.HR_PERATUS_SUMBANGAN = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PERATUS_SUMBANGAN;
+                                mPrestasi.HR_JUMLAH_BESAR = mKakitangan.HR_PENILAIAN_PRESTASI.HR_JUMLAH_BESAR;
+                                mPrestasi.HR_CEMERLANG_IND = mKakitangan.HR_PENILAIAN_PRESTASI.HR_CEMERLANG_IND;
+                                mPrestasi.HR_JENIS_IND = mKakitangan.HR_PENILAIAN_PRESTASI.HR_JENIS_IND;
+                                mPrestasi.HR_CUTI_KERAJAAN = mKakitangan.HR_PENILAIAN_PRESTASI.HR_CUTI_KERAJAAN;
+                                mPrestasi.HR_CUTI_SWASTA = mKakitangan.HR_PENILAIAN_PRESTASI.HR_CUTI_SWASTA;
+                                db.HR_PENILAIAN_PRESTASI.Add(mPrestasi);
+                                db.SaveChanges();
+                            }
                             mPrestasi.HR_NO_PEKERJA = mPeribadi.HR_NO_PEKERJA;
                             mPrestasi.HR_TAHUN_PRESTASI = Convert.ToInt16(mKakitangan.HR_PENILAIAN_PRESTASI.HR_TAHUN_PRESTASI);
                             mPrestasi.HR_PENGHASILAN_PPP = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PENGHASILAN_PPP;
@@ -3009,35 +3099,11 @@ namespace eSPP.Controllers
                             mPrestasi.HR_JENIS_IND = mKakitangan.HR_PENILAIAN_PRESTASI.HR_JENIS_IND;
                             mPrestasi.HR_CUTI_KERAJAAN = mKakitangan.HR_PENILAIAN_PRESTASI.HR_CUTI_KERAJAAN;
                             mPrestasi.HR_CUTI_SWASTA = mKakitangan.HR_PENILAIAN_PRESTASI.HR_CUTI_SWASTA;
-                            db.HR_PENILAIAN_PRESTASI.Add(mPrestasi);
+                            db.Entry(mPrestasi).State = EntityState.Modified;
                             db.SaveChanges();
                         }
-                        mPrestasi.HR_NO_PEKERJA = mPeribadi.HR_NO_PEKERJA;
-                        mPrestasi.HR_TAHUN_PRESTASI = Convert.ToInt16(mKakitangan.HR_PENILAIAN_PRESTASI.HR_TAHUN_PRESTASI);
-                        mPrestasi.HR_PENGHASILAN_PPP = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PENGHASILAN_PPP;
-                        mPrestasi.HR_PENGHASILAN_PPK = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PENGHASILAN_PPK;
-                        mPrestasi.HR_PENGETAHUAN_PPP = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PENGETAHUAN_PPP;
-                        mPrestasi.HR_PENGETAHUAN_PPK = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PENGETAHUAN_PPK;
-                        mPrestasi.HR_KUALITI_PPP = mKakitangan.HR_PENILAIAN_PRESTASI.HR_KUALITI_PPP;
-                        mPrestasi.HR_KUALITI_PPK = mKakitangan.HR_PENILAIAN_PRESTASI.HR_KUALITI_PPK;
-                        mPrestasi.HR_SUMBANGAN_PPP = mKakitangan.HR_PENILAIAN_PRESTASI.HR_SUMBANGAN_PPP;
-                        mPrestasi.HR_SUMBANGAN_PPK = mKakitangan.HR_PENILAIAN_PRESTASI.HR_SUMBANGAN_PPK;
-                        mPrestasi.HR_PURATA_PENGHASILAN = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PURATA_PENGHASILAN;
-                        mPrestasi.HR_PURATA_PENGETAHUAN = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PURATA_PENGETAHUAN;
-                        mPrestasi.HR_PURATA_KUALITI = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PURATA_KUALITI;
-                        mPrestasi.HR_PURATA_SUMBANGAN = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PURATA_SUMBANGAN;
-                        mPrestasi.HR_PERATUS_PENGHASILAN = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PERATUS_PENGHASILAN;
-                        mPrestasi.HR_PERATUS_PENGETAHUAN = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PERATUS_PENGETAHUAN;
-                        mPrestasi.HR_PERATUS_KUALITI = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PERATUS_KUALITI;
-                        mPrestasi.HR_PERATUS_SUMBANGAN = mKakitangan.HR_PENILAIAN_PRESTASI.HR_PERATUS_SUMBANGAN;
-                        mPrestasi.HR_JUMLAH_BESAR = mKakitangan.HR_PENILAIAN_PRESTASI.HR_JUMLAH_BESAR;
-                        mPrestasi.HR_CEMERLANG_IND = mKakitangan.HR_PENILAIAN_PRESTASI.HR_CEMERLANG_IND;
-                        mPrestasi.HR_JENIS_IND = mKakitangan.HR_PENILAIAN_PRESTASI.HR_JENIS_IND;
-                        mPrestasi.HR_CUTI_KERAJAAN = mKakitangan.HR_PENILAIAN_PRESTASI.HR_CUTI_KERAJAAN;
-                        mPrestasi.HR_CUTI_SWASTA = mKakitangan.HR_PENILAIAN_PRESTASI.HR_CUTI_SWASTA;
-                        db.Entry(mPrestasi).State = EntityState.Modified;
-                        db.SaveChanges();
                     }
+
                     if (Kemaskini == "Cuti")
                     {
 
@@ -3962,6 +4028,449 @@ namespace eSPP.Controllers
             db.HR_MAKLUMAT_PERIBADI.Remove(hR_MAKLUMAT_PERIBADI);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public FileStreamResult CetakPDF(MaklumatKakitanganModels model)
+        {
+            var output = new MemoryStream();
+            var document = new iTextSharp.text.Document(PageSize.A4.Rotate(), 45, 45, 30, 30);
+            var writer = PdfWriter.GetInstance(document, output);
+            PageEventHelper page = new PageEventHelper();
+            page.jenis = "MK";
+            writer.PageEvent = page;
+            writer.CloseStream = false;
+            document.Open();
+
+            iTextSharp.text.Font contentFont = iTextSharp.text.FontFactory.GetFont("Arial", 10, iTextSharp.text.Font.BOLD);
+            iTextSharp.text.Font contentFont2 = iTextSharp.text.FontFactory.GetFont("Arial", 10, iTextSharp.text.Font.NORMAL);
+            HR_MAKLUMAT_PERIBADI peribadi = db.HR_MAKLUMAT_PERIBADI.FirstOrDefault(s => s.HR_NO_PEKERJA == model.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA);
+            
+            var html = "<html><head>";
+            
+            html += "<title>Slip</title><link rel='shortcut icon' href='~/Content/img/logo-mbpj.gif' type='image/x-icon'/></head>";
+            html += "<body>";
+            if (model.ACTIVE_ITEM == "Peribadi")
+            {
+                List<GE_PARAMTABLE> negeri = db2.GE_PARAMTABLE.Where(s => s.GROUPID == 3).ToList();
+                List<GE_PARAMTABLE> sTaraf = db2.GE_PARAMTABLE.Where(s => s.GROUPID == 4).ToList();
+
+                string taraf = null;
+
+                foreach(GE_PARAMTABLE t in sTaraf)
+                {
+                    taraf += "&nbsp;&nbsp;&nbsp;&nbsp; " + string.Format("{0:#,0.00}", t.ORDINAL) + " " + t.SHORT_DESCRIPTION;
+                }
+
+                var font_size = "86%";
+                var style = "style='font-size: 86%;'";
+                var style2 = "style='font-size: 66%;'";
+                var height = "45";
+                html += "<h3>&nbsp;MAKLUMAT PERIBADI</h3>";
+                html += "<table width='100%' cellpadding='5' cellspacing='0' style='border: 0;'>";
+
+                html += "<tr>";
+                html += "<td valign='top' width='28' " + style + "><u><strong>NO. PEKERJA &nbsp;:</strong></u></td>";
+                html += "<td valign='top' colspan='5' width='50' " + style + "><strong>" + peribadi.HR_NO_PEKERJA + "</strong></td>";
+                html += "<td valign='top' width='28' " + style + " align='right'><u>ID. PEKERJA &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='4' width='50' " + style + ">" + peribadi.HR_IDPEKERJA + "</td>";
+                html += "<td valign='top' width='23' " + style + "><u>KEAKTIFAN &nbsp;:</u></td>";
+                html += "<td valign='top' width='85' " + style + ">" + peribadi.HR_AKTIF_IND + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' width='28' " + style + "><u>NAMA &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='12' width='236' " + style + ">" + peribadi.HR_NAMA_PEKERJA + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' width='28' " + style + "><u>NO K/P BARU &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='5' width='50' " + style + ">" + peribadi.HR_NO_KPBARU + "</td>";
+                html += "<td valign='top' width='28' " + style + " align='right'><u>NO K/P LAMA &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='4' width='50' " + style + ">" + peribadi.HR_NO_KPLAMA + "</td>";
+                html += "<td valign='top' width='23' " + style + "></td>";
+                html += "<td valign='top' width='85' " + style + "></td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='3' width='38' " + style + "><u>TARAF PERKAHWINAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='10' width='226' " + style + ">" + peribadi.HR_TARAF_KAHWIN + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='2' rowspan='3' width='38' " + style + "><u>ALAMAT TETAP &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='11' width='226' " + style + "><u>1)</u> &nbsp;" + peribadi.HR_TALAMAT1 + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='11' width='226' " + style + "><u>2)</u> &nbsp;" + peribadi.HR_TALAMAT2 + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='11' width='226' " + style + "><u>3)</u> &nbsp;" + peribadi.HR_TALAMAT3 + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='2' width='38' " + style + "><u>BANDAR &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='6' width='84' " + style + ">" + peribadi.HR_TBANDAR + "</td>";
+                html += "<td valign='top' colspan='2' width='33' " + style + " align='right'><u>POSKOD &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='3' width='109' " + style + ">" + peribadi.HR_TPOSKOD + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='2' width='38' " + style + "><u>NEGERI &nbsp;:</u></td>";
+                int tnegeri = Convert.ToInt32(peribadi.HR_TNEGERI);
+                string tnegeri2 = null;
+                if (negeri.Exists(s => s.ORDINAL == tnegeri))
+                {
+                    tnegeri2 = negeri.FirstOrDefault(s => s.ORDINAL == tnegeri).LONG_DESCRIPTION;
+                }
+                html += "<td valign='top' colspan='11' width='226' " + style + ">" + tnegeri2 + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='3' rowspan='3' width='48' " + style + "><u>ALAMAT SEMENTARA &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='10' width='216' " + style + "><u>1)</u> &nbsp;" + peribadi.HR_SALAMAT1 + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='10' width='216' " + style + "><u>2)</u> &nbsp;" + peribadi.HR_SALAMAT2 + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='10' width='216' " + style + "><u>3)</u> &nbsp;" + peribadi.HR_SALAMAT3 + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='3' width='48' " + style + "><u>BANDAR &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='5' width='74' " + style + ">" + peribadi.HR_SBANDAR + "</td>";
+                html += "<td valign='top' colspan='2' width='33' " + style + " align='right'><u>POSKOD &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='3' width='109' " + style + ">" + peribadi.HR_SPOSKOD + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='3' width='48' " + style + "><u>NEGERI &nbsp;:</u></td>";
+                int snegeri = Convert.ToInt32(peribadi.HR_TNEGERI);
+                string snegeri2 = null;
+                if (negeri.Exists(s => s.ORDINAL == snegeri))
+                {
+                    snegeri2 = negeri.FirstOrDefault(s => s.ORDINAL == snegeri).LONG_DESCRIPTION;
+                }
+                html += "<td valign='top' colspan='10' width='216' " + style + ">" + snegeri2 + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='2' width='38' " + style + "><u>TELEFON RUMAH &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='4' width='40' " + style + ">" + peribadi.HR_TELRUMAH + "</td>";
+                html += "<td valign='top' colspan='2' width='44' " + style + " align='right'><u>TELEFON PEJABAT &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='5' width='142' " + style + ">" + peribadi.HR_TELPEJABAT + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='2' width='38' " + style + "><u>TELEFON BIMBIT &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='4' width='40' " + style + ">" + peribadi.HR_TELBIMBIT + "</td>";
+                html += "<td valign='top' colspan='2' width='44' " + style + " align='right'></td>";
+                html += "<td valign='top' colspan='5' width='142' " + style + "></td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='2' width='38' " + style + "><u>EMAIL &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='11' width='226' " + style + ">" + peribadi.HR_EMAIL + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='2' width='38' " + style + "><u>KELAS LESEN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='4' width='40' " + style + ">" + peribadi.HR_KELAS_LESEN + "</td>";
+                html += "<td valign='top' colspan='2' width='44' " + style + " align='right'></td>";
+                html += "<td valign='top' colspan='5' width='142' " + style + "></td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='2' width='38' " + style + "><u>CC KENDERAAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='4' width='40' " + style + ">" + string.Format("{0:#,0.00}", peribadi.HR_CC_KENDERAAN) + "</td>";
+                html += "<td valign='top' colspan='2' width='44' " + style + " align='right'></td>";
+                html += "<td valign='top' colspan='5' width='142' " + style + "></td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='2' width='38' " + style + "><u>NO KENDERAAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='4' width='40' " + style + ">" + peribadi.HR_NO_KENDERAAN + "</td>";
+                html += "<td valign='top' colspan='2' width='44' " + style + " ><u>JENIS KENDERAAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='5' width='142' " + style + ">" + peribadi.HR_JENIS_KENDERAAN + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='13' width='264' " + style + ">&nbsp;</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='13' width='264' " + style + ">&nbsp;</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='13' width='264' " + style + ">&nbsp;</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='13' width='264' " + style + ">&nbsp;</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='13' width='264' " + style + ">&nbsp;</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='13' width='264' " + style + ">&nbsp;</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='13' width='264' " + style + ">&nbsp;</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='13' width='264' " + style + ">&nbsp;</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='13' width='264' " + style2 + ">RUJUKAN &nbsp;: &nbsp;&nbsp;&nbsp; TARAF PERKAHWINAN - &nbsp;&nbsp;&nbsp;&nbsp;" + taraf + "</td>";
+                html += "</tr>";
+                html += "</table>";
+            }
+                
+            if(model.ACTIVE_ITEM == "Pekerjaan")
+            {
+                string jabatan = null;
+                if(db2.GE_JABATAN.Where(s => s.GE_KOD_JABATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN).Count() > 0)
+                {
+                    jabatan = db2.GE_JABATAN.FirstOrDefault(s => s.GE_KOD_JABATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN).GE_KETERANGAN_JABATAN;
+                }
+
+                string bahagian = null;
+                if (db2.GE_BAHAGIAN.Where(s => s.GE_KOD_JABATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN && s.GE_KOD_BAHAGIAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_BAHAGIAN).Count() > 0)
+                {
+                    bahagian = db2.GE_BAHAGIAN.FirstOrDefault(s => s.GE_KOD_JABATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN && s.GE_KOD_BAHAGIAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_BAHAGIAN).GE_KETERANGAN;
+                }
+
+                string unit = null;
+                if (db2.GE_UNIT.Where(s => s.GE_KOD_JABATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN && s.GE_KOD_BAHAGIAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_BAHAGIAN && s.GE_KOD_UNIT == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_UNIT).Count() > 0)
+                {
+                    unit = db2.GE_UNIT.FirstOrDefault(s => s.GE_KOD_JABATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN && s.GE_KOD_BAHAGIAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_BAHAGIAN && s.GE_KOD_UNIT == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_UNIT).GE_KETERANGAN;
+                }
+
+                string gelaran = null;
+                if(db.HR_GELARAN_JAWATAN.Where(s => s.HR_KOD_GELARAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_KOD_GELARAN_J).Count() > 0)
+                {
+                    gelaran = db.HR_GELARAN_JAWATAN.FirstOrDefault(s => s.HR_KOD_GELARAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_KOD_GELARAN_J).HR_PENERANGAN;
+                }
+
+                string jawatan = null;
+                if (db.HR_JAWATAN.Where(s => s.HR_KOD_JAWATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN).Count() > 0)
+                {
+                    jawatan = db.HR_JAWATAN.FirstOrDefault(s => s.HR_KOD_JAWATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN).HR_NAMA_JAWATAN;
+                }
+
+                string gred = null;
+                if(db2.GE_PARAMTABLE.AsEnumerable().Where(s => s.GROUPID == 109 && s.ORDINAL == Convert.ToInt32(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_GRED)).Count() > 0)
+                {
+                    gred = db2.GE_PARAMTABLE.AsEnumerable().FirstOrDefault(s => s.GROUPID == 109 && s.ORDINAL == Convert.ToInt32(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_GRED)).SHORT_DESCRIPTION;
+                }
+
+                string kumpulanperkhidmatan = null;
+                if(db2.GE_PARAMTABLE.AsEnumerable().Where(s => s.GROUPID == 103 && s.ORDINAL == Convert.ToInt32(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_KUMP_PERKHIDMATAN)).Count() > 0)
+                {
+                    kumpulanperkhidmatan = db2.GE_PARAMTABLE.AsEnumerable().FirstOrDefault(s => s.GROUPID == 103 && s.ORDINAL == Convert.ToInt32(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_KUMP_PERKHIDMATAN)).SHORT_DESCRIPTION;
+                }
+
+                string tarafjawatan = null;
+                if(db2.GE_PARAMTABLE.Where(s => s.GROUPID == 104 && s.STRING_PARAM == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_TARAF_JAWATAN).Count() > 0)
+                {
+                    tarafjawatan = db2.GE_PARAMTABLE.FirstOrDefault(s => s.GROUPID == 104 && s.STRING_PARAM == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_TARAF_JAWATAN).SHORT_DESCRIPTION;
+                }
+
+                string gelaran2 = null;
+                if(db2.GE_PARAMTABLE.AsEnumerable().Where(s => s.GROUPID == 114 && s.ORDINAL == Convert.ToInt32(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_GELARAN)).Count() > 0)
+                {
+                    gelaran2 = db2.GE_PARAMTABLE.AsEnumerable().FirstOrDefault(s => s.GROUPID == 114 && s.ORDINAL == Convert.ToInt32(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_GELARAN)).SHORT_DESCRIPTION;
+                }
+
+                string kategori = null;
+                if(db2.GE_PARAMTABLE.AsEnumerable().Where(s => s.GROUPID == 115 && s.ORDINAL == Convert.ToInt32(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_KATEGORI)).Count() > 0)
+                {
+                    kategori = db2.GE_PARAMTABLE.AsEnumerable().FirstOrDefault(s => s.GROUPID == 115 && s.ORDINAL == Convert.ToInt32(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_KATEGORI)).SHORT_DESCRIPTION;
+                }
+
+                string bank = null;
+                if(db.HR_AGENSI.Where(s => s.HR_KOD_AGENSI == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_KOD_BANK).Count() > 0)
+                {
+                    bank = db.HR_AGENSI.FirstOrDefault(s => s.HR_KOD_AGENSI == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_KOD_BANK).HR_NAMA_AGENSI;
+                }
+
+                string taraf = null;
+                if(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_KAKITANGAN_IND == "Y")
+                {
+                    taraf = "KAKITANGAN";
+                }
+                else if (peribadi.HR_MAKLUMAT_PEKERJAAN.HR_KAKITANGAN_IND == "T")
+                {
+                    taraf = "PEKERJA";
+                }
+
+                string tingkatan = null;
+                if(db2.GE_PARAMTABLE.AsEnumerable().Where(s => s.GROUPID == 113 && s.ORDINAL == Convert.ToInt32(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_TINGKATAN)).Count() > 0)
+                {
+                    tingkatan = db2.GE_PARAMTABLE.AsEnumerable().FirstOrDefault(s => s.GROUPID == 113 && s.ORDINAL == Convert.ToInt32(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_TINGKATAN)).SHORT_DESCRIPTION;
+                }
+
+                var font_size = "86%";
+                var style = "style='font-size: 86%;'";
+                var style2 = "style='font-size: 66%;'";
+                var height = "45";
+                html += "<h3>&nbsp;MAKLUMAT PEKERJAAN</h3>";
+                html += "<table width='100%' cellpadding='5' cellspacing='0' style='border: 0;'>";
+
+                html += "<tr>";
+                html += "<td valign='top' width='28' " + style + "><u><strong>NO. PEKERJA &nbsp;:</strong></u></td>";
+                html += "<td valign='top' colspan='5' width='50' " + style + "><strong>" + peribadi.HR_NO_PEKERJA + "</strong></td>";
+                html += "<td valign='top' width='30' " + style + "><u>NO. SIRI &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='4' width='50' " + style + ">" + peribadi.HR_MAKLUMAT_PEKERJAAN.HR_NO_SIRI + "</td>";
+                html += "<td valign='top' width='23' " + style + "><u>STATUS &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='4' width='83' " + style + ">" + peribadi.HR_AKTIF_IND + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' width='28' " + style + "><u>NO K/P BARU &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='5' width='50' " + style + ">" + peribadi.HR_NO_KPBARU + "</td>";
+                html += "<td valign='top' width='30' " + style + "><u>NO K/P LAMA &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='4' width='50' " + style + ">" + peribadi.HR_NO_KPLAMA + "</td>";
+                html += "<td valign='top' width='23' " + style + "></td>";
+                html += "<td valign='top' colspan='4' width='83' " + style + "></td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' width='28' " + style + "><u>JABATAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='15' width='236' " + style + ">" + jabatan + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' width='28' " + style + "><u>BAHAGIAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='6' width='96' " + style + ">" + bahagian + "</td>";
+                html += "<td valign='top' colspan='2' width='33' " + style + " align='right'><u>UNIT &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='7' width='107' " + style + ">" + unit + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' width='28' " + style + "><u>NAMA &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='15' width='236' " + style + ">" + peribadi.HR_NAMA_PEKERJA + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' width='28' " + style + "><u>GELARAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='5' width='50' " + style + ">" + gelaran2 + "</td>";
+                html += "<td valign='top' colspan='2' width='40' " + style + "><u>GELARAN JAWATAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='8' width='146' " + style + ">" + gelaran + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' width='28' " + style + "><u>JAWATAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='15' width='236' " + style + ">" + jawatan + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' width='28' " + style + "><u>GRED &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='15' width='236' " + style + ">" + gred + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' width='28' " + style + "><u>KATEGORI &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='15' width='236' " + style + ">" + kategori + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' width='28' " + style + "><u>KUMPULAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='5' width='50' " + style + ">" + peribadi.HR_MAKLUMAT_PEKERJAAN.HR_KUMPULAN + "</td>";
+                html += "<td valign='top' colspan='3' width='50' " + style + "><u>KUMPULAN PERKHIDMATAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='7' width='140' " + style + ">" + kumpulanperkhidmatan + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='2' width='38' " + style + "><u>TARAF JAWATAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='4' width='40' " + style + ">" + tarafjawatan + "</td>";
+                html += "<td valign='top' colspan='2' width='40' " + style + "><u>SISTEM SARAAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='8' width='146' " + style + ">" + peribadi.HR_MAKLUMAT_PEKERJAAN.HR_SISTEM + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' width='28' " + style + "><u>GAJI POKOK &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='5' width='50' " + style + ">" + string.Format("{0:#,0.00}", peribadi.HR_MAKLUMAT_PEKERJAAN.HR_GAJI_POKOK) + "</td>";
+                html += "<td valign='top' colspan='3' width='50' " + style + "><u>BULAN KENAIKAN GAJI &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='2' width='25' " + style + ">" + string.Format("{0:dd/MM/yyyy}", peribadi.HR_MAKLUMAT_PEKERJAAN.HR_BULAN_KENAIKAN_GAJI) + "</td>";
+                html += "<td valign='top' colspan='2' width='44' " + style + "><u>MATRIKS GAJI &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='3' width='62' " + style + ">" + peribadi.HR_MAKLUMAT_PEKERJAAN.HR_MATRIKS_GAJI + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='2' width='38' " + style + "><u>NO. AKAUN BANK &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='4' width='40' " + style + ">" + peribadi.HR_MAKLUMAT_PEKERJAAN.HR_NO_AKAUN_BANK + "</td>";
+                html += "<td valign='top' width='30' " + style + "><u>JENIS BANK &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='9' width='156' " + style + ">" + bank + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='3' width='48' " + style + " ><u>JENIS BAYARAN CEK &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='13' width='216' " + style + ">" + peribadi.HR_MAKLUMAT_PEKERJAAN.HR_BAYARAN_CEK + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' width='28' " + style + "><u>KOD GAJI &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='5' width='50' " + style + ">" + peribadi.HR_MAKLUMAT_PEKERJAAN.HR_KOD_GAJI + "</td>";
+                html += "<td valign='top' width='30' " + style + "><u>TERIMA GAJI &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='4' width='50' " + style + ">" + peribadi.HR_MAKLUMAT_PEKERJAAN.HR_GAJI_IND + "</td>";
+                html += "<td valign='top' colspan='2' width='44' " + style + "><u>TARIKH GAJI &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='3' width='62' " + style + ">" + string.Format("{0:dd/MM/yyyy}", peribadi.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_GAJI) + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='2' width='38' " + style + "><u>TARIKH MASUK &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='4' width='40' " + style + ">" + string.Format("{0:dd/MM/yyyy}", peribadi.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_MASUK) + "</td>";
+                html += "<td valign='top' colspan='3' width='55' " + style + "><u>TARIKH SAH JAWATAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='2' width='25' " + style + ">" + string.Format("{0:dd/MM/yyyy}", peribadi.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_SAH_JAWATAN) + "</td>";
+                html += "<td valign='top' colspan='2' width='44' " + style + "><u>TARIKH LANTIKAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='3' width='62' " + style + ">" + string.Format("{0:dd/MM/yyyy}", peribadi.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_LANTIKAN) + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='2' width='38' " + style + "><u>TARIKH TAMAT &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='4' width='40' " + style + ">" + string.Format("{0:dd/MM/yyyy}", peribadi.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_TAMAT) + "</td>";
+                html += "<td valign='top' colspan='3' width='55' " + style + "><u>TARIKH TAMAT KONTRAK &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='2' width='25' " + style + ">" + string.Format("{0:dd/MM/yyyy}", peribadi.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_TAMAT_KONTRAK) + "</td>";
+                html += "<td valign='top' colspan='2' width='44' " + style + "><u>TARIKH TIDAK AKTIF &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='3' width='62' " + style + ">" + string.Format("{0:dd/MM/yyyy}", peribadi.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_TIDAK_AKTIF) + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='2' width='38' " + style + "><u>NO. PENYELIA &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='4' width='40' " + style + ">" + peribadi.HR_MAKLUMAT_PEKERJAAN.HR_NO_PENYELIA + "</td>";
+                html += "<td valign='top' colspan='3' width='55' " + style + "><u>TARIKH KE JABATAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='7' width='131' " + style + ">" + string.Format("{0:dd/MM/yyyy}", peribadi.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_KE_JABATAN) + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='2' width='38' " + style + "><u>STATUS CARUMAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='4' width='40' " + style + "><u>1) KWSP &nbsp;:</u> &nbsp;" + peribadi.HR_MAKLUMAT_PEKERJAAN.HR_STATUS_KWSP + "</td>";
+                html += "<td valign='top' colspan='2' width='42' " + style + "><u>2) PERKESO &nbsp;:</u> &nbsp;" + peribadi.HR_MAKLUMAT_PEKERJAAN.HR_STATUS_SOCSO + "</td>";
+                html += "<td valign='top' colspan='3' width='37' " + style + "><u>3) PENCEN &nbsp;:</u> &nbsp;" + peribadi.HR_MAKLUMAT_PEKERJAAN.HR_STATUS_PENCEN + "</td>";
+                html += "<td valign='top' colspan='2' width='44' " + style + "><u>4) PCB &nbsp;:</u> &nbsp;" + peribadi.HR_MAKLUMAT_PEKERJAAN.HR_STATUS_PCB + "</td>";
+                html += "<td valign='top' colspan='3' width='62' " + style + ">" + string.Format("{0:dd/MM/yyyy}", peribadi.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_TIDAK_AKTIF) + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' width='28' " + style + "><u>KOD PCB &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='5' width='50' " + style + ">" + peribadi.HR_MAKLUMAT_PEKERJAAN.HR_KOD_PCB + "</td>";
+                html += "<td valign='top' colspan='2' width='42' " + style + "><u>TARIKH MULA PCB &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='3' width='37' " + style + ">" + string.Format("{0:dd/MM/yyyy}", peribadi.HR_MAKLUMAT_PEKERJAAN.HR_PCB_TARIKH_MULA) + "</td>";
+                html += "<td valign='top' colspan='2' width='44' " + style + "><u>TARIKH AKHIR PCB &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='3' width='62' " + style + ">" + string.Format("{0:dd/MM/yyyy}", peribadi.HR_MAKLUMAT_PEKERJAAN.HR_PCB_TARIKH_AKHIR) + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' width='28' " + style + "><u>NILAI PCB &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='15' width='236' " + style + ">" + string.Format("{0:#,0.00}", peribadi.HR_MAKLUMAT_PEKERJAAN.HR_NILAI_PCB) + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='3' width='48' " + style + "><u>KAKITANGAN/PEKERJA &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='3' width='30' " + style + ">" + taraf + "</td>";
+                html += "<td valign='top' colspan='2' width='40' " + style + "><u>JENIS TINGKATAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='8' width='146' " + style + ">" + tingkatan + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='4' width='58' " + style + "><u>NO. FAIL PERKHIDMATAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='12' width='206' " + style + ">" + peribadi.HR_MAKLUMAT_PEKERJAAN.HR_FAIL_PERKHIDMATAN + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='3' width='48' " + style + "><u>KELAS PERJALANAN &nbsp;:</u></td>";
+                html += "<td valign='top' colspan='13' width='216' " + style + ">" + string.Format("{0:#,0.00}", peribadi.HR_MAKLUMAT_PEKERJAAN.HR_KELAS_PERJALANAN) + "</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='16' width='264' " + style + ">&nbsp;</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='16' width='264' " + style + ">&nbsp;</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='16' width='264' " + style + ">&nbsp;</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='top' colspan='16' width='264' " + style + ">&nbsp;</td>";
+                html += "</tr>";
+                html += "<tr>";
+                html += "<td valign='bottom' colspan='16' width='264' " + style2 + ">RUJUKAN &nbsp;: &nbsp;&nbsp;&nbsp;T - TIDAK, Y - YA</td>";
+                html += "</tr>";
+                html += "</table>";
+            }
+            
+            html += "</body></html>";
+            string exportData = string.Format(html);
+            var bytes = System.Text.Encoding.UTF8.GetBytes(exportData);
+            var input = new MemoryStream(bytes);
+            var xmlWorker = XMLWorkerHelper.GetInstance();
+
+            xmlWorker.ParseXHtml(writer, document, input, System.Text.Encoding.UTF8);
+
+            document.Close();
+            output.Position = 0;
+            return new FileStreamResult(output, "application/pdf");
         }
 
         //JSON

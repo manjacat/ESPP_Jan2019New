@@ -89,15 +89,8 @@ namespace eSPP.Models
                         //ambik dari HR_CARUMAN.HR_VOT_CARUMAN
                         PA_VOT_CARUMAN = "11-03-01-00-29301"
                     };
-                    try
-                    {
-                        spgDb.PA_TRANSAKSI_CARUMAN.Add(spgCaruman);
-                        spgDb.SaveChanges();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.Write(ex.ToString());
-                    }
+                    spgDb.PA_TRANSAKSI_CARUMAN.Add(spgCaruman);
+                    spgDb.SaveChanges();
                 }
                 else
                 {

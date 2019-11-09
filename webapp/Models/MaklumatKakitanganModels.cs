@@ -38,7 +38,7 @@ namespace eSPP.Models
         public MaklumatPenilaianPrestasi HR_PENILAIAN_PRESTASI { get; set; }
         public MaklumatCuti HR_MAKLUMAT_CUTI { get; set; }
         public IEnumerable<MaklumatAnugerahCemerlang> HR_ANUGERAH_CEMERLANG { get; set; }
-
+        public IEnumerable<HR_MAKLUMAT_TANGGUNG_KERJA> HR_MAKLUMAT_TANGGUNG_KERJA { get; set; }
 
         // Kewangan8
         public HR_MAKLUMAT_KEWANGAN8 HR_MAKLUMAT_KEWANGAN8 { get; set; }
@@ -89,7 +89,7 @@ namespace eSPP.Models
         public Nullable<System.DateTime> HR_TARIKH_UBAH { get; set; }
         public string HR_NP_UBAH { get; set; }
     }
-    
+
     public class MaklumatPekerjaan
     {
         public string HR_NO_PEKERJA { get; set; }
@@ -142,10 +142,10 @@ namespace eSPP.Models
         public Nullable<decimal> HR_NILAI_PCB { get; set; }
         public string HR_KOD_GELARAN_J { get; set; }
         public string HR_TANGGUH_GERAKGAJI_IND { get; set; }
-        public Nullable<System.DateTime> HR_TARIKH_KEYIN2 { get; set; }
-        public string HR_NP_KEYIN2 { get; set; }
-        public Nullable<System.DateTime> HR_TARIKH_UBAH2 { get; set; }
-        public string HR_NP_UBAH2 { get; set; }
+        public Nullable<System.DateTime> HR_TARIKH_KEYIN { get; set; }
+        public string HR_NP_KEYIN { get; set; }
+        public Nullable<System.DateTime> HR_TARIKH_UBAH { get; set; }
+        public string HR_NP_UBAH { get; set; }
         public string HR_SKIM { get; set; }
         public string HR_PERGERAKAN_GAJI { get; set; }
         public string HR_NO_KWSP { get; set; }
@@ -254,6 +254,8 @@ namespace eSPP.Models
         public string HR_NO_PEKERJA { get; set; }
         public string HR_KOD_KUARTERS { get; set; }
         public Nullable<System.DateTime> HR_TARIKH_MASUK { get; set; }
+        public string HR_KOD_KUARTERS2 { get; set; }
+        public Nullable<System.DateTime> HR_TARIKH_MASUK2 { get; set; }
         public Nullable<System.DateTime> HR_TARIKH_KELUAR { get; set; }
         public string HR_NO_UNIT { get; set; }
         public string HR_GANDAAN2X { get; set; }
@@ -374,6 +376,7 @@ namespace eSPP.Models
         public string HR_NO_PEKERJA { get; set; }
         public string HR_NAMA_ANUGERAH { get; set; }
         public Nullable<System.DateTime> HR_TARIKH_PENERIMAAN { get; set; }
+        public Nullable<int> HR_TAHUN { get; set; }
     }
 
     public class MaklumatPersaraan
@@ -439,6 +442,7 @@ namespace eSPP.Models
     {
         public string HR_NO_PEKERJA { get; set; }
         public Nullable<short> HR_TAHUN_PRESTASI { get; set; }
+        public Nullable<short> HR_TAHUN_PRESTASI2 { get; set; }
         public Nullable<decimal> HR_PENGHASILAN_PPP { get; set; }
         public Nullable<decimal> HR_PENGHASILAN_PPK { get; set; }
         public Nullable<decimal> HR_PENGETAHUAN_PPP { get; set; }

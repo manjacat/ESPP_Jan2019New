@@ -608,6 +608,17 @@ namespace eSPP.Models
             HR_KWSP kwsp = db.HR_KWSP
                .Where(s => gajipokok >= s.HR_UPAH_DARI
                && gajipokok <= s.HR_UPAH_HINGGA).FirstOrDefault();
+            if(kwsp == null)
+            {
+                kwsp = new HR_KWSP
+                {
+                    HR_CARUMAN_MAJIKAN = 0,
+                    HR_CARUMAN_PEKERJA = 0,
+                    HR_TOTAL_CARUMAN = 0,
+                    HR_UPAH_DARI = 0,
+                    HR_UPAH_HINGGA = 0
+                };
+            }
             return kwsp;
         }
 

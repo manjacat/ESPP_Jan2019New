@@ -365,10 +365,10 @@ namespace eSPP.Controllers
                     mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NILAI_PCB = mPekerjaan.HR_NILAI_PCB;
                     mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_KOD_GELARAN_J = mPekerjaan.HR_KOD_GELARAN_J;
                     mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TANGGUH_GERAKGAJI_IND = mPekerjaan.HR_TANGGUH_GERAKGAJI_IND;
-                    mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_KEYIN2 = mPekerjaan.HR_TARIKH_KEYIN;
-                    mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_KEYIN2 = mPekerjaan.HR_NP_KEYIN;
-                    mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_UBAH2 = mPekerjaan.HR_TARIKH_UBAH;
-                    mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_UBAH2 = mPekerjaan.HR_NP_UBAH;
+                    mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_KEYIN = mPekerjaan.HR_TARIKH_KEYIN;
+                    mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_KEYIN = mPekerjaan.HR_NP_KEYIN;
+                    mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_UBAH = mPekerjaan.HR_TARIKH_UBAH;
+                    mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_UBAH = mPekerjaan.HR_NP_UBAH;
                     mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_SKIM = mPekerjaan.HR_SKIM;
                     mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_PERGERAKAN_GAJI = mPekerjaan.HR_PERGERAKAN_GAJI;
                     mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NO_KWSP = mPekerjaan.HR_NO_KWSP;
@@ -2109,21 +2109,21 @@ namespace eSPP.Controllers
                         {
                             mPekerjaan.HR_TANGGUH_GERAKGAJI_IND = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TANGGUH_GERAKGAJI_IND;
                         }
-                        if (mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_KEYIN2 != null)
+                        if (mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_KEYIN != null)
                         {
-                            mPekerjaan.HR_TARIKH_KEYIN = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_KEYIN2;
+                            mPekerjaan.HR_TARIKH_KEYIN = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_KEYIN;
                         }
-                        if (mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_KEYIN2 != null)
+                        if (mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_KEYIN != null)
                         {
-                            mPekerjaan.HR_NP_KEYIN = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_KEYIN2;
+                            mPekerjaan.HR_NP_KEYIN = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_KEYIN;
                         }
-                        if (mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_UBAH2 != null)
+                        if (mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_UBAH != null)
                         {
-                            mPekerjaan.HR_TARIKH_UBAH = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_UBAH2;
+                            mPekerjaan.HR_TARIKH_UBAH = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_UBAH;
                         }
-                        if (mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_UBAH2 != null)
+                        if (mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_UBAH != null)
                         {
-                            mPekerjaan.HR_NP_UBAH = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_UBAH2;
+                            mPekerjaan.HR_NP_UBAH = mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_NP_UBAH;
                         }
                         if (mKakitangan.HR_MAKLUMAT_PEKERJAAN.HR_SKIM != null)
                         {

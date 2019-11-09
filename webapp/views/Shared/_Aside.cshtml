@@ -2,8 +2,8 @@
 <!-- Note: This width of the aside area can be adjusted through LESS variables -->
 @using Microsoft.AspNet.Identity;
 @{ 
-    PasswordExpiredModels Expired = new PasswordExpiredModels();
-    var expire = Expired.Expire(User.Identity.GetUserId());
+//PasswordExpiredModels Expired = new PasswordExpiredModels();
+//var expire = Expired.Expire(User.Identity.GetUserId());
 }
 
 <aside id="left-panel">
@@ -78,6 +78,9 @@
                     </li>
                     <li class="@Html.RouteIf("LantikanJawatanBaruManual", "active")">
                         <a href="@Url.Action("LantikanJawatanBaruManual", "LantikanJawatanBaru")">Lantikan Jawatan Baru Manual</a>
+                    </li>
+                    <li class="@Html.RouteIf("KalenderTemuduga", "active")">
+                        <a href="@Url.Action("KalenderTemuduga", "LantikanJawatanBaru")">Kalender Temuduga</a>
                     </li>
                 </ul>
             </li>

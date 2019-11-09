@@ -112,15 +112,52 @@
             //});
 
             // on load of the page: switch to the currently selected tab
-            var hash = window.location.hash;
-            $('#myTab a[href="' + hash + '"]').tab('show');
+            let url = location.href.replace(/\/$/, "");
+            if (location.hash) {
+                const hash = window.location.hash;
+                var item = hash.substring(1, hash.length)
+                $('input[id="ACTIVE_ITEM"]').val(item)
+                $('#myTab a[href="' + hash + '"]').tab('show');
+                url = location.href.replace(/\/#/, "#");
+                history.replaceState(null, null, url);
+                setTimeout(() => {
+                    $(window).scrollTop(0);
+                }, 400);
+                if (hash == "#Pekerjaan") {
+                    $("#btn-cetak").removeClass("hide");
+                }
+                else {
+                    $("#btn-cetak").addClass("hide");
+                }
+            }
+            else {
+                $("#btn-cetak").removeClass("hide");
+                $('input[id="ACTIVE_ITEM"]').val("Peribadi")
+            }
+
+            $('a[data-toggle="tab"]').on("click", function () {
+                let newUrl;
+                const hash = $(this).attr("href");
+                if (hash == "#Peribadi") {
+                    newUrl = url.split("#")[0];
+                } else {
+                    newUrl = url.split("#")[0] + hash;
+                }
+                //newUrl += "/";
+                if (hash == "#Peribadi" || hash == "#Pekerjaan") {
+                    $("#btn-cetak").removeClass("hide");
+                }
+                else {
+                    $("#btn-cetak").addClass("hide");
+                }
+                history.replaceState(null, null, newUrl);
+            });
 
 
             $("#myTab #ActiveTab").on("click", function () {
                 var fid = $(this).attr("href")
                 item = fid.substring(1, fid.length)
-                console.log(item);
-                $("#ACTIVE_ITEM").val(item)
+                $('input[id="ACTIVE_ITEM"]').val(item)
             })
 
                 /* // DOM Position key index //
@@ -241,7 +278,7 @@
 
                     // Tabletools options:
                     //   https://datatables.net/extensions/tabletools/button_options
-                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-history2'>>r>" +
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-history2'>>r>" +
                             "t" +
                             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "oTableTools": {
@@ -281,7 +318,7 @@
                 //
                 var l = 0;
                 if ($('#Pekerjaan #datatable_PengalamanKerjaMPPJ tbody tr:first td').length > 1) {
-                    l = $('#Pekerjaan #datatable_PengalamanKerjaMPPJ tbody tr:not(:first)').length - 1;
+                    l = $('#Pekerjaan #datatable_PengalamanKerjaMPPJ tbody tr').length;
                 }
 
                 $("#errorMsg").dialog({
@@ -370,7 +407,7 @@
                         nom.each(function () {
                             $(this).html(g + 1);
                         })
-
+                        var kiratr = 0;
                         name.each(function () {
 
                             var splitName = $(this).attr("name");
@@ -382,13 +419,16 @@
 
                                 if (s[1] == "HR_TARIKH_PERUBAHAN" && $(this).val() == $.datepicker.formatDate('dd/mm/yy', new Date()))
                                 {
-                                    $('#Pekerjaan .btn-add-history').attr("disabled", "disabled");
-                                }
-                                else {
-                                    $('#Pekerjaan .btn-add-history').removeAttr("disabled");
+                                    kiratr++;
                                 }
                             }
                         })
+                        if (kiratr > 0) {
+                            $('#Pekerjaan .btn-add-history').attr("disabled", "disabled");
+                        }
+                        else {
+                            $('#Pekerjaan .btn-add-history').removeAttr("disabled");
+                        }
                         g++;
 
                     });
@@ -402,7 +442,7 @@
 
                     // Tabletools options:
                     //   https://datatables.net/extensions/tabletools/button_options
-                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-pengalaman'>>r>" +
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-pengalaman'>>r>" +
                             "t" +
                             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "oTableTools": {
@@ -450,7 +490,7 @@
 
                 var lP = 0;
                 if ($('#Kemahiran #datatable_PengalamanKerja tbody tr:first td').length > 1) {
-                    lP = $('#Kemahiran #datatable_PengalamanKerja tbody tr:not(:first)').length - 1;
+                    lP = $('#Kemahiran #datatable_PengalamanKerja tbody tr').length;
                 }
 
                 $(document).on('click', "#Kemahiran #btn-pengalaman", function (e) {
@@ -575,7 +615,7 @@
 
                     // Tabletools options:
                     //   https://datatables.net/extensions/tabletools/button_options
-                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-KemahiranBahasa'>>r>" +
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-KemahiranBahasa'>>r>" +
                             "t" +
                             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "oTableTools": {
@@ -623,7 +663,7 @@
 
                 var lB = 0;
                 if ($('#Kemahiran #datatable_KemahiranBahasa tbody tr:first td').length > 1) {
-                    lB = $('#Kemahiran #datatable_KemahiranBahasa tbody tr:not(:first)').length - 1;
+                    lB = $('#Kemahiran #datatable_KemahiranBahasa tbody tr').length;
                 }
 
                 $(document).on('click', "#Kemahiran #btn-KemahiranBahasa", function (e) {
@@ -667,7 +707,7 @@
                         "</div>",
                         "<div id='rowtxt'>" + $("select[name='HR_MAKLUMAT_KEMAHIRAN_BAHASA_HR_PENULISAN'] option:selected").text() + "</div>" +
                         "<div class='select'>" +
-                        "<select name='HR_MAKLUMAT_KEMAHIRAN_BAHASA[" + lB + "].HR_PENULISAN' class='form-control HR_MAKLUMAT_KEMAHIRAN_BAHASA_HR_PENULISAN' style='display:none;' data-msg-required='Sila pilih menulisan'>" +
+                        "<select name='HR_MAKLUMAT_KEMAHIRAN_BAHASA[" + lB + "].HR_PENULISAN' class='form-control HR_MAKLUMAT_KEMAHIRAN_BAHASA_HR_PENULISAN' style='display:none;' data-msg-required='Sila pilih penulisan'>" +
                         optionTahap +
                         "</select>" +
                         "</div>",
@@ -767,7 +807,7 @@
 
                     // Tabletools options:
                     //   https://datatables.net/extensions/tabletools/button_options
-                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-KemahiranTeknikal'>>r>" +
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-KemahiranTeknikal'>>r>" +
                             "t" +
                             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "oTableTools": {
@@ -815,7 +855,7 @@
 
                 var lKT = 0;
                 if ($('#Kemahiran #datatable_KemahiranTeknikal tbody tr:first td').length > 1) {
-                    lKT = $('#Kemahiran #datatable_KemahiranTeknikal tbody tr:not(:first)').length - 1;
+                    lKT = $('#Kemahiran #datatable_KemahiranTeknikal tbody tr').length;
                 }
 
                 $(document).on('click', "#Kemahiran #btn-KemahiranTeknikal", function (e) {
@@ -892,7 +932,7 @@
 
                     // Tabletools options:
                     //   https://datatables.net/extensions/tabletools/button_options
-                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Kelayakan'>>r>" +
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Kelayakan'>>r>" +
                             "t" +
                             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "oTableTools": {
@@ -940,7 +980,7 @@
 
                 var lK = 0;
                 if ($('#Akademik #datatable_Kelayakan tbody tr:first td').length > 1) {
-                    lK = $('#Akademik #datatable_Kelayakan tbody tr:not(:first)').length - 1;
+                    lK = $('#Akademik #datatable_Kelayakan tbody tr').length;
                 }
 
                 $(document).on('click', "#Akademik #btn-Kelayakan", function (e) {
@@ -1033,13 +1073,11 @@
                     return false;
                 });
 
-                
-
                 var Sijil = $('#datatable_Sijil').DataTable({
 
                     // Tabletools options:
                     //   https://datatables.net/extensions/tabletools/button_options
-                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Sijil'>>r>" +
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Sijil'>>r>" +
                             "t" +
                             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "oTableTools": {
@@ -1087,7 +1125,7 @@
 
                 var lS = 0;
                 if ($('#Akademik #datatable_Sijil tbody tr:first td').length > 1) {
-                    lS = $('#Akademik #datatable_Sijil tbody tr:not(:first)').length - 1;
+                    lS = $('#Akademik #datatable_Sijil tbody tr').length;
                 }
 
                 $(document).on('click', "#Akademik #btn-Sijil", function (e) {
@@ -1196,7 +1234,7 @@
 
                     // Tabletools options:
                     //   https://datatables.net/extensions/tabletools/button_options
-                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Kursus'>>r>" +
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Kursus'>>r>" +
                             "t" +
                             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "oTableTools": {
@@ -1244,7 +1282,7 @@
 
                 var lKL = 0;
                 if ($('#Akademik #datatable_Kursus tbody tr:first td').length > 1) {
-                    lKL = $('#Akademik #datatable_Kursus tbody tr:not(:first)').length - 1;
+                    lKL = $('#Akademik #datatable_Kursus tbody tr').length;
                 }
 
                 $(document).on('click', "#Akademik #btn-Kursus", function (e) {
@@ -1375,13 +1413,11 @@
                     return false;
                 });
 
-                
-
                 var AktivitiLuar = $('#datatable_AktivitiLuar').DataTable({
 
                     // Tabletools options:
                     //   https://datatables.net/extensions/tabletools/button_options
-                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-AktivitiLuar'>>r>" +
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-AktivitiLuar'>>r>" +
                             "t" +
                             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "oTableTools": {
@@ -1429,7 +1465,7 @@
 
                 var lAL = 0;
                 if ($('#Akademik #datatable_AktivitiLuar tbody tr:first td').length > 1) {
-                    lAL = $('#Akademik #datatable_AktivitiLuar tbody tr:not(:first)').length - 1;
+                    lAL = $('#Akademik #datatable_AktivitiLuar tbody tr').length;
                 }
 
                 $(document).on('click', "#Akademik #btn-AktivitiLuar", function (e) {
@@ -1535,7 +1571,7 @@
 
                     // Tabletools options:
                     //   https://datatables.net/extensions/tabletools/button_options
-                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Tanggungan'>>r>" +
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Tanggungan'>>r>" +
                             "t" +
                             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "oTableTools": {
@@ -1569,7 +1605,7 @@
                     "drawCallback": function (oSettings) {
                         responsiveHelper_datatable_Tanggungan.respond();
                     },
-                    "scrollX": true
+                    //"scrollX": true
                 });
 
                 //button
@@ -1585,7 +1621,7 @@
 
                 var lT = 0;
                 if ($('#Tanggungan #datatable_Tanggungan tbody tr:first td').length > 1) {
-                    lT = $('#Tanggungan #datatable_Tanggungan tbody tr:not(:first)').length - 1;
+                    lT = $('#Tanggungan #datatable_Tanggungan tbody tr').length;
                 }
 
                 $(document).on('click', "#Tanggungan #btn-Tanggungan", function (e) {
@@ -1746,7 +1782,7 @@
 
                     // Tabletools options:
                     //   https://datatables.net/extensions/tabletools/button_options
-                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Gaji'>>r>" +
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Gaji'>>r>" +
                             "t" +
                             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "oTableTools": {
@@ -1795,7 +1831,7 @@
 
                 var lG = 0;
                 if ($('#Gaji #datatable_Gaji tbody tr:first td').length > 1) {
-                    lG = $('#Gaji #datatable_Gaji tbody tr:not(:first)').length - 1;
+                    lG = $('#Gaji #datatable_Gaji tbody tr').length;
                     $('#btn-add-Gaji').hide();
                 }
                 else {
@@ -1856,7 +1892,7 @@
 
                         "<div id='rowtxt'>" + $("select[name='HR_MAKLUMAT_ELAUN_POTONGAN_G_HR_KOD_ELAUN_POTONGAN'] option:selected").text() + "</div>" +
                         "<div class='select'>" +
-                        "<select name='HR_MAKLUMAT_ELAUN_POTONGAN_G[" + lG + "].HR_KOD_ELAUN_POTONGAN' class='form-control HR_MAKLUMAT_ELAUN_POTONGAN_G_HR_KOD_ELAUN_POTONGAN' id='HR_KOD_ELAUN_POTONGAN' style='display:none;'>" +
+                        "<select name='HR_MAKLUMAT_ELAUN_POTONGAN_G[" + lG + "].HR_KOD_ELAUN_POTONGAN' class='form-control HR_MAKLUMAT_ELAUN_POTONGAN_G_HR_KOD_ELAUN_POTONGAN' id='HR_KOD_ELAUN_POTONGAN' style='display:none;' data-msg-required='Sila pilih gaji'>" +
                         optionKod +
                         "</select>",
 
@@ -2021,7 +2057,7 @@
 
                     // Tabletools options:
                     //   https://datatables.net/extensions/tabletools/button_options
-                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Elaun'>>r>" +
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Elaun'>>r>" +
                             "t" +
                             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "oTableTools": {
@@ -2070,7 +2106,7 @@
 
                 var lE = 0;
                 if ($('#Gaji #datatable_Elaun tbody tr:first td').length > 1) {
-                    lE = $('#Gaji #datatable_Elaun tbody tr:not(:first)').length - 1;
+                    lE = $('#Gaji #datatable_Elaun tbody tr').length;
                 }
 
                 $(document).on('click', "#Gaji #btn-Elaun", function (e) {
@@ -2151,7 +2187,7 @@
 
                         "<div id='rowtxt' class='jumlah'>" + $("input[name='HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_JUMLAH']").val() + "</div>" +
                         "<div class='input'>" +
-                        "<input type='hidden' name='HR_MAKLUMAT_ELAUN_POTONGAN_E[" + lE + "].HR_JUMLAH' class='form-control HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_JUMLAH' value='" + $("input[name='HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_JUMLAH']").val() + "' readonly='readonly' data-msg-required='Sila masukkan hanya nombor sahaja' />" +
+                        "<input type='hidden' name='HR_MAKLUMAT_ELAUN_POTONGAN_E[" + lE + "].HR_JUMLAH' class='form-control HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_JUMLAH' value='" + $("input[name='HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_JUMLAH']").val() + "' readonly='readonly' data-msg-number='Sila masukkan hanya nombor sahaja' />" +
                         "</div>",
 
                         "<div id='rowtxt'>" + $("input[name='HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_TARIKH_MULA']").val() + "</div>" +
@@ -2311,7 +2347,7 @@
 
                     // Tabletools options:
                     //   https://datatables.net/extensions/tabletools/button_options
-                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Potongan'>>r>" +
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Potongan'>>r>" +
                             "t" +
                             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "oTableTools": {
@@ -2360,7 +2396,7 @@
 
                 var lPO = 0;
                 if ($('#Gaji #datatable_Potongan tbody tr:first td').length > 1) {
-                    lPO = $('#Gaji #datatable_Potongan tbody tr:not(:first)').length - 1;
+                    lPO = $('#Gaji #datatable_Potongan tbody tr').length;
                 }
 
                 $(document).on('click', "#Gaji #btn-Potongan", function (e) {
@@ -2607,7 +2643,7 @@
 
                     // Tabletools options:
                     //   https://datatables.net/extensions/tabletools/button_options
-                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Caruman'>>r>" +
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Caruman'>>r>" +
                             "t" +
                             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "oTableTools": {
@@ -2656,7 +2692,7 @@
 
                 var lC = 0;
                 if ($('#Gaji #datatable_Caruman tbody tr:first td').length > 1) {
-                    lC = $('#Gaji #datatable_Caruman tbody tr:not(:first)').length - 1;
+                    lC = $('#Gaji #datatable_Caruman tbody tr').length;
                 }
 
                 $(document).on('click', "#Gaji #btn-Caruman", function (e) {
@@ -2881,13 +2917,11 @@
                     $("input[name='" + sname[0] + ".HR_KOD']").val($(this).val());
                 });
 
-                
-
                 var AnugerahPingat = $('#datatable_AnugerahPingat').DataTable({
 
                     // Tabletools options:
                     //   https://datatables.net/extensions/tabletools/button_options
-                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-AnugerahPingat'>>r>" +
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-AnugerahPingat'>>r>" +
                             "t" +
                             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "oTableTools": {
@@ -3005,7 +3039,7 @@
 
                 var lAP = 0;
                 if ($('#Anugerah #datatable_AnugerahPingat tbody tr:first td').length > 1) {
-                    lAP = $('#Anugerah #datatable_AnugerahPingat tbody tr:not(:first)').length - 1;
+                    lAP = $('#Anugerah #datatable_AnugerahPingat tbody tr').length;
                 }
 
                 $(document).on('click', "#Anugerah #btn-AnugerahPingat", function (e) {
@@ -3217,7 +3251,7 @@
 
                     // Tabletools options:
                     //   https://datatables.net/extensions/tabletools/button_options
-                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-AnugerahCemerlang'>>r>" +
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-AnugerahCemerlang'>>r>" +
                             "t" +
                             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "oTableTools": {
@@ -3265,7 +3299,7 @@
 
                 var lAC = 0;
                 if ($('#Anugerah #datatable_AnugerahCemerlang tbody tr:first td').length > 1) {
-                    lAC = $('#Anugerah #datatable_AnugerahCemerlang tbody tr:not(:first)').length - 1;
+                    lAC = $('#Anugerah #datatable_AnugerahCemerlang tbody tr').length;
                 }
 
                 $(document).on('click', "#Anugerah #btn-AnugerahCemerlang", function (e) {
@@ -3286,7 +3320,6 @@
                         "<div id='rowtxt'>" + $("input[name='HR_ANUGERAH_CEMERLANG_HR_NAMA_ANUGERAH']").val() + "</div>" +
                         "<div class='input'>" +
                         "<input type='hidden' name='HR_ANUGERAH_CEMERLANG[" + lAC + "].HR_NAMA_ANUGERAH' class='form-control HR_ANUGERAH_CEMERLANG_HR_NAMA_ANUGERAH' value='" + $("input[name='HR_ANUGERAH_CEMERLANG_HR_NAMA_ANUGERAH']").val() + "' data-msg-required='Sila masukkan nama anugerah' />" +
-                        "<input type='hidden' name='HR_ANUGERAH_CEMERLANG[" + lAC + "].HR_NO_PEKERJA' class='form-control hide' value='" + $("input[name='HR_ANUGERAH_CEMERLANG_HR_NO_PEKERJA']").val() + "' />" +
                         "</div>",
 
                         "<div id='rowtxt'>" + $("input[name='HR_ANUGERAH_CEMERLANG_HR_TARIKH_PENERIMAAN']").val() + "</div>" +
@@ -3354,7 +3387,7 @@
 
                     // Tabletools options:
                     //   https://datatables.net/extensions/tabletools/button_options
-                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Tatatertib'>>r>" +
+                    "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'T<'btn-add-Tatatertib'>>r>" +
                             "t" +
                             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                     "oTableTools": {
@@ -3403,7 +3436,7 @@
 
                 var lTT = 0;
                 if ($('#Tatatertib #datatable_Tatatertib tbody tr:first td').length > 1) {
-                    lTT = $('#Tatatertib #datatable_Tatatertib tbody tr:not(:first)').length - 1;
+                    lTT = $('#Tatatertib #datatable_Tatatertib tbody tr').length;
                 }
 
                 $(document).on('click', "#Tatatertib #btn-Tatatertib", function (e) {
@@ -3913,21 +3946,6 @@
                             dateITA: true
                         },
 
-                        'HR_MAKLUMAT_PEWARIS_HR_TARIKH_LAHIR': {
-                            dateITA: function () {
-                                return ($('#mPewaris-btn').val() == "on")? true : false;
-                            }
-                        },
-                        'HR_MAKLUMAT_PEWARIS_HR_NAMA_PEWARIS': {
-                            required: function () {
-                                return ($('#mPewaris-btn').val() == "on") ? true : false;
-                            }
-                        },
-                        'HR_MAKLUMAT_PEWARIS_HR_NO_KP': {
-                            required: function () {
-                                return ($('#mPewaris-btn').val() == "on") ? true : false;
-                            }
-                        },
                         'HR_MAKLUMAT_KUARTERS.HR_TARIKH_MASUK': {
                             required: function () {
                                 return ($('#mKuarters-btn').val() == "on") ? true : false;
@@ -4516,12 +4534,6 @@
                         'HR_MAKLUMAT_PEKERJAAN.HR_GAJI_POKOK':
                         {
                             number: true
-                        },
-                        'HR_MAKLUMAT_PEWARIS.HR_NO_KP':
-                        {
-                            required: function () {
-                                return $("#mPewaris-btn").is(":checked");
-                            }
                         }
                     },
 
@@ -4669,16 +4681,6 @@
 
                         '.datepicker': {
                             dateITA: 'Sila masukkan tarikh dengan betul'
-                        },
-
-                        'HR_MAKLUMAT_PEWARIS_HR_TARIKH_LAHIR': {
-                            dateITA: 'Sila masukkan tarikh dengan betul'
-                        },
-                        'HR_MAKLUMAT_PEWARIS_HR_TARIKH_LAHIR': {
-                            required: "Sila masukkan anjuran"
-                        },
-                        'HR_MAKLUMAT_PEWARIS_HR_NO_KP': {
-                            required: "Sila masukkan anjuran"
                         },
 
                         'HR_MAKLUMAT_KUARTERS.HR_TARIKH_MASUK': {
@@ -5059,8 +5061,23 @@
                             return ($("#mKemahiran-btn").val() == "on") ? true : false;
                         }
                     },
-                    "HR_MAKLUMAT_PEWARIS_HR_TARIKH_LAHIR" : {
-                        dateITA: true
+                    'HR_MAKLUMAT_PEWARIS_HR_NAMA_PEWARIS': {
+                        required: function () {
+                            return ($('#mPewaris-btn').val() == "on") ? true : false;
+                        }
+                    },
+                    'HR_MAKLUMAT_PEWARIS_HR_NO_KP': {
+                        required: function () {
+                            return ($('#mPewaris-btn').val() == "on") ? true : false;
+                        }
+                    },
+                    'HR_MAKLUMAT_PEWARIS_HR_TARIKH_LAHIR': {
+                        required: function () {
+                            return ($('#mPewaris-btn').val() == "on") ? true : false;
+                        },
+                        dateITA: function () {
+                            return ($('#mPewaris-btn').val() == "on") ? true : false;
+                        }
                     },
                     "HR_MAKLUMAT_KEMAHIRAN_BAHASA_HR_BAHASA" : {
                         required: function () {
@@ -5573,6 +5590,7 @@
                     newEntry.find('select').val('');
                     newEntry.find('em').remove();
                     newEntry.find('.invalid').removeClass('invalid');
+                    newEntry.find('.valid').removeClass('valid');
                     newEntry.find('.state-error').removeClass('state-error');
                     newEntry.find('.state-success').removeClass('state-success');
                     newEntry.find('#text-pewaris').text("Kedua")
@@ -5691,8 +5709,7 @@
                         $("#Peribadi input[type='email']").removeAttr('disabled');
                         $("#Peribadi select").not('#HR_MAKLUMAT_PERIBADI_HR_ALASAN').removeAttr('disabled');
                         $("#Peribadi input[type='radio']").removeAttr('disabled');
-                        $("#Peribadi input[name='HR_TARIKH_LAHIR']").attr('readonly', 'readonly');
-                        $("#Peribadi input[name='HR_TARIKH_LAHIR']").attr('readonly', 'readonly');
+                        //$("#Peribadi input[name='HR_TARIKH_LAHIR']").attr('readonly', 'readonly');
                         $("#Peribadi input[name='Umur']").attr('readonly', 'readonly');
                         $("#Peribadi button").removeAttr('disabled');
                     }
@@ -5715,7 +5732,7 @@
                             });
                         })
 
-                        $("#Peribadi input[name='HR_TARIKH_LAHIR']").removeAttr('readonly', 'readonly');
+                        //$("#Peribadi input[name='HR_TARIKH_LAHIR']").removeAttr('readonly', 'readonly');
                         $("#Peribadi input[name='Umur']").removeAttr('readonly', 'readonly');
                         $("#Peribadi input[type='text']").attr('disabled', 'disabled');
                         $("#Peribadi input[type='email']").attr('disabled', 'disabled');
@@ -5736,7 +5753,7 @@
                         $("#Pekerjaan input[type='radio']").removeAttr('disabled');
                         $("#Pekerjaan textarea").removeAttr('disabled');
                         $("#Pekerjaan .btn-remove-history").removeAttr('disabled');
-
+                        var kiratr = 0;
                         $("#Pekerjaan #datatable_PengalamanKerjaMPPJ tbody tr").each(function () {
                             if ($("td:eq(4) input", this).val() == $.datepicker.formatDate('dd/mm/yy', new Date())) {
                                 $("#Pekerjaan .btn-add-history").attr('disabled', 'disabled');
@@ -5745,6 +5762,13 @@
                                 $("#Pekerjaan .btn-add-history").removeAttr('disabled');
                             }
                         });
+
+                        if (kiratr > 0) {
+                            $("#Pekerjaan .btn-add-history").attr('disabled', 'disabled');
+                        }
+                        else {
+                            $("#Pekerjaan .btn-add-history").removeAttr('disabled');
+                        }
 
                         $("#Pekerjaan #datatable_PengalamanKerjaMPPJ input[type='text']:not(.hide)").attr('disabled', 'disabled');
                         $("#Pekerjaan #datatable_PengalamanKerjaMPPJ select").attr('disabled', 'disabled');
@@ -5857,16 +5881,16 @@
                         $("#Pewaris button[name='tambah-waris']").removeAttr('disabled');
                         if ($("#Pewaris #clone-pewaris").length > 1) {
                             $("#Pewaris button[name='padam-waris']").removeAttr('disabled');
-                            $("#Pewaris button[name='tambah-waris']").attr('disabled');
+                            $("#Pewaris button[name='tambah-waris']").attr('disabled', 'disabled');
                         }
 
-                        $("#Pewaris .HR_MAKLUMAT_PEWARIS.HR_TARIKH_LAHIR").removeAttr('readonly', 'readonly');
+                        $("#Pewaris .HR_MAKLUMAT_PEWARIS.HR_TARIKH_LAHIR").removeAttr('readonly');
                     }
                     else {
                         $(this).val('off')
                         $("#Pewaris input[name='kemaskini']").val("off")
 
-                        $("#Pewaris button[name='tambah-waris'], #Pewaris button[name='tambah-waris']").attr('disabled');
+                        $("#Pewaris button[name='tambah-waris'], #Pewaris button[name='padam-waris']").attr('readonly', 'readonly');
 
                         $("#Pewaris input,#Pewaris textarea").each(function () {
                             $(this).val(function () {
@@ -5898,11 +5922,19 @@
                     if ($(this).is(':checked') == true) {
                         $(this).val('on')
                         $("#Kemahiran #Kemahiran1[name='kemaskini']").val("Kemahiran")
+                        $("#Kemahiran #datatable_PengalamanKerja input[type='hidden']").removeAttr('disabled');
+                        $("#Kemahiran #datatable_PengalamanKerja input[type='text']").removeAttr('disabled');
+                        $("#Kemahiran #datatable_PengalamanKerja select").removeAttr('disabled');
+                        $("#Kemahiran #datatable_PengalamanKerja textarea").removeAttr('disabled');
                         $("#Kemahiran .btn-add-PengalamanKerja, #Kemahiran .btn-remove-PengalamanKerja").removeAttr('disabled');
                     }
                     else {
                         $(this).val('off')
                         $("#Kemahiran #Kemahiran1[name='kemaskini']").val("off")
+                        $("#Kemahiran #datatable_PengalamanKerja input[type='hidden']").attr('disabled', 'disabled');
+                        $("#Kemahiran #datatable_PengalamanKerja input[type='text']").attr('disabled', 'disabled');
+                        $("#Kemahiran #datatable_PengalamanKerja select").attr('disabled', 'disabled');
+                        $("#Kemahiran #datatable_PengalamanKerja textarea").attr('disabled', 'disabled');
                         $("#Kemahiran .btn-add-PengalamanKerja, #Kemahiran .btn-remove-PengalamanKerja").attr('disabled', 'disabled');
                     }
                 }
@@ -5911,11 +5943,19 @@
                     if ($(this).is(':checked') == true) {
                         $(this).val('on')
                         $("#Kemahiran #Kemahiran2[name='kemaskini']").val("Kemahiran2")
+                        $("#Kemahiran #datatable_KemahiranBahasa input[type='hidden']").removeAttr('disabled');
+                        $("#Kemahiran #datatable_KemahiranBahasa input[type='text']").removeAttr('disabled');
+                        $("#Kemahiran #datatable_KemahiranBahasa select").removeAttr('disabled');
+                        $("#Kemahiran #datatable_KemahiranBahasa textarea").removeAttr('disabled');
                         $("#Kemahiran .btn-add-KemahiranBahasa, #Kemahiran .btn-remove-KemahiranBahasa").removeAttr('disabled');
                     }
                     else {
                         $(this).val('off')
                         $("#Kemahiran #Kemahiran2[name='kemaskini']").val("off")
+                        $("#Kemahiran #datatable_KemahiranBahasa input[type='hidden']").attr('disabled', 'disabled');
+                        $("#Kemahiran #datatable_KemahiranBahasa input[type='text']").attr('disabled', 'disabled');
+                        $("#Kemahiran #datatable_KemahiranBahasa select").attr('disabled', 'disabled');
+                        $("#Kemahiran #datatable_KemahiranBahasa textarea").attr('disabled', 'disabled');
                         $("#Kemahiran .btn-add-KemahiranBahasa, #Kemahiran .btn-remove-KemahiranBahasa").attr('disabled', 'disabled');
                     }
                 }
@@ -5924,11 +5964,19 @@
                     if ($(this).is(':checked') == true) {
                         $(this).val('on')
                         $("#Kemahiran #Kemahiran3[name='kemaskini']").val("Kemahiran3")
+                        $("#Kemahiran #datatable_KemahiranTeknikal input[type='hidden']").removeAttr('disabled');
+                        $("#Kemahiran #datatable_KemahiranTeknikal input[type='text']").removeAttr('disabled');
+                        $("#Kemahiran #datatable_KemahiranTeknikal select").removeAttr('disabled');
+                        $("#Kemahiran #datatable_KemahiranTeknikal textarea").removeAttr('disabled');
                         $("#Kemahiran .btn-add-KemahiranTeknikal, #Kemahiran .btn-remove-KemahiranTeknikal").removeAttr('disabled');
                     }
                     else {
                         $(this).val('off')
                         $("#Kemahiran #Kemahiran3[name='kemaskini']").val("off")
+                        $("#Kemahiran #datatable_KemahiranTeknikal input[type='hidden']").attr('disabled', 'disabled');
+                        $("#Kemahiran #datatable_KemahiranTeknikal input[type='text']").attr('disabled', 'disabled');
+                        $("#Kemahiran #datatable_KemahiranTeknikal select").attr('disabled', 'disabled');
+                        $("#Kemahiran #datatable_KemahiranTeknikal textarea").attr('disabled', 'disabled');
                         $("#Kemahiran .btn-add-KemahiranTeknikal, #Kemahiran .btn-remove-KemahiranTeknikal").attr('disabled', 'disabled');
                     }
                 }
@@ -5945,11 +5993,11 @@
                         $(this).val('off')
                         $("#Akademik #Akademik1[name='kemaskini']").val("off")
 
-                        $("#Akademik input,#Akademik textarea").each(function () {
-                            $(this).val(function () {
-                                return this.defaultValue;
-                            })
-                        })
+                        //$("#Akademik input,#Akademik textarea").each(function () {
+                        //    $(this).val(function () {
+                        //        return this.defaultValue;
+                        //    })
+                        //})
                         $("#Akademik #xmodel input[type='text']").attr('disabled', 'disabled');
                     }
                 }
@@ -5958,12 +6006,18 @@
                     if ($(this).is(':checked') == true) {
                         $(this).val('on')
                         $("#Akademik #Akademik2[name='kemaskini']").val("Akademik2")
+                        $("#Akademik #datatable_Kelayakan input[type='hidden']").removeAttr('disabled');
+                        $("#Akademik #datatable_Kelayakan input[type='text']").removeAttr('disabled');
+                        $("#Akademik #datatable_Kelayakan select").removeAttr('disabled');
                         $("#Akademik .btn-add-Kelayakan, #Akademik .btn-remove-Kelayakan").removeAttr('disabled');
                         
                     }
                     else {
                         $(this).val('off')
                         $("#Akademik #Akademik2[name='kemaskini']").val("off")
+                        $("#Akademik #datatable_Kelayakan input[type='hidden']").attr('disabled', 'disabled');
+                        $("#Akademik #datatable_Kelayakan input[type='text']").attr('disabled', 'disabled');
+                        $("#Akademik #datatable_Kelayakan select").attr('disabled', 'disabled');
                         $("#Akademik .btn-add-Kelayakan, #Akademik .btn-remove-Kelayakan").attr('disabled', 'disabled');
                     }
                 }
@@ -5972,11 +6026,17 @@
                     if ($(this).is(':checked') == true) {
                         $(this).val('on')
                         $("#Akademik #Akademik3[name='kemaskini']").val("Akademik3")
+                        $("#Akademik #datatable_Sijil input[type='hidden']").removeAttr('disabled');
+                        $("#Akademik #datatable_Sijil input[type='text']").removeAttr('disabled');
+                        $("#Akademik #datatable_Sijil select").removeAttr('disabled');
                         $("#Akademik .btn-add-Sijil, #Akademik .btn-remove-Sijil").removeAttr('disabled');
                     }
                     else {
                         $(this).val('off')
                         $("#Akademik #Akademik3[name='kemaskini']").val("off")
+                        $("#Akademik #datatable_Sijil input[type='hidden']").attr('disabled', 'disabled');
+                        $("#Akademik #datatable_Sijil input[type='text']").attr('disabled', 'disabled');
+                        $("#Akademik #datatable_Sijil select").attr('disabled', 'disabled');
                         $("#Akademik .btn-add-Sijil, #Akademik .btn-remove-Sijil").attr('disabled', 'disabled');
                     }
                 }
@@ -5984,11 +6044,17 @@
                     if ($(this).is(':checked') == true) {
                         $(this).val('on')
                         $("#Akademik #Akademik4[name='kemaskini']").val("Akademik4")
+                        $("#Akademik #datatable_Kursus input[type='hidden']").removeAttr('disabled');
+                        $("#Akademik #datatable_Kursus input[type='text']").removeAttr('disabled');
+                        $("#Akademik #datatable_Kursus select").removeAttr('disabled');
                         $("#Akademik .btn-add-Kursus, #Akademik .btn-remove-Kursus").removeAttr('disabled');
                     }
                     else {
                         $(this).val('off')
                         $("#Akademik #Akademik4[name='kemaskini']").val("off")
+                        $("#Akademik #datatable_Kursus input[type='hidden']").attr('disabled', 'disabled');
+                        $("#Akademik #datatable_Kursus input[type='text']").attr('disabled', 'disabled');
+                        $("#Akademik #datatable_Kursus select").attr('disabled', 'disabled');
                         $("#Akademik .btn-add-Kursus, #Akademik .btn-remove-Kursus").attr('disabled', 'disabled');
                     }
                 }
@@ -5997,11 +6063,17 @@
                     if ($(this).is(':checked') == true) {
                         $(this).val('on')
                         $("#Akademik #Akademik5[name='kemaskini']").val("Akademik5")
+                        $("#Akademik #datatable_AktivitiLuar input[type='hidden']").removeAttr('disabled');
+                        $("#Akademik #datatable_AktivitiLuar input[type='text']").removeAttr('disabled');
+                        $("#Akademik #datatable_AktivitiLuar select").removeAttr('disabled');
                         $("#Akademik .btn-add-AktivitiLuar, #Akademik .btn-remove-AktivitiLuar").removeAttr('disabled');
                     }
                     else {
                         $(this).val('off')
                         $("#Akademik #Akademik5 input[name='kemaskini']").val("off")
+                        $("#Akademik #datatable_AktivitiLuar input[type='hidden']").attr('disabled', 'disabled');
+                        $("#Akademik #datatable_AktivitiLuar input[type='text']").attr('disabled', 'disabled');
+                        $("#Akademik #datatable_AktivitiLuar select").attr('disabled', 'disabled');
                         $("#Akademik .btn-add-AktivitiLuar, #Akademik .btn-remove-AktivitiLuar").attr('disabled', 'disabled');
                     }
                 }
@@ -6039,7 +6111,6 @@
                             });
                         })
 
-                        //$("#Kemahiran input[name='HR_MAKLUMAT_PEWARIS.HR_TARIKH_LAHIR']").removeAttr('readonly');
                         //$("#Kuarters #HR_MAKLUMAT_KUARTERS_HR_TARIKH_MASUK").removeAttr('readonly');
                         //$("#Kuarters #HR_MAKLUMAT_KUARTERS_HR_TARIKH_KELUAR").removeAttr('readonly');
 
@@ -6056,10 +6127,9 @@
                         $(this).val('on')
                         $("#Tanggungan input[name='kemaskini']").val("Tanggungan")
 
-                        $("#Tanggungan input[type='text']").removeAttr('disabled');
-                        //$("#Tanggungan textarea").removeAttr('disabled');
-                        $("#Tanggungan select").removeAttr('disabled');
-                        $("#Tanggungan input[type='radio']").removeAttr('disabled');
+                        $("#Tanggungan #datatable_Tanggungan input[type='hidden']").removeAttr('disabled');
+                        $("#Tanggungan #datatable_Tanggungan input[type='text']").removeAttr('disabled');
+                        $("#Tanggungan #datatable_Tanggungan select").removeAttr('disabled');
 
                         //$("#Tanggungan .HR_MAKLUMAT_TANGGUNGAN_HR_TARIKH_LAHIR").attr('readonly', 'readonly');
                         $("#Tanggungan .umur").attr('readonly', 'readonly');
@@ -6095,10 +6165,9 @@
                         $("#Tanggungan .umur").removeAttr('readonly');
 
 
-                        $("#Tanggungan input[type='text']").attr('disabled', 'disabled');
-                        //$("#Akademik textarea").attr('disabled', 'disabled');
-                        $("#Tanggungan select").attr('disabled', 'disabled');
-                        $("#Tanggungan input[type='radio']").attr('disabled', 'disabled');
+                        $("#Tanggungan #datatable_Tanggungan input[type='hidden']").attr('disabled', 'disabled');
+                        $("#Tanggungan #datatable_Tanggungan input[type='text']").attr('disabled', 'disabled');
+                        $("#Tanggungan #datatable_Tanggungan select").attr('disabled', 'disabled');
                         $("#Tanggungan .btn-add-Tanggungan, #Tanggungan .btn-remove-Tanggungan").attr('disabled', 'disabled');
                         /*
                         $("#Tanggungan #datatable_Tanggungan tr").each(function () {
@@ -6113,8 +6182,9 @@
                         $(this).val('on')
                         $("#Gaji #Gaji1[name='kemaskini']").val("Gaji")
 
-                        $("#Gaji input[type='text']").removeAttr('disabled');
-                        $("#Gaji select").removeAttr('disabled');
+                        $("#Gaji #datatable_Gaji input[type='hidden']").removeAttr('disabled');
+                        $("#Gaji #datatable_Gaji input[type='text']").removeAttr('disabled');
+                        $("#Gaji #datatable_Gaji select").removeAttr('disabled');
 
                         $("#Gaji #HR_KOD").attr('readonly', 'readonly');
                         $("#Gaji #HR_JAWATAN_EP").attr('readonly', 'readonly');
@@ -6136,8 +6206,9 @@
                         $("#Gaji #HR_KUMPULAN_EP").removeAttr('readonly');
                         $("#Gaji #HR_TAHUN_EP").removeAttr('readonly');
 
-                        $("#Gaji input[type='text']").attr('disabled', 'disabled');
-                        $("#Gaji select").attr('disabled', 'disabled');
+                        $("#Gaji #datatable_Gaji input[type='hidden']").attr('disabled', 'disabled');
+                        $("#Gaji #datatable_Gaji input[type='text']").attr('disabled', 'disabled');
+                        $("#Gaji #datatable_Gaji select").attr('disabled', 'disabled');
 
                         $("#Gaji .btn-add-Gaji, #Gaji .btn-remove-Gaji").attr('disabled', 'disabled');
                     }
@@ -6148,8 +6219,9 @@
                         $(this).val('on')
                         $("#Gaji #Gaji2[name='kemaskini']").val("Gaji2")
 
-                        $("#Gaji input[type='text']").removeAttr('disabled');
-                        $("#Gaji select").removeAttr('disabled');
+                        $("#Gaji #datatable_Elaun input[type='hidden']").removeAttr('disabled');
+                        $("#Gaji #datatable_Elaun input[type='text']").removeAttr('disabled');
+                        $("#Gaji #datatable_Elaun select").removeAttr('disabled');
 
                         $("#Gaji #HR_KOD").attr('readonly', 'readonly');
                         $("#Gaji #HR_JAWATAN_EP").attr('readonly', 'readonly');
@@ -6171,8 +6243,9 @@
                         $("#Gaji #HR_KUMPULAN_EP").removeAttr('readonly');
                         $("#Gaji #HR_TAHUN_EP").removeAttr('readonly');
 
-                        $("#Gaji input[type='text']").attr('disabled', 'disabled');
-                        $("#Gaji select").attr('disabled', 'disabled');
+                        $("#Gaji #datatable_Elaun input[type='hidden']").attr('disabled', 'disabled');
+                        $("#Gaji #datatable_Elaun input[type='text']").attr('disabled', 'disabled');
+                        $("#Gaji #datatable_Elaun select").attr('disabled', 'disabled');
 
                         $("#Gaji .btn-add-Elaun, #Gaji .btn-remove-Elaun").attr('disabled', 'disabled');
                     }
@@ -6183,8 +6256,9 @@
                         $(this).val('on')
                         $("#Gaji #Gaji3[name='kemaskini']").val("Gaji3")
 
-                        $("#Gaji input[type='text']").removeAttr('disabled');
-                        $("#Gaji select").removeAttr('disabled');
+                        $("#Gaji #datatable_Potongan input[type='hidden']").removeAttr('disabled');
+                        $("#Gaji #datatable_Potongan input[type='text']").removeAttr('disabled');
+                        $("#Gaji #datatable_Potongan select").removeAttr('disabled');
 
                         $("#Gaji #HR_KOD").attr('readonly', 'readonly');
                         $("#Gaji #HR_JAWATAN_EP").attr('readonly', 'readonly');
@@ -6206,8 +6280,9 @@
                         $("#Gaji #HR_KUMPULAN_EP").removeAttr('readonly');
                         $("#Gaji #HR_TAHUN_EP").removeAttr('readonly');
 
-                        $("#Gaji input[type='text']").attr('disabled', 'disabled');
-                        $("#Gaji select").attr('disabled', 'disabled');
+                        $("#Gaji #datatable_Potongan input[type='hidden']").attr('disabled', 'disabled');
+                        $("#Gaji #datatable_Potongan input[type='text']").attr('disabled', 'disabled');
+                        $("#Gaji #datatable_Potongan select").attr('disabled', 'disabled');
 
                         $("#Gaji .btn-add-Potongan, #Gaji .btn-remove-Potongan").attr('disabled', 'disabled');
                     }
@@ -6218,8 +6293,9 @@
                         $(this).val('on')
                         $("#Gaji #Gaji4[name='kemaskini']").val("Gaji4")
 
-                        $("#Gaji input[type='text']").removeAttr('disabled');
-                        $("#Gaji select").removeAttr('disabled');
+                        $("#Gaji #datatable_Caruman input[type='hidden']").removeAttr('disabled');
+                        $("#Gaji #datatable_Caruman input[type='text']").removeAttr('disabled');
+                        $("#Gaji #datatable_Caruman select").removeAttr('disabled');
 
                         $("#Gaji #HR_KOD").attr('readonly', 'readonly');
                         $("#Gaji #HR_JAWATAN_EP").attr('readonly', 'readonly');
@@ -6241,8 +6317,9 @@
                         $("#Gaji #HR_KUMPULAN_EP").removeAttr('readonly');
                         $("#Gaji #HR_TAHUN_EP").removeAttr('readonly');
 
-                        $("#Gaji input[type='text']").attr('disabled', 'disabled');
-                        $("#Gaji select").attr('disabled', 'disabled');
+                        $("#Gaji #datatable_Caruman input[type='hidden']").attr('disabled', 'disabled');
+                        $("#Gaji #datatable_Caruman input[type='text']").attr('disabled', 'disabled');
+                        $("#Gaji #datatable_Caruman select").attr('disabled', 'disabled');
 
                         $("#Gaji .btn-add-Caruman, #Gaji .btn-remove-Caruman").attr('disabled', 'disabled');
                     }
@@ -6252,11 +6329,17 @@
                     if ($(this).is(':checked') == true) {
                         $(this).val('on')
                         $("#Anugerah #Anugerah1[name='kemaskini']").val("Anugerah")
+                        $("#Anugerah #datatable_AnugerahPingat input[type='hidden']").removeAttr('disabled');
+                        $("#Anugerah #datatable_AnugerahPingat input[type='text']").removeAttr('disabled');
+                        $("#Anugerah #datatable_AnugerahPingat select").removeAttr('disabled');
                         $("#Anugerah .btn-add-AnugerahPingat, #Anugerah .btn-remove-AnugerahPingat").removeAttr('disabled');
                     }
                     else {
                         $(this).val('off')
                         $("#Anugerah #Anugerah1[name='kemaskini']").val("off")
+                        $("#Anugerah #datatable_AnugerahPingat input[type='hidden']").attr('disabled', 'disabled');
+                        $("#Anugerah #datatable_AnugerahPingat input[type='text']").attr('disabled', 'disabled');
+                        $("#Anugerah #datatable_AnugerahPingat select").attr('disabled', 'disabled');
                         $("#Anugerah .btn-add-AnugerahPingat, #Anugerah .btn-remove-AnugerahPingat").attr('disabled', 'disabled');
                     }
                 }
@@ -6265,11 +6348,17 @@
                     if ($(this).is(':checked') == true) {
                         $(this).val('on')
                         $("#Anugerah #Anugerah2[name='kemaskini']").val("Anugerah2")
+                        $("#Anugerah #datatable_AnugerahCemerlang input[type='hidden']").removeAttr('disabled');
+                        $("#Anugerah #datatable_AnugerahCemerlang input[type='text']").removeAttr('disabled');
+                        $("#Anugerah #datatable_AnugerahCemerlang select").removeAttr('disabled');
                         $("#Anugerah .btn-add-AnugerahCemerlang, #Anugerah .btn-remove-AnugerahCemerlang").removeAttr('disabled');
                     }
                     else {
                         $(this).val('off')
                         $("#Anugerah #Anugerah2[name='kemaskini']").val("off")
+                        $("#Anugerah #datatable_AnugerahCemerlang input[type='hidden']").attr('disabled', 'disabled');
+                        $("#Anugerah #datatable_AnugerahCemerlang input[type='text']").attr('disabled', 'disabled');
+                        $("#Anugerah #datatable_AnugerahCemerlang select").attr('disabled', 'disabled');
                         $("#Anugerah .btn-add-AnugerahCemerlang, #Anugerah .btn-remove-AnugerahCemerlang").attr('disabled', 'disabled');
                     }
                 }
@@ -6370,9 +6459,10 @@
                         $(this).val('on')
                         $("#Tatatertib input[name='kemaskini']").val("Tatatertib")
 
-                        $("#Tatatertib input[type='text']").removeAttr('disabled');
-                        $("#Tatatertib textarea").removeAttr('disabled');
-                        $("#Tatatertib select").removeAttr('disabled');
+                        $("#Tatatertib #datatable_Tatatertib input[type='hidden']").removeAttr('disabled');
+                        $("#Tatatertib #datatable_Tatatertib input[type='text']").removeAttr('disabled');
+                        $("#Tatatertib #datatable_Tatatertib select").removeAttr('disabled');
+                        $("#Tatatertib #datatable_Tatatertib textarea").removeAttr('disabled');
                         //$("#Tatatertib .HR_TARIKH_KESALAHAN").attr('readonly', 'readonly');
                         //$("#Tatatertib .HR_TARIKH_MULA_TINDAKAN").attr('readonly', 'readonly');
                         //$("#Tatatertib .HR_TARIKH_AKHIR_TINDAKAN").attr('readonly', 'readonly');
@@ -6402,11 +6492,11 @@
                         //$("#Tatatertib .HR_TARIKH_KESALAHAN").removeAttr('readonly');
                         //$("#Tatatertib .HR_TARIKH_MULA_TINDAKAN").removeAttr('readonly');
                         //$("#Tatatertib .HR_TARIKH_AKHIR_TINDAKAN").removeAttr('readonly');
-                        $("#Tatatertib .HR_JABATAN_T").removeAttr('readonly');
-                        $("#Tatatertib input[type='text']").attr('disabled', 'disabled');
-                        $("#Tatatertib textarea").attr('disabled', 'disabled');
-                        $("#Tatatertib select").attr('disabled', 'disabled');
-                        $("#Tatatertib input[type='radio']").attr('disabled', 'disabled');
+                        //$("#Tatatertib .HR_JABATAN_T").removeAttr('readonly');
+                        $("#Tatatertib #datatable_Tatatertib input[type='hidden']").removeAttr('disabled');
+                        $("#Tatatertib #datatable_Tatatertib input[type='text']").removeAttr('disabled');
+                        $("#Tatatertib #datatable_Tatatertib select").removeAttr('disabled');
+                        $("#Tatatertib #datatable_Tatatertib textarea").removeAttr('disabled');
                         $("#Tatatertib .btn-add-Tatatertib, #Tatatertib .btn-remove-Tatatertib").attr('disabled', 'disabled');
                     }
                 }
@@ -6725,7 +6815,7 @@
 
             function KiraPencen(tarikh_lahir, tarikh_tamat) {
                 $("#Pekerjaan input[name='HR_UMUR_SARA']").val("");
-                if ($("#Peribadi input[name='HR_MAKLUMAT_PERIBADI.HR_TARIKH_LAHIR']").val() != "" && $("#Pekerjaan input[name='HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_TAMAT']").val() != "")
+                if ($("#Peribadi input[name='HR_MAKLUMAT_PERIBADI.HR_TARIKH_LAHIR']").val() != "" && $("#Pekerjaan input[name='HR_MAKLUMAT_PEKERJAAN.HR_TARAF_JAWATAN']").val() != "K" && $("#Pekerjaan input[name='HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_TAMAT']").val() != "")
                     $.ajax({
                         url: "../MaklumatKakitangan/KiraUmurBersara",
                         data: { "HR_TARIKH_LAHIR": tarikh_lahir, "HR_TARIKH_TAMAT": tarikh_tamat },
@@ -6867,11 +6957,11 @@
                 nextText: '<i class="fa fa-chevron-right"></i>',
                 onSelect: function (selectedDate) {
                     $('#HR_MAKLUMAT_PEKERJAAN_HR_TARIKH_MASUK').datepicker('option', 'maxDate', selectedDate);
-                    KiraPencen($("#Peribadi input[name='HR_MAKLUMAT_PERIBADI_HR_TARIKH_LAHIR']").val(), $("#Pekerjaan input[name='HR_MAKLUMAT_PEKERJAAN_HR_TARIKH_TAMAT']").val())
+                    KiraPencen($("#Peribadi input[name='HR_MAKLUMAT_PERIBADI.HR_TARIKH_LAHIR']").val(), $("#Pekerjaan input[name='HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_TAMAT']").val())
                 }
             }).on('change', function (e) {
                 $('#HR_MAKLUMAT_PEKERJAAN_HR_TARIKH_MASUK').datepicker('option', 'maxDate', getDate(this));
-                KiraPencen($("#Peribadi input[name='HR_MAKLUMAT_PERIBADI_HR_TARIKH_LAHIR']").val(), $("#Pekerjaan input[name='HR_MAKLUMAT_PEKERJAAN_HR_TARIKH_TAMAT']").val())
+                KiraPencen($("#Peribadi input[name='HR_MAKLUMAT_PERIBADI.HR_TARIKH_LAHIR']").val(), $("#Pekerjaan input[name='HR_MAKLUMAT_PEKERJAAN.HR_TARIKH_TAMAT']").val())
             });
 
             function TarafJawatan() {
@@ -6953,6 +7043,7 @@
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     onSelect: function (selectedDate) {
                         //$('#datepicker3').datepicker('option', 'minDate', selectedDate);
+                        $(this).parents('td').find("#rowtxt").html(selectedDate)
                     }
                 });
 
@@ -6964,6 +7055,7 @@
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     onSelect: function (selectedDate) {
                         //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                        $(this).parents('td').find("#rowtxt").html(selectedDate)
                     }
                 });
 
@@ -6975,6 +7067,7 @@
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     onSelect: function (selectedDate) {
                         //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                        $(this).parents('td').find("#rowtxt").html(selectedDate)
                     }
                 });
 
@@ -7123,6 +7216,7 @@
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     onSelect: function (selectedDate) {
                         //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                        $(this).parents('td').find("#rowtxt").html(selectedDate)
                     }
                 });
 
@@ -7134,6 +7228,7 @@
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     onSelect: function (selectedDate) {
                         //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                        $(this).parents('td').find("#rowtxt").html(selectedDate)
                     }
                 });
 
@@ -7145,6 +7240,7 @@
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     onSelect: function (selectedDate) {
                         //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                        $(this).parents('td').find("#rowtxt").html(selectedDate)
                     }
                 });
 
@@ -7156,6 +7252,7 @@
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     onSelect: function (selectedDate) {
                         //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                        $(this).parents('td').find("#rowtxt").html(selectedDate)
                     }
                 });
                 $("#HR_MAKLUMAT_ELAUN_POTONGAN_P_HR_TARIKH_MULA, .HR_MAKLUMAT_ELAUN_POTONGAN_P_HR_TARIKH_MULA").datepicker({
@@ -7166,6 +7263,7 @@
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     onSelect: function (selectedDate) {
                         //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                        $(this).parents('td').find("#rowtxt").html(selectedDate)
                     }
                 });
 
@@ -7177,6 +7275,7 @@
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     onSelect: function (selectedDate) {
                         //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                        $(this).parents('td').find("#rowtxt").html(selectedDate)
                     }
                 });
                 $("#HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_TARIKH_MULA, .HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_TARIKH_MULA").datepicker({
@@ -7198,8 +7297,10 @@
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     onSelect: function (selectedDate) {
                         //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                        $(this).parents('td').find("#rowtxt").html(selectedDate)
                     }
                 });
+
                 $(".HR_MAKLUMAT_KURNIAAN_HR_TARIKH_PENCALONAN").datepicker({
                     changeMonth: true,
                     changeYear: true,
@@ -7219,6 +7320,7 @@
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     onSelect: function (selectedDate) {
                         //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                        $(this).parents('td').find("#rowtxt").html(selectedDate)
                     }
                 });
 
@@ -7230,6 +7332,7 @@
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     onSelect: function (selectedDate) {
                         //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                        $(this).parents('td').find("#rowtxt").html(selectedDate)
                     }
                 });
 
@@ -7263,6 +7366,7 @@
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     onSelect: function (selectedDate) {
                         //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                        $(this).parents('td').find("#rowtxt").html(selectedDate)
                     }
                 });
 
@@ -7274,6 +7378,7 @@
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     onSelect: function (selectedDate) {
                         //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                        $(this).parents('td').find("#rowtxt").html(selectedDate)
                     }
                 });
 
@@ -7285,6 +7390,7 @@
                     nextText: '<i class="fa fa-chevron-right"></i>',
                     onSelect: function (selectedDate) {
                         //$('.datepicker2').datepicker('option', 'maxDate', selectedDate);
+                        $(this).parents('td').find("#rowtxt").html(selectedDate)
                     }
                 });
 

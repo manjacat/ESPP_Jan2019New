@@ -13,8 +13,7 @@ namespace eSPP.Controllers
     public class CarumanController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        //private FMSContext db2 = new FMSContext();
-        private ApplicationDbContext db2 = new ApplicationDbContext();
+        private FMSContext db2 = new FMSContext();
 
         // GET: Caruman
         public ActionResult SenaraiCaruman()

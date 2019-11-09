@@ -51,16 +51,15 @@ namespace eSPP.App_Helpers.ExcelHelper
             return startrow;            
         }
 
-        public static IWorkbook GetReport(int bulanProses, int tahunProses, 
-            string jenisReport)
+        public static IWorkbook GetReport(int bulan, int tahun, string jenisReport)
         {
             IWorkbook workbook = new XSSFWorkbook();
 
-            ReportBorangAModel report = ReportBorangAModel.GetReport(bulanProses, tahunProses, jenisReport);
+            ReportBorangAModel report = ReportBorangAModel.GetReport(bulan, tahun, jenisReport);
 
             ISheet sheet1 = workbook.CreateSheet("Sheet 1");
             int currentRow;
-            currentRow = SetBorangAHeader(workbook, sheet1, bulanProses, tahunProses);
+            currentRow = SetBorangAHeader(workbook, sheet1, bulan, tahun);
             currentRow = SetBayaran(workbook, sheet1, currentRow + 1);
             currentRow = SetMajikan(workbook, sheet1, currentRow + 2);
             currentRow = SetTableHeader(workbook, sheet1, currentRow + 2);

@@ -35,7 +35,7 @@ namespace eSPP.Models
         public string PA_PROSES_IND { get; set; }
 
         public static void InsertSPGGaji(ApplicationDbContext sppDb, SPGContext spgDb, 
-            int tahun, int bulanDibayar)
+            int tahunDibayar, int bulanDibayar)
         {
             //ApplicationDbContext sppDb = new ApplicationDbContext();
             //int tahun = 2019;
@@ -43,7 +43,8 @@ namespace eSPP.Models
             //string noPekerja = "01595";
 
             List<HR_TRANSAKSI_SAMBILAN_DETAIL> sppTrans = 
-                HR_TRANSAKSI_SAMBILAN_DETAIL.GetTransaksi(sppDb, tahun, bulanDibayar);
+                HR_TRANSAKSI_SAMBILAN_DETAIL
+                .GetTransaksiDibayar(sppDb, tahunDibayar, bulanDibayar);
 
             if(sppTrans != null)
             {
@@ -162,14 +163,7 @@ namespace eSPP.Models
                         PA_PROSES_IND = "P"
                     };
                     spgDb.PA_TRANSAKSI_GAJI.Add(spgTrans);
-                    try
-                    {
-                        spgDb.SaveChanges();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.Write(ex.ToString());
-                    }
+                    spgDb.SaveChanges();
                 }
                 else
                 {

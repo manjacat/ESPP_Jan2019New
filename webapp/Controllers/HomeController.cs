@@ -255,6 +255,11 @@ namespace eSPP.Controllers
             return View();
         }
 
+        private HR_MAKLUMAT_PERIBADI Pekerja(string HR_NO_PEKERJA)
+        {
+            return db.HR_MAKLUMAT_PERIBADI.Include(s => s.HR_MAKLUMAT_PEKERJAAN).SingleOrDefault(s => s.HR_NO_PEKERJA == HR_NO_PEKERJA);
+        }
+
         public List<EventsModels> SenaraiAktiviti(string category)
         {
             List<EventsModels> events = new List<EventsModels>();
@@ -370,6 +375,54 @@ namespace eSPP.Controllers
                         events.Add(aktiviti);
                     }
                     
+                }
+            }
+
+            if(category == "T" || category == "ALL")
+            {
+                List<HR_SENARAI_TEMUDUGA> iv = db.HR_SENARAI_TEMUDUGA.Include(s => s.HR_MAKLUMAT_CALON_TEMUDUGA).Include(s => s.HR_MAKLUMAT_PENEMUDUGA).ToList();
+                foreach (HR_SENARAI_TEMUDUGA item in iv)
+                {
+                    EventsModels aktiviti = new EventsModels();
+                    if (item.HR_MASA_MULA == null)
+                    {
+                        item.HR_MASA_MULA = "00:00";
+                    }
+
+                    if (item.HR_MASA_AKHIR == null)
+                    {
+                        item.HR_MASA_AKHIR = "00:00";
+                    }
+                    string[] waktuMula = item.HR_MASA_MULA.Split(':');
+                    string[] waktuAkhir = item.HR_MASA_AKHIR.Split(':');
+
+                    string penemuduga = string.Join(",\n", item.HR_MAKLUMAT_PENEMUDUGA.Select(s => new { HR_NAMA_PENEMUDUGA = Pekerja(s.HR_PENEMUDUGA).HR_NAMA_PEKERJA }));
+
+                    string jawatan = null;
+                    if(db.HR_JAWATAN.Where(s => s.HR_KOD_JAWATAN == item.HR_KOD_JAWATAN).Count() > 0)
+                    {
+                        jawatan = db.HR_JAWATAN.FirstOrDefault(s => s.HR_KOD_JAWATAN == item.HR_KOD_JAWATAN).HR_NAMA_JAWATAN;
+                    }
+
+                    aktiviti.id = string.Format("{0:dd/MM/yyyy}", item.HR_TARIKH_TEMUDUGA) + "|_|" + item.HR_KOD_JAWATAN + "|_|" + item.HR_TARAF_JAWATAN;
+                    aktiviti.title = "TEMUDUGA " + item.HR_KOD_JAWATAN + " " + item.HR_TARAF_JAWATAN;
+                    //aktiviti.description = "PENEMUDUGA : " + penemuduga;
+                    aktiviti.icon = "fa-users";
+                    aktiviti.className = "bg-color-blue txt-color-white";
+                    aktiviti.start = Convert.ToDateTime(item.HR_TARIKH_TEMUDUGA);
+                    aktiviti.startHour = Convert.ToInt16(waktuMula[0]);
+                    aktiviti.startMinute = Convert.ToInt16(waktuMula[1]);
+                    //aktiviti.startSecond = Convert.ToInt16(waktuMula[2]);
+                    aktiviti.end = Convert.ToDateTime(item.HR_TARIKH_TEMUDUGA);
+                    aktiviti.endHour = Convert.ToInt16(waktuAkhir[0]);
+                    aktiviti.endMinute = Convert.ToInt16(waktuAkhir[1]);
+                    //aktiviti.endSecond = Convert.ToInt16(waktuAkhir[2]);
+                    aktiviti.category = "T";
+                    aktiviti.kod = item.HR_KOD_JAWATAN;
+                    aktiviti.allDay = false;
+                    aktiviti.place = item.HR_TEMPAT;
+                    aktiviti.gred = item.HR_GRED_GAJI;
+                    events.Add(aktiviti);
                 }
             }
             return events;

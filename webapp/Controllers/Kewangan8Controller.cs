@@ -199,6 +199,11 @@ namespace eSPP.Controllers
             return redirect;
         }
 
+        public HR_JAWATAN CariJawatan(string HR_KOD_JAWATAN)
+        {
+            return db.HR_JAWATAN.SingleOrDefault(s => s.HR_KOD_JAWATAN == HR_KOD_JAWATAN);
+        }
+
         public PartialViewResult TableKewangan8(string id)
         {
             ViewBag.id = id;
@@ -267,7 +272,7 @@ namespace eSPP.Controllers
                 Peribadi = new HR_MAKLUMAT_PERIBADI();
             }
 
-            HR_JAWATAN jawatan = db.HR_JAWATAN.SingleOrDefault(s => s.HR_KOD_JAWATAN == Peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
+            HR_JAWATAN jawatan = CariJawatan(Peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
             if (jawatan == null)
             {
                 jawatan = new HR_JAWATAN();
@@ -804,7 +809,7 @@ namespace eSPP.Controllers
                 }
 
                 model2.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN = jabatan.GE_KETERANGAN_JABATAN;
-                HR_JAWATAN jawatan = db.HR_JAWATAN.SingleOrDefault(s => s.HR_KOD_JAWATAN == pekerjaan.HR_JAWATAN);
+                HR_JAWATAN jawatan = CariJawatan(pekerjaan.HR_JAWATAN);
                 if (pekerjaan == null || jawatan == null)
                 {
                     jawatan = new HR_JAWATAN();
@@ -865,7 +870,7 @@ namespace eSPP.Controllers
                 }
                 sBahagian.Add(ListBahagian);
                 GE_UNIT ListUnit = mc.GE_UNIT.SingleOrDefault(s => s.GE_KOD_JABATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN && s.GE_KOD_BAHAGIAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_BAHAGIAN && s.GE_KOD_UNIT == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_UNIT);
-                if (ListBahagian == null)
+                if (ListUnit == null)
                 {
                     ListUnit = new GE_UNIT();
                 }
@@ -1268,7 +1273,7 @@ namespace eSPP.Controllers
                 }
                 sBahagian.Add(ListBahagian);
                 GE_UNIT ListUnit = mc.GE_UNIT.SingleOrDefault(s => s.GE_KOD_JABATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN && s.GE_KOD_BAHAGIAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_BAHAGIAN && s.GE_KOD_UNIT == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_UNIT);
-                if (ListBahagian == null)
+                if (ListUnit == null)
                 {
                     ListUnit = new GE_UNIT();
                 }
@@ -3987,7 +3992,7 @@ namespace eSPP.Controllers
             model.HR_PERGERAKAN_EWIL = mKewangan8Detail.HR_PERGERAKAN_EWIL;
             model.HR_GAJI_LAMA = mKewangan8Detail.HR_GAJI_LAMA;
 
-            HR_JAWATAN jawatan = db.HR_JAWATAN.SingleOrDefault(s => s.HR_KOD_JAWATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
+            HR_JAWATAN jawatan = CariJawatan(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
 
             GE_PARAMTABLE gred = new GE_PARAMTABLE();
 
@@ -4226,7 +4231,7 @@ namespace eSPP.Controllers
             model.HR_PERGERAKAN_EWIL = mKewangan8Detail.HR_PERGERAKAN_EWIL;
             model.HR_GAJI_LAMA = mKewangan8Detail.HR_GAJI_LAMA;
 
-            HR_JAWATAN jawatan = db.HR_JAWATAN.SingleOrDefault(s => s.HR_KOD_JAWATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
+            HR_JAWATAN jawatan = CariJawatan(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
 
             GE_PARAMTABLE gred = new GE_PARAMTABLE();
 
@@ -4510,7 +4515,7 @@ namespace eSPP.Controllers
             model.HR_PERGERAKAN_EWIL = mKewangan8Detail.HR_PERGERAKAN_EWIL;
             model.HR_GAJI_LAMA = mKewangan8Detail.HR_GAJI_LAMA;
 
-            HR_JAWATAN jawatan = db.HR_JAWATAN.SingleOrDefault(s => s.HR_KOD_JAWATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
+            HR_JAWATAN jawatan = CariJawatan(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
 
             GE_PARAMTABLE gred = new GE_PARAMTABLE();
 
@@ -4932,7 +4937,7 @@ namespace eSPP.Controllers
 
             Microsoft.Office.Interop.Word.Document Doc = WordApp.Documents.Add(ref missing, ref missing, ref missing, ref missing);
             object start = 0; object end = 0;
-            Microsoft.Office.Interop.Word.Range rng = Doc.Range(ref start, ref missing);
+            Microsoft.Office.Interop.Word.Range rng = Doc.Range(ref start, ref end);
             foreach (PergerakanGajiModels pergerakanGaji in model)
             {
                 HR_MAKLUMAT_KEWANGAN8 sKewangan8 = db.HR_MAKLUMAT_KEWANGAN8.FirstOrDefault(s => s.HR_KOD_PERUBAHAN == "00001" && s.HR_KEW8_ID == pergerakanGaji.HR_KEW8_ID && s.HR_NO_PEKERJA == pergerakanGaji.HR_NO_PEKERJA);
@@ -4947,7 +4952,7 @@ namespace eSPP.Controllers
                     peribadi = new HR_MAKLUMAT_PERIBADI();
                 }
 
-                HR_JAWATAN jawatan = db.HR_JAWATAN.SingleOrDefault(s => s.HR_KOD_JAWATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
+                HR_JAWATAN jawatan = CariJawatan(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
                 if (jawatan == null)
                 {
                     jawatan = new HR_JAWATAN();
@@ -5060,9 +5065,12 @@ namespace eSPP.Controllers
 
             foreach (Microsoft.Office.Interop.Word.Paragraph paragraph in Doc.Paragraphs)
             {
-                paragraph.Range.Font.Name = "Times New Roman";
+                paragraph.Range.Font.Name = "Arial";
                 paragraph.Range.Font.Size = 11;
-                paragraph.Format.SpaceAfter = 0.1f;
+                paragraph.LineSpacing = 12.0f;
+                paragraph.SpaceBefore = 0;
+                paragraph.SpaceAfter = 0;
+                paragraph.Format.LineSpacingRule = Microsoft.Office.Interop.Word.WdLineSpacing.wdLineSpaceMultiple;
             }
 
             Doc.SaveAs2(path_file + "Surat_Pergerakan_Gaji.doc");
@@ -5124,7 +5132,7 @@ namespace eSPP.Controllers
                 peribadi = new HR_MAKLUMAT_PERIBADI();
             }
 
-            HR_JAWATAN jawatan = db.HR_JAWATAN.SingleOrDefault(s => s.HR_KOD_JAWATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
+            HR_JAWATAN jawatan = CariJawatan(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
             if(jawatan == null)
             {
                 jawatan = new HR_JAWATAN();
@@ -6157,7 +6165,7 @@ namespace eSPP.Controllers
                     peribadi = new HR_MAKLUMAT_PERIBADI();
                 }
 
-                HR_JAWATAN jawatan = db.HR_JAWATAN.SingleOrDefault(s => s.HR_KOD_JAWATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
+                HR_JAWATAN jawatan = CariJawatan(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
                 if (jawatan == null)
                 {
                     jawatan = new HR_JAWATAN();
@@ -7838,8 +7846,7 @@ namespace eSPP.Controllers
                     sejarahPekerja = new HR_SEJARAH_PEKERJAAN();
                 }
 
-                //HR_SEJARAH_PERIBADI sejarahPeribadi = db.HR_SEJARAH_PERIBADI.Where(s => s.HR_NO_PEKERJA == model.HR_NO_PEKERJA && s.HR_TINDAKAN != "P").OrderByDescending(s => s.HR_ID_SEJARAH).FirstOrDefault();
-                HR_SEJARAH_PERIBADI sejarahPeribadi = null;
+                HR_SEJARAH_PERIBADI sejarahPeribadi = db.HR_SEJARAH_PERIBADI.Where(s => s.HR_NO_PEKERJA == model.HR_NO_PEKERJA && s.HR_TINDAKAN != "P").OrderByDescending(s => s.HR_ID_SEJARAH).FirstOrDefault();
                 if (sejarahPeribadi == null)
                 {
                     sejarahPeribadi = new HR_SEJARAH_PERIBADI();
@@ -8047,9 +8054,7 @@ namespace eSPP.Controllers
                         }
                     }
                 }
-                //HR_SEJARAH_KEWANGAN8 sejarahKew8 = db.HR_SEJARAH_KEWANGAN8.Where(s => s.HR_NO_PEKERJA == model.HR_NO_PEKERJA && s.HR_KOD_PERUBAHAN == model.HR_KOD_PERUBAHAN && s.HR_TARIKH_MULA == model.HR_TARIKH_MULA && s.HR_TINDAKAN != "P" && s.HR_FINALISED_IND_HR != "Y").OrderByDescending(s => s.HR_ID_SEJARAH).FirstOrDefault();
-                HR_SEJARAH_KEWANGAN8 sejarahKew8 = null;
-
+                HR_SEJARAH_KEWANGAN8 sejarahKew8 = db.HR_SEJARAH_KEWANGAN8.Where(s => s.HR_NO_PEKERJA == model.HR_NO_PEKERJA && s.HR_KOD_PERUBAHAN == model.HR_KOD_PERUBAHAN && s.HR_TARIKH_MULA == model.HR_TARIKH_MULA && s.HR_TINDAKAN != "P" && s.HR_FINALISED_IND_HR != "Y").OrderByDescending(s => s.HR_ID_SEJARAH).FirstOrDefault();
                 if (sejarahKew8 != null)
                 {
                     List<HR_MAKLUMAT_KEWANGAN8> senaraiQ8 = db.HR_MAKLUMAT_KEWANGAN8.Where(s => s.HR_NO_PEKERJA == model.HR_NO_PEKERJA && s.HR_KOD_PERUBAHAN == model.HR_KOD_PERUBAHAN && s.HR_ANSURAN_ID == model.HR_ANSURAN_ID).ToList();
@@ -8188,7 +8193,7 @@ namespace eSPP.Controllers
 
             }
 
-            HR_JAWATAN jawatan = db.HR_JAWATAN.SingleOrDefault(s => s.HR_KOD_JAWATAN == mPekerjaan.HR_JAWATAN);
+            HR_JAWATAN jawatan = CariJawatan(mPekerjaan.HR_JAWATAN);
             if (jawatan == null)
             {
                 jawatan = new HR_JAWATAN();
@@ -9114,7 +9119,7 @@ namespace eSPP.Controllers
                 }
 
                 ViewBag.HR_GAJI_MIN_BARU = Detail2.HR_GAJI_BARU;
-                ViewBag.HR_NAMA_PEKERJA_PT = mPeribadi4.HR_NAMA_PEKERJA;
+                ViewBag.HR_NAMA_PT = mPeribadi4.HR_NAMA_PEKERJA;
                 ViewBag.HR_NO_PEKERJA_PT = Detail2.HR_NO_PEKERJA_PT;
                 ViewBag.HR_PGT_BARU = matriksDetail2.HR_RM_KENAIKAN;
                 ViewBag.HR_JAWATAN_BARU = Detail2.HR_JAWATAN_BARU;
@@ -9145,7 +9150,7 @@ namespace eSPP.Controllers
             ViewBag.HR_PGT_LAMA = matriksPekerjaan.HR_RM_KENAIKAN;
             ViewBag.kodGaji = matriksPekerjaan.HR_KOD_GAJI;
 
-            HR_JAWATAN jawatan = db.HR_JAWATAN.SingleOrDefault(s => s.HR_KOD_JAWATAN == model.HR_KOD_JAWATAN);
+            HR_JAWATAN jawatan = CariJawatan(model.HR_KOD_JAWATAN);
             if (jawatan == null)
             {
                 jawatan = new HR_JAWATAN();
@@ -9610,7 +9615,7 @@ namespace eSPP.Controllers
                 }
 
                 ViewBag.HR_GAJI_MIN_BARU = Detail2.HR_GAJI_BARU;
-                ViewBag.HR_NAMA_PEKERJA_PT = mPeribadi4.HR_NAMA_PEKERJA;
+                ViewBag.HR_NAMA_PT = mPeribadi4.HR_NAMA_PEKERJA;
                 ViewBag.HR_NO_PEKERJA_PT = Detail2.HR_NO_PEKERJA_PT;
                 ViewBag.HR_PGT_BARU = matriksDetail2.HR_RM_KENAIKAN;
                 ViewBag.HR_JAWATAN_BARU = Detail2.HR_JAWATAN_BARU;
@@ -9641,7 +9646,7 @@ namespace eSPP.Controllers
             ViewBag.HR_PGT_LAMA = matriksPekerjaan.HR_RM_KENAIKAN;
             ViewBag.kodGaji = mPekerjaan.HR_KOD_GAJI;
 
-            HR_JAWATAN jawatan = db.HR_JAWATAN.SingleOrDefault(s => s.HR_KOD_JAWATAN == mPekerjaan.HR_JAWATAN);
+            HR_JAWATAN jawatan = CariJawatan(mPekerjaan.HR_JAWATAN);
             if (jawatan == null)
             {
                 jawatan = new HR_JAWATAN();
@@ -10321,6 +10326,7 @@ namespace eSPP.Controllers
                         if (padamKew8.Count() <= 0)
                         {
                             db.HR_MAKLUMAT_KEWANGAN8.Add(model);
+                            SMK8.Add(model);
                         }
                         else
                         {
@@ -11227,7 +11233,7 @@ namespace eSPP.Controllers
                 }
 
                 ViewBag.HR_GAJI_MIN_BARU = Detail2.HR_GAJI_BARU;
-                ViewBag.HR_NAMA_PEKERJA_PT = mPeribadi4.HR_NAMA_PEKERJA;
+                ViewBag.HR_NAMA_PT = mPeribadi4.HR_NAMA_PEKERJA;
                 ViewBag.HR_NO_PEKERJA_PT = Detail2.HR_NO_PEKERJA_PT;
                 ViewBag.HR_PGT_BARU = matriksDetail2.HR_RM_KENAIKAN;
                 ViewBag.HR_JAWATAN_BARU = Detail2.HR_JAWATAN_BARU;
@@ -11256,7 +11262,7 @@ namespace eSPP.Controllers
             ViewBag.HR_PGT_LAMA = matriksPekerjaan.HR_RM_KENAIKAN;
             ViewBag.kodGaji = matriksPekerjaan.HR_KOD_GAJI;
 
-            HR_JAWATAN jawatan = db.HR_JAWATAN.SingleOrDefault(s => s.HR_KOD_JAWATAN == model.HR_KOD_JAWATAN);
+            HR_JAWATAN jawatan = CariJawatan(model.HR_KOD_JAWATAN);
             if (jawatan == null)
             {
                 jawatan = new HR_JAWATAN();
@@ -11686,8 +11692,10 @@ namespace eSPP.Controllers
 
             if(ModelState.IsValid)
             {
-                db.HR_MAKLUMAT_KEWANGAN8.RemoveRange(padamModel);
+                
                 db.HR_MAKLUMAT_KEWANGAN8_DETAIL.RemoveRange(padamDetail);
+                db.SaveChanges();
+                db.HR_MAKLUMAT_KEWANGAN8.RemoveRange(padamModel);
                 db.SaveChanges();
 
                 return Json(new { error = false, msg = "Data berjaya dipadam", location = "../Kewangan8/" + redirect + "?key=1&value=" + model.HR_NO_PEKERJA }, JsonRequestBehavior.AllowGet);
@@ -12199,7 +12207,7 @@ namespace eSPP.Controllers
                         {
                             jabatan = new GE_JABATAN();
                         }
-                        HR_JAWATAN jawatan = db.HR_JAWATAN.SingleOrDefault(s => s.HR_KOD_JAWATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
+                        HR_JAWATAN jawatan = CariJawatan(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
                         if (jawatan == null)
                         {
                             jawatan = new HR_JAWATAN();
@@ -12489,7 +12497,7 @@ namespace eSPP.Controllers
                             {
                                 jabatan = new GE_JABATAN();
                             }
-                            HR_JAWATAN jawatan = db.HR_JAWATAN.SingleOrDefault(s => s.HR_KOD_JAWATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
+                            HR_JAWATAN jawatan = CariJawatan(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
                             if (jawatan == null)
                             {
                                 jawatan = new HR_JAWATAN();
@@ -13646,6 +13654,291 @@ namespace eSPP.Controllers
         {
             List<HR_MAKLUMAT_KEWANGAN8> bil = BilPekerja2(key, value, bulan, tarafpekerja);
             return Json(bil, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult TestPrint(string key, string value, int? bulan, string tarafpekerja, string tindakan, ManageMessageId? message)
+        {
+            List<HR_MAKLUMAT_PERIBADI> sPeribadi = new List<HR_MAKLUMAT_PERIBADI>();
+            List<HR_MAKLUMAT_PERIBADI> sPegawai = db.HR_MAKLUMAT_PERIBADI.Include(s => s.HR_MAKLUMAT_PEKERJAAN).ToList();
+            List<PergerakanGajiModels> model = new List<PergerakanGajiModels>();
+
+            if (tarafpekerja == null)
+            {
+                tarafpekerja = "Y";
+            }
+
+            ViewBag.tarafpekerja = tarafpekerja;
+
+            if (tindakan == null)
+            {
+                tindakan = "T";
+            }
+
+            ViewBag.ViewTindakan = tindakan;
+            //bulan = DateTime.Now.Month;
+
+            //dapatkan senarai pekerja yg layak dapat PGT
+            sPeribadi = CariPekerja(key, value, bulan, "00001");
+
+
+            // daparkan id user yg login
+            HR_MAKLUMAT_PERIBADI peribadi2 = db.HR_MAKLUMAT_PERIBADI.Where(s => s.HR_AKTIF_IND != "T" && s.HR_AKTIF_IND != "P").OrderByDescending(s => s.HR_NO_PEKERJA).FirstOrDefault(s => s.HR_NO_KPBARU == User.Identity.Name);
+            if (peribadi2 == null)
+            {
+                peribadi2 = new HR_MAKLUMAT_PERIBADI();
+            }
+
+            ViewBag.HR_NAMA_PEGAWAI = peribadi2.HR_NAMA_PEKERJA;
+            ViewBag.HR_NP_FINALISED_HR = peribadi2.HR_NO_PEKERJA;
+
+            if (tindakan == "T")
+            {
+                model = ViewTambahKew8(sPeribadi, bulan, tindakan, tarafpekerja);
+            }
+            else
+            {
+                model = ViewEditKew8(bulan, tindakan, tarafpekerja);
+            }
+
+            ViewBag.countKew8 = model.Count();
+            ViewBag.key = key;
+            ViewBag.value = value;
+            ViewBag.bulan = bulan;
+            ViewBag.peribadi = sPeribadi;
+            ViewBag.sPegawai = sPegawai;
+            ViewBag.gred = mc.GE_PARAMTABLE.Where(s => s.GROUPID == 109).ToList().OrderBy(s => s.SHORT_DESCRIPTION);
+
+            HR_KEWANGAN8 kewangan8 = db.HR_KEWANGAN8.SingleOrDefault(s => s.HR_KOD_KEW8 == "00001");
+            ViewBag.HR_KOD_PERUBAHAN = kewangan8.HR_KOD_KEW8;
+            ViewBag.HR_PENERANGAN = kewangan8.HR_PENERANGAN;
+
+            ViewBag.TARIKH_MULA = null;
+            ViewBag.ID = null;
+
+            if (model.Count() > 0)
+            {
+                ViewBag.TARIKH_MULA = model.ElementAt(0).HR_TARIKH_MULA;
+                ViewBag.ID = model.ElementAt(0).HR_KEW8_ID;
+            }
+
+            List<SelectListItem> pengesahan = new List<SelectListItem>();
+            pengesahan.Add(new SelectListItem { Value = "T", Text = "Tidak Aktif" });
+            pengesahan.Add(new SelectListItem { Value = "P", Text = "Proses" });
+            pengesahan.Add(new SelectListItem { Value = "Y", Text = "Muktamad" });
+
+            List<SelectListItem> Bulan = new List<SelectListItem>();
+            Bulan.Add(new SelectListItem { Text = "-- Pilih --", Value = null });
+            Bulan.Add(new SelectListItem { Text = "Januari", Value = "1" });
+            Bulan.Add(new SelectListItem { Text = "Febuari", Value = "2" });
+            Bulan.Add(new SelectListItem { Text = "Mac", Value = "3" });
+            Bulan.Add(new SelectListItem { Text = "April", Value = "4" });
+            Bulan.Add(new SelectListItem { Text = "Mei", Value = "5" });
+            Bulan.Add(new SelectListItem { Text = "Jun", Value = "6" });
+            Bulan.Add(new SelectListItem { Text = "Julai", Value = "7" });
+            Bulan.Add(new SelectListItem { Text = "Ogos", Value = "8" });
+            Bulan.Add(new SelectListItem { Text = "September", Value = "9" });
+            Bulan.Add(new SelectListItem { Text = "Oktober", Value = "10" });
+            Bulan.Add(new SelectListItem { Text = "November", Value = "11" });
+            Bulan.Add(new SelectListItem { Text = "Disember", Value = "12" });
+            ViewBag.month = Bulan;
+            ViewBag.pengesahan = pengesahan;
+
+            List<HR_MAKLUMAT_KEWANGAN8> bil = BilPekerja2(key, value, bulan, tarafpekerja);
+
+            List<SelectListItem> Tindakan = new List<SelectListItem>();
+            Tindakan.Add(new SelectListItem { Value = "T", Text = "Tambah ( " + bil.FirstOrDefault(s => s.HR_KEW8_IND == "T").HR_BIL + " )" });
+            Tindakan.Add(new SelectListItem { Value = "K", Text = "Kemaskini ( " + bil.FirstOrDefault(s => s.HR_KEW8_IND == "K").HR_BIL + " )" });
+            Tindakan.Add(new SelectListItem { Value = "M", Text = "Muktamad ( " + bil.FirstOrDefault(s => s.HR_KEW8_IND == "M").HR_BIL + " )" });
+            ViewBag.Tindakan = Tindakan;
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult TestPrint(IEnumerable<PergerakanGajiModels> pergerakanGaji, PergerakanGajiModels pergerakanGajiDetail, string key2, string value2, string btnSub, int? bulan2, string tarafpekerja2, string tindakan2)
+        {
+ 
+            ViewBag.key = key2;
+            ViewBag.value = value2;
+            ViewBag.bulan = bulan2;
+
+            HR_KEWANGAN8 kewangan8 = db.HR_KEWANGAN8.SingleOrDefault(s => s.HR_KOD_KEW8 == "00001");
+            ViewBag.HR_KOD_PERUBAHAN = kewangan8.HR_KOD_KEW8;
+            ViewBag.HR_PENERANGAN = kewangan8.HR_PENERANGAN;
+
+            List<SelectListItem> pengesahan = new List<SelectListItem>();
+            pengesahan.Add(new SelectListItem { Value = "T", Text = "Tidak Aktif" });
+            pengesahan.Add(new SelectListItem { Value = "P", Text = "Proses" });
+            pengesahan.Add(new SelectListItem { Value = "Y", Text = "Muktamad" });
+            ViewBag.pengesahan = pengesahan;
+
+            return Json(new { error = true, msg = "Maaf ralat!!. Sila hubungi pihak ICT untuk menyelesaikan masalah ini. Terima Kasih.", key = key2, value = value2, bulan = bulan2, tarafpekerja = tarafpekerja2, tindakan = tindakan2 }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SenaraiSuratKewangan8Test(IEnumerable<PergerakanGajiModels> model, string TARIKH_BERSIDANG, int? bulan, string tarafpekerja)
+        {
+            DateTime tarikhBersidang = Convert.ToDateTime(TARIKH_BERSIDANG);
+
+            string path_file = Server.MapPath("~/Content/template/");
+            object missing = System.Reflection.Missing.Value;
+
+            Microsoft.Office.Interop.Word.Application application = new Microsoft.Office.Interop.Word.Application();
+            Microsoft.Office.Interop.Word.Document document = application.Documents.Add(ref missing, ref missing, ref missing, ref missing);
+
+            object filename = path_file + "Surat_Pergerakan_Gaji.doc";
+            document.SaveAs2(ref filename);
+            document.Close(ref missing, ref missing, ref missing);
+            document = null;
+            application.Quit(ref missing, ref missing, ref missing);
+            application = null;
+
+
+            //System.IO.FileInfo file = new System.IO.FileInfo(path_file + "Surat_Pergerakan_Gaji.doc");
+
+            //Response.Clear();
+            //Response.AddHeader("content-length", file.Length.ToString());
+            //Response.AddHeader("content-disposition", "attachment; filename = Surat_Pergerakan_Gaji.doc");
+            //Response.ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+            //Response.TransmitFile(path_file + "Surat_Pergerakan_Gaji.doc");
+            //Response.Flush();
+            //Response.Close();
+
+            //List<HR_MAKLUMAT_PERIBADI> peribadi4 = db.HR_MAKLUMAT_PERIBADI.Include(s => s.HR_MAKLUMAT_PEKERJAAN).Take(2).ToList();
+
+            //foreach (HR_MAKLUMAT_PERIBADI pergerakanGaji in peribadi4)
+            //{
+
+            //    HR_MAKLUMAT_PERIBADI peribadi = db.HR_MAKLUMAT_PERIBADI.Include(s => s.HR_MAKLUMAT_PEKERJAAN).SingleOrDefault(s => s.HR_NO_PEKERJA == pergerakanGaji.HR_NO_PEKERJA);
+            //    if (peribadi == null)
+            //    {
+            //        peribadi = new HR_MAKLUMAT_PERIBADI();
+            //    }
+
+            //    HR_JAWATAN jawatan = db.HR_JAWATAN.SingleOrDefault(s => s.HR_KOD_JAWATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JAWATAN);
+            //    if (jawatan == null)
+            //    {
+            //        jawatan = new HR_JAWATAN();
+            //    }
+
+            //    var grd = 0;
+            //    if (peribadi.HR_MAKLUMAT_PEKERJAAN.HR_GRED != null)
+            //    {
+            //        peribadi.HR_MAKLUMAT_PEKERJAAN.HR_GRED = peribadi.HR_MAKLUMAT_PEKERJAAN.HR_GRED.Trim();
+            //        grd = Convert.ToInt32(peribadi.HR_MAKLUMAT_PEKERJAAN.HR_GRED);
+            //    }
+            //    GE_PARAMTABLE gred = mc.GE_PARAMTABLE.Where(s => s.GROUPID == 109 && s.ORDINAL == grd).SingleOrDefault();
+
+            //    GE_JABATAN jabatan = mc.GE_JABATAN.SingleOrDefault(s => s.GE_KOD_JABATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN);
+            //    if (jabatan == null)
+            //    {
+            //        jabatan = new GE_JABATAN();
+            //    }
+
+            //    GE_BAHAGIAN bahagian = mc.GE_BAHAGIAN.SingleOrDefault(s => s.GE_KOD_JABATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN && s.GE_KOD_BAHAGIAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_BAHAGIAN);
+            //    if (bahagian == null)
+            //    {
+            //        bahagian = new GE_BAHAGIAN();
+            //    }
+
+            //    GE_UNIT unit = mc.GE_UNIT.SingleOrDefault(s => s.GE_KOD_JABATAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_JABATAN && s.GE_KOD_BAHAGIAN == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_BAHAGIAN && s.GE_KOD_UNIT == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_UNIT);
+            //    if (unit == null)
+            //    {
+            //        unit = new GE_UNIT();
+            //    }
+
+            //    HR_GAJI_UPAHAN gajiUpah = db.HR_GAJI_UPAHAN.FirstOrDefault(s => db.HR_MAKLUMAT_ELAUN_POTONGAN.Where(g => g.HR_KOD_ELAUN_POTONGAN == s.HR_KOD_UPAH && g.HR_NO_PEKERJA == peribadi.HR_NO_PEKERJA).Count() > 0);
+            //    if (gajiUpah == null)
+            //    {
+            //        gajiUpah = new HR_GAJI_UPAHAN();
+            //    }
+            //    HR_POTONGAN potongan2 = db.HR_POTONGAN.FirstOrDefault(s => s.HR_SINGKATAN == "PGAJI" && s.HR_VOT_POTONGAN == gajiUpah.HR_VOT_UPAH);
+            //    if (potongan2 == null)
+            //    {
+            //        potongan2 = new HR_POTONGAN();
+            //    }
+
+            //    var jawatan_ind = "";
+
+            //    if (peribadi.HR_MAKLUMAT_PEKERJAAN.HR_KAKITANGAN_IND == "Y")
+            //    {
+            //        jawatan_ind = "K" + peribadi.HR_MAKLUMAT_PEKERJAAN.HR_TARAF_JAWATAN;
+            //    }
+            //    else if (peribadi.HR_MAKLUMAT_PEKERJAAN.HR_KAKITANGAN_IND == "T")
+            //    {
+            //        jawatan_ind = "P" + peribadi.HR_MAKLUMAT_PEKERJAAN.HR_TARAF_JAWATAN;
+            //    }
+
+            //    HR_GAJI_UPAHAN tggkk = db.HR_GAJI_UPAHAN.FirstOrDefault(s => s.HR_JAWATAN_IND == jawatan_ind && s.HR_SINGKATAN == "TGGAJ");
+            //    if (gajiUpah == null)
+            //    {
+            //        tggkk = new HR_GAJI_UPAHAN();
+            //    }
+
+            //    GE_PARAMTABLE tarafJawatan = mc.GE_PARAMTABLE.SingleOrDefault(s => s.GROUPID == 104 && s.STRING_PARAM == peribadi.HR_MAKLUMAT_PEKERJAAN.HR_TARAF_JAWATAN);
+            //    if (tarafJawatan == null)
+            //    {
+            //        tarafJawatan = new GE_PARAMTABLE();
+            //    }
+
+            //    var associativeArray = new Dictionary<int?, string>() { { 1, "Januari" }, { 2, "Febuari" }, { 3, "Mac" }, { 4, "April" }, { 5, "Mei" }, { 6, "Jun" }, { 7, "Julai" }, { 8, "Ogos" }, { 9, "September" }, { 10, "Oktober" }, { 11, "November" }, { 12, "Disember" } };
+
+            //    var Bulan = "";
+            //    var Bulan3 = "";
+            //    foreach (var m in associativeArray)
+            //    {
+            //        if (DateTime.Now.Month == m.Key)
+            //        {
+            //            Bulan = m.Value;
+            //        }
+
+            //        if (tarikhBersidang.Month == m.Key)
+            //        {
+            //            Bulan3 = m.Value;
+            //        }
+            //    }
+            //    var templateEngine = new swxben.docxtemplateengine.DocXTemplateEngine();
+            //    templateEngine.Process(
+            //        source: path_file + "Test.doc",
+            //        destination: path_file + "SuratPergerakanGaji/SuratPergerakanGaji.doc",
+            //        data: new
+            //        {
+            //            nama = peribadi.HR_NAMA_PEKERJA,
+            //            jawatan = (string.IsNullOrEmpty(jawatan.HR_NAMA_JAWATAN)) ? "" : UppercaseWords(jawatan.HR_NAMA_JAWATAN.Replace("&", "&amp;").Replace(", ", ",").Replace(",", ", ").ToLower()),
+            //            taraf = peribadi.HR_MAKLUMAT_PEKERJAAN.HR_TARAF_JAWATAN,
+            //            gred = gred.SHORT_DESCRIPTION,
+            //            jabatan = (string.IsNullOrEmpty(jabatan.GE_KETERANGAN_JABATAN)) ? "" : UppercaseWords(jabatan.GE_KETERANGAN_JABATAN.Replace("&", "&amp;").Replace(", ", ",").Replace(",", ", ").ToLower()),
+            //            bahagian = (string.IsNullOrEmpty(bahagian.GE_KETERANGAN)) ? "" : UppercaseWords(bahagian.GE_KETERANGAN.Replace("&", "&amp;").Replace(", ", ",").Replace(",", ", ").ToLower()),
+            //            //unit = unit.GE_KETERANGAN,
+            //            tahun = "",
+            //            tarikh_cetak = string.Format("{0:dd}", DateTime.Now) + " " + Bulan.ToUpper() + " " + string.Format("{0:yyyy}", DateTime.Now),
+            //            tarikh_bersidang = string.Format("{0:dd}", tarikhBersidang) + " " + Bulan3 + " " + string.Format("{0:yyyy}", tarikhBersidang)
+            //        });
+            //}
+
+            return File(path_file + "Surat_Pergerakan_Gaji.doc", "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+
+        }
+
+        public ActionResult CariJawatanPekerja(string id)
+        {
+            string kod = null;
+            string gred = null;
+            HR_MAKLUMAT_PEKERJAAN pekerja = db.HR_MAKLUMAT_PEKERJAAN.Find(id);
+            if(pekerja != null)
+            {
+                if(CariJawatan(pekerja.HR_JAWATAN) != null)
+                {
+                    kod = CariJawatan(pekerja.HR_JAWATAN).HR_KOD_JAWATAN;
+                }
+
+                int kodGred = Convert.ToInt32(pekerja.HR_GRED);
+                if(cariGred(kodGred, null) != null)
+                {
+                    gred = cariGred(kodGred, null).SHORT_DESCRIPTION;
+                }
+            }
+
+            return Json(new { kod = kod, gred = gred }, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

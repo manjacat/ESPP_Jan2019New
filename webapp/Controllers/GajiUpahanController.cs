@@ -14,8 +14,7 @@ namespace eSPP.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private MajlisContext db2 = new MajlisContext();
-        //private FMSContext db3 = new FMSContext();
-        private ApplicationDbContext db3 = new ApplicationDbContext();
+        private FMSContext db3 = new FMSContext();
 
         // GET: HR_GAJI_UPAHAN
         public ActionResult SenaraiGaji()

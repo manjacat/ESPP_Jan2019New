@@ -22,5 +22,6 @@ namespace eSPP.Models
         [Column(Order = 1)]
         public string HR_NAMA_ANUGERAH { get; set; }
         public Nullable<System.DateTime> HR_TARIKH_PENERIMAAN { get; set; }
+        public Nullable<int> HR_TAHUN { get; set; }
     }
 }

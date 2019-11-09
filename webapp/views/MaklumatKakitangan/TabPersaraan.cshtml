@@ -1,0 +1,297 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+<div class="tab-pane" id="Persaraan">
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <button type="button" name="padamtxt" class="btn btn-warning padamtxt" disabled="disabled" title="Padam Text">
+                    <i class="fa fa-file-text"></i><i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Maklumat Persaraan
+            </legend>
+            <div class="row smart-form">
+
+                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Sebab</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.HiddenFor(model => model.HR_PERSARAAN.HR_NO_PEKERJA, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    @Html.DropDownListFor(model => model.HR_PERSARAAN.HR_ALASAN, new SelectList(ViewBag.HR_ALASAN, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+
+
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Bersara</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    @Html.TextBox("HR_PERSARAAN.HR_TARIKH_BERSARA", string.Format("{0:dd/MM/yyyy}", Model.HR_PERSARAAN.HR_TARIKH_BERSARA), new { @class = "form-control", disabled = "disabled", id = "HR_PERSARAAN_HR_TARIKH_BERSARA" })
+                                    <b class="tooltip tooltip-top-right">
+                                        <i class="fa fa-warning txt-color-teal"></i>
+                                        Sila penuhkan ruangan ini
+                                    </b>
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jumlah Cuti GCR</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-question-circle"></i>
+                                    @Html.EditorFor(model => model.HR_PERSARAAN.HR_JUMLAH_CUTI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    <b class="tooltip tooltip-top-right">
+                                        <i class="fa fa-warning txt-color-teal"></i>
+                                        Sila penuhkan ruangan ini
+                                    </b>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bayaran GCR</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-question-circle"></i>
+                                    @Html.EditorFor(model => model.HR_PERSARAAN.HR_JUMLAH_BAYARAN, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    <b class="tooltip tooltip-top-right">
+                                        <i class="fa fa-warning txt-color-teal"></i>
+                                        Sila penuhkan ruangan ini
+                                    </b>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jenis Persaraan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <div class="inline-group">
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_PERSARAAN.HR_BERSARA_IND, "W", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>Wajib
+                                    </label>
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_PERSARAAN.HR_BERSARA_IND, "P", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>Pilihan
+                                    </label>
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Status Bayaran</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <div class="inline-group">
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_PERSARAAN.HR_TERIMA_BAYARAN_IND, "Y", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>Ya
+                                    </label>
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_PERSARAAN.HR_TERIMA_BAYARAN_IND, "T", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>Tidak
+                                    </label>
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Cara Bayaran Pencen</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <div class="inline-group">
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_PERSARAAN.HR_BAYARAN_IND, "P", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>Waran Pos
+                                    </label>
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_PERSARAAN.HR_BAYARAN_IND, "C", htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>Waran Cek
+                                    </label>
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">(Bagi Waran Pos)</label>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Alamat Pejabat Pos</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-question-circle"></i>
+                                    @Html.EditorFor(model => model.HR_PERSARAAN.HR_PALAMAT1, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    <b class="tooltip tooltip-top-right">
+                                        <i class="fa fa-warning txt-color-teal"></i>
+                                        Sila penuhkan ruangan ini
+                                    </b>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_PERSARAAN.HR_PALAMAT2, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_PERSARAAN.HR_PALAMAT3, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Negeri</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_PERSARAAN.HR_PNEGERI, new SelectList(ViewBag.Negeri, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Poskod</label>
+                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-question-circle"></i>
+                                            @Html.EditorFor(model => model.HR_PERSARAAN.HR_PPOSKOD, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            <b class="tooltip tooltip-top-right">
+                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                Sila penuhkan ruangan ini
+                                            </b>
+                                        </label>
+                                    </div>
+
+                                </section>
+
+                                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bandar</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-question-circle"></i>
+                                            @Html.EditorFor(model => model.HR_PERSARAAN.HR_PBANDAR, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                            <b class="tooltip tooltip-top-right">
+                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                Sila penuhkan ruangan ini
+                                            </b>
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Pegawai Yang Mengesahkan
+            </legend>
+            <div class="row smart-form">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama Pegawai</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_PERSARAAN.HR_NP_PEGAWAI, new SelectList(ViewBag.HR_NO_PENYELIA, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control select2", disabled = "disabled", style = "width:'100%'" })
+
+                                </label>
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jawatan Pegawai</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_PERSARAAN.HR_JAWATAN_PEGAWAI, new SelectList(ViewBag.HR_JAWATAN, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled", style = "width:'100%'" })
+
+                                </label>
+
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <label class="">Kemaskini : </label>
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mPersaraan-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mPersaraan-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" name="kemaskini" class="form-control" value="off">
+            </div>
+        </div>
+    </div>
+</div>

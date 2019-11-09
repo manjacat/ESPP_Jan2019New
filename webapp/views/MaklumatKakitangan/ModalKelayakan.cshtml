@@ -1,0 +1,79 @@
+﻿<div class="modal fade" id="ModalKelayakan" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    Tambah Kelayakan <span class="error"></span>
+                </h4>
+            </div>
+            <div class="modal-body no-padding smart-form">
+                <fieldset>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Kelayakan Akademik</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    @Html.TextBox("HR_MAKLUMAT_KELAYAKAN_HR_KEPUTUSAN", null, new { @class = "form-control" })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Kelulusan</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    @Html.TextBox("HR_MAKLUMAT_KELAYAKAN_HR_PANGKAT", null, new { @class = "form-control" })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Tahun Mula</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    <input type = "text" name = "HR_MAKLUMAT_KELAYAKAN_HR_TAHUN_MULA" id = "HR_MAKLUMAT_KELAYAKAN_HR_TAHUN_MULA" class = "form-control" data-mask = "9999" />
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Tahun Tamat</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    <input type = "text" name = "HR_MAKLUMAT_KELAYAKAN_HR_TAHUN_TAMAT" id = "HR_MAKLUMAT_KELAYAKAN_HR_TAHUN_TAMAT" class = "form-control" data-mask = "9999" />
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Sekolah/IPT</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    @Html.TextBox("HR_MAKLUMAT_KELAYAKAN_HR_SEKOLAH_INSTITUSI", null, new { @class = "form-control" })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                </fieldset>
+                <footer>
+                    <button type="button" id="btn-Kelayakan" class="btn btn-primary">
+                        <span class="fa fa-plus"></span> Tambah
+                    </button>
+                    <button type="reset" class="btn btn-default">
+                        Reset
+                    </button>
+                    <button type="button" id="btn-back" class="btn btn-default" data-dismiss="modal">
+                        Kembali
+                    </button>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>

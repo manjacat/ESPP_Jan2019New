@@ -1,0 +1,212 @@
+﻿@model IEnumerable<eSPP.Models.HR_SENARAI_TEMUDUGA>
+
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            Tambah Aktiviti <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+        
+        @using (Html.BeginForm("BorangTemuduga", "LantikanJawatanBaru", FormMethod.Post, new { id = "add-form", @class = "smart-form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.Hidden("HR_JENIS", null, new { @class = "form-control", id = "HR_JENIS" })
+            @Html.Hidden("HR_ID", string.Format("{0:dd/MM/yyyy}", Model.ElementAtOrDefault(0).HR_TARIKH_TEMUDUGA), new { @class = "form-control HR_ID", id = "HR_ID" })
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Tarikh Temuduga</label>
+                        <div class="col col-8">
+                            <label class="input">
+                                <i class="icon-append fa fa-calendar"></i>
+                                @Html.TextBox("HR_ID", string.Format("{0:dd/MM/yyyy}", Model.ElementAtOrDefault(0).HR_TARIKH_TEMUDUGA), new { @class = "form-control HR_ID", id = "HR_ID", @readonly = "readonly" })
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                
+            @for (var item = 0; item < Model.Count(); item++)
+            {
+                <div id="parents">
+                    <div id="child">
+                        @Html.Hidden("[" + item + "].HR_TARIKH_TEMUDUGA", string.Format("{0:dd/MM/yyyy}", Model.ElementAtOrDefault(item).HR_TARIKH_TEMUDUGA), new { @class = "form-control HR_TARIKH_TEMUDUGA", id = item + "__HR_TARIKH_TEMUDUGA" })
+                        @if (ViewBag.HR_JENIS == "Padam")
+                        {
+                            @Html.Hidden("[" + item + "].HR_KOD_JAWATAN", Model.ElementAtOrDefault(item).HR_KOD_JAWATAN, new { @class = "form-control HR_KOD_JAWATAN", id = item + "__HR_KOD_JAWATAN" })
+                            @Html.Hidden("[" + item + "].HR_TARAF_JAWATAN", Model.ElementAtOrDefault(item).HR_TARAF_JAWATAN, new { @class = "form-control HR_TARAF_JAWATAN", id = item + "__HR_TARAF_JAWATAN" })
+                        }
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Jawatan</label>
+                                <div class="col col-6">
+                                    <label class="select">
+                                        @Html.DropDownList("[" + item + "].HR_KOD_JAWATAN", new SelectList(ViewBag.HR_JAWATAN, "Value", "Text", Model.ElementAtOrDefault(item).HR_KOD_JAWATAN), String.Empty, htmlAttributes: new { @class = "form-control HR_KOD_JAWATAN", id = item + "__HR_KOD_JAWATAN" })
+                                        <i></i>
+                                    </label>
+                                </div>
+                                @if (item == 0)
+                                {
+                                    <div class="col col-2 text-right" id="event_btn">
+                                        <button type="button" class="btn btn-success btn-sm tambah_jawatan" title="Tambah Jawatan" id="tambah_jawatan"><i class="fa fa-plus"></i></button>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col col-2 text-right" id="event_btn">
+                                        <button type="button" class="btn btn-danger btn-sm padam_jawatan" title="Tambah Jawatan" id="padam_jawatan" @((Model.ElementAtOrDefault(item).HR_MAKLUMAT_CALON_TEMUDUGA.Count() > 0 || Model.ElementAtOrDefault(item).HR_MAKLUMAT_CALON_TEMUDUGA.Count() > 0) ? "disabled='disabled'" : "")><i class="fa fa-minus"></i></button>
+                                    </div>
+                                }
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Masa Mula</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-clock-o"></i>
+                                        @Html.TextBox("[" + item + "].HR_MASA_MULA", Model.ElementAtOrDefault(item).HR_MASA_MULA, new { @class = "form-control HR_MASA_MULA", id = item + "__HR_MASA_MULA" })
+                                    </label>
+                                </div>
+                                <label class="label col col-2">Akhir</label>
+                                <div class="col col-3">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-clock-o"></i>
+                                        @Html.TextBox("[" + item + "].HR_MASA_AKHIR", Model.ElementAtOrDefault(item).HR_MASA_AKHIR, new { @class = "form-control HR_MASA_AKHIR", id = item + "__HR_MASA_AKHIR" })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Taraf Jawatan</label>
+                                <div class="col col-3">
+                                    <label class="select">
+                                        @Html.DropDownList("[" + item + "].HR_TARAF_JAWATAN", new SelectList(ViewBag.HR_TARAF_JAWATAN, "Value", "Text", Model.ElementAtOrDefault(item).HR_TARAF_JAWATAN), String.Empty, htmlAttributes: new { @class = "form-control HR_TARAF_JAWATAN", id = item + "__HR_TARAF_JAWATAN" })
+                                        <i></i>
+                                    </label>
+                                </div>
+                                <label class="label col col-2">Gred</label>
+                                <div class="col col-3">
+                                    <label class="select">
+                                        @Html.DropDownList("[" + item + "].HR_GRED_GAJI", new SelectList(ViewBag.HR_GRED, "Value", "Text", Convert.ToInt16(Model.ElementAtOrDefault(item).HR_GRED_GAJI)), String.Empty, htmlAttributes: new { @class = "form-control HR_GRED_GAJI", id = item + "__HR_GRED_GAJI" })
+                                        <i></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">Tempat</label>
+                                <div class="col col-8">
+                                    <label class="input">
+                                        @Html.TextBox("[" + item + "].HR_TEMPAT", string.Format("{0:dd/MM/yyyy}", Model.ElementAtOrDefault(item).HR_TEMPAT), new { @class = "form-control HR_TEMPAT", id = item + "__HR_TEMPAT" })
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            }
+
+            </fieldset>
+            <footer>
+                <button type="button" id="btn-sub" class="btn btn-primary">
+                    <span class="fa fa-send-o"></span> Hantar
+                </button>
+                <button type="button" class="btn btn-default" id="btn-close" data-dismiss="modal" aria-hidden="true">
+                    Kembali
+                </button>
+            </footer>
+        }
+
+    </div>
+
+</div>
+
+
+    <!-- PAGE RELATED PLUGIN(S) -->
+    <script src="../scripts/plugin/moment/moment.min.js"></script>
+    <script src="../scripts/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>
+    <script src="../scripts/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+    <script src="../scripts/plugin/clockpicker/clockpicker.min.js"></script>
+
+
+    <script type="text/javascript">
+
+    // DO NOT REMOVE : GLOBAL FUNCTIONS!
+
+        $(document).ready(function () {
+            $(".modal-dialog").css("min-width", "50%");
+            function clockitem() {
+                var length = $("#parents #child").length;
+                for (var i = 0; i < length; i++) {
+                    $('#' + i + '__HR_MASA_MULA').timepicker({ showMeridian: false });
+                    $('#' + i + '__HR_MASA_AKHIR').timepicker({ showMeridian: false });
+                }
+            }
+            clockitem();
+
+            function arrangefield(name, newEntry) {
+                var length = $("#parents #child").length;
+                name.each(function () {
+                    var splitName = $(this).attr("name");
+                    var newClone = newEntry.find('input, select, textarea')
+                    var s = splitName.split('.');
+                    if (s.length > 1) {
+                        newClone.each(function () {
+                            var splitName2 = $(this).attr("name");
+                            var s2 = splitName2.split('.');
+                            if (s[1] == s2[1]) {
+                                if (s2.length > 1) {
+                                    $(this).removeAttr("name").attr("name", "[" + (length - 1) + "]." + s2[1]);
+                                    $(this).removeAttr("id").attr("id", (length - 1) + "__" + s2[1]);
+                                }
+                            }
+                        })
+                    }
+                })
+            }
+
+            $(document).on("click", "#parents .tambah_jawatan", function () {
+                var controlForm = $('#parents'),
+                        currentEntry = controlForm.find("#child:first"),
+                        newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+                controlForm.find('.tambah_jawatan:not(:first)')
+                    .removeClass('tambah_jawatan').addClass("padam_jawatan")
+                    .removeAttr("id").attr("id", "padam_jawatan")
+                    .removeClass('btn-success').addClass('btn-danger')
+                    .html('<span class="glyphicon glyphicon-minus"></span>');
+
+                arrangefield(currentEntry.find("input, select, textarea"), newEntry)
+                clockitem()
+
+                newEntry.find('input:not([type="hidden"], .HR_MASA_MULA, .HR_MASA_AKHIR)').val('');
+                newEntry.find('select').val('');
+                newEntry.find('em').remove();
+                newEntry.find('.invalid').removeClass('invalid');
+                newEntry.find('.valid').removeClass('valid');
+                newEntry.find('.state-error').removeClass('state-error');
+                newEntry.find('.state-success').removeClass('state-success');
+            }).on("click", "#parents .padam_jawatan", function (e) {
+
+                $(this).parents('#child:first').remove();
+                var currentEntry = $("#child:first")
+                var controlForm = $('#parents #child')
+                arrangefield(currentEntry.find("input, select, textarea"), controlForm)
+                clockitem()
+
+                e.preventDefault();
+                return false;
+            })
+        })
+
+    </script>

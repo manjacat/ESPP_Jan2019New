@@ -1,0 +1,388 @@
+﻿@model eSPP.Models.HR_MAKLUMAT_CALON_TEMUDUGA
+
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" id="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title">
+            @(ViewBag.HR_JENIS) Calon <span class="error"></span>
+        </h4>
+    </div>
+    <div class="modal-body no-padding">
+
+        @using (Html.BeginForm("BorangCalon", "LantikanJawatanBaru", FormMethod.Post, new { id = "form", @class = "smart-form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.HR_TARIKH_TEMUDUGA)
+            @Html.HiddenFor(model => model.HR_KOD_JAWATAN)
+            @Html.HiddenFor(model => model.HR_TARAF_JAWATAN)
+            if (Model.HR_PEKERJA_IND == "D")
+            {
+                @Html.HiddenFor(model => model.HR_NO_KPBARU)
+            }
+
+            @Html.HiddenFor(model => model.HR_NO_PEKERJA)
+            @Html.HiddenFor(model => model.HR_PEKERJA_IND)
+            @Html.Hidden("HR_JENIS")
+
+            <fieldset>
+                @if (Model.HR_PEKERJA_IND == "L")
+                {
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">No. KP (Baru)</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-list-alt"></i>
+                                    @Html.EditorFor(model => model.HR_NO_KPBARU, new { htmlAttributes = new { @class = "form-control", id = "HR_NO_KPBARU" } })
+                                    @if (ViewBag.HR_JENIS != "Tambah")
+                                    {
+                                        @Html.HiddenFor(model => model.HR_NO_KPBARU)
+                                    }
+                                    
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                }
+                
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Nama Calon</label>
+                        <div class="col col-8">
+                            <label class="input">
+                                @if (Model.HR_PEKERJA_IND == "D")
+                                {
+                                    <i class="icon-append fa fa-search"></i>
+                                }
+                                else
+                                {
+                                    <i class="icon-append fa fa-user"></i>
+                                }
+
+                                @Html.Editor("HR_NAMA_CALON", new { htmlAttributes = new { @class = "form-control", id= "HR_NAMA_CALON" } })
+                                @if (ViewBag.HR_JENIS != "Tambah")
+                                {
+                                    @Html.HiddenFor(model => model.HR_NAMA_CALON)
+                                }
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                @if (Model.HR_PEKERJA_IND == "L")
+                {
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Kemahiran Komunikasi</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_KEMAHIRAN_KOMUNIKASI, new { htmlAttributes = new { @class = "form-control", id = "HR_KEMAHIRAN_KOMUNIKASI" } })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Pengetahuan Am</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_PENGETAHUAN_AM, new { htmlAttributes = new { @class = "form-control", id = "HR_PENGETAHUAN_AM" } })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Sifat Sahsiah</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_SIFAT_SAHSIAH, new { htmlAttributes = new { @class = "form-control", id = "HR_SIFAT_SAHSIAH" } })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Markah Penuh</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_MARKAH_PENUH, new { htmlAttributes = new { @class = "form-control", id = "HR_MARKAH_PENUH", @readonly = "readonly" } })
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                }
+
+                <section>
+                    <div class="row">
+                        <label class="label col col-4">Status</label>
+                        <div class="col col-8">
+                            <label class="select">
+                                @Html.DropDownListFor(model => model.HR_STATUS_TEMUDUGA, new SelectList(ViewBag.pengesahan, "Value", "Text"), new { @class = "form-control" })
+                                <i></i>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+            </fieldset>
+            <footer>
+                <button type="button" id="btn-sub" class="btn btn-primary">
+                    <span class="fa fa-send-o"></span> Hantar
+                </button>
+                <button class="btn btn-default" id="btn-close" data-dismiss="modal" aria-hidden="true">
+                    Kembali
+                </button>
+            </footer>
+        }
+
+    </div>
+    
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var breakpointDefinition = {
+            tablet: 1024,
+            phone: 480
+        };
+
+        var responsiveHelper_datatable_CariPekerja = undefined;
+
+        /* TABLETOOLS */
+        function Cari(nilai) {
+            var CariPekerja = $('#datatable_CariPekerja').DataTable({
+
+                // Tabletools options:
+                //   https://datatables.net/extensions/tabletools/button_options
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'l>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                "language": {
+                    "zeroRecords": "Tiada data dijumpai",
+                    "info": "Memaparkan <span class='txt-color-darken'>_START_</span> hingga <span class='txt-color-darken'>_END_</span> daripada <span class='text-primary'>_TOTAL_</span> rekod",
+                    "infoEmpty": "Tiada data",
+                    "infoFiltered": "(ditapis daripada <span class='text-primary'>_MAX_</span> jumlah rekod)"
+                },
+                "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "Semua"]],
+                'columnDefs': [{
+                    'targets': 0,
+                    'searchable': false,
+                    'orderable': false,
+                    'className': 'dt-body-center smart-form',
+                    'render': function (data, type, full, meta) {
+                        var html = '<label class="radio"><input type="radio" name="HR_NO_PEKERJA" value="' + data + '" class="HR_NO_PEKERJA"><i></i></label>';
+                        return html;
+                    }
+                }],
+                'order': [[1, 'asc']],
+                "searching": false,
+                "autoWidth": true,
+                'retrieve': true,
+                "ajax": {
+                    "destroy": true,
+                    "url": "../MaklumatKakitangan/SenaraiPekerja",
+                    "data": { "nilai": nilai },
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columns": [
+                { "data": "HR_NO_PEKERJA" },
+                { "data": "HR_NO_PEKERJA" },
+                { "data": "HR_NO_KPBARU" },
+                { "data": "HR_NAMA_PEKERJA" }
+
+                ],
+                //"preDrawCallback": function () {
+                //    // Initialize the responsive datatables helper once.
+                //    if (!responsiveHelper_datatable_CariPekerja) {
+                //        responsiveHelper_datatable_CariPekerja = new ResponsiveDatatablesHelper($('#datatable_CariPekerja'), breakpointDefinition);
+                //    }
+                //},
+                //"rowCallback": function (nRow) {
+                //    responsiveHelper_datatable_CariPekerja.createExpandIcon(nRow);
+                //},
+                //"drawCallback": function (oSettings) {
+                //    responsiveHelper_datatable_CariPekerja.respond();
+                //}
+            });
+
+            return CariPekerja;
+        }
+        Cari($("#nilai").val())
+
+        $("#CariPenyelia2").on("click", function () {
+            $('#datatable_CariPekerja').DataTable().destroy();
+            Cari($("#nilai").val()).draw()
+        })
+
+        $(document).on("click", "#HR_NAMA_CALON", function () {
+            if ($("#HR_PEKERJA_IND").val() == "D") {
+                $("#ModalPekerja").modal({
+                    show: true,
+                    backdrop: 'static'
+                });
+            }
+        }).on("click", "#btn-done", function () {
+            //$('#datatable_CariCalon').DataTable().destroy();
+            Cari("").draw().$("input[type='radio']").each(function () {
+                if (this.checked) {
+                    var VIEW = $(this).parents("tr");
+                    var HR_NAMA_CALON = VIEW.find("td:eq(3)").text()
+                    var HR_NO_KPBARU = VIEW.find("td:eq(2)").text()
+                    var HR_NO_PEKERJA= this.value
+
+                    //console.log(HR_NO_PENYELIA);
+
+                    $("input[id='HR_NAMA_CALON']").val(HR_NAMA_CALON);
+                    $("#HR_NO_KPBARU").val(HR_NO_KPBARU);
+                    $("#HR_NO_PEKERJA").val(HR_NO_PEKERJA);
+
+                    $("#ModalPekerja").modal("hide")
+                }
+            })
+        })
+
+        var $elaunForm = $("#form").validate({
+            // Rules for form validation
+            rules: {
+                HR_NO_KPBARU: {
+                    required: function () {
+                        return $("#HR_PEKERJA_IND").val() == "L"? true:false;
+                    },
+                    remote: {
+                        url: "../LantikanJawatanBaru/SemakCalon",
+                        type: "get",
+                        data: {
+                            HR_TARIKH_TEMUDUGA: function () {
+                                return $("#HR_TARIKH_TEMUDUGA").val();
+                            },
+                            HR_KOD_JAWATAN: function () {
+                                return $("#HR_KOD_JAWATAN").val();
+                            },
+                            HR_TARAF_JAWATAN: function () {
+                                return $("#HR_TARAF_JAWATAN").val();
+                            },
+                            HR_NO_KPBARU: function () {
+                                return $("#HR_NO_KPBARU").val();
+                            },
+                            HR_JENIS: function () {
+                                return $("#HR_JENIS").val();
+                            },
+                            HR_PEKERJA_IND: "L"
+
+                        }
+
+                    }
+                },
+                HR_NAMA_CALON: {
+                    required: true,
+                    remote: {
+                        url: "../LantikanJawatanBaru/SemakCalon",
+                        type: "get",
+                        data: {
+                            HR_TARIKH_TEMUDUGA: function () {
+                                return $("#HR_TARIKH_TEMUDUGA").val();
+                            },
+                            HR_KOD_JAWATAN: function () {
+                                return $("#HR_KOD_JAWATAN").val();
+                            },
+                            HR_TARAF_JAWATAN: function () {
+                                return $("#HR_TARAF_JAWATAN").val();
+                            },
+                            HR_NO_KPBARU: function () {
+                                return $("#HR_NO_KPBARU").val();
+                            },
+                            HR_JENIS: function () {
+                                return $("#HR_JENIS").val();
+                            },
+                            HR_PEKERJA_IND: "D"
+
+                        }
+
+                    }
+                },
+                HR_KEMAHIRAN_KOMUNIKASI: {
+                    required: function () {
+                        return $("#HR_PEKERJA_IND").val() == "L" ? true : false;
+                    },
+                    number: true,
+                    max: 15
+                },
+                HR_PENGETAHUAN_AM: {
+                    required: function () {
+                        return $("#HR_PEKERJA_IND").val() == "L" ? true : false;
+                    },
+                    number: true,
+                    max: 35
+                },
+                HR_SIFAT_SAHSIAH: {
+                    required: function () {
+                        return $("#HR_PEKERJA_IND").val() == "L" ? true : false;
+                    },
+                    number: true,
+                    max: 20
+                }
+
+            },
+
+            // Messages for form validation
+            messages: {
+                HR_NO_KPBARU: {
+                    required: 'Kad pengenalan diperlukan'
+                },
+                HR_NAMA_CALON: {
+                    required: 'Calon diperlukan'
+                },
+                HR_KEMAHIRAN_KOMUNIKASI: {
+                    required: "Kemahiran komunikasi diperlukan",
+                    number: "Sila masukan hanya nombor sahaja",
+                    max: "Sila masukan nombor kurang dan sama dengan {0}"
+                },
+                HR_PENGETAHUAN_AM: {
+                    required: "Pengetahuan am diperlukan",
+                    number: "Sila masukan hanya nombor sahaja",
+                    max: "Sila masukan nombor kurang dan sama dengan {0}"
+                },
+                HR_SIFAT_SAHSIAH: {
+                    required: "Sifat sahsiah diperlukan",
+                    number: "Sila masukan hanya nombor sahaja",
+                    max: "Sila masukan nombor kurang dan sama dengan {0}"
+                }
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+            }
+        });
+
+        $("#HR_KEMAHIRAN_KOMUNIKASI, #HR_PENGETAHUAN_AM, #HR_SIFAT_SAHSIAH").on("input", function () {
+            var HR_KEMAHIRAN_KOMUNIKASI = parseInt($("#HR_KEMAHIRAN_KOMUNIKASI").val());
+            var HR_PENGETAHUAN_AM = parseInt($("#HR_PENGETAHUAN_AM").val());
+            var HR_SIFAT_SAHSIAH = parseInt($("#HR_SIFAT_SAHSIAH").val());
+            var HR_MARKAH_PENUH = 0;
+
+            if (isNaN(HR_KEMAHIRAN_KOMUNIKASI)) {
+                HR_KEMAHIRAN_KOMUNIKASI = parseInt(0);
+            }
+            if (isNaN(HR_PENGETAHUAN_AM)) {
+                HR_PENGETAHUAN_AM = parseInt(0);
+            }
+            if (isNaN(HR_SIFAT_SAHSIAH)) {
+                HR_SIFAT_SAHSIAH = parseInt(0);
+            }
+            
+            HR_MARKAH_PENUH = Math.round(parseInt((HR_KEMAHIRAN_KOMUNIKASI + HR_PENGETAHUAN_AM + HR_SIFAT_SAHSIAH) * 100/70))
+            $("#HR_MARKAH_PENUH").val(HR_MARKAH_PENUH)
+        })
+
+    })
+</script>
+

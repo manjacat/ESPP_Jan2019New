@@ -44,7 +44,6 @@ namespace eSPP.Models
         public System.Data.Entity.DbSet<eSPP.Models.HR_BONUS_SAMBILAN_DETAIL> HR_BONUS_SAMBILAN_DETAIL { get; set; }
         public System.Data.Entity.DbSet<eSPP.Models.ASPNETROLESHTML> ASPNETROLESHTML { get; set; }
 
-
         public System.Data.Entity.DbSet<eSPP.Models.UserInfo> UserInfoes { get; set; }
         public System.Data.Entity.DbSet<eSPP.Models.SystemFeature> SystemFeatures { get; set; }
         public System.Data.Entity.DbSet<eSPP.Models.GroupFeature> GroupFeatures { get; set; }
@@ -110,7 +109,7 @@ namespace eSPP.Models
 		public System.Data.Entity.DbSet<eSPP.Models.HR_KLAS_PERKHIDMATAN> HR_KLAS_PERKHIDMATAN { get; set; }
 
         public System.Data.Entity.DbSet<eSPP.Models.HR_JENIS_PEPERIKSAAN> HR_JENIS_PEPERIKSAAN { get; set; }
-        public System.Data.Entity.DbSet<eSPP.Models.AP_CREDITORMASTER> AP_CREDITORMASTER { get; set; }
+        //public System.Data.Entity.DbSet<eSPP.Models.AP_CREDITORMASTER> AP_CREDITORMASTER { get; set; }
 
         public System.Data.Entity.DbSet<eSPP.Models.HR_SEWAAN_ALATAN> HR_SEWAAN_ALATAN { get; set; }
         public System.Data.Entity.DbSet<eSPP.Models.HR_SOCSO> HR_SOCSO { get; set; }
@@ -149,6 +148,19 @@ namespace eSPP.Models
 
         public System.Data.Entity.DbSet<eSPP.Models.HR_SEJARAH_ELAUN_POTONGAN> HR_SEJARAH_ELAUN_POTONGAN { get; set; }
         public System.Data.Entity.DbSet<eSPP.Models.HR_SEJARAH_PEKERJAAN> HR_SEJARAH_PEKERJAAN { get; set; }
+        public System.Data.Entity.DbSet<eSPP.Models.HR_SEJARAH_PERIBADI> HR_SEJARAH_PERIBADI { get; set; }
+        public System.Data.Entity.DbSet<eSPP.Models.HR_SEJARAH_KEWANGAN8> HR_SEJARAH_KEWANGAN8 { get; set; }
+
+        public System.Data.Entity.DbSet<HR_MAKLUMAT_PEMOHON> HR_MAKLUMAT_PEMOHON { get; set; }
+        public System.Data.Entity.DbSet<HR_PERMOHONAN_JAWATAN> HR_PERMOHONAN_JAWATAN { get; set; }
+        public System.Data.Entity.DbSet<HR_JADUAL_TEMUDUGA> HR_JADUAL_TEMUDUGA { get; set; }
+        public System.Data.Entity.DbSet<HR_JADUAL_TEMUDUGA_DETAIL> HR_JADUAL_TEMUDUGA_DETAIL { get; set; }
+        public System.Data.Entity.DbSet<HR_MARKAH_TEMUDUGA> HR_MARKAH_TEMUDUGA { get; set; }
+
+        public virtual System.Data.Entity.DbSet<HR_MAKLUMAT_CALON_TEMUDUGA> HR_MAKLUMAT_CALON_TEMUDUGA { get; set; }
+        public virtual System.Data.Entity.DbSet<HR_MAKLUMAT_PENEMUDUGA> HR_MAKLUMAT_PENEMUDUGA { get; set; }
+        public virtual System.Data.Entity.DbSet<HR_SENARAI_TEMUDUGA> HR_SENARAI_TEMUDUGA { get; set; }
+        public virtual System.Data.Entity.DbSet<HR_MAKLUMAT_TANGGUNG_KERJA> HR_MAKLUMAT_TANGGUNG_KERJA { get; set; }
     }
     public class MajlisContext : DbContext
     {
@@ -195,8 +207,27 @@ namespace eSPP.Models
         public System.Data.Entity.DbSet<eSPP.Models.PA_TRANSAKSI_CARUMAN> PA_TRANSAKSI_CARUMAN { get; set; }
 		public System.Data.Entity.DbSet<eSPP.Models.PA_TRANSAKSI_PEMOTONGAN> PA_TRANSAKSI_PEMOTONGAN { get; set; }
         public System.Data.Entity.DbSet<eSPP.Models.PA_TRANSAKSI_GAJI> PA_TRANSAKSI_GAJI { get; set; }
-
-        //added utk pump data ke SPG
         public System.Data.Entity.DbSet<eSPP.Models.PA_REPORT> PA_REPORT { get; set; }
+    }
+
+   
+
+    public class FMSContext : DbContext
+    {
+        public FMSContext()
+            : base("FMSEntities")
+
+        {
+        }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("FMS");
+            //modelBuilder.HasDefaultSchema("SYSTEM");
+
+            base.OnModelCreating(modelBuilder);
+
+        }
+        public System.Data.Entity.DbSet<eSPP.Models.AP_CREDITORMASTER> AP_CREDITORMASTER { get; set; }
+
     }
 }

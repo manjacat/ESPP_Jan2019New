@@ -1,0 +1,181 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+@{
+    List<SelectListItem> HR_JANTINA = ViewBag.HR_JANTINA;
+    SelectList HR_TEMPAT_LAHIR = ViewBag.HR_TEMPAT_LAHIR;
+    SelectList HR_HUBUNGAN = ViewBag.HR_HUBUNGAN;
+}
+<div class="tab-pane fade" id="Tanggungan">
+    <div class="row">
+
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Maklumat Tanggungan
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalTanggungan")
+                    <table id="datatable_Tanggungan" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>No KP(Baru) / Surat Beranak</th>
+                                <th>Jantina</th>
+                                <th>Hubungan</th>
+                                <th>Tarikh Lahir</th>
+                                <th>Tempat Lahir</th>
+                                <th>Umur</th>
+                                <th>Sekolah/IPT</th>
+                                <th>Padam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_TANGGUNGAN.Count(); item++)
+                            {
+                                <tr>
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_NAMA_TANGGUNGAN</div>
+                                        <label class="input">
+                                            @*@Html.TextBox("HR_MAKLUMAT_TANGGUNGAN[" + item + "].HR_NAMA_TANGGUNGAN", Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_NAMA_TANGGUNGAN, new { @class = "form-control", disabled = "disabled" })*@
+                                            <input type="hidden" name="HR_MAKLUMAT_TANGGUNGAN[@item].HR_NAMA_TANGGUNGAN" class='form-control HR_MAKLUMAT_TANGGUNGAN_HR_NAMA_TANGGUNGAN' value='@Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_NAMA_TANGGUNGAN' disabled="disabled" data-msg-required='Sila masukkan nama' />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_NO_KP</div>
+                                        <label class="input">
+                                            @*@Html.TextBox("HR_MAKLUMAT_TANGGUNGAN[" + item + "].HR_NO_KP", Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_NO_KP, new { @class = "form-control", disabled = "disabled", size = 12 })*@
+                                            <input type='hidden' name='HR_MAKLUMAT_TANGGUNGAN[@item].HR_NO_KP' class='form-control HR_MAKLUMAT_TANGGUNGAN_HR_NO_KP' value='@Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_NO_KP' data-msg-required='Sila masukkan no KP/surat beranak' />
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string jantina = null;
+                                                if (HR_JANTINA.Where(s => s.Value == Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_JANTINA).Count() > 0)
+                                                {
+                                                    jantina = HR_JANTINA.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_JANTINA).Text;
+                                                }
+                                            }
+                                            @jantina
+                                        </div>
+                                        <label class="select">
+                                            @*@Html.DropDownList("HR_MAKLUMAT_TANGGUNGAN[" + item + "].HR_JANTINA", new SelectList(ViewBag.HR_JANTINA, "Value", "Text", Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_JANTINA), string.Empty, new { @class = "form-control", disabled = "disabled" })*@
+                                            <select name="HR_MAKLUMAT_TANGGUNGAN[@item].HR_JANTINA" class="form-control HR_MAKLUMAT_TANGGUNGAN_HR_JANTINA" style="display:none;" disabled="disabled" data-msg-required="Sila pilih jantina">
+                                                @foreach (var op in HR_JANTINA)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_JANTINA ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string hubungan = null;
+                                                if (HR_HUBUNGAN.Where(s => s.Value == Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_HUBUNGAN).Count() > 0)
+                                                {
+                                                    hubungan = HR_HUBUNGAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_HUBUNGAN).Text;
+                                                }
+                                            }
+                                            @hubungan
+                                        </div>
+                                        <label class="select">
+                                            @*@Html.DropDownList("HR_MAKLUMAT_TANGGUNGAN[" + item + "].HR_HUBUNGAN", new SelectList(ViewBag.HR_HUBUNGAN, "Value", "Text", Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_HUBUNGAN), string.Empty, new { @class = "form-control", disabled = "disabled" })*@
+                                            <select name="HR_MAKLUMAT_TANGGUNGAN[@item].HR_HUBUNGAN" class="form-control HR_MAKLUMAT_TANGGUNGAN_HR_HUBUNGAN" style="display:none;" disabled="disabled" data-msg-required="Sila pilih hubungan">
+                                                @foreach (var op in HR_HUBUNGAN)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_HUBUNGAN ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_TARIKH_LAHIR)</div>
+                                        <label class="input">
+                                            @*@Html.TextBox("HR_MAKLUMAT_TANGGUNGAN[" + item + "].HR_TARIKH_LAHIR", string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_TARIKH_LAHIR), new { @class = "form-control HR_MAKLUMAT_TANGGUNGAN_HR_TARIKH_LAHIR", disabled = "disabled", size = 9 })*@
+                                            <input type='hidden' name='HR_MAKLUMAT_TANGGUNGAN[@item].HR_TARIKH_LAHIR' class='form-control HR_MAKLUMAT_TANGGUNGAN_HR_TARIKH_LAHIR' value='@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_TARIKH_LAHIR)' data-msg-required='Sila masukkan tarikh lahir' />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string tarikhlahir = null;
+                                                if (HR_TEMPAT_LAHIR.Where(s => s.Value == Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_TEMPAT_LAHIR).Count() > 0)
+                                                {
+                                                    tarikhlahir = HR_TEMPAT_LAHIR.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_TEMPAT_LAHIR).Text;
+                                                }
+                                            }
+                                            @tarikhlahir
+                                        </div>
+                                        <label class="select">
+                                            @*@Html.DropDownList("HR_MAKLUMAT_TANGGUNGAN[" + item + "].HR_TEMPAT_LAHIR", new SelectList(ViewBag.HR_TEMPAT_LAHIR, "Value", "Text", Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_TEMPAT_LAHIR), string.Empty, new { @class = "form-control", disabled = "disabled" })*@
+                                            <select name="HR_MAKLUMAT_TANGGUNGAN[@item].HR_TEMPAT_LAHIR" class="form-control HR_MAKLUMAT_TANGGUNGAN_HR_TEMPAT_LAHIR" style="display:none;" disabled="disabled" data-msg-required="Sila pilih tempat lahir">
+                                                @foreach (var op in HR_TEMPAT_LAHIR)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_TEMPAT_LAHIR ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            @{
+                                                string umur = Convert.ToString((DateTime.Now.Year - Convert.ToDateTime(Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_TARIKH_LAHIR).Year));
+                                                if (Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_TARIKH_LAHIR == null)
+                                                {
+                                                    umur = null;
+                                                }
+                                            }
+                                            @umur
+                                            @*@Html.TextBox("HR_MAKLUMAT_TANGGUNGAN[" + item + "].HR_UMUR", umur, new { @class = "form-control umur", disabled = "disabled", size = 2 })*@
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_SEK_IPT</div>
+                                        <label class="input">
+                                            @*@Html.TextBox("HR_MAKLUMAT_TANGGUNGAN[" + item + "].HR_SEK_IPT", Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_SEK_IPT, new { @class = "form-control", disabled = "disabled" })*@
+                                            <input type='hidden' name='HR_MAKLUMAT_TANGGUNGAN[@item].HR_SEK_IPT' class='form-control HR_MAKLUMAT_TANGGUNGAN_HR_SEK_IPT' value='@Model.HR_MAKLUMAT_TANGGUNGAN.ElementAt(item).HR_SEK_IPT' />
+                                        </label>
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-danger btn-remove-Tanggungan" id="btn-remove-Tanggungan" name="remove-Tanggungan" type="button" disabled="disabled">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                                }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+
+        <br />
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <label class="">Kemaskini : </label>
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mTanggungan-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mTanggungan-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" name="kemaskini" class="form-control" value="off">
+            </div>
+        </div>
+    </div>
+</div>
+

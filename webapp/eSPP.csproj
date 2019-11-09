@@ -683,6 +683,7 @@
     <None Include="Properties\PublishProfiles\eSPP.pubxml" />
     <None Include="Properties\PublishProfiles\SmartAdmin - Release.pubxml" />
     <None Include="Properties\PublishProfiles\SmartAdmin - Debug.pubxml" />
+    <Content Include="Reports\GajiBersih.html" />
     <Content Include="Reports\ReportGajiSambilan.html" />
     <Content Include="Reports\SuratPengesahanHospital.html" />
     <Content Include="Scripts\app.config.js" />
@@ -1828,6 +1829,51 @@
     <Content Include="Views\LantikanJawatanBaru\ModalTatatertib.cshtml" />
     <Content Include="Views\LantikanJawatanBaru\TabKematian.cshtml" />
     <Content Include="Views\LantikanJawatanBaru\TabPrestasi.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\KakitanganTab.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\ListKakitangan.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\ModalAktivitiLuar.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\ModalAnugerahCemerlang.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\ModalAnugerahPingat.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\ModalCaruman.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\ModalElaun.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\ModalGaji.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\ModalKelayakan.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\ModalKemahiranBahasa.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\ModalKemahiranTeknikal.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\ModalKursusLatihan.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\ModalPekerja.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\ModalPengalamanKerja.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\ModalPotongan.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\ModalSijil.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\ModalTanggungan.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\ModalTatatertib.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\SearchKakitangan.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\TabAkademik.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\TabAnugerah.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\TabCuti.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\TabGaji.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\TabKemahiran.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\TabKematian.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\TabKuarters.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\TabPekerjaan.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\TabPeribadi.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\TabPersaraan.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\TabPewaris.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\TabPrestasi.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\TabTanggungan.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\TabTatatertib.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\_SenaraiPeribadi.cshtml" />
+    <Content Include="Views\Kewangan8\TestPrint.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\KalenderTemuduga.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\_BorangTemuduga.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\ModalCalon.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\SenaraiTemuduga.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\SenaraiPenemuduga.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\_BorangPenemuduga.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\SenaraiCalon.cshtml" />
+    <Content Include="Views\LantikanJawatanBaru\_BorangCalon.cshtml" />
+    <Content Include="Views\MaklumatKakitangan\TabTanggungKerja.cshtml" />
+    <Content Include="Views\MaklumatKakitanganBaru\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1908,6 +1954,7 @@
     <Compile Include="Controllers\IconsController.cs" />
     <Compile Include="Controllers\IntelController.cs" />
     <Compile Include="Controllers\MaklumatKakitanganBakController.cs" />
+    <Compile Include="Controllers\MaklumatKakitanganBaruController.cs" />
     <Compile Include="Controllers\MaklumatKakitanganController.cs" />
     <Compile Include="Controllers\MaklumatPekerjaanController.cs" />
     <Compile Include="Controllers\MaklumatPeribadiController.cs" />
@@ -1984,6 +2031,13 @@
     </Compile>
     <Compile Include="Models\GredElaunPekelilingModels.cs" />
     <Compile Include="Models\HR_Bonus_Sambilan_Detail.cs" />
+    <Compile Include="Models\JadualTemudugaDetailModels.cs" />
+    <Compile Include="Models\JadualTemudugaModels.cs" />
+    <Compile Include="Models\MaklumatCalonTemudugaModels.cs" />
+    <Compile Include="Models\MaklumatPemohonModels.cs" />
+    <Compile Include="Models\MaklumatPenemudugaModels.cs" />
+    <Compile Include="Models\MaklumatTanggungKerjaModels.cs" />
+    <Compile Include="Models\MarkahTemuduga.cs" />
     <Compile Include="Models\ModelsView\RoleAccess_MaklumatKakitangan.cs" />
     <Compile Include="Models\MonthModel.cs" />
     <Compile Include="Models\PageSejarahModel.cs" />
@@ -2000,6 +2054,7 @@
     <Compile Include="Models\PerbatuanModels.cs" />
     <Compile Include="Models\PerbatuanPinkModels.cs" />
     <Compile Include="Models\PerbatuanPutihModels.cs" />
+    <Compile Include="Models\PermohonanJawatanModels.cs" />
     <Compile Include="Models\PinkTujuanModels.cs" />
     <Compile Include="Models\PinkTuntutanDetailModels.cs" />
     <Compile Include="Models\PinkTuntutanModels.cs" />
@@ -2014,6 +2069,7 @@
     <Compile Include="Models\SejarahKewangan8Models.cs" />
     <Compile Include="Models\SejarahPekerjaanModels.cs" />
     <Compile Include="Models\SejarahPeribadiModels.cs" />
+    <Compile Include="Models\SenaraiTemudugaModels.cs" />
     <Compile Include="Models\SuratPengesahanHospitalModel.cs" />
     <Compile Include="Models\TarikhAcaraModels.cs" />
     <Compile Include="Models\TextFileModel.cs" />
@@ -2160,6 +2216,7 @@
     <Folder Include="Content\img\realestate\thumbs\" />
     <Folder Include="Content\template\SuratPengesahanHospital\" />
     <Folder Include="Content\template\SuratPergerakanGaji\" />
+    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

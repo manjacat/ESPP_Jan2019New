@@ -27,7 +27,8 @@
                         <div class="jarviswidget-editbox">
                         </div>
                         <div class="widget-body no-padding">
-                            @using (Html.BeginForm("ProsesGajiSambilan", "PengurusanKakitanganSambilan", FormMethod.Post, new { @class = "smart-form", id = "smart-form-register", enctype = "multipart/form-data" }))
+                            @using (Html.BeginForm("ProsesGajiSambilan", "PengurusanKakitanganSambilan", 
+                                FormMethod.Post, new { @class = "smart-form", id = "smart-form-register", enctype = "multipart/form-data" }))
                             {
                                 <fieldset>                                    
                                     <div class="row">
@@ -38,7 +39,8 @@
                                         </section>
                                         <section class="col col-lg-2 col-md-2 col-sm-12">
                                             <label class="input">
-                                                <input class="form-control" name="bulantahun" id="tahunproses" data-mask="99/9999" data-mask-placeholder="-">
+                                                <input class="form-control" name="bulantahun" id="bulantahun" 
+                                                       data-mask="99/9999" data-mask-placeholder="-">
                                                 <label class="note">
                                                     Data format mm/yyyy
                                                 </label>
@@ -59,6 +61,9 @@
                                 <footer>
                                     <button type="button" class="btn btn-default" id="Tambah">
                                         <i class="fa fa-search"></i> Hantar ke SPG
+                                    </button>
+                                    <button type="submit" class="btn btn-default" id="btnDebug" name="Command" value="DebugBtn">
+                                        <i class="fa fa-search"></i> Debug Btn
                                     </button>
                                 </footer>
                             }
@@ -89,7 +94,7 @@
                 $('#progressbar-Label').text(reset + '%');
                 progressbarDiv.fadeIn(500);
                 var totalRows = 4;
-                var tahunProses = $("#tahunproses").val();
+                var myBulanTahun = $("#bulantahun").val();
                 var counter = 0;
 
                 if (totalRows > 0) {
@@ -99,7 +104,7 @@
                             type: 'POST',
                             url: submitURL,
                             //contentType: "application/json; charset=utf-8",
-                            data: { "bulanTahun": tahunProses, "loopCount" : i },
+                            data: { "bulanTahun": myBulanTahun, "loopCount" : i },
                             datatype: "json",
                             success: function (data) {
                                 //debugger;

@@ -1,0 +1,810 @@
+﻿@model eSPP.Models.MaklumatKakitanganModels
+@{ 
+    List<HR_GAJI_UPAHAN> Gaji = ViewBag.Gaji;
+    List<HR_ELAUN> Elaun = ViewBag.Elaun;
+    List<HR_POTONGAN> Potongan = ViewBag.Potongan;
+    List<HR_CARUMAN> Caruman = ViewBag.Caruman;
+    SelectList HR_MOD_BAYARAN = ViewBag.HR_MOD_BAYARAN;
+    SelectList HR_AKTIF_IND_PEKERJAAN = ViewBag.HR_AKTIF_IND_PEKERJAAN;
+    List<SelectListItem> HR_AUTO_IND = ViewBag.HR_AUTO_IND;
+}
+<div class="tab-pane fade" id="Gaji">
+    <div class="row">
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Maklumat Pengguna
+            </legend>
+            <div class="row smart-form">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jawatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-briefcase"></i>
+                                    <input type="text" name="HR_JAWATAN_EP" id="HR_JAWATAN_EP" class="form-control" value="@ViewBag.jawatan" disabled="disabled" />
+                                </label>
+                            </div>
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kumpulan/Gred</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <input type="text" name="HR_KUMPULAN_EP" id="HR_KUMPULAN_EP" class="form-control" value="@ViewBag.KumpulanGred" disabled="disabled" />
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jabatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-building"></i>
+                                    <input type="text" name="HR_JABATAN_EP" id="HR_JABATAN_EP" class="form-control" value="@ViewBag.jabatan" disabled="disabled" />
+                                </label>
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bahagian</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-building"></i>
+                                    <input type="text" name="HR_BAHAGIAN_EP" id="HR_BAHAGIAN_EP" class="form-control" value="@ViewBag.bahagian" disabled="disabled" />
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tahun</label>
+                            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4">
+                                <label class="input">
+                                    <input type="text" name="HR_TAHUN_EP" id="HR_TAHUN_EP" class="form-control" disabled="disabled" value="@DateTime.Now.Year" maxlength="4" size="4" />
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Gaji
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mGaji-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mGaji-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Gaji" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalGaji")
+                    <table id="datatable_Gaji" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kod</th>
+                                <th>Penerangan</th>
+                                <th>No. Rujukan / No. Akaun</th>
+                                <th>Tarikh Mula</th>
+                                <th>Tarikh Akhir</th>
+                                <th>Mod Bayaran</th>
+                                <th>Status</th>
+                                <th>Auto</th>
+                                <th>Tambah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.Count(); item++)
+                            {
+                                <tr>
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_KOD_ELAUN_POTONGAN</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_KOD" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_G_HR_KOD" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_KOD_ELAUN_POTONGAN" readonly="readonly" data-msg-required="Sila masukkan kod" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_NP_UBAH" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_NP_UBAH" disabled = "disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_NP_KEYIN" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_NP_KEYIN" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_MATRIKS_GAJI_PT" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_MATRIKS_GAJI_PT" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_GRED_PT" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_GRED_PT" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_UBAH_IND" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_UBAH_IND" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_TARIKH_UBAH" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_TARIKH_UBAH" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_TARIKH_KEYIN" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_TARIKH_KEYIN" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_NO_PEKERJA_PT" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_NO_PEKERJA_PT" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_HARI_BEKERJA" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_HARI_BEKERJA" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_BAKI" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_BAKI" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_TUNTUTAN_MAKSIMA" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_TUNTUTAN_MAKSIMA" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_PENERANGAN" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_PENERANGAN" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_JUMLAH" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_JUMLAH" disabled="disabled" />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string gaji = null;
+                                                if (Gaji.Where(s => s.HR_KOD_UPAH == Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_KOD_ELAUN_POTONGAN).Count() > 0)
+                                                {
+                                                    gaji = Gaji.FirstOrDefault(s => s.HR_KOD_UPAH == Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_KOD_ELAUN_POTONGAN).HR_PENERANGAN_UPAH;
+                                                }
+                                            }
+                                            @gaji
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_KOD_ELAUN_POTONGAN" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_G_HR_KOD_ELAUN_POTONGAN" style="display:none;" disabled="disabled" data-msg-required="Sila pilih gaji">
+                                                @foreach (var op in Gaji)
+                                                {
+                                                    <option value="@op.HR_KOD_UPAH" @(op.HR_KOD_UPAH == Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_KOD_ELAUN_POTONGAN ? "selected" : "")>@op.HR_PENERANGAN_UPAH</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_NO_FAIL</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_NO_FAIL" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_G_HR_NO_FAIL" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_NO_FAIL" disabled="disabled" />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_TARIKH_MULA)</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_TARIKH_MULA" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_G_HR_TARIKH_MULA" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_TARIKH_MULA)" disabled="disabled" data-msg-required="Sila masukkan tarikh mula" />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_TARIKH_AKHIR)</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_TARIKH_AKHIR" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_G_HR_TARIKH_AKHIR" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_TARIKH_AKHIR)" disabled="disabled" data-msg-required="Sila masukkan tarikh akhir" />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string mod = null;
+                                                if(Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_MOD_BAYARAN != null)
+                                                {
+                                                    if (HR_MOD_BAYARAN.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_MOD_BAYARAN.Trim()).Count() > 0)
+                                                    {
+                                                        mod = HR_MOD_BAYARAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_MOD_BAYARAN.Trim()).Text;
+                                                    }
+                                                }
+                                            }
+                                            @mod
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_MOD_BAYARAN" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_G_HR_MOD_BAYARAN" style="display:none;" disabled="disabled" data-msg-required="Sila pilih mod bayar">
+                                                @foreach (var op in HR_MOD_BAYARAN)
+                                                {
+                                                    if (Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_MOD_BAYARAN != null)
+                                                    {
+                                                        <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_MOD_BAYARAN.Trim() ? "selected" : "")>@op.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string aktif = null;
+                                                if (HR_AKTIF_IND_PEKERJAAN.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_AKTIF_IND).Count() > 0)
+                                                {
+                                                    aktif = HR_AKTIF_IND_PEKERJAAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_AKTIF_IND).Text;
+                                                }
+                                            }
+                                            @aktif
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_AKTIF_IND" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_G_HR_AKTIF_IND" style="display:none;" disabled="disabled" data-msg-required="Sila pilih status">
+                                                @foreach (var op in HR_AKTIF_IND_PEKERJAAN)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_AKTIF_IND ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string auto = null;
+                                                if (HR_AUTO_IND.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_AUTO_IND).Count() > 0)
+                                                {
+                                                    auto = HR_AUTO_IND.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_AUTO_IND).Text;
+                                                }
+                                            }
+                                            @auto
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_ELAUN_POTONGAN_G[@item].HR_AUTO_IND" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_G_HR_AUTO_IND" style="display:none;" disabled="disabled" >
+                                                @foreach (var op in HR_AUTO_IND)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_G.ElementAt(item).HR_AUTO_IND ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-danger btn-remove-Gaji" id="btn-remove-Gaji" name="remove-Gaji" type="button" disabled="disabled">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Elaun
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mGaji2-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mGaji2-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Gaji2" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalElaun")
+                    <table id="datatable_Elaun" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kod</th>
+                                <th>Penerangan</th>
+                                <th>No. Rujukan / No. Akaun</th>
+                                <th>Tuntutan Maksima</th>
+                                <th>Nilai</th>
+                                <th>Tarikh Mula</th>
+                                <th>Tarikh Akhir</th>
+                                <th>Mod Bayaran</th>
+                                <th>Status</th>
+                                <th>Auto</th>
+                                <th>Padam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.Count(); item++)
+                            {
+                                <tr>
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_KOD_ELAUN_POTONGAN</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_KOD" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_KOD" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_KOD_ELAUN_POTONGAN" readonly="readonly" data-msg-required="Sila masukkan kod" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_NP_UBAH" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_NP_UBAH" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_NP_KEYIN" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_NP_KEYIN" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_MATRIKS_GAJI_PT" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_MATRIKS_GAJI_PT" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_GRED_PT" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_GRED_PT" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_UBAH_IND" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_UBAH_IND" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_TARIKH_UBAH" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_TARIKH_UBAH" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_TARIKH_KEYIN" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_TARIKH_KEYIN" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_NO_PEKERJA_PT" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_NO_PEKERJA_PT" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_HARI_BEKERJA" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_HARI_BEKERJA" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_BAKI" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_BAKI" disabled="disabled" />
+                                            @*<input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_TUNTUTAN_MAKSIMA" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_TUNTUTAN_MAKSIMA" disabled="disabled" />*@
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_PENERANGAN" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_PENERANGAN" disabled="disabled" />
+                                            @*<input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_JUMLAH" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_JUMLAH" disabled="disabled" />*@
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string elaun = null;
+                                                if (Elaun.Where(s => s.HR_KOD_ELAUN == Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_KOD_ELAUN_POTONGAN).Count() > 0)
+                                                {
+                                                    elaun = Elaun.FirstOrDefault(s => s.HR_KOD_ELAUN == Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_KOD_ELAUN_POTONGAN).HR_PENERANGAN_ELAUN;
+                                                }
+                                            }
+                                            @elaun
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_KOD_ELAUN_POTONGAN" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_KOD_ELAUN_POTONGAN" style="display:none;" disabled="disabled" data-msg-required="Sila pilih elaun">
+                                                @foreach (var op in Elaun)
+                                                {
+                                                    <option value="@op.HR_KOD_ELAUN" @(op.HR_KOD_ELAUN == Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_KOD_ELAUN_POTONGAN ? "selected" : "")>@op.HR_PENERANGAN_ELAUN</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_NO_FAIL</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_NO_FAIL" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_NO_FAIL" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_NO_FAIL" disabled="disabled" />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_TUNTUTAN_MAKSIMA</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_TUNTUTAN_MAKSIMA" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_TUNTUTAN_MAKSIMA" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_TUNTUTAN_MAKSIMA" disabled="disabled" data-msg-number="Sila masukkan hanya nombor sahaja" />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_JUMLAH</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_JUMLAH" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_JUMLAH" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_JUMLAH" disabled="disabled" data-msg-number="Sila masukkan hanya nombor sahaja" />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_TARIKH_MULA)</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_TARIKH_MULA" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_TARIKH_MULA" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_TARIKH_MULA)" disabled="disabled" data-msg-required="Sila masukkan tarikh mula" />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_TARIKH_AKHIR)</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_TARIKH_AKHIR" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_TARIKH_AKHIR" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_TARIKH_AKHIR)" disabled="disabled" data-msg-required="Sila masukkan tarikh akhir" />
+                                        </label>
+                                    </td>
+                                    <td>
+										<div id="rowtxt">
+											@{
+												string mod = null;
+												if (Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_MOD_BAYARAN != null)
+												{
+													if (HR_MOD_BAYARAN.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_MOD_BAYARAN.Trim()).Count() > 0)
+													{
+														mod = HR_MOD_BAYARAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_MOD_BAYARAN.Trim()).Text;
+													}
+												}
+											}
+											@mod
+										</div>	
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_MOD_BAYARAN" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_MOD_BAYARAN" style="display:none;" disabled="disabled" data-msg-required="Sila pilih mod bayar">
+                                                @foreach (var op in HR_MOD_BAYARAN)
+                                                {
+                                                    if (Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_MOD_BAYARAN != null)
+                                                    {
+                                                        <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_MOD_BAYARAN.Trim() ? "selected" : "")>@op.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string aktif = null;
+                                                if (HR_AKTIF_IND_PEKERJAAN.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_AKTIF_IND).Count() > 0)
+                                                {
+                                                    aktif = HR_AKTIF_IND_PEKERJAAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_AKTIF_IND).Text;
+                                                }
+                                            }
+                                            @aktif
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_AKTIF_IND" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_AKTIF_IND" style="display:none;" disabled="disabled" data-msg-required="Sila pilih status">
+                                                @foreach (var op in HR_AKTIF_IND_PEKERJAAN)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_AKTIF_IND ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string auto = null;
+                                                if (HR_AUTO_IND.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_AUTO_IND).Count() > 0)
+                                                {
+                                                    auto = HR_AUTO_IND.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_AUTO_IND).Text;
+                                                }
+                                            }
+                                            @auto
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_AUTO_IND" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_AUTO_IND" style="display:none;" disabled="disabled">
+                                                @foreach (var op in HR_AUTO_IND)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_AUTO_IND ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-danger btn-remove-Elaun" id="btn-remove-Elaun" name="remove_Elaun" type="button" disabled="disabled">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Potongan
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mGaji3-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mGaji3-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Gaji3" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalPotongan")
+                    <table id="datatable_Potongan" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kod</th>
+                                <th>Penerangan</th>
+                                <th>No. Rujukan / No. Akaun</th>
+                                <th>Nilai</th>
+                                <th>Tarikh Mula</th>
+                                <th>Tarikh Akhir</th>
+                                <th>Mod Bayaran</th>
+                                <th>Status</th>
+                                <th>Auto</th>
+                                <th>Tambah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.Count(); item++)
+                            {
+                                <tr>
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_KOD_ELAUN_POTONGAN</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_KOD" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_P_HR_KOD" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_KOD_ELAUN_POTONGAN" readonly="readonly" data-msg-required="Sila masukkan kod" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_NP_UBAH" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_NP_UBAH" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_NP_KEYIN" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_NP_KEYIN" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_MATRIKS_GAJI_PT" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_MATRIKS_GAJI_PT" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_GRED_PT" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_GRED_PT" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_UBAH_IND" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_UBAH_IND" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_TARIKH_UBAH" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_TARIKH_UBAH" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_TARIKH_KEYIN" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_TARIKH_KEYIN" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_NO_PEKERJA_PT" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_NO_PEKERJA_PT" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_HARI_BEKERJA" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_HARI_BEKERJA" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_BAKI" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_BAKI" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_TUNTUTAN_MAKSIMA" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_TUNTUTAN_MAKSIMA" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_PENERANGAN" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_PENERANGAN" disabled="disabled" />
+                                            @*<input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_JUMLAH" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_JUMLAH" disabled="disabled" />*@
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string potongan = null;
+                                                if (Potongan.Where(s => s.HR_KOD_POTONGAN == Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_KOD_ELAUN_POTONGAN).Count() > 0)
+                                                {
+                                                    potongan = Potongan.FirstOrDefault(s => s.HR_KOD_POTONGAN == Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_KOD_ELAUN_POTONGAN).HR_PENERANGAN_POTONGAN;
+                                                }
+                                            }
+                                            @potongan
+                                        </div>
+                                        <label class="select"> 
+                                            <select name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_KOD_ELAUN_POTONGAN" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_P_HR_KOD_ELAUN_POTONGAN" style="display:none;" disabled="disabled" data-msg-required="Sila pilih Potongan">
+                                                @foreach (var op in Potongan)
+                                                {
+                                                    <option value="@op.HR_KOD_POTONGAN" @(op.HR_KOD_POTONGAN == Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_KOD_ELAUN_POTONGAN ? "selected" : "")>@op.HR_PENERANGAN_POTONGAN</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_NO_FAIL</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_NO_FAIL" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_P_HR_NO_FAIL" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_NO_FAIL" disabled="disabled" />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_JUMLAH</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_JUMLAH" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_P_HR_JUMLAH" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_JUMLAH" disabled="disabled" data-msg-number="Sila masukkan hanya nombor sahaja" />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_TARIKH_MULA)</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_TARIKH_MULA" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_P_HR_TARIKH_MULA" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_TARIKH_MULA)" disabled="disabled" data-msg-required="Sila masukkan tarikh mula" />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_TARIKH_AKHIR)</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_TARIKH_AKHIR" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_P_HR_TARIKH_AKHIR" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_TARIKH_AKHIR)" disabled="disabled" data-msg-required="Sila masukkan tarikh akhir" />
+                                        </label>
+                                    </td>
+                                    <td>
+										<div id="rowtxt">
+											@{
+												string mod = null;
+												if (Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_MOD_BAYARAN != null)
+												{
+													if (HR_MOD_BAYARAN.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_MOD_BAYARAN.Trim()).Count() > 0)
+													{
+														mod = HR_MOD_BAYARAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_MOD_BAYARAN.Trim()).Text;
+													}
+												}
+											}
+											@mod
+										</div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_MOD_BAYARAN" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_P_HR_MOD_BAYARAN" style="display:none;" disabled="disabled" data-msg-required="Sila pilih mod bayar">
+                                                @foreach (var op in HR_MOD_BAYARAN)
+                                                {
+                                                    if (Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_MOD_BAYARAN != null)
+                                                    {
+                                                        <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_MOD_BAYARAN.Trim() ? "selected" : "")>@op.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string aktif = null;
+                                                if (HR_AKTIF_IND_PEKERJAAN.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_AKTIF_IND).Count() > 0)
+                                                {
+                                                    aktif = HR_AKTIF_IND_PEKERJAAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_AKTIF_IND).Text;
+                                                }
+                                            }
+                                            @aktif
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_AKTIF_IND" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_P_HR_AKTIF_IND" style="display:none;" disabled="disabled" data-msg-required="Sila pilih status">
+                                                @foreach (var op in HR_AKTIF_IND_PEKERJAAN)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_AKTIF_IND ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string auto = null;
+                                                if (HR_AUTO_IND.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_AUTO_IND).Count() > 0)
+                                                {
+                                                    auto = HR_AUTO_IND.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_AUTO_IND).Text;
+                                                }
+                                            }
+                                            @auto
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_AUTO_IND" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_P_HR_AUTO_IND" style="display:none;" disabled="disabled">
+                                                @foreach (var op in HR_AUTO_IND)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_AUTO_IND ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-danger btn-remove-Potongan" id="btn-remove-Potongan" name="remove_Potongan" type="button" disabled="disabled">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Caruman
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mGaji4-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mGaji4-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" id="Gaji4" name="kemaskini" class="form-control" value="off">
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    @Html.Partial("ModalCaruman")
+                    <table id="datatable_Caruman" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kod</th>
+                                <th>Penerangan</th>
+                                <th>No. Rujukan / No. Akaun</th>
+                                <th>Tarikh Mula</th>
+                                <th>Tarikh Akhir</th>
+                                <th>Mod Bayaran</th>
+                                <th>Status</th>
+                                <th>Auto</th>
+                                <th>Tambah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var item = 0; item < Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.Count(); item++)
+                            {
+                                <tr>
+                                    <td><span id="num">@(item + 1)</span></td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_KOD_ELAUN_POTONGAN</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_KOD" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_KOD" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_KOD_ELAUN_POTONGAN" readonly="readonly" data-msg-required="Sila masukkan kod" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_NP_UBAH" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_NP_UBAH" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_NP_KEYIN" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_NP_KEYIN" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_MATRIKS_GAJI_PT" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_MATRIKS_GAJI_PT" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_GRED_PT" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_GRED_PT" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_UBAH_IND" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_UBAH_IND" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_TARIKH_UBAH" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_TARIKH_UBAH" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_TARIKH_KEYIN" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_TARIKH_KEYIN" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_NO_PEKERJA_PT" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_NO_PEKERJA_PT" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_HARI_BEKERJA" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_HARI_BEKERJA" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_BAKI" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_BAKI" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_TUNTUTAN_MAKSIMA" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_TUNTUTAN_MAKSIMA" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_PENERANGAN" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_PENERANGAN" disabled="disabled" />
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_JUMLAH" class="form-control hide" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_JUMLAH" disabled="disabled" />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string caruman = null;
+                                                if (Caruman.Where(s => s.HR_KOD_CARUMAN == Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_KOD_ELAUN_POTONGAN).Count() > 0)
+                                                {
+                                                    caruman = Caruman.FirstOrDefault(s => s.HR_KOD_CARUMAN == Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_KOD_ELAUN_POTONGAN).HR_PENERANGAN_CARUMAN;
+                                                }
+                                            }
+                                            @caruman
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_KOD_ELAUN_POTONGAN" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_KOD_ELAUN_POTONGAN" style="display:none;" disabled="disabled" data-msg-required="Sila pilih caruman">
+                                                @foreach (var op in Caruman)
+                                                {
+                                                    <option value="@op.HR_KOD_CARUMAN" @(op.HR_KOD_CARUMAN == Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_KOD_ELAUN_POTONGAN ? "selected" : "")>@op.HR_PENERANGAN_CARUMAN</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_NO_FAIL</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_NO_FAIL" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_NO_FAIL" value="@Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_NO_FAIL" disabled="disabled" />
+                                        </label>
+                                    </td>
+
+                                    <td>
+                                        <div id="rowtxt">@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_TARIKH_MULA)</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_TARIKH_MULA" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_TARIKH_MULA" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_TARIKH_MULA)" disabled="disabled" data-msg-required="Sila masukkan tarikh mula" />
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_TARIKH_AKHIR)</div>
+                                        <label class="input">
+                                            <input type="hidden" name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_TARIKH_AKHIR" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_TARIKH_AKHIR" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_TARIKH_AKHIR)" disabled="disabled" data-msg-required="Sila masukkan tarikh akhir" />
+                                        </label>
+                                    </td>
+                                    <td>
+										<div id="rowtxt">
+											@{
+												string mod = null;
+												if (Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_MOD_BAYARAN != null)
+												{
+													if (HR_MOD_BAYARAN.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_MOD_BAYARAN.Trim()).Count() > 0)
+													{
+														mod = HR_MOD_BAYARAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_MOD_BAYARAN.Trim()).Text;
+													}
+												}
+											}
+											@mod
+										</div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_MOD_BAYARAN" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_MOD_BAYARAN" style="display:none;" disabled="disabled" data-msg-required="Sila pilih mod bayar">
+                                                @foreach (var op in HR_MOD_BAYARAN)
+                                                {
+                                                    if (Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_MOD_BAYARAN != null)
+                                                    {
+                                                        <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_MOD_BAYARAN.Trim() ? "selected" : "")>@op.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string aktif = null;
+                                                if (HR_AKTIF_IND_PEKERJAAN.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_AKTIF_IND).Count() > 0)
+                                                {
+                                                    aktif = HR_AKTIF_IND_PEKERJAAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_AKTIF_IND).Text;
+                                                }
+                                            }
+                                            @aktif
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_AKTIF_IND" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_AKTIF_IND" style="display:none;" disabled="disabled" data-msg-required="Sila pilih status">
+                                                @foreach (var op in HR_AKTIF_IND_PEKERJAAN)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_AKTIF_IND ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div id="rowtxt">
+                                            @{
+                                                string auto = null;
+                                                if (HR_AUTO_IND.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_AUTO_IND).Count() > 0)
+                                                {
+                                                    auto = HR_AUTO_IND.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_AUTO_IND).Text;
+                                                }
+                                            }
+                                            @auto
+                                        </div>
+                                        <label class="select">
+                                            <select name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_AUTO_IND" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_AUTO_IND" style="display:none;" disabled="disabled">
+                                                @foreach (var op in HR_AUTO_IND)
+                                                {
+                                                    <option value="@op.Value" @(op.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_AUTO_IND ? "selected" : "")>@op.Text</option>
+                                                }
+                                            </select>
+                                        </label>
+                                    </td>
+                                    <td align="center">
+                                        <button class="btn btn-danger btn-remove-Caruman" id="btn-remove-Caruman" name="remove_Cagaran" type="button" disabled="disabled">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <br />
+    <br />
+    <br />
+    @*<div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <label class="">Kemaskini : </label>
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mGaji-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mGaji-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" name="kemaskini" class="form-control" value="off">
+            </div>
+        </div>
+    </div>*@
+</div>
+

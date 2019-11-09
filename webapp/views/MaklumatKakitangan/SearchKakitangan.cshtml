@@ -1,0 +1,40 @@
+﻿@model  eSPP.Models.MaklumatKakitanganModels
+<div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="well">
+        @using (Html.BeginForm("Index", "MaklumatKakitangan", FormMethod.Get))
+            {
+            <div class="row">
+                <div class="col smart-form col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                    <div class="select">
+                        <select name="key" id="key" class="form-control">
+                            <option value="1">No. Pekerja</option>
+                            <option value="2">Nama Pekerja</option>
+                            <option value="3">No. KP(Baru)</option>
+                        </select>
+                        <i></i>
+                    </div>
+                </div>
+                <div class="col smart-form col-lg-6 col-md-4 col-sm-6 col-xs-12">
+                    <div class="input">
+                        <input type="text" name="value" id="value" class="form-control" placeholder="Data" />
+                    </div>
+                </div>
+                <div class="col smart-form col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                    <div class="select">
+                        @Html.DropDownList("status", new SelectList(ViewBag.HR_AKTIF_IND3, "Value", "Text"), "Status", htmlAttributes: new { @class = "form-control" })<i></i>
+                    </div>
+                </div>
+                <div class="col col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="button">
+                        <button class="btn btn-default btn-primary" type="submit">
+                            <i class="fa fa-search"></i> Cari
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+

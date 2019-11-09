@@ -136,6 +136,7 @@
             </div>
         </div>
     </div>
+    @Html.Partial("../MaklumatKakitangan/ModalPekerja")
     <!-- End Modal -->
 </fieldset>
 
@@ -164,6 +165,7 @@
         var responsiveHelper_datatable_col_reorder = undefined;
         var responsiveHelper_datatable_tabletools = undefined;
         var responsiveHelper_datatable_tabletools2 = undefined;
+        var responsiveHelper_datatable_CariPekerja = undefined;
 
         var breakpointDefinition = {
             tablet: 1024,
@@ -255,6 +257,304 @@
         /* END COLUMN SHOW - HIDE */
 
         /* TABLETOOLS */
+
+        function Cari(nilai) {
+            var CariPekerja = $('#datatable_CariPekerja').DataTable({
+
+                // Tabletools options:
+                //   https://datatables.net/extensions/tabletools/button_options
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'><'col-sm-6 col-xs-6 hidden-xs'l>r>" +
+                        "t" +
+                        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                "language": {
+                    "zeroRecords": "Tiada data dijumpai",
+                    "info": "Memaparkan <span class='txt-color-darken'>_START_</span> hingga <span class='txt-color-darken'>_END_</span> daripada <span class='text-primary'>_TOTAL_</span> rekod",
+                    "infoEmpty": "Tiada data",
+                    "infoFiltered": "(ditapis daripada <span class='text-primary'>_MAX_</span> jumlah rekod)"
+                },
+                "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "Semua"]],
+                'columnDefs': [{
+                    'targets': 0,
+                    'searchable': false,
+                    'orderable': false,
+                    'className': 'dt-body-center smart-form',
+                    'render': function (data, type, full, meta) {
+                        var html = '<label class="radio"><input type="radio" name="HR_NO_PEKERJA" value="' + data + '" class="HR_NO_PEKERJA"><i></i></label>';
+                        return html;
+                    }
+                }],
+                'order': [[1, 'asc']],
+                "searching": false,
+                "autoWidth": true,
+                'retrieve': true,
+                "ajax": {
+                    "destroy": true,
+                    "url": "../MaklumatKakitangan/SenaraiPekerja",
+                    "data": { "nilai": nilai },
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columns": [
+                { "data": "HR_NO_PEKERJA" },
+                { "data": "HR_NO_PEKERJA" },
+                { "data": "HR_NO_KPBARU" },
+                { "data": "HR_NAMA_PEKERJA" }
+
+                ],
+                //"preDrawCallback": function () {
+                //    // Initialize the responsive datatables helper once.
+                //    if (!responsiveHelper_datatable_CariPekerja) {
+                //        responsiveHelper_datatable_CariPekerja = new ResponsiveDatatablesHelper($('#datatable_CariPekerja'), breakpointDefinition);
+                //    }
+                //},
+                //"rowCallback": function (nRow) {
+                //    responsiveHelper_datatable_CariPekerja.createExpandIcon(nRow);
+                //},
+                //"drawCallback": function (oSettings) {
+                //    responsiveHelper_datatable_CariPekerja.respond();
+                //}
+            });
+
+            return CariPekerja;
+        }
+        Cari($("#nilai").val())
+
+        $("#CariPenyelia2").on("click", function () {
+            $('#datatable_CariPekerja').DataTable().destroy();
+            Cari($("#nilai").val()).draw()
+        })
+
+        function ajaxKodMatriks(HR_GRED, HR_GAJI_POKOK) {
+            var output = null;
+            $.ajax({
+                url: "../Kewangan8/KodMatriks",
+                type: "GET",
+                data: { HR_GRED: HR_GRED, HR_GAJI_POKOK: HR_GAJI_POKOK },
+                dataType: "Json",
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                success: function (data) {
+                    var tahap = parseFloat(data.HR_TAHAP);
+                    output = "P" + data.HR_PERINGKAT + "T" + tahap.toFixed(2);
+                    $("#HR_GAJI_MAX_BARU").val(data.HR_GAJI_MAX.toFixed(2));
+                    $("#HR_GAJI_MIN_BARU").val(data.HR_GAJI_MIN.toFixed(2));
+                }
+            });
+            return output;
+        }
+
+        function ajaxGajiMin(HR_GRED) {
+            $("#list-min").html('<option></option>');
+            var output = new Array();
+            $.ajax({
+                url: "../Kewangan8/GajiMin",
+                type: "GET",
+                data: { "HR_GRED": HR_GRED },
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                success: function (data) {
+                    output = data;
+                    $.each(data, function (i, v) {
+                        $("#list-min").append($("<option></option>").val(v.HR_GAJI_MIN.toFixed(2)))
+                        if (data.length == 1) {
+                            $("#HR_GAJI_MIN_BARU").val(v.HR_GAJI_MIN.toFixed(2));
+                            ajaxGajiMax(v.HR_GAJI_MIN, HR_GRED);
+                        }
+                    })
+                }
+            });
+
+            return output;
+        }
+
+        function ajaxGajiMax(HR_GAJI_MIN, HR_GRED) {
+            $("#list-max").html('<option></option>');
+            var output = new Array();
+            $.ajax({
+                url: "../Kewangan8/GajiMax",
+                type: "GET",
+                data: { HR_GAJI_MIN: HR_GAJI_MIN, HR_GRED: HR_GRED },
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                success: function (data) {
+                    output = data;
+                    $.each(data, function (i, v) {
+                        $("#list-max").append($("<option></option>").val(v.HR_GAJI_MAX.toFixed(2)))
+                        if (data.length == 1) {
+                            $("#HR_GAJI_MAX_BARU").val(v.HR_GAJI_MAX.toFixed(2));
+                            ajaxGajiPokok(HR_GRED, HR_GAJI_MIN, v.HR_GAJI_MAX)
+                        }
+                    })
+                }
+            });
+
+            return output;
+        }
+
+        function ajaxGajiPokok(HR_GRED, HR_GAJI_MIN, HR_GAJI_MAX) {
+            $("#list-gaji").html('<option></option>');
+            var p = "GajiPokok";
+            if ('@ViewBag.Kod' == "TMK" || '@ViewBag.Kod' == "00032" || '@ViewBag.Kod' == "00004") {
+                p = "GajiPokok2";
+            }
+            var output = new Array();
+            $.ajax({
+                url: "../Kewangan8/" + p,
+                type: "GET",
+                data: { HR_GRED: HR_GRED, HR_GAJI_MIN: HR_GAJI_MIN, HR_GAJI_MAX: HR_GAJI_MAX },
+                dataType: "Json",
+                async: false,
+                success: function (data) {
+                    output = data;
+                    if (p == "GajiPokok") {
+                        $.each(data, function (i, v) {
+                            $("#list-gaji").append($("<option>P" + v.HR_PERINGKAT + "T" + (v.HR_TAHAP).toFixed(2) + "</option>").val(v.HR_GAJI_POKOK.toFixed(2)))
+                        })
+                    }
+                    else {
+                        var tahap = parseFloat(data.HR_TAHAP);
+                        $("#HR_GAJI_BARU").val(data.HR_GAJI_POKOK);
+                        $("#HR_MATRIKS_GAJI").val("P" + data.HR_PERINGKAT + "T" + tahap.toFixed(2));
+                        //$("#HR_PGT_BARU").val(data.HR_RM_KENAIKAN);
+                    }
+
+                }
+            })
+
+            return output;
+        }
+
+        function ajaxHasilNilai(startDate, endDate, gaji, kod) {
+            $('#HR_JUMLAH_PERUBAHAN_ELAUN').val((0).toFixed(2));
+            var nilai = 0;
+            if (kod == "TMK" || kod == "00032") {
+                gaji = gaji * 0.25;
+            }
+            $('#HR_JUMLAH_PERUBAHAN_ELAUN').val(gaji.toFixed(2));
+            ajaxHasilAkhirNilai(startDate, endDate, gaji, kod, "E");
+        }
+
+        function ajaxHasilAkhirNilai(startDate, endDate, gaji, kod, jenis) {
+            $('#HR_JUMLAH_PERUBAHAN').val((0).toFixed(2));
+            $('#HR_JUMLAH_POTONGAN_GAJI').val((0).toFixed(2));
+
+            var nilai = 0;
+
+            if (kod == "LNTKN") {
+                nilai = ajaxKiraPelarasan(startDate, endDate, keyInDate3, gaji.toFixed(2), kod, jenis)
+                $('#HR_JUMLAH_POTONGAN_GAJI').val(nilai.toFixed(2));
+            }
+            else if (kod == "00017") {
+                nilai = ajaxKiraPelarasan(startDate, endDate, endDate, gaji.toFixed(2), kod, jenis);
+                $('#HR_JUMLAH_POTONGAN_GAJI').val(nilai.toFixed(2));
+
+            }
+            else {
+                nilai = ajaxKiraPelarasan(startDate, endDate, keyInDate3, gaji.toFixed(2), kod, jenis)
+                $('#HR_JUMLAH_PERUBAHAN').val(nilai.toFixed(2));
+            }
+
+            return nilai;
+        }
+
+        function ajaxKiraPelarasan(startDate, endDate, keyInDate, gaji, kod, jenis) {
+            var nilai = 0;
+            $.ajax({
+                url: "../Kewangan8/KiraPelarasan",
+                type: "GET",
+                data: { startDate: startDate, endDate: endDate, keyInDate: keyInDate, gaji: gaji, kod: kod, jenis: jenis },
+                dataType: "Json",
+                async: false,
+                success: function (data) {
+                    nilai = data;
+                }
+            });
+            return nilai;
+        }
+
+        $(document).on("click", "#HR_NAMA_PT", function () {
+            var $this = $(this)
+            $("#ModalPekerja").modal({
+                show: true,
+                backdrop: 'static'
+            }).on("click", "#btn-done", function () {
+                //$('#datatable_CariCalon').DataTable().destroy();
+                Cari("").draw().$("input[type='radio']").each(function () {
+                    if (this.checked) {
+                        var VIEW = $(this).parents("tr");
+                        var HR_NAMA_PEKERJA = VIEW.find("td:eq(3)").text()
+                        var HR_NO_PEKERJA = this.value
+
+                        $this.val(HR_NAMA_PEKERJA);
+                        if ($this.attr("id") == "HR_NAMA_PT") {
+                            $("#HR_NO_PEKERJA_PT").val(HR_NO_PEKERJA);
+                            $.get("../Kewangan8/CariJawatanPekerja", { id: HR_NO_PEKERJA }, function (data) {
+                                $("#HR_JAWATAN_BARU").val(data.kod)
+                                $("#HR_GRED").val(data.gred)
+                                $("#HR_GAJI_MIN_BARU").val("");
+                                $("#HR_GAJI_MAX_BARU").val("");
+                                $("#HR_GAJI_BARU").val("");
+                                //$("#HR_PGT_BARU").val("");
+
+                                $("#HR_JUMLAH_PERUBAHAN_ELAUN").val((0).toFixed(2));
+                                $("#HR_JUMLAH_PERUBAHAN").val((0).toFixed(2));
+
+                                ajaxGajiMin($("#HR_GRED").val());
+                                ajaxGajiPokok($("#HR_GRED").val(), null, null)
+
+                                $("#HR_MATRIKS_GAJI").val("");
+                                if ($(this).attr("id") != "HR_GAJI_BARU") {
+                                    $("#HR_GAJI_BARU").val("");
+                                    //$("#HR_PGT_BARU").val("");
+                                    $("#list-gaji").html('<option></option>');
+
+                                    var MIN = null;
+                                    var MAX = null;
+
+                                    if ($("#HR_GAJI_MIN_BARU").val() != "") {
+                                        MIN = $("#HR_GAJI_MIN_BARU").val()
+                                    }
+
+                                    if ($("#HR_GAJI_MAX_BARU").val() != "") {
+                                        MAX = $("#HR_GAJI_MAX_BARU").val();
+                                    }
+
+                                    if ($("#HR_GRED").val() != "") {
+                                        ajaxGajiPokok($("#HR_GRED").val(), MIN, MAX)
+                                    }
+                                }
+
+                                if ($("#HR_GRED").val() != "" && $("#HR_GAJI_BARU").val() != "" && '@ViewBag.Kod' == "00036") {
+                                    var matriks6 = ajaxKodMatriks($("#HR_GRED").val(), $("#HR_GAJI_BARU").val())
+                                    $("#HR_MATRIKS_GAJI").val(matriks6)
+                                }
+
+                                if ('@ViewBag.Kod' == "TMK" || '@ViewBag.Kod' == "00032" || '@ViewBag.Kod' == "00004") {
+                                    var startDate = $('#HR_TARIKH_MULA').val();
+                                    var endDate = $('#HR_TARIKH_AKHIR').val();
+                                    var gaji = parseFloat($("#HR_GAJI_MIN_BARU").val());
+
+                                    if ($("#HR_TARIKH_MULA").val() != "" && $("#HR_TARIKH_AKHIR").val() != "" && $("#HR_GRED").val() != "" && $("#HR_GAJI_MIN_BARU").val() != "") {
+                                        if ($("#HR_KOD_PERUBAHAN").val() == "00032") {
+                                            //var data = ajaxGajiMin($("#HR_GRED").val());
+                                            ajaxHasilNilai(startDate, endDate, gaji, '@ViewBag.Kod')
+                                        }
+                                        else {
+                                            ajaxHasilNilaiMemangku(startDate, endDate, $("#HR_GAJI_LAMA").val(), gaji)
+                                        }
+                                    }
+                                }
+                            })
+                        }
+                        
+                        $("#ModalPekerja").modal("hide")
+                    }
+                })
+            });
+        })
+
         $('#datatable_tabletools').dataTable({
 
             // Tabletools options:
