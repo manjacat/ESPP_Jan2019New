@@ -1944,7 +1944,15 @@ namespace eSPP.Controllers
                        .Where(s => listElaunKa.Contains(s.HR_KOD)).ToList();
                 List<HR_TRANSAKSI_SAMBILAN_DETAIL> elaunot = userTransaksiDetail
                     .Where(s => s.HR_KOD == "E0164").ToList();
-                var jamBekerja = elaunot.FirstOrDefault().HR_JAM_HARI.Value;
+                var jamBekerja = 0.0000M;
+                try
+                {
+                    jamBekerja = elaunot.FirstOrDefault().HR_JAM_HARI.Value;
+                }
+                catch
+                {
+                    jamBekerja = 0.0000M;
+                }
                 List<HR_TRANSAKSI_SAMBILAN_DETAIL> elaunlain = userTransaksiDetail
                     .Where(s => s.HR_KOD_IND == "E"
                     && (!listElaunKa.Contains(s.HR_KOD)
