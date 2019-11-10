@@ -623,7 +623,7 @@ namespace eSPP.Models
         }
 
         private static HR_TRANSAKSI_SAMBILAN_DETAIL GetTransaksiGaji
-            (ApplicationDbContext db, PageSejarahModel agree)
+            (ApplicationDbContext db, PageSejarahModel agree, bool isTunggakan = false)
         {
             HR_TRANSAKSI_SAMBILAN_DETAIL gaji = new HR_TRANSAKSI_SAMBILAN_DETAIL
             {
@@ -641,20 +641,24 @@ namespace eSPP.Models
                 HR_TUNGGAKAN_IND = agree.tunggakan,
                 HR_YDP_LULUS_IND = agree.kelulusanydp
             };
-            if (agree.tunggakan == "Y")
+            if (isTunggakan)
             {
                 gaji.HR_BULAN_BEKERJA = agree.tunggakanbulanbekerja;
                 gaji.HR_BULAN_DIBAYAR = agree.tunggakanbulandibayar;
                 gaji.HR_TAHUN_BEKERJA = agree.tunggakantahunbekerja;
                 gaji.HR_TAHUN = agree.tunggakantahundibayar;
                 gaji.HR_YDP_LULUS_IND = agree.kelulusanydptunggakan;
+                //fix tunggakan value incorrect
+                gaji.HR_JAM_HARI = agree.tunggakanjumlahhari;
+                gaji.HR_JUMLAH = agree.tunggakangajipokok;
             }
             return gaji;
         }
 
         private static List<HR_TRANSAKSI_SAMBILAN_DETAIL> GetTransaksiElaun
             (ApplicationDbContext db, PageSejarahModel agree,
-            List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunList)
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunList,
+            bool isTunggakan = false)
         {
             List<HR_TRANSAKSI_SAMBILAN_DETAIL> elaunSemua =
                 new List<HR_TRANSAKSI_SAMBILAN_DETAIL>();
@@ -677,13 +681,15 @@ namespace eSPP.Models
                         HR_TUNGGAKAN_IND = agree.tunggakan,
                         HR_YDP_LULUS_IND = agree.kelulusanydp
                     };
-                if (agree.tunggakan == "Y")
+                if (isTunggakan)
                 {
                     tElaun.HR_BULAN_BEKERJA = agree.tunggakanbulanbekerja;
                     tElaun.HR_BULAN_DIBAYAR = agree.tunggakanbulandibayar;
                     tElaun.HR_TAHUN_BEKERJA = agree.tunggakantahunbekerja;
                     tElaun.HR_TAHUN = agree.tunggakantahundibayar;
                     tElaun.HR_YDP_LULUS_IND = agree.kelulusanydptunggakan;
+                    //fix tunggakan value incorrect
+                    //n/a
                 }
                 elaunSemua.Add(tElaun);
             }
@@ -691,7 +697,7 @@ namespace eSPP.Models
         }
 
         public static HR_TRANSAKSI_SAMBILAN_DETAIL
-            GetTransaksiSocso(ApplicationDbContext db, PageSejarahModel agree)
+            GetTransaksiSocso(ApplicationDbContext db, PageSejarahModel agree, bool isTunggakan = false)
         {
             //kira socso dari gaji kasar
             decimal socso = GetPotonganSocso(db, agree.gajikasar);
@@ -712,20 +718,23 @@ namespace eSPP.Models
                 HR_TUNGGAKAN_IND = agree.tunggakan,
                 HR_YDP_LULUS_IND = agree.kelulusanydp
             };
-            if (agree.tunggakan == "Y")
+            if (isTunggakan)
             {
                 tSosco.HR_BULAN_BEKERJA = agree.tunggakanbulanbekerja;
                 tSosco.HR_BULAN_DIBAYAR = agree.tunggakanbulandibayar;
                 tSosco.HR_TAHUN_BEKERJA = agree.tunggakantahunbekerja;
                 tSosco.HR_TAHUN = agree.tunggakantahundibayar;
                 tSosco.HR_YDP_LULUS_IND = agree.kelulusanydptunggakan;
+                //fix tunggakan value incorrect
+                tSosco.HR_JAM_HARI = 0;
+                tSosco.HR_JUMLAH = agree.tunggakansocso;
             }
             return tSosco;
         }
 
         private static List<HR_TRANSAKSI_SAMBILAN_DETAIL> GetTransaksiPotongan
             (ApplicationDbContext db, PageSejarahModel agree,
-            List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganList)
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganList, bool isTunggakan = false)
         {
             List<HR_TRANSAKSI_SAMBILAN_DETAIL> potonganSemua =
                 new List<HR_TRANSAKSI_SAMBILAN_DETAIL>();
@@ -748,13 +757,15 @@ namespace eSPP.Models
                         HR_TUNGGAKAN_IND = agree.tunggakan,
                         HR_YDP_LULUS_IND = agree.kelulusanydp
                     };
-                if (agree.tunggakan == "Y")
+                if (isTunggakan)
                 {
                     tPotong.HR_BULAN_BEKERJA = agree.tunggakanbulanbekerja;
                     tPotong.HR_BULAN_DIBAYAR = agree.tunggakanbulandibayar;
                     tPotong.HR_TAHUN_BEKERJA = agree.tunggakantahunbekerja;
                     tPotong.HR_TAHUN = agree.tunggakantahundibayar;
                     tPotong.HR_YDP_LULUS_IND = agree.kelulusanydptunggakan;
+                    //fix tunggakan value incorrect
+                    //n/a
                 }
                 potonganSemua.Add(tPotong);
             }
@@ -763,7 +774,7 @@ namespace eSPP.Models
 
         private static HR_TRANSAKSI_SAMBILAN_DETAIL GetCarumanPekerja
             (ApplicationDbContext db, PageSejarahModel agree,
-            HR_KWSP kwsp)
+            HR_KWSP kwsp, bool isTunggakan)
         {
             HR_TRANSAKSI_SAMBILAN_DETAIL carumanPekerja =
                     new HR_TRANSAKSI_SAMBILAN_DETAIL
@@ -782,7 +793,7 @@ namespace eSPP.Models
                         HR_TUNGGAKAN_IND = agree.tunggakan,
                         HR_YDP_LULUS_IND = agree.kelulusanydp
                     };
-            if (agree.tunggakan == "Y")
+            if (isTunggakan)
             {
                 carumanPekerja.HR_BULAN_BEKERJA = agree.tunggakanbulanbekerja;
                 carumanPekerja.HR_BULAN_DIBAYAR = agree.tunggakanbulandibayar;
@@ -796,7 +807,7 @@ namespace eSPP.Models
 
         private static HR_TRANSAKSI_SAMBILAN_DETAIL GetCarumanMajikan
             (ApplicationDbContext db, PageSejarahModel agree,
-            HR_KWSP kwsp)
+            HR_KWSP kwsp, bool isTunggakan)
         {
             HR_TRANSAKSI_SAMBILAN_DETAIL carumanMajikan =
                     new HR_TRANSAKSI_SAMBILAN_DETAIL
@@ -815,7 +826,7 @@ namespace eSPP.Models
                         HR_TUNGGAKAN_IND = agree.tunggakan,
                         HR_YDP_LULUS_IND = agree.kelulusanydp
                     };
-            if (agree.tunggakan == "Y")
+            if (isTunggakan)
             {
                 carumanMajikan.HR_BULAN_BEKERJA = agree.tunggakanbulanbekerja;
                 carumanMajikan.HR_BULAN_DIBAYAR = agree.tunggakanbulandibayar;
@@ -827,24 +838,39 @@ namespace eSPP.Models
         }
 
         private static List<HR_TRANSAKSI_SAMBILAN_DETAIL> GetTransaksiCaruman
-        (ApplicationDbContext db, PageSejarahModel agree)
+        (ApplicationDbContext db, PageSejarahModel agree, bool isTunggakan = false)
         {
-            List<HR_TRANSAKSI_SAMBILAN_DETAIL> carumanSemua =
-                new List<HR_TRANSAKSI_SAMBILAN_DETAIL>();
-            HR_KWSP kwsp = GetPotonganKWSP(db, agree.gajikasar);
+            HR_TRANSAKSI_SAMBILAN_DETAIL carumanPekerja = null;
+            HR_TRANSAKSI_SAMBILAN_DETAIL carumanMajikan = null;
 
-            HR_TRANSAKSI_SAMBILAN_DETAIL carumanPekerja = GetCarumanPekerja
-                (db, agree, kwsp);
-            HR_TRANSAKSI_SAMBILAN_DETAIL carumanMajikan = GetCarumanMajikan
-                (db, agree, kwsp);
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> carumanSemua =
+            new List<HR_TRANSAKSI_SAMBILAN_DETAIL>();
+            HR_KWSP kwsp = null;
+            //fix tunggakan gaji kasar not saved correctly
+            if (isTunggakan)
+            {
+                kwsp = GetPotonganKWSP(db, agree.tunggakangajikasar);
+            }
+            else
+            {
+                kwsp = GetPotonganKWSP(db, agree.gajikasar);
+            }
+            carumanPekerja = GetCarumanPekerja
+                (db, agree, kwsp, isTunggakan);
+            carumanMajikan = GetCarumanMajikan
+                (db, agree, kwsp, isTunggakan);
+
             carumanSemua.Add(carumanPekerja);
             carumanSemua.Add(carumanMajikan);
+
+            
+            
 
             return carumanSemua;
         }
 
         private static HR_TRANSAKSI_SAMBILAN_DETAIL GetTransaksiOT
-            (ApplicationDbContext db, PageSejarahModel agree)
+            (ApplicationDbContext db, PageSejarahModel agree, bool isTunggakan = false)
         {
             HR_TRANSAKSI_SAMBILAN_DETAIL elaunOT =
             new HR_TRANSAKSI_SAMBILAN_DETAIL
@@ -863,13 +889,16 @@ namespace eSPP.Models
                 HR_TUNGGAKAN_IND = agree.tunggakan,
                 HR_YDP_LULUS_IND = agree.kelulusanydp
             };
-            if (agree.tunggakan == "Y")
+            if (isTunggakan)
             {
                 elaunOT.HR_BULAN_BEKERJA = agree.tunggakanbulanbekerja;
                 elaunOT.HR_BULAN_DIBAYAR = agree.tunggakanbulandibayar;
                 elaunOT.HR_TAHUN_BEKERJA = agree.tunggakantahunbekerja;
                 elaunOT.HR_TAHUN = agree.tunggakantahundibayar;
                 elaunOT.HR_YDP_LULUS_IND = agree.kelulusanydptunggakan;
+                //fix tunggakan value incorrect
+                elaunOT.HR_JAM_HARI = agree.tunggakanjumlahot;
+                elaunOT.HR_JUMLAH = agree.tunggakanjumlahbayaranot;
             }
             return elaunOT;
         }
@@ -877,17 +906,20 @@ namespace eSPP.Models
         private static List<HR_TRANSAKSI_SAMBILAN_DETAIL> GetNewTRANSAKSI_SAMBILAN_DETAIL
             (ApplicationDbContext db, PageSejarahModel agree,
             List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunList,
-            List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganList)
+            List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganList,
+            bool isTunggakan = false)
         {
             List<HR_TRANSAKSI_SAMBILAN_DETAIL> detail =
                 new List<HR_TRANSAKSI_SAMBILAN_DETAIL>();
             //gaji
-            HR_TRANSAKSI_SAMBILAN_DETAIL gaji = GetTransaksiGaji(db, agree);
-            HR_TRANSAKSI_SAMBILAN_DETAIL elaunOT = GetTransaksiOT(db, agree);
-            HR_TRANSAKSI_SAMBILAN_DETAIL socso = GetTransaksiSocso(db, agree);
-            List<HR_TRANSAKSI_SAMBILAN_DETAIL> elaunSemua = GetTransaksiElaun(db, agree, elaunList);
-            List<HR_TRANSAKSI_SAMBILAN_DETAIL> potonganSemua = GetTransaksiPotongan(db, agree, potonganList);
-            List<HR_TRANSAKSI_SAMBILAN_DETAIL> carumanSemua = GetTransaksiCaruman(db, agree);
+            HR_TRANSAKSI_SAMBILAN_DETAIL gaji = GetTransaksiGaji(db, agree, isTunggakan);
+            HR_TRANSAKSI_SAMBILAN_DETAIL elaunOT = GetTransaksiOT(db, agree, isTunggakan);
+            HR_TRANSAKSI_SAMBILAN_DETAIL socso = GetTransaksiSocso(db, agree, isTunggakan);
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> elaunSemua = 
+                GetTransaksiElaun(db, agree, elaunList, isTunggakan);
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> potonganSemua = 
+                GetTransaksiPotongan(db, agree, potonganList, isTunggakan);
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> carumanSemua = GetTransaksiCaruman(db, agree, isTunggakan);
 
             detail.Add(gaji);
             detail.Add(elaunOT);
@@ -1217,14 +1249,34 @@ namespace eSPP.Models
                 = GetNewTRANSAKSI_SAMBILAN_DETAIL
                 (db, agree, elaunsemua, potonganSemua);
 
+            bool isTunggakan = false;
+            if(agree.tunggakan == "Y")
+            {
+                isTunggakan = true;
+                List<HR_TRANSAKSI_SAMBILAN_DETAIL> newDetail2 =
+                    GetNewTRANSAKSI_SAMBILAN_DETAIL
+                    (db, agree, elaunsemua, potonganSemua, isTunggakan);
+                newDetail.AddRange(newDetail2);
+            }
+
             //For Logging
             try
             {
                 var tbl = db.Users.Where(p => p.Id == user).FirstOrDefault();
                 var emel = db.HR_MAKLUMAT_PERIBADI
                     .Where(s => s.HR_NO_KPBARU == tbl.UserName).FirstOrDefault();
-                var role1 = db.UserRoles.Where(d => d.UserId == tbl.Id).FirstOrDefault();
-                var role = db.Roles.Where(e => e.Id == role1.RoleId).FirstOrDefault();
+                IdentityRole role = null;
+                try
+                {
+                    IdentityUserRole role1 = db.UserRoles.Where(d => d.UserId == tbl.Id).FirstOrDefault();
+                    role = db.Roles.Where(e => e.Id == role1.RoleId).FirstOrDefault();
+                }
+                catch
+                {
+                    role = new IdentityRole();
+                    role.Id = "";
+                    role.Name = "anonymous";
+                }
 
                 if (string.IsNullOrEmpty(command))
                 {
@@ -1234,12 +1286,12 @@ namespace eSPP.Models
                 switch (command.ToLower())
                 {
                     case ("hantar"):
-                        InsertHantar(db, agree, newDetail);
+                        InsertHantar(db, agree, newDetail, isTunggakan);
                         TrailLog(emel, role,
                             emel.HR_NAMA_PEKERJA + " Telah menambah data untuk pekerja " + agree.HR_PEKERJA);
                         break;
                     case ("kemaskini"):
-                        InsertHantar(db, agree, newDetail);
+                        InsertHantar(db, agree, newDetail, isTunggakan);
                         //InsertKemaskini(db, agree, listkwsp, elaunLain, potonganSemua,
                         //    maklumatcaruman, agree.gajipokok);
                         TrailLog(emel, role,
@@ -1256,7 +1308,7 @@ namespace eSPP.Models
             }
             catch
             {
-
+                throw;
             }
 
             return agree;
@@ -1415,7 +1467,7 @@ namespace eSPP.Models
             //List<HR_MAKLUMAT_ELAUN_POTONGAN> maklumatelaun,
             //List<HR_MAKLUMAT_ELAUN_POTONGAN> maklumatpotongan,
             //List<HR_MAKLUMAT_ELAUN_POTONGAN> maklumatcaruman,
-            List<HR_TRANSAKSI_SAMBILAN_DETAIL> detail)
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> detail, bool isTunggakan)
         {
             //instead of looping 401 records, a LINQ is used here to get the correct KWSP based on gaji pokok
             //KWSP based on gaji pokok? or KWSP based on gaji pokok + elaun
@@ -1425,6 +1477,12 @@ namespace eSPP.Models
             try
             {
                 InsertHRSAMBILAN(db, agree);
+                //kalau ada tunggakan, insert lagi satu row utk tunggakan
+                if (isTunggakan)
+                {
+                    InsertHRSAMBILAN(db, agree, isTunggakan);
+                }
+
                 InsertHRSAMBILANDETAIL(db, agree, detail);
 
                 //InsertMAJIKANKWSP(db, agree, kwsp);
@@ -1440,30 +1498,8 @@ namespace eSPP.Models
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-            }
-            if (agree.tunggakan == "Y")
-            {
-                try
-                {
-                    InsertHRSAMBILAN(db, agree, true);
-                    InsertHRSAMBILANDETAIL(db, agree, detail, true);
-                    //InsertMAJIKANKWSP(db, agree, kwsp, true);
-                    //InsertPEKERJAKSWP(db, agree, kwsp, true);
-
-                    //if (maklumatpotongan != null)
-                    //{
-                    //    InsertMAKLUMATPOTONGAN(db, agree, maklumatpotongan, true);
-                    //}
-                    //InsertELAUNOT(db, agree, true);
-                    //InsertGAJIPEKERJA(db, agree, true);
-                    //InsertELAUNLAIN(db, agree, maklumatelaun, true);
-                    //InsertMAKLUMATCARUMAN(db, agree, maklumatcaruman, true);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
-            }
+                throw;
+            }            
         }
 
         /*
@@ -1475,39 +1511,37 @@ namespace eSPP.Models
         #region Insert Into HR SAMBILAN DETAIL
 
         private static void InsertHRSAMBILANDETAIL(ApplicationDbContext db,
-            PageSejarahModel agree, List<HR_TRANSAKSI_SAMBILAN_DETAIL> detail,
-            bool isTunggakan = false)
+            PageSejarahModel agree, List<HR_TRANSAKSI_SAMBILAN_DETAIL> detail)
         {
-            int bulanDibayar = agree.bulandibayar;
-            int tahunDibayar = agree.tahundibayar;
-            int bulanBekerja = agree.bulanbekerja;
-            int tahunBekerja = agree.tahunbekerja;
-            string kelulusanYDP = agree.kelulusanydp;
-
-            if (isTunggakan)
-            {
-                bulanDibayar = agree.tunggakanbulandibayar;
-                tahunDibayar = agree.tunggakantahundibayar;
-                bulanBekerja = agree.tunggakanbulanbekerja;
-                tahunBekerja = agree.tunggakantahunbekerja;
-                kelulusanYDP = agree.kelulusanydptunggakan;
-            }
-
-            //TODO: delete semua transaksi, masukkan transaksi baru
-            List<HR_TRANSAKSI_SAMBILAN_DETAIL> toEdit =
-                db.HR_TRANSAKSI_SAMBILAN_DETAIL
-                .Where(s => s.HR_NO_PEKERJA == agree.HR_PEKERJA
-                && s.HR_BULAN_BEKERJA == agree.bulanbekerja
-                && s.HR_BULAN_DIBAYAR == agree.bulandibayar
-                && s.HR_TAHUN_BEKERJA == agree.tahunbekerja
-                && s.HR_TAHUN == agree.tahundibayar).ToList();
+            //ada tak tunggakan dgn tunggakan
+            Debug.WriteLine("Adding " + detail.Count + " records");
             try
             {
-                Debug.WriteLine("Adding " + detail.Count + " records");
+                //int bulanDibayar = agree.bulandibayar;
+                //int tahunDibayar = agree.tahundibayar;
+                //int bulanBekerja = agree.bulanbekerja;
+                //int tahunBekerja = agree.tahunbekerja;
+                //string kelulusanYDP = agree.kelulusanydp;
+
+                //if (isTunggakan)
+                //{
+                //    bulanDibayar = agree.tunggakanbulandibayar;
+                //    tahunDibayar = agree.tunggakantahundibayar;
+                //    bulanBekerja = agree.tunggakanbulanbekerja;
+                //    tahunBekerja = agree.tunggakantahunbekerja;
+                //    kelulusanYDP = agree.kelulusanydptunggakan;
+                //}
                 foreach (var toIns in detail)
                 {
-                    var dkod = toEdit
-                        .Where(s => s.HR_KOD == toIns.HR_KOD).FirstOrDefault();
+                    //check existing record
+                    var dkod = db.HR_TRANSAKSI_SAMBILAN_DETAIL
+                        .Where(s => s.HR_KOD == toIns.HR_KOD
+                        && s.HR_BULAN_BEKERJA == toIns.HR_BULAN_BEKERJA
+                        && s.HR_BULAN_DIBAYAR == toIns.HR_BULAN_DIBAYAR
+                        && s.HR_TAHUN_BEKERJA == toIns.HR_TAHUN_BEKERJA
+                        && s.HR_TAHUN == toIns.HR_TAHUN
+                        && s.HR_NO_PEKERJA == toIns.HR_NO_PEKERJA)
+                        .FirstOrDefault();
                     if (dkod != null)
                     {
                         //kalau ada, kita edit row itu.
@@ -1530,7 +1564,9 @@ namespace eSPP.Models
             catch (Exception ex)
             {
                 Debug.WriteLine("Error:" + ex.ToString());
+                throw;
             }
+
         }
 
 

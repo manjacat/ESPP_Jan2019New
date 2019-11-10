@@ -737,7 +737,7 @@ namespace eSPP.Controllers
                     //
                     //List<PA_REPORT> reports = PA_REPORT.TestSelect(spgDb);
                     //
-                    PA_TRANSAKSI_PEMOTONGAN.InsertSpgPotongan(sppDb, spgDb, tahunDibayar, bulanDibayar)
+                    PA_REPORT.InsertSpgReport(sppDb, spgDb, tahunDibayar, bulanDibayar);
                     Console.Write("connected 1");
                     break;
                 case "2":
@@ -745,7 +745,8 @@ namespace eSPP.Controllers
                     Console.Write("connected 2");
                     break;
                 case "3":
-                    PA_REPORT.InsertSpgReport(sppDb, spgDb, tahunDibayar, bulanDibayar);
+                    //PA_REPORT.InsertSpgReport(sppDb, spgDb, tahunDibayar, bulanDibayar);
+                    PA_TRANSAKSI_PEMOTONGAN.InsertSpgPotongan(sppDb, spgDb, tahunDibayar, bulanDibayar);
                     Console.Write("connected 3");
                     break;
                 default:

@@ -34,6 +34,8 @@ namespace eSPP.Models
         public string HR_KOD_IND { get; set; }
         public string HR_TUNGGAKAN_IND { get; set; }
         public decimal? HR_JAM_HARI { get; set; }
+        [Key]
+        [Column(Order = 5)]
         public int HR_TAHUN_BEKERJA { get; set; }
         public string HR_YDP_LULUS_IND { get; set; }
         public string HR_POTONGAN_IND { get; set; }

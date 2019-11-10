@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -76,7 +77,8 @@ namespace eSPP.Models
                         .Where(s => s.HR_KOD == "E0164").ToList();
                     List<HR_TRANSAKSI_SAMBILAN_DETAIL> elaunlain = userTransaksiDetail
                         .Where(s => s.HR_KOD_IND == "E" 
-                        && (!listElaunKa.Contains(s.HR_KOD) && s.HR_KOD != "E0164")).ToList();
+                        && (!listElaunKa.Contains(s.HR_KOD) 
+                        && s.HR_KOD != "E0164")).ToList();
 
                     //potongan
                     List<HR_TRANSAKSI_SAMBILAN_DETAIL> potonganksdk = userTransaksiDetail
@@ -226,10 +228,19 @@ namespace eSPP.Models
 	public partial class HR_TRANSAKSI_SAMBILAN
 	{
 		[Key]
+        [Column(Order = 0)]
 		public string HR_NO_PEKERJA { get; set; }
-		public int HR_BULAN_DIBAYAR { get; set; }
-		public int HR_TAHUN { get; set; }
-		public int HR_BULAN_BEKERJA { get; set; }
-		public int HR_TAHUN_BEKERJA { get; set; }
+        [Key]
+        [Column(Order = 1)]
+        public int HR_BULAN_DIBAYAR { get; set; }
+        [Key]
+        [Column(Order = 2)]
+        public int HR_TAHUN { get; set; }
+        [Key]
+        [Column(Order = 3)]
+        public int HR_BULAN_BEKERJA { get; set; }
+        [Key]
+        [Column(Order = 4)]
+        public int HR_TAHUN_BEKERJA { get; set; }
 	}
 }

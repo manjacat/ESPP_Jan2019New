@@ -92,7 +92,7 @@ namespace eSPP.Models
                 PA_REPORT spgReport = spgDb.PA_REPORT
                     .Where(s => s.PA_NO_PEKERJA == noPekerja
                     && s.PA_TAHUN == tahunBekerja
-                    && s.PA_BULAN == bulanDibayar).FirstOrDefault();
+                    && s.PA_BULAN == bulanBekerja).FirstOrDefault();
 
                 decimal gajiPokok = sppDb.HR_TRANSAKSI_SAMBILAN_DETAIL
                     .Where(s => s.HR_KOD == "GAJPS"
