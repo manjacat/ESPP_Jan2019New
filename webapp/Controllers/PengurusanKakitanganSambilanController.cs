@@ -1815,7 +1815,17 @@ namespace eSPP.Controllers
                     using (var exportData = new MemoryStream())
                     {
                         workbook.Write(exportData);
-                        string saveAsFileName = string.Format("LaporanExport-{0:d}.xlsx", DateTime.Now).Replace("/", "-");
+                        string fileName = "LaporanExport-{0:d}.xlsx";
+                        if(jenis == "1") //1 - Borang A Sambilan
+                        {
+                            fileName = "BorangASambilan-{0:d}.xlsx";
+                        }
+                        else if(jenis == "3") //3 - Borang A Sambilan Sukan
+                        {
+                            fileName = "BorangASambilanSukan-{0:d}.xlsx";
+                        }
+                        string saveAsFileName = string.Format(fileName, DateTime.Now)
+                            .Replace("/", "-");
 
                         byte[] bytes = exportData.ToArray();
                         return File(bytes, "application/vnd.ms-excel", saveAsFileName);
@@ -1934,12 +1944,21 @@ namespace eSPP.Controllers
                 .ToList();
 
             string html = string.Empty;
-            html += GetGajiHTMLString(db, listGaji);
+            string pdfTitle = string.Empty;
+            if (isFilterSukan)
+            {
+                pdfTitle = "Senarai Gaji Sambilan Sukan";
+            }
+            else
+            {
+                pdfTitle = "Senarai Gaji Sambilan";
+            }
+            html += GetGajiHTMLString(db, listGaji, pdfTitle);
             return GetGajiPDF(reportTitle, html);
         }
 
         private string GetGajiHTMLString(ApplicationDbContext db,
-            List<HR_TRANSAKSI_SAMBILAN_DETAIL> listGaji)
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> listGaji, string pdfTitle)
         {
             string root = Server.MapPath("~");
             string rootURL = Request.Url.Host;
@@ -1960,7 +1979,8 @@ namespace eSPP.Controllers
             //string imageRootURL = rootURL + "/Images/";
             string output = System.IO.File.ReadAllText(htmlFileLocation);
             output = CleanHTMLString(output);
-            string html = "<html><head /><body>";
+            //add title to pdf
+            string html = string.Format("<html><head><title>{0}</title><link rel='shortcut icon' href='~/Content/img/lpktn.jpeg' type='image/x-icon'/></head><body>", pdfTitle);
             int counter = 1;
             foreach (var item in listGaji)
             {
@@ -2027,18 +2047,18 @@ namespace eSPP.Controllers
                     .FirstOrDefault();
 
                 //tocheck
-                var totalElaunka = elaunka.Sum(s => s.HR_JUMLAH);
-                var totalElaunLain = elaunlain.Sum(s => s.HR_JUMLAH);
-                var totalElaunot = elaunot.Sum(s => s.HR_JUMLAH);
-                totalElaunot = totalElaunot == null ? 0.00M : totalElaunot;
-                var totalElaunkaSebulan = totalElaunka * hariBekerja;
-                var totalElaunLainSebulan = totalElaunLain * hariBekerja;
+                var ekaMonthly = elaunka.Sum(s => s.HR_JUMLAH);
+                var elainMonthly = elaunlain.Sum(s => s.HR_JUMLAH);
+                var eotMonthly = elaunot.Sum(s => s.HR_JUMLAH);
+                eotMonthly = eotMonthly == null ? 0.00M : eotMonthly;
+                var ekaDaily = ekaMonthly / hariBekerja;
+                var elainDaily = elainMonthly / hariBekerja;
 
                 decimal gajikasar = PageSejarahModel.GetGajiKasar
                     (gajiPokok,
-                    totalElaunka,
-                    totalElaunLain,
-                    totalElaunot.Value);
+                    ekaMonthly,
+                    elainMonthly,
+                    eotMonthly.Value);
                 var gajiSebelumKWSP = gajikasar;
 
                 var totalPotongan = potonganKWSP.HR_JUMLAH
@@ -2068,24 +2088,24 @@ namespace eSPP.Controllers
                     gajiPokok.ToString(PageSejarahModel.CurrencyFormat));
                 htmlgaji = htmlgaji.Replace("#KEKA",
                     string.Format("{0} x {1}",
-                    elaunka.Sum(s => s.HR_JUMLAH).ToString(),
+                    ekaDaily.ToString(),
                     hariBekerja.ToString()));
                 htmlgaji = htmlgaji.Replace("#JEKA",
-                    totalElaunkaSebulan.Value
+                    ekaMonthly.Value
                     .ToString(PageSejarahModel.CurrencyFormat));
                 htmlgaji = htmlgaji.Replace("#KCOLA",
                     string.Format("{0} x {1}",
-                    elaunlain.Sum(s => s.HR_JUMLAH).ToString(),
+                    elainDaily.ToString(),
                     hariBekerja.ToString()));
                 htmlgaji = htmlgaji.Replace("#JCOLA",
-                    totalElaunLainSebulan.Value
+                    elainMonthly.Value
                     .ToString(PageSejarahModel.CurrencyFormat));
                 htmlgaji = htmlgaji.Replace("#KOT",
                     string.Format("{0} x {1}",
                     rate.ToString("0.0000"),
                     jamBekerja.ToString("0.0000")));
                 htmlgaji = htmlgaji.Replace("#JOT",
-                    totalElaunot.Value.ToString(PageSejarahModel.CurrencyFormat));
+                    eotMonthly.Value.ToString(PageSejarahModel.CurrencyFormat));
                 htmlgaji = htmlgaji.Replace("#JKASAR", "RM" +
                     gajikasar.ToString(PageSejarahModel.CurrencyFormat));
 
@@ -2473,12 +2493,12 @@ namespace eSPP.Controllers
             string reportTitle = string.Empty;
             if (isFilterSukan)
             {
-                html += "<title>Senarai KWSP Sambilan</title><link rel='shortcut icon' href='~/Content/img/lpktn.jpeg' type='image/x-icon'/></head>";
+                html += "<title>Senarai KWSP Sambilan Sukan</title><link rel='shortcut icon' href='~/Content/img/lpktn.jpeg' type='image/x-icon'/></head>";
                 reportTitle = "MAJLIS BANDARAYA PETALING JAYA PENYATA CARUMAN KWSP BAGI JAWATAN PEKERJA SUKAN";
             }
             else
             {
-                html += "<title>Senarai KWSP Sambilan Sukan</title><link rel='shortcut icon' href='~/Content/img/lpktn.jpeg' type='image/x-icon'/></head>";
+                html += "<title>Senarai KWSP Sambilan</title><link rel='shortcut icon' href='~/Content/img/lpktn.jpeg' type='image/x-icon'/></head>";
                 reportTitle = "MAJLIS BANDARAYA PETALING JAYA PENYATA CARUMAN KWSP BAGI JAWATAN PEKERJA SAMBILAN";
             }
             html += "<body>";

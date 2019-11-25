@@ -1237,6 +1237,7 @@ namespace eSPP.Models
 
         //}
 
+        //25/11 - Fix Gaji Kasar calculation of EKA & ElaunLain
         public static decimal GetGajiKasar(ApplicationDbContext db,
             List<HR_TRANSAKSI_SAMBILAN_DETAIL> detail,
             bool isNew = false, decimal hariBekerja = 0, decimal jamBekerja = 0)
@@ -1248,9 +1249,9 @@ namespace eSPP.Models
             decimal elaunOT = detail.Where(s => s.HR_KOD == "E0164")
                 .Select(s => s.HR_JUMLAH).Sum().Value;
 
-            decimal elaunKAsehari = detail.Where(s => ListElaunKa.Contains(s.HR_KOD))
+            decimal ekaSebulan = detail.Where(s => ListElaunKa.Contains(s.HR_KOD))
                 .Select(s => s.HR_JUMLAH).Sum().Value;
-            decimal elaunLainsehari = detail
+            decimal elainSebulan = detail
                 .Where(s => s.HR_KOD_IND == "E"
                 && !ListElaunKa.Contains(s.HR_KOD)
                 && s.HR_KOD != "E0164")
@@ -1259,7 +1260,8 @@ namespace eSPP.Models
             decimal gajiKasar = 0;
             gajiKasar = gajiPokok
                 + elaunOT
-                + ((elaunKAsehari + elaunLainsehari) * hariBekerja);
+                + ekaSebulan 
+                + elainSebulan;
             return gajiKasar;
         }
 
@@ -1346,8 +1348,11 @@ namespace eSPP.Models
 
             if (tunggakanCheck)
             {
-                newDetailTunggakan = GetNewTRANSAKSI_SAMBILAN_DETAIL
-                (db, agree, elaunsemua, potonganSemua, true);
+                if(agree.tunggakanjumlahhari > 0)
+                {
+                    newDetailTunggakan = GetNewTRANSAKSI_SAMBILAN_DETAIL
+                        (db, agree, elaunsemua, potonganSemua, true);
+                }
             }
 
             //For Logging
@@ -1372,7 +1377,7 @@ namespace eSPP.Models
                             emel.HR_NAMA_PEKERJA + " Telah menambah data untuk pekerja " + agree.HR_PEKERJA);
                         break;
                     case ("kemaskini"):
-                        InsertHantar(db, agree, newDetail);
+                        InsertHantar(db, agree, newDetail, newDetailTunggakan);
                         //InsertKemaskini(db, agree, listkwsp, elaunLain, potonganSemua,
                         //    maklumatcaruman, agree.gajipokok);
                         TrailLog(emel, role,
@@ -1570,8 +1575,9 @@ namespace eSPP.Models
             {
                 try
                 {
+                    //kalau ada tunggakan, masukkan detail tunggakan
                     InsertHRSAMBILAN(db, agree, true);
-                    InsertHRSAMBILANDETAIL(db, agree, detail, true);                   
+                    InsertHRSAMBILANDETAIL(db, agree, detailTunggakan, true);                   
                 }
                 catch (Exception ex)
                 {
@@ -1650,7 +1656,7 @@ namespace eSPP.Models
                     else
                     {
                         //kalau takde, kita insert
-                        if (toIns.HR_KOD == "E" && toIns.HR_KOD != "E0164")
+                        if (toIns.HR_KOD_IND == "E" && toIns.HR_KOD != "E0164")
                         {
                             toIns.HR_JUMLAH = toIns.HR_JUMLAH * agree.jumlahhari;
                         }
