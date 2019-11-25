@@ -1940,11 +1940,14 @@
                         HasilKiraan(startDate, endDate);
                     }
 
-                    if (('@ViewBag.Kod' == "CUTI" && $('#HR_KOD_PERUBAHAN').val() == "00017") && $('#HR_TARIKH_MULA').val() != "" && $('#HR_TARIKH_AKHIR').val() != "") {
+                    if ('@ViewBag.Kod' == "CUTI" && $('#HR_TARIKH_MULA').val() != "" && $('#HR_TARIKH_AKHIR').val() != "") {
                         var startDate = $(this).val();
                         var endDate = $('#HR_TARIKH_AKHIR').val();
                         var gaji = parseFloat($("#HR_GAJI_LAMA").val());
-                        gaji /= 2;
+                        if ($('#HR_KOD_PERUBAHAN').val() == "00017") {
+                            gaji /= 2;
+                        }
+                        
                         //ajaxHasilAkhirNilai(startDate, endDate, gaji, $('#HR_KOD_PERUBAHAN').val(), "G")
                         jumPelarasan2(startDate, endDate, gaji)
                     }
@@ -2019,11 +2022,14 @@
                         }
                     }
 
-                    if (('@ViewBag.Kod' == "CUTI" && $('#HR_KOD_PERUBAHAN').val() == "00017") && $('#HR_TARIKH_MULA').val() != "" && $('#HR_TARIKH_AKHIR').val() != "") {
+                    if ('@ViewBag.Kod' == "CUTI" && $('#HR_TARIKH_MULA').val() != "" && $('#HR_TARIKH_AKHIR').val() != "") {
                         var startDate = $('#HR_TARIKH_MULA').val();
                         var endDate = $(this).val();
                         var gaji = parseFloat($("#HR_GAJI_LAMA").val());
-                        gaji /= 2;
+                        if ($('#HR_KOD_PERUBAHAN').val() == "00017") {
+                            gaji /= 2;
+                        }
+                        
                         //ajaxHasilAkhirNilai(startDate, endDate, gaji, $('#HR_KOD_PERUBAHAN').val(), "G")
                         jumPelarasan2(startDate, endDate, gaji)
                     }
@@ -2461,7 +2467,7 @@
                         }
 
                         if ('@ViewBag.Kod' == "CUTI") {
-                            total = ajaxKiraPelarasan(tarikhMula, tarikhAkhir, tarikhAkhir, amaun, "00017", jenis)
+                            total = ajaxKiraPelarasan(tarikhMula, tarikhAkhir, tarikhAkhir, amaun, $('#HR_KOD_PERUBAHAN').val(), jenis)
                         }
 
                         html += '<tr>' +
@@ -3565,8 +3571,13 @@
                     $.each(elaun, function (key, val) {
                         var nilaiPelarasan = 0;
 
-                        if (('@ViewBag.Kod' == "CUTI" && $('#HR_KOD_PERUBAHAN').val() == "00017")) {
-                            nilaiPelarasan = ajaxKiraPelarasan(startDate, endDate, endDate, val.ELAUN.HR_NILAI / 2, $('#HR_KOD_PERUBAHAN').val(), "P");
+                        if ('@ViewBag.Kod' == "CUTI") {
+                            if ($('#HR_KOD_PERUBAHAN').val() == "00017") {
+                                nilaiPelarasan = ajaxKiraPelarasan(startDate, endDate, endDate, val.ELAUN.HR_NILAI / 2, $('#HR_KOD_PERUBAHAN').val(), "P");
+                            }
+                            else {
+                                nilaiPelarasan = ajaxKiraPelarasan(startDate, endDate, endDate, val.ELAUN.HR_NILAI, $('#HR_KOD_PERUBAHAN').val(), "P");
+                            }
                         }
                         else {
                             nilaiPelarasan = ajaxHasilAkhirNilai(startDate, endDate, val.ELAUN.HR_NILAI, '@ViewBag.Kod', "E");
@@ -3589,17 +3600,18 @@
                                     '</tr></tfoot>');
                     }
 
-                    if (('@ViewBag.Kod' == "CUTI" && $('#HR_KOD_PERUBAHAN').val() == "00017")) {
+                    if ('@ViewBag.Kod' == "CUTI") {
                         jumPotongan3 = jumPotongan2 + parseFloat(ajaxHasilAkhirNilai(startDate, endDate, xGaji, $('#HR_KOD_PERUBAHAN').val(), "G"));
-
-                        PadamAnsuranBulanan();
-                        if (startDate != null && endDate != null) {
-                            $.get("../Kewangan8/BulanCutiSeparuhGaji", { startDate: startDate, endDate: endDate }, function (data) {
-                                if (data.length > 1) {
-                                    $("#tableAnsuran").html(AnsuranBulanan(data.length, xGaji, 0, data, "G"));
-                                    AnsuranElaunBulanan(data.length, data)
-                                }
-                            }, "Json")
+                        if ($('#HR_KOD_PERUBAHAN').val() == "00017") {
+                            PadamAnsuranBulanan();
+                            if (startDate != null && endDate != null) {
+                                $.get("../Kewangan8/BulanCutiSeparuhGaji", { startDate: startDate, endDate: endDate }, function (data) {
+                                    if (data.length > 1) {
+                                        $("#tableAnsuran").html(AnsuranBulanan(data.length, xGaji, 0, data, "G"));
+                                        AnsuranElaunBulanan(data.length, data)
+                                    }
+                                }, "Json")
+                            }
                         }
                     }
                     else {
@@ -3996,7 +4008,7 @@
                     nilai = ajaxKiraPelarasan(startDate, endDate, keyInDate3, gaji.toFixed(2), kod, jenis)
                     $('#HR_JUMLAH_POTONGAN_GAJI').val(nilai.toFixed(2));
                 }
-                else if (kod == "00017") {
+                else if (kod == "00017" || kod == "00018") {
                     nilai = ajaxKiraPelarasan(startDate, endDate, endDate, gaji.toFixed(2), kod, jenis);
                     $('#HR_JUMLAH_POTONGAN_GAJI').val(nilai.toFixed(2));
 

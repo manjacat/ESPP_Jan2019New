@@ -13419,7 +13419,7 @@ namespace eSPP.Controllers
                 DateTime keyInDate2 = Convert.ToDateTime(keyInDate);
                 DateTime keyInDate3 = new DateTime(keyInDate2.Year, keyInDate2.Month, 1);
                 decimal gajiPokok = Convert.ToDecimal(gaji);
-                if (kod != "00017")
+                if (kod != "00017" && kod != "00018")
                 {
                     //potongan
                     if (crrnDate > keyInDate2)

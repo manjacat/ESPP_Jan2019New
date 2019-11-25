@@ -2026,6 +2026,7 @@ namespace eSPP.Controllers
                     .Where(s => PageSejarahModel.ListKodKWSP.Contains(s.HR_KOD))
                     .FirstOrDefault();
 
+                //tocheck
                 var totalElaunka = elaunka.Sum(s => s.HR_JUMLAH);
                 var totalElaunLain = elaunlain.Sum(s => s.HR_JUMLAH);
                 var totalElaunot = elaunot.Sum(s => s.HR_JUMLAH);
@@ -2037,7 +2038,7 @@ namespace eSPP.Controllers
                     (gajiPokok,
                     totalElaunka,
                     totalElaunLain,
-                    totalElaunot.Value, hariBekerja);
+                    totalElaunot.Value);
                 var gajiSebelumKWSP = gajikasar;
 
                 var totalPotongan = potonganKWSP.HR_JUMLAH
@@ -2385,28 +2386,36 @@ namespace eSPP.Controllers
             var date = Convert.ToDateTime(datebulan);
             List<HR_TRANSAKSI_SAMBILAN_DETAIL> listbulan = db.HR_TRANSAKSI_SAMBILAN_DETAIL.AsEnumerable().Where(s => s.HR_KOD == "P0015" && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) >= date) && (Convert.ToDateTime("01/" + s.HR_BULAN_DIBAYAR + "/" + s.HR_TAHUN) <= date)).ToList();
             var maklumat = listbulan.OrderBy(s => s.HR_NO_PEKERJA);
-
+            var style = "style='font-size:11px;top-padding:5px;bottom-padding:5px;'";
             html += "<table width='100%'>";
-            html += "<tr><td style='font-size:11px;'>Bil.</td><td style='font-size:11px;'>Nama</td><td style='font-size:11px;'>No. K/P</td><td style='font-size:11px;'>Jumlah</td></tr>";
-
+            html += "<tr><td " + style + ">Bil.</td><td " + style + ">Nama</td><td " + style + ">No. K/P</td><td " + style + ">Jumlah</td></tr>";
+            Double tbesar = 0;
             foreach (var item in listbulan)
             {
                 i++;
                 HR_MAKLUMAT_PERIBADI peribadi = db.HR_MAKLUMAT_PERIBADI.AsEnumerable().Where(s => s.HR_NO_PEKERJA == item.HR_NO_PEKERJA).SingleOrDefault();
                 HR_MAKLUMAT_PEKERJAAN pekerjaan = db.HR_MAKLUMAT_PEKERJAAN.AsEnumerable().Where(s => s.HR_NO_PEKERJA == item.HR_NO_PEKERJA).SingleOrDefault();
-
+                Double jbesar = 1.50;
+                tbesar += jbesar;
                 html += "<tr>";
-                html += "<td align='left' width='3%' style='font-size:11px;'>" + i + "</td>";
-                html += "<td align='left' width='70%' style='font-size:11px;'>" + peribadi.HR_NAMA_PEKERJA + "</td>";
-                html += "<td align='left' width='20%' style='font-size:11px;'>" + peribadi.HR_NO_KPBARU + "</td>";
-                html += "<td align='left' width='7%' style='font-size:11px;'>1.50</td>";
+                html += "<td align='left' width='3%' " + style + ">" + i + "</td>";
+                html += "<td align='left' width='70%' " + style + ">" + peribadi.HR_NAMA_PEKERJA + "</td>";
+                html += "<td align='left' width='20%' " + style + ">" + peribadi.HR_NO_KPBARU + "</td>";
+                html += "<td align='left' width='7%' " + style + ">" + jbesar.ToString("#,0.00") + "</td>";
                 html += "</tr>";
             }
+            html += "<tr>";
+            html += "<td align='left' width='3%' " + style + "></td>";
+            html += "<td align='left' width='70%' " + style + "></td>";
+            html += "<td align='left' width='20%' " + style + "><strong>Jumlah</strong></td>";
+            html += "<td align='left' width='7%' " + style + "><strong>RM " + tbesar.ToString("#,0.00") + "</strong></td>";
+            html += "</tr>";
+
             html += "</table>";
             html += "<table><tr><td>&nbsp;</td></tr></table>";
             html += "<table><tr><td>&nbsp;</td></tr></table>";
             html += "<table>";
-            html += "<tr><td align='left' style='font-size:11px;'>(MOHAMAD ROSNANI BIN HJ. HAMID,PPT)</td></tr>";
+            html += "<tr><td align='left' style='font-size:11px;'>KU MUSTAFA BIN KU MOHAMAD</td></tr>";
             html += "<tr><td align='left' style='font-size:11px;'>Timbalan Pengarah (Sumber Manusia),</td></tr>";
             html += "<tr><td align='left' style='font-size:11px;'>b.p. Datuk Bandar,</td></tr>";
             html += "<tr><td align='left' style='font-size:11px;'>Majlis Bandaraya Petaling Jaya</td></tr>";
@@ -2589,10 +2598,10 @@ namespace eSPP.Controllers
                     html += "<td " + style + " align='left' width='10%'>" + peribadi.HR_NO_KPBARU + "</td>";
                     html += "<td " + style + " align='left' width='10%'>" + pekerjaan.HR_NO_KWSP + "</td>";
                     //fix gaji pokok, caruman pekerja & caruman majikan
-                    html += "<td " + style + " align='left' width='10%'>" + listGaji.ElementAt(j).HR_JUMLAH.Value.ToString("0.00") + "</td>";
-                    html += "<td " + style + " align='left' width='10%'>" + kwspData.HR_CARUMAN_PEKERJA.ToString("0.00") + "</td>";
-                    html += "<td " + style + " align='left' width='10%'>" + kwspData.HR_CARUMAN_MAJIKAN.ToString("0.00") + "</td>";
-                    html += "<td " + style + " align='left'  width='10%'>" + kwspData.HR_TOTAL_CARUMAN.Value.ToString("0.00") + "</td>";
+                    html += "<td " + style + " align='left' width='10%'>" + listGaji.ElementAt(j).HR_JUMLAH.Value.ToString("#,0.00") + "</td>";
+                    html += "<td " + style + " align='left' width='10%'>" + kwspData.HR_CARUMAN_PEKERJA.ToString("#,0.00") + "</td>";
+                    html += "<td " + style + " align='left' width='10%'>" + kwspData.HR_CARUMAN_MAJIKAN.ToString("#,0.00") + "</td>";
+                    html += "<td " + style + " align='left'  width='10%'>" + kwspData.HR_TOTAL_CARUMAN.Value.ToString("#,0.00") + "</td>";
                     sumGajiPokok += listGaji.ElementAt(j).HR_JUMLAH.Value;
                     sumCarumanPekerja += kwspData.HR_CARUMAN_PEKERJA;
                     sumCarumanMajikan += kwspData.HR_CARUMAN_MAJIKAN;
@@ -2604,10 +2613,10 @@ namespace eSPP.Controllers
                 if(n == listGaji.Count())
                 {
                     html += "<tr><td></td><td " + style + "><strong>JUMLAH KESELURUHAN</strong></td><td></td><td></td><td " + style + "><strong>"
-                    + sumGajiPokok.ToString("0.00") + "</strong></td><td " + style + "><strong>"
-                    + sumCarumanPekerja.ToString("0.00") + "</strong></td><td " + style + "><strong>"
-                    + sumCarumanMajikan.ToString("0.00") + "</strong></td><td " + style + "><strong>"
-                    + sumJumlah.ToString("0.00") + "</strong></td></tr>";
+                    + sumGajiPokok.ToString("#,0.00") + "</strong></td><td " + style + "><strong>"
+                    + sumCarumanPekerja.ToString("#,0.00") + "</strong></td><td " + style + "><strong>"
+                    + sumCarumanMajikan.ToString("#,0.00") + "</strong></td><td " + style + "><strong>"
+                    + sumJumlah.ToString("#,0.00") + "</strong></td></tr>";
                 }
                 
                 html += "</table>";
@@ -2615,7 +2624,7 @@ namespace eSPP.Controllers
             html += "<table><tr><td>&nbsp;</td></tr></table>";
             html += "<table><tr><td>&nbsp;</td></tr></table>";
             html += "<table>";
-            html += "<tr><td align='left' style='font-size:11px;'>(MOHAMAD ROSNANI BIN HJ. HAMID,PPT)</td></tr>";
+            html += "<tr><td align='left' style='font-size:11px;'>KU MUSTAFA BIN KU MOHAMAD</td></tr>";
             html += "<tr><td align='left' style='font-size:11px;'>Timbalan Pengarah (Sumber Manusia),</td></tr>";
             html += "<tr><td align='left' style='font-size:11px;'>b.p. Datuk Bandar,</td></tr>";
             html += "<tr><td align='left' style='font-size:11px;'>Majlis Bandaraya Petaling Jaya</td></tr>";
@@ -2735,7 +2744,7 @@ namespace eSPP.Controllers
         //    html += "<table><tr><td>&nbsp;</td></tr></table>";
         //    html += "<table><tr><td>&nbsp;</td></tr></table>";
         //    html += "<table>";
-        //    html += "<tr><td align='left' style='font-size:11px;'>(MOHAMAD ROSNANI BIN HJ. HAMID,PPT)</td></tr>";
+        //    html += "<tr><td align='left' style='font-size:11px;'>KU MUSTAFA BIN KU MOHAMAD</td></tr>";
         //    html += "<tr><td align='left' style='font-size:11px;'>Timbalan Pengarah (Sumber Manusia),</td></tr>";
         //    html += "<tr><td align='left' style='font-size:11px;'>b.p. Datuk Bandar,</td></tr>";
         //    html += "<tr><td align='left' style='font-size:11px;'>Majlis Bandaraya Petaling Jaya</td></tr>";
@@ -2896,7 +2905,7 @@ namespace eSPP.Controllers
         //    html += "<table><tr><td>&nbsp;</td></tr></table>";
         //    html += "<table><tr><td>&nbsp;</td></tr></table>";
         //    html += "<table>";
-        //    html += "<tr><td align='left' style='font-size:11px;'>(MOHAMAD ROSNANI BIN HJ. HAMID,PPT)</td></tr>";
+        //    html += "<tr><td align='left' style='font-size:11px;'>KU MUSTAFA BIN KU MOHAMAD</td></tr>";
         //    html += "<tr><td align='left' style='font-size:11px;'>Timbalan Pengarah (Sumber Manusia),</td></tr>";
         //    html += "<tr><td align='left' style='font-size:11px;'>b.p. Datuk Bandar,</td></tr>";
         //    html += "<tr><td align='left' style='font-size:11px;'>Majlis Bandaraya Petaling Jaya</td></tr>";
@@ -3061,15 +3070,15 @@ namespace eSPP.Controllers
                     html += "<td " + style + " align='left' width='20%'>" + peribadi.HR_NAMA_PEKERJA + "</td>";
                     html += "<td " + style + " align='left' width='10%'>" + peribadi.HR_NO_KPBARU + "</td>";
                     html += "<td " + style + " align='left' width='10%'>" + pekerjaan.HR_NO_SOCSO + "</td>";
-                    html += "<td " + style + " align='left' width='10%'>" + gajiPokok.HR_JUMLAH.Value.ToString("0.00") + "</td>";
+                    html += "<td " + style + " align='left' width='10%'>" + gajiPokok.HR_JUMLAH.Value.ToString("#,0.00") + "</td>";
 
                     decimal carumanMajikan = potonganSosco.HR_CARUMAN_MAJIKAN;
                     decimal carumanPekerja = potonganSosco.HR_CARUMAN_PEKERJA;
 
-                    html += "<td " + style + " align='left' width='10%'>" + carumanPekerja.ToString("0.00") + "</td>";
-                    html += "<td " + style + " align='left' width='10%'>" + carumanMajikan.ToString("0.00") + "</td>";
+                    html += "<td " + style + " align='left' width='10%'>" + carumanPekerja.ToString("#,0.00") + "</td>";
+                    html += "<td " + style + " align='left' width='10%'>" + carumanMajikan.ToString("#,0.00") + "</td>";
                     var tambah = potonganSosco.HR_JUMLAH;
-                    html += "<td " + style + " align='left'  width='10%'>" + tambah.ToString("0.00") + "</td>";
+                    html += "<td " + style + " align='left'  width='10%'>" + tambah.ToString("#,0.00") + "</td>";
 
                     sumGajiPokok = sumGajiPokok + gajiPokok.HR_JUMLAH.Value;
                     sumPotonganSocso = sumPotonganSocso + carumanPekerja;
@@ -3083,20 +3092,20 @@ namespace eSPP.Controllers
                 if (n == listGaji.Count())
                 {
                     html += "<tr><td></td><td " + style + "><strong>JUMLAH KESELURUHAN</strong></td><td></td><td></td><td " + style + "><strong>"
-                    + sumGajiPokok.Value.ToString("0.00")
+                    + sumGajiPokok.Value.ToString("#,0.00")
                     + "</strong></td><td " + style + "><strong>"
-                    + sumPotonganSocso.Value.ToString("0.00")
+                    + sumPotonganSocso.Value.ToString("#,0.00")
                     + "</strong></td><td " + style + "><strong>"
-                    + sumCarumanMajikan.Value.ToString("0.00")
+                    + sumCarumanMajikan.Value.ToString("#,0.00")
                     + "</strong></td><td " + style + "><strong>"
-                    + sumJumlah.Value.ToString("0.00") + "</strong></td></tr>";
+                    + sumJumlah.Value.ToString("#,0.00") + "</strong></td></tr>";
                 }
                 html += "</table>";
             }
             html += "<table><tr><td>&nbsp;</td></tr></table>";
             html += "<table><tr><td>&nbsp;</td></tr></table>";
             html += "<table>";
-            html += "<tr><td align='left' style='font-size:11px;'>(MOHAMAD ROSNANI BIN HJ. HAMID,PPT)</td></tr>";
+            html += "<tr><td align='left' style='font-size:11px;'>KU MUSTAFA BIN KU MOHAMAD</td></tr>";
             html += "<tr><td align='left' style='font-size:11px;'>Timbalan Pengarah (Sumber Manusia),</td></tr>";
             html += "<tr><td align='left' style='font-size:11px;'>b.p. Datuk Bandar,</td></tr>";
             html += "<tr><td align='left' style='font-size:11px;'>Majlis Bandaraya Petaling Jaya</td></tr>";

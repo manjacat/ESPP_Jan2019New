@@ -148,7 +148,7 @@ namespace eSPP.Models
                         (gaji.HR_JUMLAH.Value, 
                         totalElaunka, 
                         totalElaunLain, 
-                        totalElaunot.Value, kerjaelaun.HARIBEKERJA.Value);
+                        totalElaunot.Value);
                     kerjaelaun.GAJIKASAR = gajikasar.ToString("0.00");
                     var gajiSebelumKWSP = gajikasar;
                     kerjaelaun.GAJISEBELUMKWSP = gajiSebelumKWSP.ToString("0.00");
@@ -177,16 +177,20 @@ namespace eSPP.Models
                     List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganksdk = PageSejarahModel.GetPotonganKSDK(db, HR_PEKERJA);
                     List<HR_MAKLUMAT_ELAUN_POTONGAN> potonganlain = 
                         PageSejarahModel.GetPotonganLain(db, HR_PEKERJA);
-                    List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunka = PageSejarahModel.GetElaunKa(db, HR_PEKERJA);
-                    List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunLain = PageSejarahModel.GetElaunLain(db, HR_PEKERJA);
+                    List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunkaDaily = PageSejarahModel.GetElaunKa_Daily(db, HR_PEKERJA);
+                    List<HR_MAKLUMAT_ELAUN_POTONGAN> elaunLainDaily = PageSejarahModel.GetElaunLain_Daily(db, HR_PEKERJA);
                     
                     //semua Elaun
                     int jumlahHariInt = Convert.ToInt32(jumlahhari != null ? jumlahhari : 0);
                     decimal jumlahJamOT = Convert.ToDecimal(jumlahot != null ? jumlahot : 0);
                     var elaunot = PageSejarahModel.GetElaunOT(db, HR_PEKERJA, jumlahHariInt, jumlahJamOT);
                     kerjaelaun.JUMLAHBAYARANOT = elaunot.ToString("0.00");
-                    kerjaelaun.ELAUNKA = elaunka.Sum(s => s.HR_JUMLAH).Value.ToString("0.00");
-                    kerjaelaun.ELAUNLAIN = elaunLain.Sum(s => s.HR_JUMLAH).Value.ToString("0.00");
+                    var elaunka_bulan = PageSejarahModel.GetElaun_Bulanan(elaunkaDaily.Sum(s => s.HR_JUMLAH), jumlahHariInt);
+                    var elaunLain_bulan = PageSejarahModel.GetElaun_Bulanan(elaunLainDaily.Sum(s => s.HR_JUMLAH), jumlahHariInt);
+                    kerjaelaun.ELAUNKA = elaunka_bulan.ToString("0.00");
+                    kerjaelaun.ELAUNLAIN = elaunLain_bulan.ToString("0.00");
+                    //kerjaelaun.ELAUNKA = elaunkaDaily.Sum(s => s.HR_JUMLAH).Value.ToString("0.00");
+                    //kerjaelaun.ELAUNLAIN = elaunLainDaily.Sum(s => s.HR_JUMLAH).Value.ToString("0.00");
 
                     //other info
                     kerjaelaun.JABATAN = userJabatan.GE_KETERANGAN_JABATAN; 
@@ -194,10 +198,8 @@ namespace eSPP.Models
                     kerjaelaun.NOKP = userPeribadi.HR_NO_KPBARU;
                     kerjaelaun.JAWATAN = jawatan.HR_NAMA_JAWATAN;
 
-                    var totalElaunka = elaunka.Sum(s => s.HR_JUMLAH);
-                    var totalElaunLain = elaunLain.Sum(s => s.HR_JUMLAH);
                     decimal gajiKasar = PageSejarahModel
-                        .GetGajiKasar(gajiPokok, totalElaunka, totalElaunLain, elaunot, jumlahHariInt);
+                        .GetGajiKasar(gajiPokok, elaunka_bulan, elaunLain_bulan, elaunot);
                     kerjaelaun.GAJIKASAR = gajiKasar.ToString("0.00");
 
                     //semua potongan

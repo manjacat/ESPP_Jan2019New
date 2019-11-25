@@ -9,6 +9,7 @@ namespace eSPP.Models
     public class MaklumatKakitanganModels
     {
         public string ACTIVE_ITEM { get; set; }
+        public HttpPostedFileBase file { get; set; }
         public List<MaklumatPeribadi> HR_SENARAI_PERIBADI { get; set; }
         public MaklumatPeribadi HR_MAKLUMAT_PERIBADI { get; set; }
         public HR_GAMBAR_PENGGUNA HR_GAMBAR_PENGGUNA { get; set; }

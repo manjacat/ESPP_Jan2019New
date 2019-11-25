@@ -4482,7 +4482,7 @@ namespace eSPP.Controllers
 
             if (nilai != null && nilai != "")
             {
-                model = db.HR_MAKLUMAT_PERIBADI.Where(s => (s.HR_NO_PEKERJA.Contains(nilai) || s.HR_NO_KPBARU.Contains(nilai) || s.HR_NAMA_PEKERJA.Contains(nilai)) && s.HR_AKTIF_IND == "Y").Select(s => new { HR_NAMA_PEKERJA = s.HR_NAMA_PEKERJA, HR_NO_KPBARU = s.HR_NO_KPBARU, HR_NO_PEKERJA = s.HR_NO_PEKERJA }).ToList();
+                model = db.HR_MAKLUMAT_PERIBADI.Where(s => s.HR_NO_PEKERJA.Contains(nilai) || s.HR_NO_KPBARU.Contains(nilai) || s.HR_NAMA_PEKERJA.Contains(nilai)).Select(s => new { HR_NAMA_PEKERJA = s.HR_NAMA_PEKERJA, HR_NO_KPBARU = s.HR_NO_KPBARU, HR_NO_PEKERJA = s.HR_NO_PEKERJA }).ToList();
             }
             return Json(new { data = model }, JsonRequestBehavior.AllowGet);
         }

@@ -1,0 +1,682 @@
+﻿@model eSPP.Models.HR_MAKLUMAT_PERIBADI
+<div class="tab-pane active" id="Peribadi">
+    <div class="row">
+
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Maklumat Pengguna
+            </legend>
+            <div class="row smart-form">
+                @Html.HiddenFor(model => model.HR_NO_PEKERJA)
+                @Html.HiddenFor(model => model.HR_NAMA_PEKERJA)
+                @Html.HiddenFor(model => model.HR_NO_KPBARU)
+                @Html.HiddenFor(model => model.HR_TAHUN_SPM)
+                @Html.HiddenFor(model => model.HR_GRED_BM)
+                @Html.HiddenFor(model => model.HR_NP_KEYIN)
+                @Html.HiddenFor(model => model.HR_TARIKH_KEYIN)
+                @Html.HiddenFor(model => model.HR_IDPEKERJA)
+                
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Status</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_AKTIF_IND, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Alasan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_ALASAN, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. KP (Lama)</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-list-alt"></i>
+                                    @Html.EditorFor(model => model.HR_NO_KPLAMA, new { htmlAttributes = new { @class = "form-control" } })
+                                </label>
+
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Taraf Perkahwinan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_TARAF_KAHWIN, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Lahir</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input type="text" name="HR_TARIKH_LAHIR" id="HR_TARIKH_LAHIR" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_LAHIR)" />
+
+                                </label>
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-4 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Umur</label>
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
+                                <label class="input">
+                                    <input type="text" name="Umur" id="Umur" class="form-control" value="@ViewBag.Umur" readonly="readonly" />
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tempat Lahir</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_TEMPAT_LAHIR, null, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kewarganegaraan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_WARGANEGARA, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Agama</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_AGAMA, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Keturunan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_KETURUNAN, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">E-mel</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-envelope-o"></i>
+                                    @Html.EditorFor(model => model.HR_EMAIL, new { htmlAttributes = new { @class = "form-control" } })
+                                    <b class="tooltip tooltip-top-right">
+                                        <i class="fa fa-warning txt-color-teal"></i>
+                                        Sila isikan e-mel dengan betul (cth: = example@mbpj.gov.my)
+                                    </b>
+                                </label>
+                            </div>
+
+                        </section>
+
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jantina</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <div class="inline-group">
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_JANTINA, "L", htmlAttributes: new { @class = "form-control" })
+                                        <i></i>Lelaki
+                                    </label>
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_JANTINA, "P", htmlAttributes: new { @class = "form-control" })
+                                        <i></i>Perempuan
+                                    </label>
+                                </div>
+                            </div>
+
+                        </section>
+
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Gelaran</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownList("HR_GELARAN", null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+            
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Alamat
+            </legend>
+            <div class="row">
+
+                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="row smart-form">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tetap</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_TALAMAT1, new { htmlAttributes = new { @class = "form-control" } })
+                                </label>
+                            </div>
+
+                        </section>
+
+
+                    </div>
+                    <div class="row smart-form">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_TALAMAT2, new { htmlAttributes = new { @class = "form-control" } })
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row smart-form">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_TALAMAT3, new { htmlAttributes = new { @class = "form-control" } })
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row smart-form">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Poskod</label>
+                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-question-circle"></i>
+                                            @Html.EditorFor(model => model.HR_TPOSKOD, new { htmlAttributes = new { @class = "form-control", maxlength = 5 } })
+                                            <b class="tooltip tooltip-top-right">
+                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                Sila isi hanya nombor sahaja
+                                            </b>
+                                        </label>
+                                    </div>
+
+                                </section>
+
+                                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bandar</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            @Html.EditorFor(model => model.HR_TBANDAR, new { htmlAttributes = new { @class = "form-control" } })
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="row smart-form">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Negeri</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_TNEGERI, new SelectList(ViewBag.Negeri, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="row smart-form">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Surat - Menyurat</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_SALAMAT1, new { htmlAttributes = new { @class = "form-control" } })
+                                </label>
+                            </div>
+
+                        </section>
+
+
+                    </div>
+                    <div class="row smart-form">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_SALAMAT2, new { htmlAttributes = new { @class = "form-control" } })
+                                </label>
+                            </div>
+
+                        </section>
+
+
+                    </div>
+
+                    <div class="row smart-form">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12"></label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_SALAMAT3, new { htmlAttributes = new { @class = "form-control" } })
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row smart-form">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Poskod</label>
+                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-question-circle"></i>
+                                            @Html.EditorFor(model => model.HR_SPOSKOD, new { htmlAttributes = new { @class = "form-control" } })
+                                            <b class="tooltip tooltip-top-right">
+                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                Sila isikan nombor sahaja
+                                            </b>
+                                        </label>
+                                    </div>
+
+                                </section>
+
+                                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bandar</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            @Html.EditorFor(model => model.HR_SBANDAR, new { htmlAttributes = new { @class = "form-control" } })
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="row smart-form">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Negeri</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_SNEGERI, new SelectList(ViewBag.Negeri, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Negeri</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <button type="button" id="btn-paste" name="btn-paste" class="btn btn-default">
+                                    <i class="fa fa-paste"> Ambil Data Dari Alamat Tetap</i>
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <legend>Kenderaan</legend>
+            <div class="row smart-form">
+                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Lesen Memandu</label>
+                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <div class="inline-group">
+                            <label class="radio">
+                                @Html.RadioButtonFor(model => model.HR_LESEN, "Y", htmlAttributes: new { @class = "form-control" })
+                                <i></i>Ada
+                            </label>
+                            <label class="radio">
+                                @Html.RadioButtonFor(model => model.HR_LESEN, "T", htmlAttributes: new { @class = "form-control" })
+                                <i></i>Tiada
+                            </label>
+                        </div>
+                    </div>
+
+                </section>
+
+                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kelas</label>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <label class="input">
+                            @Html.EditorFor(model => model.HR_KELAS_LESEN, new { htmlAttributes = new { @class = "form-control" } })
+                        </label>
+                    </div>
+
+                </section>
+            </div>
+            <div class="row smart-form">
+                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">No. Pendaftaran</label>
+                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <label class="input">
+                            @Html.EditorFor(model => model.HR_NO_KENDERAAN, new { htmlAttributes = new { @class = "form-control" } })
+                        </label>
+                    </div>
+
+                </section>
+
+                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jenis</label>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <label class="input">
+                            @Html.EditorFor(model => model.HR_JENIS_KENDERAAN, new { htmlAttributes = new { @class = "form-control" } })
+                        </label>
+                    </div>
+
+                </section>
+            </div>
+
+            <div class="row smart-form">
+                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">CC Kenderaan</label>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <label class="input">
+                            @Html.EditorFor(model => model.HR_CC_KENDERAAN, new { htmlAttributes = new { @class = "form-control" } })
+                        </label>
+                    </div>
+
+                </section>
+            </div>
+        </fieldset>
+        <br />
+        <fieldset class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <legend>Telefon</legend>
+
+            <div class="row smart-form">
+                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Rumah</label>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <label class="input">
+                            <i class="icon-append fa fa-phone"></i>
+                            @Html.EditorFor(model => model.HR_TELRUMAH, new { htmlAttributes = new { @class = "form-control" } })
+                            <b class="tooltip tooltip-top-right">
+                                <i class="fa fa-warning txt-color-teal"></i>
+                                Sila penuhkan ruangan ini
+                            </b>
+                        </label>
+                    </div>
+
+                </section>
+            </div>
+
+            <div class="row smart-form">
+                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Pejabat</label>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <label class="input">
+                            <i class="icon-append fa fa-phone"></i>
+                            @Html.EditorFor(model => model.HR_TELPEJABAT, new { htmlAttributes = new { @class = "form-control" } })
+                            <b class="tooltip tooltip-top-right">
+                                <i class="fa fa-warning txt-color-teal"></i>
+                                Sila penuhkan ruangan ini
+                            </b>
+                        </label>
+                    </div>
+
+                </section>
+            </div>
+
+            <div class="row smart-form">
+                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bimbit</label>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <label class="input">
+                            <i class="icon-append fa fa-mobile-phone"></i>
+                            @Html.EditorFor(model => model.HR_TELBIMBIT, new { htmlAttributes = new { @class = "form-control" } })
+                            <b class="tooltip tooltip-top-right">
+                                <i class="fa fa-warning txt-color-teal"></i>
+                                Sila penuhkan ruangan ini
+                            </b>
+                        </label>
+                    </div>
+
+                </section>
+            </div>
+        </fieldset>
+
+        @*<footer>
+            <div class="well text-right">
+                <button type="button" name="cetak" id="btn-cetak" class="btn btn-success hide">
+                    <i class="fa fa-print"></i>
+                </button>
+                <button type="submit" name="Command" id="btn-edit" class="btn btn-primary" disabled="disabled">
+                    <i class="fa fa-edit"> Kemaskini</i>
+                </button>
+            </div>
+        </footer>*@
+    </div>
+    @*<br />
+    <br />
+    <br />
+    <footer>
+        <div class="well text-right">
+            <button type="button" name="cetak" id="btn-cetak" class="btn btn-success">
+                <i class="fa fa-print"></i>
+            </button>
+            <button type="button" name="Command" id="btn-edit" class="btn btn-primary">
+                <i class="fa fa-edit"> Kemaskini</i>
+            </button>
+        </div>
+    </footer>*@
+</div>
+
+<script>
+    $(document).ready(function () {
+        
+        $.validator.addMethod("dateITA", function (value, element) {
+
+            var check = false,
+                re = /^\d{1,2}\/\d{1,2}\/\d{4}$/,
+                adata, gg, mm, aaaa, xdata;
+            if (re.test(value)) {
+                adata = value.split("/");
+                gg = parseInt(adata[0], 10);
+                mm = parseInt(adata[1], 10);
+                aaaa = parseInt(adata[2], 10);
+                xdata = new Date(aaaa, mm - 1, gg, 12, 0, 0, 0);
+                if ((xdata.getUTCFullYear() === aaaa) && (xdata.getUTCMonth() === mm - 1) && (xdata.getUTCDate() === gg)) {
+                    check = true;
+                } else {
+                    check = false;
+                }
+            } else {
+                check = false;
+            }
+            return this.optional(element) || check;
+        }, 'Sila masukkan tarikh dengan betul');
+
+        var $mKakitangan = $('#mKakitangan').validate({
+            // Rules for form validation
+            rules: {
+                'HR_NO_PEKERJA': {
+                    required: true,
+                    number: true,
+                    maxlength: 5,
+                    minlength: 5
+                },
+                'HR_NAMA_PEKERJA': {
+                    required: true
+                },
+                'HR_NO_KPBARU': {
+                    required: true,
+                    number: true,
+                    maxlength: 12,
+                    minlength: 12
+                },
+                'HR_EMAIL':
+                {
+                    email: true
+                },
+                'HR_TARIKH_LAHIR': {
+                    dateITA: true
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                'HR_NO_PEKERJA': {
+                    required: 'Sila masukkan no pekerja',
+                    number: 'Sila masukkan hanya nombor sahaja',
+                    minlength: 'Sila masukkan 5 digit nombor'
+                },
+                'HR_NAMA_PEKERJA': {
+                    required: 'Sila masukkan nama pekerja'
+
+                },
+                'HR_NO_KPBARU': {
+                    required: 'Sila masukkan no kad pengenalan',
+                    number: 'Sila masukkan hanya nombor sahaja',
+                    minlength: 'Sila masukkan 12 digit nombor'
+                },
+                'HR_EMAIL': {
+                    email: "Sila masukkan email dengan betul"
+                },
+                'HR_TARIKH_LAHIR': {
+                    dateITA: 'Sila masukkan tarikh dengan betul'
+                }
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+                $.datepicker.errorPlacement
+            }
+        });
+
+        function KiraUmur(no_pekerja, tarikh_lahir) {
+            $.ajax({
+                url: "MaklumatKakitangan/KiraUmur",
+                data: { "id": no_pekerja, "date": tarikh_lahir },
+                contentType: "application/json; charset=utf-8",
+                type: 'GET',
+                dataType: "json",
+                success: function (data) {
+                    $("#Umur").val(data);
+                }
+            })
+        }
+
+        //function KiraPencen(tarikh_lahir, tarikh_tamat) {
+        //    $("#Pekerjaan input[name='HR_UMUR_SARA']").val("");
+        //    if ($("#Peribadi input[name='HR_TARIKH_LAHIR']").val() != "" && $("#Pekerjaan input[name='HR_TARAF_JAWATAN']").val() != "K" && $("#Pekerjaan input[name='HR_TARIKH_TAMAT']").val() != "")
+        //        $.ajax({
+        //            url: "MaklumatKakitangan/KiraUmurBersara",
+        //            data: { "HR_TARIKH_LAHIR": tarikh_lahir, "HR_TARIKH_TAMAT": tarikh_tamat },
+        //            contentType: "application/json; charset=utf-8",
+        //            type: 'GET',
+        //            dataType: "json",
+        //            success: function (data) {
+        //                $("#Pekerjaan input[name='HR_UMUR_SARA']").val(data);
+        //            }
+        //        })
+        //}
+
+        function getDate(element) {
+            var date;
+            try {
+                date = $.datepicker.parseDate(dateFormat, element.value);
+            } catch (error) {
+                date = null;
+            }
+
+            return date;
+        }
+
+        $('#HR_TARIKH_LAHIR').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                //$('#finishdate').datepicker('option', 'minDate', selectedDate);
+                KiraUmur($("#HR_NO_PEKERJA").val(), $(this).val())
+                //KiraPencen($("#Peribadi input[name='HR_TARIKH_LAHIR']").val(), $("#Pekerjaan input[name='HR_TARIKH_TAMAT']").val())
+            }
+        }).on('input', function (e) {
+            KiraUmur($("#HR_NO_PEKERJA").val(), $(this).val())
+            //KiraPencen($("#Peribadi input[name='HR_TARIKH_LAHIR']").val(), $("#Pekerjaan input[name='HR_TARIKH_TAMAT']").val())
+        });
+
+        $("#Peribadi #btn-paste").on("click", function () {
+            $("#Peribadi input[name='HR_SALAMAT1']").val($("#Peribadi input[name='HR_TALAMAT1']").val());
+            $("#Peribadi input[name='HR_SALAMAT2']").val($("#Peribadi input[name='HR_TALAMAT2']").val());
+            $("#Peribadi input[name='HR_SALAMAT3']").val($("#Peribadi input[name='HR_TALAMAT3']").val());
+            $("#Peribadi input[name='HR_SPOSKOD']").val($("#Peribadi input[name='HR_TPOSKOD']").val());
+            $("#Peribadi input[name='HR_SBANDAR']").val($("#Peribadi input[name='HR_TBANDAR']").val());
+            $("#Peribadi select[name='HR_SNEGERI']").val($("#Peribadi select[name='HR_TNEGERI']").val());
+        })
+
+        //cetakPDF
+        $("#btn-cetak").click(function () {
+            $("#CetakForm").submit()
+            //$.post("MaklumatKakitangan/CetakPDF", { no_pekerja: $("#HR_MAKLUMAT_PERIBADI_HR_NAMA_PEKERJA").val(), tab: hash })
+        })
+
+    })
+</script>

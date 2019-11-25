@@ -172,6 +172,10 @@
             phone: 480
         };
 
+        //var keyInDate = $('#HR_TARIKH_KEYIN').datepicker("getDate");
+        //var keyInDate2 = new Date(keyInDate.getFullYear(), keyInDate.getMonth(), 1)
+        //var keyInDate3 = keyInDate2.getDate() + "/" + (keyInDate2.getMonth() + 1) + "/" + keyInDate2.getFullYear();
+
         $('#dt_basic').dataTable({
             "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>" +
                 "t" +
@@ -324,24 +328,24 @@
             Cari($("#nilai").val()).draw()
         })
 
-        function ajaxKodMatriks(HR_GRED, HR_GAJI_POKOK) {
-            var output = null;
-            $.ajax({
-                url: "../Kewangan8/KodMatriks",
-                type: "GET",
-                data: { HR_GRED: HR_GRED, HR_GAJI_POKOK: HR_GAJI_POKOK },
-                dataType: "Json",
-                contentType: "application/json; charset=utf-8",
-                async: false,
-                success: function (data) {
-                    var tahap = parseFloat(data.HR_TAHAP);
-                    output = "P" + data.HR_PERINGKAT + "T" + tahap.toFixed(2);
-                    $("#HR_GAJI_MAX_BARU").val(data.HR_GAJI_MAX.toFixed(2));
-                    $("#HR_GAJI_MIN_BARU").val(data.HR_GAJI_MIN.toFixed(2));
-                }
-            });
-            return output;
-        }
+        //function ajaxKodMatriks(HR_GRED, HR_GAJI_POKOK) {
+        //    var output = null;
+        //    $.ajax({
+        //        url: "../Kewangan8/KodMatriks",
+        //        type: "GET",
+        //        data: { HR_GRED: HR_GRED, HR_GAJI_POKOK: HR_GAJI_POKOK },
+        //        dataType: "Json",
+        //        contentType: "application/json; charset=utf-8",
+        //        async: false,
+        //        success: function (data) {
+        //            var tahap = parseFloat(data.HR_TAHAP);
+        //            output = "P" + data.HR_PERINGKAT + "T" + tahap.toFixed(2);
+        //            $("#HR_GAJI_MAX_BARU").val(data.HR_GAJI_MAX.toFixed(2));
+        //            $("#HR_GAJI_MIN_BARU").val(data.HR_GAJI_MIN.toFixed(2));
+        //        }
+        //    });
+        //    return output;
+        //}
 
         function ajaxGajiMin(HR_GRED) {
             $("#list-min").html('<option></option>');
@@ -357,10 +361,10 @@
                     output = data;
                     $.each(data, function (i, v) {
                         $("#list-min").append($("<option></option>").val(v.HR_GAJI_MIN.toFixed(2)))
-                        if (data.length == 1) {
-                            $("#HR_GAJI_MIN_BARU").val(v.HR_GAJI_MIN.toFixed(2));
-                            ajaxGajiMax(v.HR_GAJI_MIN, HR_GRED);
-                        }
+                        //if (data.length == 1) {
+                        //    $("#HR_GAJI_MIN_BARU").val(v.HR_GAJI_MIN.toFixed(2));
+                        //    ajaxGajiMax(v.HR_GAJI_MIN, HR_GRED);
+                        //}
                     })
                 }
             });
@@ -368,7 +372,7 @@
             return output;
         }
 
-        function ajaxGajiMax(HR_GAJI_MIN, HR_GRED) {
+        @*function ajaxGajiMax(HR_GAJI_MIN, HR_GRED) {
             $("#list-max").html('<option></option>');
             var output = new Array();
             $.ajax({
@@ -472,7 +476,7 @@
                 }
             });
             return nilai;
-        }
+        }*@
 
         $(document).on("click", "#HR_NAMA_PT", function () {
             var $this = $(this)
@@ -502,7 +506,7 @@
                                 $("#HR_JUMLAH_PERUBAHAN").val((0).toFixed(2));
 
                                 ajaxGajiMin($("#HR_GRED").val());
-                                ajaxGajiPokok($("#HR_GRED").val(), null, null)
+                                //ajaxGajiPokok($("#HR_GRED").val(), null, null)
 
                                 $("#HR_MATRIKS_GAJI").val("");
                                 if ($(this).attr("id") != "HR_GAJI_BARU") {
@@ -510,23 +514,23 @@
                                     //$("#HR_PGT_BARU").val("");
                                     $("#list-gaji").html('<option></option>');
 
-                                    var MIN = null;
-                                    var MAX = null;
+                                    //var MIN = null;
+                                    //var MAX = null;
 
-                                    if ($("#HR_GAJI_MIN_BARU").val() != "") {
-                                        MIN = $("#HR_GAJI_MIN_BARU").val()
-                                    }
+                                    //if ($("#HR_GAJI_MIN_BARU").val() != "") {
+                                    //    MIN = $("#HR_GAJI_MIN_BARU").val()
+                                    //}
 
-                                    if ($("#HR_GAJI_MAX_BARU").val() != "") {
-                                        MAX = $("#HR_GAJI_MAX_BARU").val();
-                                    }
+                                    //if ($("#HR_GAJI_MAX_BARU").val() != "") {
+                                    //    MAX = $("#HR_GAJI_MAX_BARU").val();
+                                    //}
 
-                                    if ($("#HR_GRED").val() != "") {
-                                        ajaxGajiPokok($("#HR_GRED").val(), MIN, MAX)
-                                    }
+                                    //if ($("#HR_GRED").val() != "") {
+                                    //    ajaxGajiPokok($("#HR_GRED").val(), MIN, MAX)
+                                    //}
                                 }
 
-                                if ($("#HR_GRED").val() != "" && $("#HR_GAJI_BARU").val() != "" && '@ViewBag.Kod' == "00036") {
+                                @*if ($("#HR_GRED").val() != "" && $("#HR_GAJI_BARU").val() != "" && '@ViewBag.Kod' == "00036") {
                                     var matriks6 = ajaxKodMatriks($("#HR_GRED").val(), $("#HR_GAJI_BARU").val())
                                     $("#HR_MATRIKS_GAJI").val(matriks6)
                                 }
@@ -545,7 +549,7 @@
                                             ajaxHasilNilaiMemangku(startDate, endDate, $("#HR_GAJI_LAMA").val(), gaji)
                                         }
                                     }
-                                }
+                                }*@
                             })
                         }
                         

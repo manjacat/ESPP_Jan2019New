@@ -84,7 +84,7 @@
                         <span class="onoffswitch-switch"></span>
                     </label>
                 </span>
-                <input type="hidden" id="Gaji" name="kemaskini" class="form-control" value="off">
+                <input type="hidden" id="Gaji1" name="kemaskini" class="form-control" value="off">
             </legend>
             <div class="row">
 
@@ -355,19 +355,17 @@
                                         </label>
                                     </td>
                                     <td>
-										<div id="rowtxt">
-											@{
-												string mod = null;
-												if (Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_MOD_BAYARAN != null)
-												{
-													if (HR_MOD_BAYARAN.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_MOD_BAYARAN.Trim()).Count() > 0)
-													{
-														mod = HR_MOD_BAYARAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_MOD_BAYARAN.Trim()).Text;
-													}
-												}
-											}
-											@mod
-										</div>	
+                                        @{
+                                            string mod = null;
+                                            if (Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_MOD_BAYARAN != null)
+                                            {
+                                                if (HR_MOD_BAYARAN.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_MOD_BAYARAN.Trim()).Count() > 0)
+                                                {
+                                                    mod = HR_MOD_BAYARAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_E.ElementAt(item).HR_MOD_BAYARAN.Trim()).Text;
+                                                }
+                                            }
+                                        }
+                                        @mod
                                         <label class="select">
                                             <select name="HR_MAKLUMAT_ELAUN_POTONGAN_E[@item].HR_MOD_BAYARAN" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_E_HR_MOD_BAYARAN" style="display:none;" disabled="disabled" data-msg-required="Sila pilih mod bayar">
                                                 @foreach (var op in HR_MOD_BAYARAN)
@@ -535,19 +533,17 @@
                                         </label>
                                     </td>
                                     <td>
-										<div id="rowtxt">
-											@{
-												string mod = null;
-												if (Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_MOD_BAYARAN != null)
-												{
-													if (HR_MOD_BAYARAN.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_MOD_BAYARAN.Trim()).Count() > 0)
-													{
-														mod = HR_MOD_BAYARAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_MOD_BAYARAN.Trim()).Text;
-													}
-												}
-											}
-											@mod
-										</div>
+                                        @{
+                                            string mod = null;
+                                            if (Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_MOD_BAYARAN != null)
+                                            {
+                                                if (HR_MOD_BAYARAN.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_MOD_BAYARAN.Trim()).Count() > 0)
+                                                {
+                                                    mod = HR_MOD_BAYARAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_P.ElementAt(item).HR_MOD_BAYARAN.Trim()).Text;
+                                                }
+                                            }
+                                        }
+                                        @mod
                                         <label class="select">
                                             <select name="HR_MAKLUMAT_ELAUN_POTONGAN_P[@item].HR_MOD_BAYARAN" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_P_HR_MOD_BAYARAN" style="display:none;" disabled="disabled" data-msg-required="Sila pilih mod bayar">
                                                 @foreach (var op in HR_MOD_BAYARAN)
@@ -709,19 +705,17 @@
                                         </label>
                                     </td>
                                     <td>
-										<div id="rowtxt">
-											@{
-												string mod = null;
-												if (Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_MOD_BAYARAN != null)
-												{
-													if (HR_MOD_BAYARAN.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_MOD_BAYARAN.Trim()).Count() > 0)
-													{
-														mod = HR_MOD_BAYARAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_MOD_BAYARAN.Trim()).Text;
-													}
-												}
-											}
-											@mod
-										</div>
+                                        @{
+                                            string mod = null;
+                                            if (Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_MOD_BAYARAN != null)
+                                            {
+                                                if (HR_MOD_BAYARAN.Where(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_MOD_BAYARAN.Trim()).Count() > 0)
+                                                {
+                                                    mod = HR_MOD_BAYARAN.FirstOrDefault(s => s.Value == Model.HR_MAKLUMAT_ELAUN_POTONGAN_C.ElementAt(item).HR_MOD_BAYARAN.Trim()).Text;
+                                                }
+                                            }
+                                        }
+                                        @mod
                                         <label class="select">
                                             <select name="HR_MAKLUMAT_ELAUN_POTONGAN_C[@item].HR_MOD_BAYARAN" class="form-control HR_MAKLUMAT_ELAUN_POTONGAN_C_HR_MOD_BAYARAN" style="display:none;" disabled="disabled" data-msg-required="Sila pilih mod bayar">
                                                 @foreach (var op in HR_MOD_BAYARAN)

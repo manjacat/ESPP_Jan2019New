@@ -1,4 +1,4 @@
-﻿@model eSPP.Models.HR_MAKLUMAT_PERIBADI
+﻿@model IEnumerable<eSPP.Models.HR_MAKLUMAT_PERIBADI>
 			<!-- MAIN CONTENT -->
 <div id="content">
 
@@ -57,67 +57,51 @@
                         <div class="widget-body">
                             
                             <div class="row">
-                                @Html.Partial("SearchKakitangan", Model)
+                                @Html.Partial("SearchKakitangan")
                             </div>
                             <br />
-
-                                @using (Html.BeginForm("Index", "MaklumatKakitangan", FormMethod.Post, new { id = "mKakitangan", enctype = "multipart/form-data" }))
+                            @using (Html.BeginForm("TabPeribadi", "MaklumatKakitangan", FormMethod.Post, new { id = "mKakitangan", enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationBootstrap()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.Partial("ListKakitangan", Model)
+                                if (ViewBag.key == "4")
                                 {
-                                    @Html.AntiForgeryToken()
-                                    @Html.ValidationBootstrap()
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    @Html.Hidden("ACTIVE_ITEM", null)
-                                    @Html.Partial("ListKakitangan", Model)
-                                    if (ViewBag.key == "4")
-                                    {
-                                        <div id="lihat-info">
-                                            <div class="row">
-                                                <div class="col-md-12 tab-pane">
-                                                    @Html.Partial("KakitanganTab")
-                                                    <div class="tab-content padding-10">
-                                                        @Html.Partial("TabPeribadi", Model)
-                                                        @Html.Partial("TabPekerjaan", Model)
-                                                        @Html.Partial("TabKemahiran", Model)
-                                                        @Html.Partial("TabAkademik", Model)
-                                                        @Html.Partial("TabPewaris", Model)
-                                                        @Html.Partial("TabTanggungan", Model)
-                                                        @Html.Partial("TabKuarters", Model)
-                                                        @Html.Partial("TabGaji", Model)
-                                                        @Html.Partial("TabAnugerah", Model)
-                                                        @Html.Partial("TabPersaraan", Model)
-                                                        @Html.Partial("TabTatatertib", Model)
-                                                        @Html.Partial("TabKematian", Model)
-                                                        @Html.Partial("TabPrestasi", Model)
-                                                        @Html.Partial("TabTanggungKerja", Model)
-                                                        @Html.Partial("TabCuti", Model)
-                                                    </div>
+                                    <div id="lihat-info">
+                                        <div class="row">
+                                            <div class="col-md-12 tab-pane">
+                                                @Html.Partial("KakitanganTab")
+                                                <div class="tab-content padding-10">
+
                                                 </div>
                                             </div>
                                         </div>
-                                        <footer>
-                                            <div class="well text-right">
-                                                <button type="button" name="cetak" id="btn-cetak" class="btn btn-success hide">
-                                                    <i class="fa fa-print"></i>
-                                                </button>
-                                                <button type="submit" name="Command" id="btn-edit" class="btn btn-primary" disabled="disabled">
-                                                    <i class="fa fa-edit"> Kemaskini</i>
-                                                </button>
-                                            </div>
-                                        </footer>
-                                    }
-
+                                    </div>
+                                    <footer>
+                                        <div class="well text-right">
+                                            <button type="button" name="cetak" id="btn-cetak" class="btn btn-success hide">
+                                                <i class="fa fa-print"></i>
+                                            </button>
+                                            <button type="submit" name="Command" id="btn-edit" class="btn btn-primary">
+                                                <i class="fa fa-edit"> Kemaskini</i>
+                                            </button>
+                                        </div>
+                                    </footer>
                                 }
-                            
-                                @using (Html.BeginForm("CetakPDF", "MaklumatKakitangan", FormMethod.Post, new { id = "CetakForm", enctype = "multipart/form-data", target = "_blank" }))
+                                
+                            }
+                            @if (ViewBag.key == "4")
+                            { 
+                                using (Html.BeginForm("CetakPDF", "MaklumatKakitangan", FormMethod.Post, new { id = "CetakForm", enctype = "multipart/form-data", target = "_blank" }))
                                 {
-                                    @Html.HiddenFor(model => model.ACTIVE_ITEM)
-                                    @Html.HiddenFor(model => model.HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA)
+                                    @Html.Hidden("ACTIVE_ITEM")
+                                    @Html.Hidden("HR_NO_PEKERJA", Model.ElementAt(0).HR_NO_PEKERJA)
                                 }
-
+                            }
                         <!-- end widget content -->
 
                     </div>
-                    @Html.Partial("ModalPekerja")
                     <!-- end widget div -->
 
                 </div>
@@ -154,45 +138,106 @@
 
             // on load of the page: switch to the currently selected tab
             let url = location.href.replace(/\/$/, "");
-            if (location.hash) {
-                const hash = window.location.hash;
-                var item = hash.substring(1, hash.length)
+            if ('@ViewBag.key' == "4") {
+                if (location.hash) {
+                    const hash = window.location.hash;
+                    CallTab(hash)
+                    
+                    $('#myTab a[href="' + hash + '"]').tab('show');
+                    url = location.href.replace(/\/#/, "#");
+                    history.replaceState(null, null, url);
+                    setTimeout(() => {
+                        $(window).scrollTop(0);
+                    }, 400);
+                    if (hash == "#Peribadi" || hash == "#Pekerjaan") {
+                        $("#btn-cetak").removeClass("hide");
+                    }
+                    else {
+                        $("#btn-cetak").addClass("hide");
+                    }
+                }
+                else {
+                    $("#btn-cetak").removeClass("hide");
+                    CallTab("#Peribadi")
+                }
+            }
+
+            function CallTab(tab) {
+                var item = tab.substring(1, tab.length)
+                $("#mKakitangan").attr("action", "/MaklumatKakitanganBaru/Tab" + item);
+                $('.tab-content').html("");
                 $('input[id="ACTIVE_ITEM"]').val(item)
-                $('#myTab a[href="' + hash + '"]').tab('show');
-                url = location.href.replace(/\/#/, "#");
-                history.replaceState(null, null, url);
-                setTimeout(() => {
-                    $(window).scrollTop(0);
-                }, 400);
-                
+                $.ajax({
+                    type: "GET",
+                    url: "../MaklumatKakitanganBaru/Tab" + item,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "id": $("#HR_MAKLUMAT_PERIBADI_HR_NO_PEKERJA").val() },
+                    datatype: "json",
+                    success: function (data) {
+                        $('.tab-content').html(data);
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
             }
 
             $('a[data-toggle="tab"]').on("click", function () {
                 let newUrl;
                 const hash = $(this).attr("href");
+
                 if (hash == "#Peribadi") {
                     newUrl = url.split("#")[0];
                 } else {
                     newUrl = url.split("#")[0] + hash;
                 }
-                //newUrl += "/";
+
                 if (hash == "#Peribadi" || hash == "#Pekerjaan") {
                     $("#btn-cetak").removeClass("hide");
                 }
                 else {
                     $("#btn-cetak").addClass("hide");
                 }
+                CallTab(hash)
                 history.replaceState(null, null, newUrl);
             });
-
 
             $("#myTab #ActiveTab").on("click", function () {
                 var fid = $(this).attr("href")
                 item = fid.substring(1, fid.length)
                 $('input[id="ACTIVE_ITEM"]').val(item)
+
+            })
+
+            $("#HR_MAKLUMAT_PERIBADI_HR_NAMA_PEKERJA").on("input", function () {
+                $("#HR_NAMA_PEKERJA").val($(this).val())
+            })
+            $("#HR_MAKLUMAT_PERIBADI_HR_NO_KPBARU").on("input", function () {
+                $("#HR_NO_KPBARU").val($(this).val())
             })
 
             
+            //upload image
+            $("button[name='upload-image']").click(function () {
+                $("input[name='file']").click();
+            })
+            $("input[name='file']").change(function () {
+                readURL(this);
+            });
+
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#img').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            
+
         });
 </script>
 }

@@ -1,0 +1,149 @@
+﻿@model IEnumerable<eSPP.Models.HR_MAKLUMAT_PERIBADI>
+@{ 
+    List<HR_GAMBAR_PENGGUNA> SenaraiGambar = (List<HR_GAMBAR_PENGGUNA>)ViewBag.HR_GAMBAR_PENGGUNA;
+}
+@if (Model != null)
+{
+    var style = "";
+    if (Model.Count() > 4)
+    {
+        style = "overflow-y:scroll; height:750px;";
+    }
+    <div style="@style">
+        @{var noP = 0;}
+        @foreach (var HR_MAKLUMAT_PERIBADI in Model)
+        {
+            HR_GAMBAR_PENGGUNA HR_GAMBAR_PENGGUNA = SenaraiGambar.FirstOrDefault(s => s.HR_NO_PEKERJA == HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA);
+            if(HR_GAMBAR_PENGGUNA == null)
+            {
+                HR_GAMBAR_PENGGUNA = new HR_GAMBAR_PENGGUNA();
+            }
+
+            <div class="well">
+                <fieldset>
+                    <div class="row" id="infoKakitangan">
+                        <div class="col col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <div class="row">
+                                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                    @if (HR_GAMBAR_PENGGUNA.HR_NO_PEKERJA == null)
+                                    {
+                                        if (HR_MAKLUMAT_PERIBADI.HR_JANTINA == "P")
+                                        {
+                                            <img id="img" src="~/content/img/avatars/female.png" alt="" width="120" height="120" />
+                                        }
+                                        else
+                                        {
+                                            <img id="img" src="~/content/img/avatars/male.png" alt="" width="120" height="120" />
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        var gambar = HR_GAMBAR_PENGGUNA.HR_PHOTO + HR_GAMBAR_PENGGUNA.HR_FORMAT_TYPE;
+                                        string fullPath = Server.MapPath("~/Content/uploads/" + gambar);
+                                        if (System.IO.File.Exists(fullPath))
+                                        {
+                                            <img id="img" src="~/content/uploads/@gambar" alt="" width="120" height="120" />
+                                        }
+                                        else
+                                        {
+                                            <img id="img" src="~/content/img/avatars/male.png" alt="" width="120" height="120" />
+                                        }
+                                    }
+
+                                </div>
+                                @if (ViewBag.key == "4")
+                                {
+                                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <button type="button" name="upload-image" id="upload-image" class="btn btn-sm btn-default" style="width:120px">Tukar Gambar</button>
+                                        
+                                        <input type="file" name="file" id="file" style="display:none" />
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+
+                        <div class="col col-lg-8 col-md-8 col-sm-10 col-xs-12 smart-form">
+                            <div class="row">
+                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="label col-lg-2 col-md-2 col-sm-2">Nama Pekerja</label>
+                                    <div class="col-lg-6 col-md-8 col-sm-8">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-user"></i>
+                                            @Html.TextBox("HR_NAMA_PEKERJA", HR_MAKLUMAT_PERIBADI.HR_NAMA_PEKERJA, new { @class = "form-control", id = "HR_MAKLUMAT_PERIBADI_HR_NAMA_PEKERJA" })
+
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+                            <div class="row">
+                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="label col-lg-2 col-md-2  col-sm-2">No. KP (Baru)</label>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-list-alt"></i>
+                                            @Html.TextBox("HR_NO_KPBARU", HR_MAKLUMAT_PERIBADI.HR_NO_KPBARU, new { @class = "form-control", maxlength = "12", id = "HR_MAKLUMAT_PERIBADI_HR_NO_KPBARU" })
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+                            <div class="row">
+                                <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label class="label col-lg-2 col-md-2 col-sm-2">No. Pekerja</label>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-list-alt"></i>
+                                            @Html.TextBox("HR_NO_PEKERJA", HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA, new { @class = "form-control", disabled = "disabled", maxlength = "5", id = "HR_MAKLUMAT_PERIBADI_HR_NO_PEKERJA" })
+                                            @Html.Hidden("HR_NO_PEKERJA", HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA, new { @class = "form-control" })
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+                            @if (ViewBag.key != "4")
+                            {
+                                <div class="row">
+                                    <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="label col-lg-2 col-md-2 col-sm-2">Status</label>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <label class="select">
+                                                @Html.DropDownListFor(model => HR_MAKLUMAT_PERIBADI.HR_AKTIF_IND, new SelectList(ViewBag.HR_AKTIF_IND, "Value", "Text", HR_MAKLUMAT_PERIBADI.HR_AKTIF_IND), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                                <i></i>
+                                            </label>
+                                        </div>
+
+                                    </section>
+                                </div>
+                            }
+                            @{noP++;}
+
+                        </div>
+
+
+
+                        @if (ViewBag.key != "4")
+                        {
+                            <div class="col col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <section>
+                                    <a class="btn btn-sm btn-default btn-primary" href="@Url.Action("Index", "MaklumatKakitanganBaru", new { key = "4", value = HR_MAKLUMAT_PERIBADI.HR_NO_PEKERJA })" title="Profil Kakitangan">
+                                        Lihat Info
+                                    </a>
+                                </section>
+                            </div>
+                        }
+
+                    </div>
+
+                </fieldset>
+
+            </div>
+        }
+    </div>
+
+}
+<br />

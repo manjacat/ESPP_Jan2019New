@@ -1,0 +1,1367 @@
+﻿@model eSPP.Models.HR_MAKLUMAT_PEKERJAAN
+<div class="tab-pane active" id="Pekerjaan">
+    <div class="row">
+
+        <fieldset class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <legend>
+                Maklumat Pekerjaan
+            </legend>
+            <div class="row smart-form">
+                @Html.Hidden("HR_TARIKH_LAHIR", string.Format("{0:dd/MM/yyyy}", Model.HR_MAKLUMAT_PERIBADI.HR_TARIKH_LAHIR))
+                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="row">
+
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama Penyelia</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_NO_PENYELIA, null, String.Empty, htmlAttributes: new { @class = "form-control select2" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+
+                    </div>
+                    <!--<div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Gelaran</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_GELARAN, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>-->
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jabatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_JABATAN, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bahagian</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_BAHAGIAN, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Unit</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_UNIT, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jawatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_JAWATAN, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Gelaran Jawatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_KOD_GELARAN_J, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    @*<div class="row">
+                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kategori</label>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <label class="select">
+                                        @Html.DropDownListFor(model => model.HR_MAKLUMAT_PEKERJAAN.HR_KATEGORI, new SelectList(ViewBag.HR_KATEGORI, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+                                        <i></i>
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>*@
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kumpulan Perkhidmatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_KUMP_PERKHIDMATAN, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Taraf Jawatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_TARAF_JAWATAN, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Nama Singkatan</label>
+                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            @Html.EditorFor(model => model.HR_INITIAL, new { htmlAttributes = new { @class = "form-control" } })
+                                        </label>
+                                    </div>
+
+                                </section>
+
+                                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                    <label class="label col-lg-5 col-md-5 col-sm-12 col-xs-12">Kumpulan</label>
+                                    <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                                        <label class="select">
+                                            @Html.DropDownListFor(model => model.HR_KUMPULAN, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                            <i></i>
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Uniform</label>
+                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                        <label class="select">
+                                            @Html.DropDownListFor(model => model.HR_UNIFORM, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                            <i></i>
+                                        </label>
+                                    </div>
+                                </section>
+
+                                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                    <label class="label col-lg-5 col-md-5 col-sm-12 col-xs-12">Teknikal</label>
+                                    <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                                        <label class="select">
+                                            @Html.DropDownListFor(model => model.HR_TEKNIKAL, new SelectList(ViewBag.HR_UNIFORM, "Value", "Text"), String.Empty, htmlAttributes: new { @class = "form-control" })
+                                            <i></i>
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-7 col-md-7 col-sm-6 col-xs-6">
+                            <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Kod PCB</label>
+                            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownList("HR_KATEGORI_PCB", new SelectList(ViewBag.HR_KATEGORI_PCB2, "Value", "Text", ViewBag.HR_KATEGORI_PCB), String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </section>
+
+                        <section class="col col-lg-5 col-md-5 col-sm-6 col-xs-6">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="select">
+
+                                    @Html.DropDownListFor(model => model.HR_KOD_PCB, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">PCB</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <div class="inline-group">
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_STATUS_PCB, "Y", htmlAttributes: new { @class = "form-control" })
+                                        <i></i>Ada
+                                    </label>
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_STATUS_PCB, "T", htmlAttributes: new { @class = "form-control" })
+                                        <i></i>Tiada
+                                    </label>
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_STATUS_PCB, "N", htmlAttributes: new { @class = "form-control" })
+                                        <i></i>Tetap
+                                    </label>
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Akaun PCB</label>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_NO_PCB, new { htmlAttributes = new { @class = "form-control" } })
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <!--<div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jumlah</label>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-question-circle"></i>
+
+                                    <input type="text" name="HR_JUM_PCB" id="HR_JUM_PCB" class="form-control" disabled="disabled" />
+                                    <b class="tooltip tooltip-top-right">
+                                        <i class="fa fa-warning txt-color-teal"></i>
+                                        Sila masukkan hanya nombor sahaja
+                                    </b>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>-->
+                    <!--<div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Mula PCB</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input type="text" name="HR_MAKLUMAT_PEKERJAAN.HR_PCB_TARIKH_MULA" id="HR_MAKLUMAT_PEKERJAAN_HR_PCB_TARIKH_MULA" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_PCB_TARIKH_MULA)" />
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>-->
+                    <!--<div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Akhir PCB</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input type="text" name="HR_MAKLUMAT_PEKERJAAN.HR_PCB_TARIKH_AKHIR" id="HR_MAKLUMAT_PEKERJAAN_HR_PCB_TARIKH_AKHIR" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_PCB_TARIKH_AKHIR)" />
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>-->
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Pilihan (Pencen/KWSP)</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <div class="inline-group">
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_STATUS_PENCEN, "Y", htmlAttributes: new { @class = "form-control" })
+                                        <i></i>Pencen
+                                    </label>
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_STATUS_KWSP, "Y", htmlAttributes: new { @class = "form-control" })
+                                        <i></i>KWSP
+                                    </label>
+
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Akaun KWSP</label>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_NO_KWSP, new { htmlAttributes = new { @class = "form-control" } })
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">SOCSO</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <div class="inline-group">
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_STATUS_SOCSO, "Y", htmlAttributes: new { @class = "form-control" })
+                                        <i></i>Ada
+                                    </label>
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_STATUS_SOCSO, "T", htmlAttributes: new { @class = "form-control" })
+                                        <i></i>Tiada
+                                    </label>
+
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">No. Akaun SOCSO</label>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_NO_SOCSO, new { htmlAttributes = new { @class = "form-control" } })
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Taraf Pekerja</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <div class="inline-group">
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_KAKITANGAN_IND, "Y", htmlAttributes: new { @class = "form-control" })
+                                        <i></i>Kakitangan
+                                    </label>
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_KAKITANGAN_IND, "T", htmlAttributes: new { @class = "form-control" })
+                                        <i></i>Pekerja
+                                    </label>
+
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+
+
+                </div>
+
+                <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="row">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">No. Siri</label>
+                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-list-alt"></i>
+                                            @Html.EditorFor(model => model.HR_NO_SIRI, new { htmlAttributes = new { @class = "form-control", maxlength = 4, size = "5" } })
+                                            <b class="tooltip tooltip-top-right">
+                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                Sila masukkan hanya nombor sahaja
+                                            </b>
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Fail Perkhidmatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-list-alt"></i>
+                                    @Html.EditorFor(model => model.HR_FAIL_PERKHIDMATAN, new { htmlAttributes = new { @class = "form-control" } })
+                                    <b class="tooltip tooltip-top-right">
+                                        <i class="fa fa-warning txt-color-teal"></i>
+                                        Sila masukkan hanya nombor sahaja
+                                    </b>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Bayaran Melalui Cek</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <div class="inline-group">
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_BAYARAN_CEK, "Y", htmlAttributes: new { @class = "form-control" })
+                                        <i></i>YA
+                                    </label>
+                                    <label class="radio">
+                                        @Html.RadioButtonFor(model => model.HR_BAYARAN_CEK, "T", htmlAttributes: new { @class = "form-control" })
+                                        <i></i>Tidak
+                                    </label>
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Nama Bank</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_KOD_BANK, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Akaun Bank</label>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-list-alt"></i>
+                                    @Html.EditorFor(model => model.HR_NO_AKAUN_BANK, new { htmlAttributes = new { @class = "form-control" } })
+                                    <b class="tooltip tooltip-top-right">
+                                        <i class="fa fa-warning txt-color-teal"></i>
+                                        Sila masukkan hanya nombor sahaja
+                                    </b>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Sistem Saraan</label>
+                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                        <div class="inline-group">
+                                            <label class="radio">
+                                                @Html.RadioButtonFor(model => model.HR_SISTEM, "SSM", htmlAttributes: new { @class = "form-control" })
+                                                <i></i>SSM
+                                            </label>
+                                            <label class="radio">
+                                                @Html.RadioButtonFor(model => model.HR_SISTEM, "SSB", htmlAttributes: new { @class = "form-control" })
+                                                <i></i>SSB
+                                            </label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                    <label class="label col-lg-5 col-md-5 col-sm-12 col-xs-12">Umur Persaraan</label>
+                                    <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-list-alt"></i>
+                                            @Html.Editor("HR_UMUR_SARA", new { htmlAttributes = new { @class = "form-control" } })
+                                            <b class="tooltip tooltip-top-right">
+                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                Sila masukkan hanya nombor sahaja
+                                            </b>
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Gred</label>
+                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            @Html.EditorFor(model => model.HR_GRED, new { htmlAttributes = new { @class = "form-control", list = "gredList", autocomplete = "off" } })
+                                            <i></i>
+                                            <datalist id="gredList"></datalist>
+                                        </label>
+                                    </div>
+                                </section>
+
+                                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                    <label class="label col-lg-5 col-md-5 col-sm-12 col-xs-12">Kategori Gaji</label>
+                                    <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                                        <label class="select">
+                                            @Html.DropDownListFor(model => model.HR_GAJI_PRORATA, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                            <i></i>
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Gaji Min</label>
+                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            <span class="icon-prepend fa fa-money"></span>
+                                            @Html.Editor("HR_GAJI_MIN", new { htmlAttributes = new { @class = "form-control", list = "MinList" } })
+                                            <b class="tooltip tooltip-top-right">
+                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                Sila masukkan hanya nombor sahaja
+                                            </b>
+                                            <datalist id="MinList"></datalist>
+                                        </label>
+                                    </div>
+                                </section>
+
+                                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                    <label class="label col-lg-5 col-md-5 col-sm-12 col-xs-12">Gaji Max</label>
+                                    <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            <span class="icon-prepend fa fa-money"></span>
+                                            @Html.Editor("HR_GAJI_MAX", new { htmlAttributes = new { @class = "form-control", list = "MaxList" } })
+                                            <b class="tooltip tooltip-top-right">
+                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                Sila masukkan hanya nombor sahaja
+                                            </b>
+                                            <datalist id="MaxList"></datalist>
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Gaji Pokok</label>
+                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            <span class="icon-prepend fa fa-money"></span>
+                                            @Html.EditorFor(model => model.HR_GAJI_POKOK, new { htmlAttributes = new { @class = "form-control", list = "GajiList" } })
+                                            <b class="tooltip tooltip-top-right">
+                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                Sila masukkan hanya nombor sahaja
+                                            </b>
+                                            <datalist id="GajiList"></datalist>
+                                            @Html.HiddenFor(model => model.HR_MATRIKS_GAJI)
+                                        </label>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Kod Gaji</label>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    @Html.EditorFor(model => model.HR_KOD_GAJI, new { htmlAttributes = new { @class = "form-control" } })
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <!--<div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tingkatan</label>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="select">
+                                    @Html.DropDownListFor(model => model.HR_TINGKATAN, null, String.Empty, htmlAttributes: new { @class = "form-control" })
+                                    <i></i>
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>-->
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Masuk Agensi Kerajaan</label>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input type="text" name="HR_TARIKH_MASUK_KERAJAAN" id="HR_TARIKH_MASUK_KERAJAAN" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_MASUK_KERAJAAN)" />
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Masuk MBPJ</label>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input type="text" name="HR_TARIKH_MASUK" id="HR_TARIKH_MASUK" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_MASUK)" />
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div id="TamatTetap">
+                        <div class="row">
+                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Tamat Perkhidmatan</label>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-calendar"></i>
+                                        <input type="text" name="HR_TARIKH_TAMAT" id="HR_TARIKH_TAMAT" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_TAMAT)" />
+                                    </label>
+                                </div>
+
+                            </section>
+                        </div>
+                    </div>
+                    <div id="TamatKontrak">
+                        <div class="row">
+                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Jumlah Tahun Kontrak</label>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-question-circle"></i>
+                                        @*Html.EditorFor(model => model.HR_NO_SIRI, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })*@
+                                        <input type="text" name="HR_JUM_TAHUN" id="HR_JUM_TAHUN" class="form-control" value="@ViewBag.HR_JUM_TAHUN" maxlength="2" />
+                                        <b class="tooltip tooltip-top-right">
+                                            <i class="fa fa-warning txt-color-teal"></i>
+                                            Sila masukkan hanya nombor sahaja
+                                        </b>
+                                    </label>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="row">
+                            <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Tamat Kontrak</label>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-calendar"></i>
+                                        <input type="text" name="HR_TARIKH_TAMAT_KONTRAK" id="HR_TARIKH_TAMAT_KONTRAK" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_TAMAT_KONTRAK)" />
+                                    </label>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Pengesahan Jawatan</label>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input type="text" name="HR_TARIKH_SAH_JAWATAN" id="HR_TARIKH_SAH_JAWATAN" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_SAH_JAWATAN)" />
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Pengesahan Jawatan Tukar Lantik</label>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input type="text" name="HR_TARIKH_SAH_J_TUKAR_LANTIK" id="HR_TARIKH_SAH_J_TUKAR_LANTIK" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_SAH_J_TUKAR_LANTIK)" />
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Lantikan</label>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input type="text" name="HR_TARIKH_LANTIKAN" id="HR_TARIKH_LANTIKAN" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_TARIKH_LANTIKAN)" />
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">Tarikh Pergerakkan Gaji</label>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input type="text" name="HR_BULAN_KENAIKAN_GAJI" id="HR_BULAN_KENAIKAN_GAJI" class="form-control" value="@string.Format("{0:dd/MM/yyyy}", Model.HR_BULAN_KENAIKAN_GAJI)" />
+                                </label>
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <section class="col col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                    <label class="label col-lg-7 col-md-7 col-sm-12 col-xs-12">Kelas Perjalanan</label>
+                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-question-circle"></i>
+                                            @Html.EditorFor(model => model.HR_KELAS_PERJALANAN, new { htmlAttributes = new { @class = "form-control" } })
+                                            <b class="tooltip tooltip-top-right">
+                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                Sila penuhkan ruangan ini
+                                            </b>
+                                        </label>
+                                    </div>
+
+                                </section>
+
+                                <section class="col col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                    <label class="label col-lg-4 col-md-4 col-sm-12 col-xs-12">CC Kenderaan</label>
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-question-circle"></i>
+                                            @Html.EditorFor(model => model.HR_MAKLUMAT_PERIBADI.HR_CC_KENDERAAN, new { htmlAttributes = new { @class = "form-control" } })
+                                            <b class="tooltip tooltip-top-right">
+                                                <i class="fa fa-warning txt-color-teal"></i>
+                                                Sila penuhkan ruangan ini
+                                            </b>
+                                        </label>
+                                    </div>
+
+                                </section>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </fieldset>
+        <br />
+
+    </div>
+    @*<br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="text-right">
+                <label class="">Kemaskini : </label>
+                <span class="onoffswitch">
+                    <input type="checkbox" name="sah[]" class="onoffswitch-checkbox" id="mPekerjaan-btn" value="off">
+
+                    <label class="onoffswitch-label" for="mPekerjaan-btn">
+                        <span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </span>
+                <input type="hidden" name="kemaskini" class="form-control" value="off">
+            </div>
+        </div>
+    </div>*@
+</div>
+<script>
+    $(document).ready(function () {
+
+        $.validator.addMethod("dateITA", function (value, element) {
+
+            var check = false,
+                re = /^\d{1,2}\/\d{1,2}\/\d{4}$/,
+                adata, gg, mm, aaaa, xdata;
+            if (re.test(value)) {
+                adata = value.split("/");
+                gg = parseInt(adata[0], 10);
+                mm = parseInt(adata[1], 10);
+                aaaa = parseInt(adata[2], 10);
+                xdata = new Date(aaaa, mm - 1, gg, 12, 0, 0, 0);
+                if ((xdata.getUTCFullYear() === aaaa) && (xdata.getUTCMonth() === mm - 1) && (xdata.getUTCDate() === gg)) {
+                    check = true;
+                } else {
+                    check = false;
+                }
+            } else {
+                check = false;
+            }
+            return this.optional(element) || check;
+        }, 'Sila masukkan tarikh dengan betul');
+
+        var $mKakitangan = $('#mKakitangan').validate({
+            // Rules for form validation
+            rules: {
+                'HR_PCB_TARIKH_MULA': {
+                    dateITA: true
+                },
+                'HR_PCB_TARIKH_AKHIR': {
+                    dateITA: true
+                },
+                'HR_TARIKH_MASUK_KERAJAAN': {
+                    dateITA: true
+                },
+                'HR_BULAN_KENAIKAN_GAJI': {
+                    dateITA: true
+                },
+                'HR_TARIKH_MASUK': {
+                    dateITA: true
+                },
+                'HR_TARIKH_TAMAT': {
+                    dateITA: true
+                },
+                'HR_TARIKH_SAH_JAWATAN': {
+                    dateITA: true
+                },
+                'HR_TARIKH_SAH_J_TUKAR_LANTIK': {
+                    dateITA: true
+                },
+                'HR_TARIKH_LANTIKAN': {
+                    dateITA: true
+                },
+                'HR_GAJI_MIN': {
+                    number: true
+                },
+                'HR_GAJI_MAX': {
+                    number: true
+                },
+                'HR_GAJI_POKOK': {
+                    number: true
+                }
+            },
+
+            // Messages for form validation
+            messages: {
+                'HR_PCB_TARIKH_MULA': {
+                    dateITA: 'Sila masukkan tarikh dengan betul'
+                },
+                'HR_PCB_TARIKH_AKHIR': {
+                    dateITA: 'Sila masukkan tarikh dengan betul'
+                },
+                'HR_TARIKH_MASUK_KERAJAAN': {
+                    dateITA: 'Sila masukkan tarikh dengan betul'
+                },
+                'HR_BULAN_KENAIKAN_GAJI': {
+                    dateITA: 'Sila masukkan tarikh dengan betul'
+                },
+                'HR_TARIKH_MASUK': {
+                    dateITA: 'Sila masukkan tarikh dengan betul'
+                },
+                'HR_TARIKH_TAMAT': {
+                    dateITA: 'Sila masukkan tarikh dengan betul'
+                },
+                'HR_TARIKH_SAH_JAWATAN': {
+                    dateITA: 'Sila masukkan tarikh dengan betul'
+                },
+                'HR_TARIKH_SAH_J_TUKAR_LANTIK': {
+                    dateITA: 'Sila masukkan tarikh dengan betul'
+                },
+                'HR_TARIKH_LANTIKAN': {
+                    dateITA: 'Sila masukkan tarikh dengan betul'
+                },
+                'HR_GAJI_MIN': {
+                    number: 'Sila masukkan hanya nombor sahaja'
+                },
+                'HR_GAJI_MAX': {
+                    number: 'Sila masukkan hanya nombor sahaja'
+                },
+                'HR_GAJI_POKOK': {
+                    number: 'Sila masukkan hanya nombor sahaja'
+                }
+            },
+
+            // Do not change code below
+            errorPlacement: function (error, element) {
+                error.insertAfter(element.parent());
+                $.datepicker.errorPlacement
+            }
+        });
+
+        function KiraUmur(no_pekerja, tarikh_lahir) {
+            $.ajax({
+                url: "MaklumatKakitangan/KiraUmur",
+                data: { "id": no_pekerja, "date": tarikh_lahir },
+                contentType: "application/json; charset=utf-8",
+                type: 'GET',
+                dataType: "json",
+                success: function (data) {
+                    $("#Umur").val(data);
+                }
+            })
+        }
+
+        function KiraPencen(tarikh_lahir, tarikh_tamat) {
+            debugger;
+            $("#Pekerjaan input[name='HR_UMUR_SARA']").val("");
+            if ($("#Pekerjaan input[name='HR_TARIKH_LAHIR']").val() != "" && $("#Pekerjaan input[name='HR_TARAF_JAWATAN']").val() != "K" && $("#Pekerjaan input[name='HR_TARIKH_TAMAT']").val() != "")
+                $.ajax({
+                    url: "MaklumatKakitangan/KiraUmurBersara",
+                    data: { "HR_TARIKH_LAHIR": tarikh_lahir, "HR_TARIKH_TAMAT": tarikh_tamat },
+                    contentType: "application/json; charset=utf-8",
+                    type: 'GET',
+                    dataType: "json",
+                    success: function (data) {
+                        $("#Pekerjaan input[name='HR_UMUR_SARA']").val(data);
+                    }
+                });
+        }
+
+        function getDate(element) {
+            var date;
+            try {
+                date = $.datepicker.parseDate(dateFormat, element.value);
+            } catch (error) {
+                date = null;
+            }
+
+            return date;
+        }
+
+        $('#HR_PCB_TARIKH_MULA').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#HR_PCB_TARIKH_AKHIR').datepicker('option', 'minDate', selectedDate);
+            }
+        }).on('change', function (e) {
+            $('#HR_PCB_TARIKH_AKHIR').datepicker('option', 'minDate', getDate(this));
+        });
+
+        $('#HR_PCB_TARIKH_AKHIR').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#HR_PCB_TARIKH_MULA').datepicker('option', 'maxDate', selectedDate);
+            }
+        }).on('change', function (e) {
+            $('#HR_PCB_TARIKH_MULA').datepicker('option', 'maxDate', getDate(this));
+        });
+
+        $('#HR_TARIKH_MASUK_KERAJAAN').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                //$('#HR_TARIKH_TAMAT').datepicker('option', 'minDate', selectedDate);
+            }
+        });
+
+        $('#HR_BULAN_KENAIKAN_GAJI').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            showButtonPanel: true,
+            currentText: "Bulan Kini",
+            closeText: 'Tutup',
+            onSelect: function (selectedDate) {
+                $('#HR_TARIKH_AKHIR').datepicker('option', 'minDate', selectedDate);
+            },
+            onChangeMonthYear: function (year, month, inst) {
+                $(this).val($.datepicker.formatDate('dd/mm/yy', new Date(year, month - 1, 1)));
+            },
+            onClose: function (dateText, inst) {
+                $(this).val($.datepicker.formatDate('dd/mm/yy', new Date(inst.selectedYear, inst.selectedMonth, 1)));
+            }
+        }).on('change', function (e) {
+            $('#HR_TARIKH_AKHIR').datepicker('option', 'minDate', getDate(this));
+        }).focus(function () {
+            $(".ui-datepicker-calendar").hide();
+        });
+
+        function KiraTahunKontrek(tahun, tarikh) {
+            $("#Pekerjaan input[name='HR_TARIKH_TAMAT_KONTRAK']").val("");
+            if ($("#Pekerjaan input[name='HR_JUM_TAHUN']").val() != "" && $("#Pekerjaan input[name='HR_TARIKH_MASUK']").val() != "") {
+                $.ajax({
+                    url: "MaklumatKakitangan/JumlahTahunKontrak",
+                    data: { "HR_JUM_TAHUN": tahun, "HR_TARIKH_MASUK": tarikh },
+                    contentType: "application/json; charset=utf-8",
+                    type: 'GET',
+                    dataType: "json",
+                    success: function (data) {
+                        var tarikh = new Date(parseInt(data.replace(/\/Date\((\d+)\)\//, '$1')));
+                        $("#Pekerjaan input[name='HR_TARIKH_TAMAT_KONTRAK']").val(tarikh.toLocaleDateString('en-GB'));
+                    }
+                })
+            }
+        }
+
+        $('#HR_TARIKH_MASUK').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#HR_TARIKH_TAMAT').datepicker('option', 'minDate', selectedDate);
+                KiraTahunKontrek($("#Pekerjaan input[name='HR_JUM_TAHUN']").val(), $("#Pekerjaan input[name='HR_TARIKH_MASUK']").val());
+            }
+        }).on('change', function (e) {
+            $('#HR_TARIKH_TAMAT').datepicker('option', 'minDate', getDate(this));
+            KiraTahunKontrek($("#Pekerjaan input[name='HR_JUM_TAHUN']").val(), $("#Pekerjaan input[name='HR_TARIKH_MASUK']").val())
+        });
+
+        $('#HR_TARIKH_TAMAT').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                $('#HR_TARIKH_MASUK').datepicker('option', 'maxDate', selectedDate);
+                KiraPencen($("#Pekerjaan input[name='HR_TARIKH_LAHIR']").val(), $("#Pekerjaan input[name='HR_TARIKH_TAMAT']").val())
+            }
+        }).on('change', function (e) {
+            $('#HR_TARIKH_MASUK').datepicker('option', 'maxDate', getDate(this));
+            KiraPencen($("#Pekerjaan input[name='HR_TARIKH_LAHIR']").val(), $("#Pekerjaan input[name='HR_TARIKH_TAMAT']").val())
+        });
+
+        function TarafJawatan() {
+            if ($("#HR_TARAF_JAWATAN").val() == "K") {
+                if ($('#HR_TARIKH_TAMAT_KONTRAK').val() != "") {
+                    $('#HR_TARIKH_MASUK').datepicker('option', 'maxDate', $('#HR_TARIKH_TAMAT_KONTRAK').val());
+                }
+                $('#HR_TARIKH_TAMAT').datepicker('disable');
+            }
+            else {
+                if ($('#HR_TARIKH_TAMAT').val() != "") {
+                    $('#HR_TARIKH_MASUK').datepicker('option', 'maxDate', $('#HR_TARIKH_TAMAT').val());
+                }
+                if ($('#HR_TARIKH_MASUK').val() != "") {
+                    $('#HR_TARIKH_TAMAT').datepicker('option', 'minDate', $('#HR_TARIKH_MASUK').val());
+                }
+                $('#HR_TARIKH_TAMAT').datepicker('enable');
+            }
+        }
+        TarafJawatan()
+
+        $('#HR_TARIKH_SAH_JAWATAN').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                //$('#finishdate').datepicker('option', 'minDate', selectedDate);
+
+
+            }
+        });
+
+        $('#HR_TARIKH_SAH_J_TUKAR_LANTIK').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                //$('#finishdate').datepicker('option', 'minDate', selectedDate);
+
+
+            }
+        });
+
+        $('#HR_TARIKH_LANTIKAN').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>',
+            onSelect: function (selectedDate) {
+                //$('#finishdate').datepicker('option', 'minDate', selectedDate);
+
+
+            }
+        });
+
+        $("#Pekerjaan select[name='HR_JABATAN']").on("input", function () {
+            $("#Pekerjaan select[name='HR_BAHAGIAN']").html("<option></option>");
+            $("#Pekerjaan select[name='HR_UNIT']").html("<option></option>");
+            $.ajax({
+                url: "MaklumatKakitangan/Bahagian",
+                data: { "KodJabatan": $(this).val() },
+                contentType: "application/json; charset=utf-8",
+                type: 'GET',
+                dataType: "json",
+                success: function (data) {
+                    $.each(data, function (i, v) {
+                        $("#Pekerjaan select[name='HR_BAHAGIAN']").append($("<option></option>").val(v.GE_KOD_BAHAGIAN).html(v.GE_KETERANGAN));
+                    })
+                }
+            })
+        })
+        $("#Pekerjaan select[name='HR_BAHAGIAN']").on("input", function () {
+            $("#Pekerjaan select[name='HR_UNIT']").html("<option></option>");
+            $.ajax({
+                url: "MaklumatKakitangan/Unit",
+                data: { "KodBahagian": $(this).val(), "KodJabatan": $("#Pekerjaan select[name='HR_JABATAN']").val() },
+                contentType: "application/json; charset=utf-8",
+                type: 'GET',
+                dataType: "json",
+                success: function (data) {
+                    $.each(data, function (i, v) {
+                        $("#Pekerjaan select[name='HR_UNIT']").append($("<option></option>").val(v.GE_KOD_UNIT).html(v.GE_KETERANGAN));
+                    })
+                }
+            })
+        })
+
+        $("#Pekerjaan input[name='HR_UMUR_SARA']").on("input", function () {
+            $("#Pekerjaan input[name='HR_TARIKH_TAMAT']").val("");
+            $.ajax({
+                url: "MaklumatKakitangan/KiraUmurBersara2",
+                data: { "HR_TARIKH_LAHIR": $("#Pekerjaan input[name='HR_TARIKH_LAHIR']").val(), "HR_UMUR_SARA": $(this).val() },
+                contentType: "application/json; charset=utf-8",
+                type: 'GET',
+                dataType: "json",
+                success: function (data) {
+                    var tarikh = new Date(parseInt(data.replace(/\/Date\((\d+)\)\//, '$1')));
+                    $("#Pekerjaan input[name='HR_TARIKH_TAMAT']").val(tarikh.toLocaleDateString('en-GB'));
+                }
+            })
+        })
+
+        $("#Pekerjaan input[name='HR_STATUS_PENCEN']").on("click", function () {
+            if ($(this).is(":checked") == true) {
+                $("#Pekerjaan input[name='HR_STATUS_KWSP']").prop("checked", false)
+            }
+        })
+        $("#Pekerjaan input[name='HR_STATUS_KWSP']").on("click", function () {
+            if ($(this).is(":checked") == true) {
+                $("#Pekerjaan input[name='HR_STATUS_PENCEN']").prop("checked", false)
+            }
+        })
+
+        function CariGred(HR_SISTEM) {
+            $.ajax({
+                url: "MaklumatKakitangan/CariGred",
+                data: { "HR_SISTEM": HR_SISTEM },
+                contentType: "application/json; charset=utf-8",
+                type: 'GET',
+                dataType: "json",
+                success: function (data) {
+                    $("#gredList").empty();
+                    $.each(data, function (i, v) {
+                        $("#gredList").append("<option value = '" + v.SHORT_DESCRIPTION + "'></option>")
+                    })
+                }
+            })
+        }
+        CariGred($("#Pekerjaan input[name='HR_SISTEM']:checked").val())
+
+        $("#Pekerjaan input[name='HR_SISTEM']").on("click", function () {
+            $("#Pekerjaan input[name='HR_GRED']").val("");
+            $("#Pekerjaan input[name='HR_GAJI_MIN']").val("");
+            $("#Pekerjaan input[name='HR_GAJI_MAX']").val("");
+            $("#Pekerjaan input[name='HR_GAJI_POKOK']").val("")
+            $("#Pekerjaan input[name='HR_KOD_GAJI']").val("")
+            $("#Pekerjaan #HR_MATRIKS_GAJI").val("")
+
+            $("#MinList").empty()
+            $("#MaxList").empty()
+            $("#GajiList").empty()
+
+            CariGred(this.value)
+        })
+
+        $("#Pekerjaan #HR_KATEGORI_PCB").on("input", function () {
+            $("#Pekerjaan #HR_KOD_PCB").html("<option></option>");
+            $.ajax({
+                url: "MaklumatKakitangan/KategoriPCB",
+                type: "GET",
+                data: { "id": $(this).val() },
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $.each(data, function (i, v) {
+                        $("#Pekerjaan #HR_KOD_PCB").append($("<option></option>").val(v.STRING_PARAM).html(v.SHORT_DESCRIPTION));
+                    })
+                }
+            })
+        })
+
+        function MinGaji(HR_SISTEM, HR_GRED) {
+            $.ajax({
+                url: "MaklumatKakitangan/MinGaji",
+                data: { "HR_SISTEM": HR_SISTEM, "HR_GRED": HR_GRED },
+                contentType: "application/json; charset=utf-8",
+                type: 'GET',
+                dataType: "json",
+                success: function (data) {
+                    $("#MinList").empty()
+
+                    $.each(data, function (i, v) {
+                        $("#MinList").append("<option value='" + v.HR_GAJI_MIN.toFixed(2) + "'></option>")
+                    })
+                }
+            })
+            GajiPokok(HR_SISTEM, HR_GRED, null, null)
+        }
+        MinGaji($("#Pekerjaan input[name='HR_SISTEM']:checked").val(), $("#Pekerjaan #HR_GRED").val())
+
+        function MaxGaji(HR_SISTEM, HR_GRED, HR_GAJI_MIN) {
+            $.ajax({
+                url: "MaklumatKakitangan/MaxGaji",
+                data: { "HR_SISTEM": HR_SISTEM, "HR_GRED": HR_GRED, "HR_GAJI_MIN": HR_GAJI_MIN },
+                contentType: "application/json; charset=utf-8",
+                type: 'GET',
+                dataType: "json",
+                success: function (data) {
+                    $("#MaxList").empty()
+
+                    $.each(data, function (i, v) {
+                        //console.log(v.HR_GAJI_MAX.toFixed(2))
+                        $("#MaxList").append("<option value='" + v.HR_GAJI_MAX.toFixed(2) + "'></option>")
+                    })
+                }
+            })
+            //MaxGaji(HR_SISTEM, HR_GRED, HR_GAJI_MIN)
+            GajiPokok(HR_SISTEM, HR_GRED, HR_GAJI_MIN, null)
+        }
+        MaxGaji($("#Pekerjaan input[name='HR_SISTEM']:checked").val(), $("#Pekerjaan #HR_GRED").val(), $("#Pekerjaan #HR_GAJI_MIN").val())
+
+        function GajiPokok(HR_SISTEM, HR_GRED, HR_GAJI_MIN, HR_GAJI_MAX) {
+            $.ajax({
+                url: "MaklumatKakitangan/GajiPokok",
+                data: { "HR_SISTEM": HR_SISTEM, "HR_GRED": HR_GRED, "HR_GAJI_MIN": HR_GAJI_MIN, "HR_GAJI_MAX": HR_GAJI_MAX },
+                contentType: "application/json; charset=utf-8",
+                type: 'GET',
+                dataType: "json",
+                success: function (data) {
+                    $("#GajiList").empty()
+                    $.each(data, function (i, v) {
+
+                        $("#GajiList").append("<option value='" + v.HR_GAJI_POKOK.toFixed(2) + "'>P" + v.HR_PERINGKAT + "T" + parseFloat(v.HR_TAHAP).toFixed(2) + "</option>")
+                    })
+
+                }
+            })
+            //GajiPokok(HR_SISTEM, HR_GRED, HR_GAJI_MIN, HR_GAJI_MAX)
+        }
+        GajiPokok($("#Pekerjaan input[name='HR_SISTEM']:checked").val(), $("#Pekerjaan #HR_GRED").val(), $("#Pekerjaan #HR_GAJI_MIN").val(), $("#Pekerjaan #HR_GAJI_MAX").val())
+
+        function KodMatriks(HR_SISTEM, HR_GRED, HR_GAJI_POKOK) {
+            $.ajax({
+                url: "MaklumatKakitangan/KodMatriks",
+                data: { "HR_SISTEM": HR_SISTEM, "HR_GRED": HR_GRED, "HR_GAJI_POKOK": HR_GAJI_POKOK },
+                contentType: "application/json; charset=utf-8",
+                type: 'GET',
+                dataType: "json",
+                success: function (data) {
+
+                    $("#Pekerjaan #HR_MATRIKS_GAJI").val("P" + data.HR_PERINGKAT + "T" + parseFloat(data.HR_TAHAP).toFixed(2))
+                    $("#Pekerjaan #HR_KOD_GAJI").val(data.HR_KOD_GAJI)
+                }
+            })
+            //GajiPokok(HR_SISTEM, HR_GRED, null, null)
+        }
+        KodMatriks($("#Pekerjaan input[name='HR_SISTEM']:checked").val(), $("#Pekerjaan #HR_GRED").val(), $("#Pekerjaan #HR_GAJI_POKOK").val())
+
+        $("#Pekerjaan #HR_GRED").on("input", function () {
+            $("#Pekerjaan #HR_GAJI_MIN").val("");
+            $("#Pekerjaan #HR_GAJI_MAX").val("");
+            $("#Pekerjaan #HR_KOD_GAJI").val("")
+            $("#Pekerjaan #HR_GAJI_POKOK").val("")
+            $("#Pekerjaan #HR_MATRIKS_GAJI").val("")
+
+            $("#MaxList").empty()
+            $("#GajiList").empty()
+
+            MinGaji($("#Pekerjaan input[name='HR_SISTEM']:checked").val(), this.value)
+        })
+
+        $("#Pekerjaan #HR_GAJI_MIN").on("input", function () {
+            $("#Pekerjaan #HR_GAJI_MAX").val("");
+            $("#Pekerjaan #HR_KOD_GAJI").val("")
+            $("#Pekerjaan #HR_GAJI_POKOK").val("")
+            $("#Pekerjaan #HR_MATRIKS_GAJI").val("")
+
+            $("#GajiList").empty()
+
+            MaxGaji($("#Pekerjaan input[name='HR_SISTEM']:checked").val(), $("#Pekerjaan #HR_GRED").val(), this.value)
+        })
+
+        $("#Pekerjaan #HR_GAJI_MAX").on("input", function () {
+            $("#Pekerjaan #HR_KOD_GAJI").val("")
+            $("#Pekerjaan #HR_GAJI_POKOK").val("")
+            $("#Pekerjaan #HR_MATRIKS_GAJI").val("")
+
+            GajiPokok($("#Pekerjaan input[name='HR_SISTEM']:checked").val(), $("#Pekerjaan #HR_GRED").val(), $("#Pekerjaan #HR_GAJI_MIN").val(), this.value)
+        })
+
+        $("#Pekerjaan #HR_GAJI_POKOK").on("input", function () {
+            $("#Pekerjaan #HR_KOD_GAJI").val("")
+            $("#Pekerjaan #HR_MATRIKS_GAJI").val("")
+
+            KodMatriks($("#Pekerjaan input[name='HR_SISTEM']:checked").val(), $("#Pekerjaan #HR_GRED").val(), this.value)
+        })
+
+        $("#Pekerjaan input[name='HR_JUM_TAHUN']").on("input", function () {
+            $("#Pekerjaan input[name='HR_TARIKH_TAMAT_KONTRAK']").val("");
+            if ($("#Pekerjaan input[name='HR_JUM_TAHUN']").val() != "" && $("#Pekerjaan input[name='HR_TARIKH_MASUK']").val() != "") {
+                $.ajax({
+                    url: "MaklumatKakitangan/JumlahTahunKontrak",
+                    data: { "HR_JUM_TAHUN": $("#Pekerjaan input[name='HR_JUM_TAHUN']").val(), "HR_TARIKH_MASUK": $("#Pekerjaan input[name='HR_TARIKH_MASUK']").val() },
+                    contentType: "application/json; charset=utf-8",
+                    type: 'GET',
+                    dataType: "json",
+                    success: function (data) {
+                        var tarikh = new Date(parseInt(data.replace(/\/Date\((\d+)\)\//, '$1')));
+                        $("#Pekerjaan input[name='HR_TARIKH_TAMAT_KONTRAK']").val(tarikh.toLocaleDateString('en-GB'));
+                    }
+                })
+            }
+
+        })
+
+        if ($.trim($("#Pekerjaan select[name='HR_TARAF_JAWATAN']").find("option:selected").text().toLowerCase()) != "kontrak") {
+            $("#Pekerjaan #TamatKontrak").hide();
+            $("#Pekerjaan #TamatTetap").show();
+        }
+        else {
+            $("#Pekerjaan #TamatKontrak").show();
+            $("#Pekerjaan #TamatTetap").hide();
+        }
+        $("#Pekerjaan select[name='HR_TARAF_JAWATAN']").on("input", function () {
+            console.log($.trim($(this).find("option:selected").text().toLowerCase()))
+            if ($.trim($(this).find("option:selected").text().toLowerCase()) == "kontrak") {
+                $("#Pekerjaan #TamatKontrak").show();
+                $("#Pekerjaan #TamatTetap").hide();
+            }
+            else {
+                $("#Pekerjaan #TamatKontrak").hide();
+                $("#Pekerjaan #TamatTetap").show();
+            }
+
+            TarafJawatan();
+        })
+
+        //cetakPDF
+        $("#btn-cetak").click(function () {
+            $("#CetakForm").submit()
+            //$.post("MaklumatKakitangan/CetakPDF", { no_pekerja: $("#HR_MAKLUMAT_PERIBADI_HR_NAMA_PEKERJA").val(), tab: hash })
+        })
+
+    })
+</script>
+
