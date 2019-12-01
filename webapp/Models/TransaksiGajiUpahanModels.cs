@@ -8,33 +8,34 @@ using System.Web;
 
 namespace eSPP.Models
 {
-    public class TransaksiPemotonganModels
+    public class TransaksiGajiUpahanModels
     {
-        public virtual DbSet<PA_TRANSAKSI_PEMOTONGAN> PA_TRANSAKSI_PEMOTONGAN { get; set; }
+        DbSet<PA_TRANSAKSI_GAJI_UPAHAN> PA_TRANSAKSI_GAJI_UPAHAN { get; set; }
     }
-
-    public partial class PA_TRANSAKSI_PEMOTONGAN
+    public partial class PA_TRANSAKSI_GAJI_UPAHAN
     {
         [Key]
         [Column(Order = 0)]
         public string PA_NO_PEKERJA { get; set; }
         [Key]
         [Column(Order = 1)]
-        public string PA_KOD_PEMOTONGAN { get; set; }
-        public System.DateTime PA_TARIKH_PROSES { get; set; }
-        public Nullable<decimal> PA_JUMLAH_PEMOTONGAN { get; set; }
+        public string PA_KOD_GAJI_UPAHAN { get; set; }
         [Key]
         [Column(Order = 2)]
-        public byte PA_BULAN_POTONGAN { get; set; }
+        public int PA_BULAN_GAJI_UPAHAN { get; set; }
         [Key]
         [Column(Order = 3)]
-        public short PA_TAHUN_POTONGAN { get; set; }
+        public int PA_TAHUN_GAJI_UPAHAN { get; set; }
+        public decimal? PA_JUMLAH_GAJI_UPAHAN { get; set; }
         public string PA_PROSES_IND { get; set; }
-        public string PA_VOT_PEMOTONGAN { get; set; }
-        public Nullable<System.DateTime> PA_TARIKH_KEYIN { get; set; }
+        public DateTime? PA_TARIKH_PROSES { get; set; }
+        [Key]
+        [Column(Order = 4)]
+        public string PA_VOT_GAJI_UPAHAN { get; set; }
+        public DateTime? PA_TARIKH_KEYIN { get; set; }
 
-        //TODO InsertData
-        public static void InsertSpgPotongan(ApplicationDbContext sppDb, SPGContext spgDb, int tahunDibayar, int bulanDibayar)
+        public static void InsertSPGGajiUpahan(ApplicationDbContext sppDb, SPGContext spgDb,
+            int tahunDibayar, int bulanDibayar)
         {
             List<HR_TRANSAKSI_SAMBILAN_DETAIL> sppTrans =
                 HR_TRANSAKSI_SAMBILAN_DETAIL
@@ -59,32 +60,32 @@ namespace eSPP.Models
                 //get List of transaksi by No Pekerja
                 List<HR_TRANSAKSI_SAMBILAN_DETAIL> sppTransData =
                     sppTrans.Where(s => s.HR_NO_PEKERJA == noPekerja).ToList();
-                var listElaun = sppTransData.Where(s => s.HR_KOD_IND == "P").ToList();
+                var listGaji = sppTransData.Where(s => s.HR_KOD_IND == "G").ToList();
 
-                foreach (string kodpemotongan in listElaun.Select(s => s.HR_KOD).ToList())
+                foreach (string kodGaji in listGaji.Select(s => s.HR_KOD).ToList())
                 {
                     List<HR_TRANSAKSI_SAMBILAN_DETAIL> sKod =
-                        sppTransData.Where(s => s.HR_KOD == kodpemotongan).ToList();
-                    PA_TRANSAKSI_PEMOTONGAN spgTrans = spgDb.PA_TRANSAKSI_PEMOTONGAN
+                        sppTransData.Where(s => s.HR_KOD == kodGaji).ToList();
+                    PA_TRANSAKSI_GAJI_UPAHAN spgTrans = spgDb.PA_TRANSAKSI_GAJI_UPAHAN
                     .Where(s => s.PA_NO_PEKERJA == noPekerja
-                    && s.PA_TAHUN_POTONGAN == tahunDibayar
-                    && s.PA_BULAN_POTONGAN == bulanDibayar
-                    && s.PA_KOD_PEMOTONGAN == kodpemotongan).FirstOrDefault();
-                    var jumlahPemotongan = sKod.Select(s => s.HR_JUMLAH).Sum();
-                    var votPemotongan = GetKodVOT(noPekerja, kodpemotongan);
+                    && s.PA_TAHUN_GAJI_UPAHAN == tahunDibayar
+                    && s.PA_BULAN_GAJI_UPAHAN == bulanDibayar
+                    && s.PA_KOD_GAJI_UPAHAN == kodGaji).FirstOrDefault();
+                    var jumlahGaji = sKod.Select(s => s.HR_JUMLAH).Sum();
+                    var votGajiUpahan = GetKodVOT(noPekerja, kodGaji);
 
                     if (spgTrans != null)
                     {
                         //update data
                         //spgTrans.PA_NO_PEKERJA = noPekerja;
                         //spgTrans.PA_KOD_PEMOTONGAN = kodElaun;
-                        spgTrans.PA_JUMLAH_PEMOTONGAN = jumlahPemotongan;
+                        spgTrans.PA_JUMLAH_GAJI_UPAHAN = jumlahGaji;
                         //spgTrans.PA_BULAN_POTONGAN = (byte)bulanDibayar;
                         //spgTrans.PA_TAHUN_POTONGAN = (short)tahunDibayar;
                         spgTrans.PA_PROSES_IND = "P";
                         spgTrans.PA_TARIKH_PROSES = DateTime.Now;
                         //spgTrans.PA_VOT_PEMOTONGAN = "VOT";
-                        spgTrans.PA_TARIKH_KEYIN = DateTime.Now;                        
+                        spgTrans.PA_TARIKH_KEYIN = DateTime.Now;
                         try
                         {
                             spgDb.Entry(spgTrans).State = EntityState.Modified;
@@ -98,47 +99,47 @@ namespace eSPP.Models
                     else
                     {
                         //insert data
-                        spgTrans = new PA_TRANSAKSI_PEMOTONGAN
+                        spgTrans = new PA_TRANSAKSI_GAJI_UPAHAN
                         {
                             PA_NO_PEKERJA = noPekerja,
-                            PA_KOD_PEMOTONGAN = kodpemotongan,
-                            PA_JUMLAH_PEMOTONGAN = jumlahPemotongan,
-                            PA_BULAN_POTONGAN = (byte)bulanDibayar,
-                            PA_TAHUN_POTONGAN = (short)tahunDibayar,
+                            PA_KOD_GAJI_UPAHAN = kodGaji,
+                            PA_JUMLAH_GAJI_UPAHAN = jumlahGaji,
+                            PA_BULAN_GAJI_UPAHAN = (byte)bulanDibayar,
+                            PA_TAHUN_GAJI_UPAHAN = (short)tahunDibayar,
                             PA_PROSES_IND = "P",
                             PA_TARIKH_PROSES = DateTime.Now,
-                            PA_VOT_PEMOTONGAN = votPemotongan,
+                            PA_VOT_GAJI_UPAHAN = votGajiUpahan,
                             PA_TARIKH_KEYIN = DateTime.Now
                         };
-                        spgDb.PA_TRANSAKSI_PEMOTONGAN.Add(spgTrans);
+                        spgDb.PA_TRANSAKSI_GAJI_UPAHAN.Add(spgTrans);
                         spgDb.SaveChanges();
                     }
                 }
             }
         }
 
-        private static string GetKodVOT(string noPekerja, string kodPemotongan)
+        private static string GetKodVOT(string noPekerja, string kodGaji)
         {
             string retString = "11-00-00-00-00000";
             ApplicationDbContext db = new ApplicationDbContext();
             HR_MAKLUMAT_PEKERJAAN mWork = db.HR_MAKLUMAT_PEKERJAAN.Where
                 (s => s.HR_NO_PEKERJA == noPekerja).FirstOrDefault();
-            HR_POTONGAN mPotongan = db.HR_POTONGAN.Where
-                (s => s.HR_KOD_POTONGAN == kodPemotongan).FirstOrDefault();
-            if (mWork != null && mPotongan != null)
+            HR_GAJI_UPAHAN mGaji = db.HR_GAJI_UPAHAN.Where
+                (s => s.HR_KOD_UPAH == kodGaji).FirstOrDefault();
+            if (mWork != null && mGaji != null)
             {
                 string cropString = string.Empty;
-                if(mPotongan.HR_VOT_POTONGAN.Length > 5)
+                if (mGaji.HR_VOT_UPAH.Length > 5)
                 {
-                    var indexChar = mPotongan.HR_VOT_POTONGAN.Length - 5;
-                    cropString = mPotongan.HR_VOT_POTONGAN.Substring(indexChar, 5);
+                    var indexChar = mGaji.HR_VOT_UPAH.Length - 5;
+                    cropString = mGaji.HR_VOT_UPAH.Substring(indexChar, 5);
                 }
                 else
                 {
-                    cropString = mPotongan.HR_VOT_POTONGAN;
+                    cropString = mGaji.HR_VOT_UPAH;
                 }
 
-                if(cropString.Length == 0)
+                if (cropString.Length == 0)
                 {
                     cropString = "00000";
                 }
@@ -152,5 +153,6 @@ namespace eSPP.Models
             }
             return retString;
         }
+
     }
 }

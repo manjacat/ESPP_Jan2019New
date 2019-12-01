@@ -34,7 +34,7 @@ namespace eSPP.Models
         public Nullable<decimal> PA_JUMLAH_PELARASAN { get; set; }
         public string PA_PROSES_IND { get; set; }
 
-        public static void InsertSPGGaji(ApplicationDbContext sppDb, SPGContext spgDb, 
+        public static void InsertSPGGaji(ApplicationDbContext sppDb, SPGContext spgDb,
             int tahunDibayar, int bulanDibayar)
         {
             //ApplicationDbContext sppDb = new ApplicationDbContext();
@@ -42,11 +42,11 @@ namespace eSPP.Models
             //int bulanDibayar = 4;
             //string noPekerja = "01595";
 
-            List<HR_TRANSAKSI_SAMBILAN_DETAIL> sppTrans = 
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> sppTrans =
                 HR_TRANSAKSI_SAMBILAN_DETAIL
                 .GetTransaksiDibayar(sppDb, tahunDibayar, bulanDibayar);
 
-            if(sppTrans != null)
+            if (sppTrans != null)
             {
                 InsertToSPG(sppDb, spgDb, sppTrans);
             }
@@ -55,95 +55,34 @@ namespace eSPP.Models
         private static void InsertToSPG(ApplicationDbContext sppDb, SPGContext spgDb,
             List<HR_TRANSAKSI_SAMBILAN_DETAIL> sppTrans)
         {
-            //List<string> noPekerja_all = 
-            //    sppTrans.Select(s => s.HR_NO_PEKERJA).Distinct().ToList();
+            List<string> noPekerja_all =
+                sppTrans.Select(s => s.HR_NO_PEKERJA).Distinct().ToList();
+            int bulanDibayar = sppTrans.Where(s => s.HR_KOD == "GAJPS").Select(s => s.HR_BULAN_DIBAYAR).FirstOrDefault();
+            int tahunDibayar = sppTrans.Where(s => s.HR_KOD == "GAJPS").Select(s => s.HR_TAHUN).FirstOrDefault();
 
-            List<HR_TRANSAKSI_SAMBILAN_DETAIL> gajiAll =
-                sppTrans.Where(s => s.HR_KOD == "GAJPS").ToList();
-
-
-            foreach (var item in gajiAll)
+            foreach (var noPekerja in noPekerja_all)
             {
-                string noPekerja = item.HR_NO_PEKERJA;
-                int bulanBekerja = item.HR_BULAN_BEKERJA;
-                int bulanDibayar = item.HR_BULAN_DIBAYAR;
-                int tahunBekerja = item.HR_TAHUN_BEKERJA;
-                int tahunDibayar = item.HR_TAHUN;
-
-                decimal jumlahHari = sppTrans
-                    .Where(s => s.HR_KOD == "GAJPS"
-                    && s.HR_NO_PEKERJA == noPekerja
-                    && s.HR_BULAN_BEKERJA == bulanBekerja
-                    && s.HR_BULAN_DIBAYAR == bulanDibayar
-                    && s.HR_TAHUN_BEKERJA == tahunBekerja
-                    && s.HR_TAHUN == tahunDibayar)
-                    .Select(s => s.HR_JAM_HARI).Sum().Value;
-                //select elaunKA dan elaunLain - elaunOT
-                decimal jumlahElaunSehari = sppTrans
-                    .Where(s => s.HR_KOD_IND == "E"
-                    && s.HR_KOD != "E0164"
-                    && s.HR_NO_PEKERJA == noPekerja
-                    && s.HR_BULAN_BEKERJA == bulanBekerja
-                    && s.HR_BULAN_DIBAYAR == bulanDibayar
-                    && s.HR_TAHUN_BEKERJA == tahunBekerja
-                    && s.HR_TAHUN == tahunDibayar)
-                    .Select(s => s.HR_JUMLAH).Sum().Value;
-                decimal totalElaunOT = sppTrans
-                    .Where(s => s.HR_KOD_IND == "E"
-                    && s.HR_KOD == "E0164"
-                    && s.HR_NO_PEKERJA == noPekerja
-                    && s.HR_BULAN_BEKERJA == bulanBekerja
-                    && s.HR_BULAN_DIBAYAR == bulanDibayar
-                    && s.HR_TAHUN_BEKERJA == tahunBekerja
-                    && s.HR_TAHUN == tahunDibayar)
-                    .Select(s => s.HR_JUMLAH).Sum().Value;
-
-                decimal gajiPokok = sppTrans
-                    .Where(s => s.HR_KOD == "GAJPS" 
-                    && s.HR_NO_PEKERJA == noPekerja
-                    && s.HR_BULAN_BEKERJA == bulanBekerja
-                    && s.HR_BULAN_DIBAYAR == bulanDibayar
-                    && s.HR_TAHUN_BEKERJA == tahunBekerja
-                    && s.HR_TAHUN == tahunDibayar)
-                    .Select(s => s.HR_JUMLAH).Sum().Value;
-                decimal jumlahElaun = sppTrans
-                    .Where(s => s.HR_KOD_IND == "E"
-                    && s.HR_NO_PEKERJA == noPekerja
-                    && s.HR_BULAN_BEKERJA == bulanBekerja
-                    && s.HR_BULAN_DIBAYAR == bulanDibayar
-                    && s.HR_TAHUN_BEKERJA == tahunBekerja
-                    && s.HR_TAHUN == tahunDibayar)
-                    .Select(s => s.HR_JUMLAH).Sum().Value;
-                decimal jumlahPotongan = sppTrans
-                    .Where(s => s.HR_KOD_IND == "P" 
-                    && s.HR_NO_PEKERJA == noPekerja
-                    && s.HR_BULAN_BEKERJA == bulanBekerja
-                    && s.HR_BULAN_DIBAYAR == bulanDibayar
-                    && s.HR_TAHUN_BEKERJA == tahunBekerja
-                    && s.HR_TAHUN == tahunDibayar)
-                    .Select(s => s.HR_JUMLAH).Sum().Value;
-                //decimal potonganSocso = PageSejarahModel
-                //   .GetPotonganSocso(sppDb, gajiPokok, totalElaunOT);
-                //tambah potongan Socso dalam calculation sbb potongan socso takda dalam DB
-                //jumlahPotongan = jumlahPotongan + potonganSocso;
-
-                decimal jumlahCaruman = sppTrans
-                    .Where(s => s.HR_KOD == "C0020" 
-                    && s.HR_NO_PEKERJA == noPekerja
-                    && s.HR_BULAN_BEKERJA == bulanBekerja
-                    && s.HR_BULAN_DIBAYAR == bulanDibayar
-                    && s.HR_TAHUN_BEKERJA == tahunBekerja
-                    && s.HR_TAHUN == tahunDibayar)
-                    .Select(s => s.HR_JUMLAH).Sum().Value;
-               
-                decimal totalElaun = jumlahElaunSehari * jumlahHari;
-                decimal gajiKasar = gajiPokok + totalElaun + totalElaunOT;
-                decimal gajiBersih = gajiKasar - jumlahPotongan;
+                //get List of transaksi by No Pekerja
+                List<HR_TRANSAKSI_SAMBILAN_DETAIL> sppTransData =
+                    sppTrans.Where(s => s.HR_NO_PEKERJA == noPekerja).ToList();
+                var jumlahElaun = sppTransData.Where(s => s.HR_KOD_IND == "E")
+                    .Select(s => s.HR_JUMLAH).Sum();
+                jumlahElaun = jumlahElaun == null ? 0 : jumlahElaun;
+                var jumlahPemotongan = sppTransData.Where(s => s.HR_KOD_IND == "P")
+                    .Select(s => s.HR_JUMLAH).Sum();
+                jumlahPemotongan = jumlahPemotongan == null ? 0 : jumlahPemotongan;
+                var gajiPokok = sppTransData.Where(s => s.HR_KOD == "GAJPS")
+                    .Select(s => s.HR_JUMLAH).Sum();
+                gajiPokok = gajiPokok == null ? 0 : gajiPokok;
+                var gajiBersih = gajiPokok + jumlahElaun - jumlahPemotongan;
+                var jumlahCaruman = sppTransData.Where(s => s.HR_KOD_IND == "C")
+                    .Select(s => s.HR_JUMLAH).Sum();
+                jumlahCaruman = jumlahCaruman == null ? 0 : jumlahCaruman;
 
                 PA_TRANSAKSI_GAJI spgTrans = spgDb.PA_TRANSAKSI_GAJI
                     .Where(s => s.PA_NO_PEKERJA == noPekerja
-                    && s.PA_TAHUN_GAJI == tahunBekerja
-                    && s.PA_BULAN_GAJI == bulanBekerja).FirstOrDefault();
+                    && s.PA_TAHUN_GAJI == tahunDibayar
+                    && s.PA_BULAN_GAJI == bulanDibayar).FirstOrDefault();
                 if (spgTrans == null)
                 {
                     spgTrans = new PA_TRANSAKSI_GAJI
@@ -151,13 +90,13 @@ namespace eSPP.Models
                         PA_NO_PEKERJA = noPekerja,
                         PA_TARIKH_PROCESS = DateTime.Now,
                         PA_JUMLAH_ELAUN = jumlahElaun,
-                        PA_JUMLAH_PEMOTONGAN = jumlahPotongan,
+                        PA_JUMLAH_PEMOTONGAN = jumlahPemotongan,
                         PA_JUMLAH_PCB = null,
                         PA_GAJI_POKOK = gajiPokok,
                         PA_GAJI_BERSIH = gajiBersih,
                         PA_NO_SLIP_GAJI = null,
-                        PA_TAHUN_GAJI = (short)tahunBekerja,
-                        PA_BULAN_GAJI = bulanBekerja,
+                        PA_TAHUN_GAJI = (short)tahunDibayar,
+                        PA_BULAN_GAJI = (byte)bulanDibayar,
                         PA_JUMLAH_CARUMAN = jumlahCaruman,
                         PA_JUMLAH_PELARASAN = null,
                         PA_PROSES_IND = "P"
@@ -167,16 +106,16 @@ namespace eSPP.Models
                 }
                 else
                 {
-                    spgTrans.PA_NO_PEKERJA = noPekerja;
+                    //spgTrans.PA_NO_PEKERJA = noPekerja;
                     spgTrans.PA_TARIKH_PROCESS = DateTime.Now;
                     spgTrans.PA_JUMLAH_ELAUN = jumlahElaun;
-                    spgTrans.PA_JUMLAH_PEMOTONGAN = jumlahPotongan;
+                    spgTrans.PA_JUMLAH_PEMOTONGAN = jumlahPemotongan;
                     spgTrans.PA_JUMLAH_PCB = null;
                     spgTrans.PA_GAJI_POKOK = gajiPokok;
                     spgTrans.PA_GAJI_BERSIH = gajiBersih;
                     spgTrans.PA_NO_SLIP_GAJI = null;
-                    spgTrans.PA_TAHUN_GAJI = (short)tahunBekerja;
-                    spgTrans.PA_BULAN_GAJI = bulanBekerja;
+                    //spgTrans.PA_TAHUN_GAJI = (short)tahunDibayar;
+                    //spgTrans.PA_BULAN_GAJI = (byte)bulanDibayar;
                     spgTrans.PA_JUMLAH_CARUMAN = jumlahCaruman;
                     spgTrans.PA_JUMLAH_PELARASAN = null;
                     spgTrans.PA_PROSES_IND = "P";

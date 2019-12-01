@@ -32,90 +32,123 @@ namespace eSPP.Models
 
         //TODO InsertData
         public static void InsertSpgCaruman(ApplicationDbContext sppDb, SPGContext spgDb,
-            int tahun, int bulan)
+            int tahunDibayar, int bulanDibayar)
         {
-            //int tahun = 2019;
-            //int bulan = 4;
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> sppTrans =
+                HR_TRANSAKSI_SAMBILAN_DETAIL
+                .GetTransaksiDibayar(sppDb, tahunDibayar, bulanDibayar);
 
-            //List<string> listPekerja = sppDb.HR_TRANSAKSI_SAMBILAN_DETAIL
-            //    .Where(s => s.HR_TAHUN == tahun
-            //    && s.HR_BULAN_DIBAYAR == bulan)
-            //    .Select(s => s.HR_NO_PEKERJA).Distinct().ToList();
-
-            List<HR_TRANSAKSI_SAMBILAN_DETAIL> gajiAll =
-                sppDb.HR_TRANSAKSI_SAMBILAN_DETAIL
-                .Where(s => s.HR_KOD == "GAJPS"
-                && s.HR_TAHUN == tahun
-                && s.HR_BULAN_DIBAYAR == bulan).ToList();
-
-            foreach (var item in gajiAll)
+            if (sppTrans != null)
             {
-                string noPekerja = item.HR_NO_PEKERJA;
-                int bulanBekerja = item.HR_BULAN_BEKERJA;
-                int bulanDibayar = item.HR_BULAN_DIBAYAR;
-                int tahunBekerja = item.HR_TAHUN_BEKERJA;
-                int tahunDibayar = item.HR_TAHUN;
+                InsertToSPG(sppDb, spgDb, sppTrans);
+            }
+        }
 
-                PA_TRANSAKSI_CARUMAN spgCaruman = spgDb.PA_TRANSAKSI_CARUMAN
+        private static void InsertToSPG(ApplicationDbContext sppDb, SPGContext spgDb,
+            List<HR_TRANSAKSI_SAMBILAN_DETAIL> sppTrans)
+        {
+            List<string> noPekerja_all =
+                sppTrans.Select(s => s.HR_NO_PEKERJA).Distinct().ToList();
+            int bulanDibayar = sppTrans.Where(s => s.HR_KOD == "GAJPS").Select(s => s.HR_BULAN_DIBAYAR).FirstOrDefault();
+            int tahunDibayar = sppTrans.Where(s => s.HR_KOD == "GAJPS").Select(s => s.HR_TAHUN).FirstOrDefault();
+
+            foreach (string noPekerja in noPekerja_all)
+            {
+                //get List of transaksi by No Pekerja
+                List<HR_TRANSAKSI_SAMBILAN_DETAIL> sppTransData =
+                    sppTrans.Where(s => s.HR_NO_PEKERJA == noPekerja).ToList();
+                var listCaruman = sppTransData.Where(s => s.HR_KOD_IND == "C").ToList();
+
+                foreach (string kodCaruman in listCaruman.Select(s => s.HR_KOD).ToList())
+                {
+                    List<HR_TRANSAKSI_SAMBILAN_DETAIL> sKod =
+                        sppTransData.Where(s => s.HR_KOD == kodCaruman).ToList();
+                    PA_TRANSAKSI_CARUMAN spgTrans = spgDb.PA_TRANSAKSI_CARUMAN
                     .Where(s => s.PA_NO_PEKERJA == noPekerja
-                    && s.PA_TAHUN_CARUMAN == tahunBekerja
-                    && s.PA_BULAN_CARUMAN == bulanBekerja
-                    && s.PA_KOD_CARUMAN == "C0020").FirstOrDefault();
+                    && s.PA_TAHUN_CARUMAN == tahunDibayar
+                    && s.PA_BULAN_CARUMAN == bulanDibayar
+                    && s.PA_KOD_CARUMAN == kodCaruman).FirstOrDefault();
+                    var jumlahCaruman = sKod.Select(s => s.HR_JUMLAH).Sum();
+                    var votCaruman = GetKodVOT(noPekerja, kodCaruman);
 
-                HR_TRANSAKSI_SAMBILAN_DETAIL sppCaruman = 
-                    sppDb.HR_TRANSAKSI_SAMBILAN_DETAIL
-                    .Where(s => s.HR_NO_PEKERJA == noPekerja
-                    && s.HR_BULAN_BEKERJA == bulanBekerja
-                    && s.HR_TAHUN_BEKERJA == tahunBekerja
-                    && s.HR_TAHUN == tahunDibayar
-                    && s.HR_BULAN_DIBAYAR == bulanDibayar
-                    && s.HR_KOD == "C0020").FirstOrDefault();
-                decimal jumlahCaruman = sppCaruman.HR_JUMLAH == null 
-                    ? 0 : sppCaruman.HR_JUMLAH.Value;
-
-                if(spgCaruman == null)
-                {
-                    //insert
-                    spgCaruman = new PA_TRANSAKSI_CARUMAN
+                    if (spgTrans != null)
                     {
-                        PA_NO_PEKERJA = noPekerja,
-                        PA_KOD_CARUMAN = "C0020",
-                        PA_TARIKH_PROSES = DateTime.Now,
-                        PA_JUMLAH_CARUMAN = jumlahCaruman,
-                        PA_BULAN_CARUMAN = (byte)bulanBekerja,
-                        PA_PROSES_IND = "P",
-                        PA_TAHUN_CARUMAN = (short)tahunBekerja,
-                        PA_TARIKH_KEYIN = DateTime.Now,
-                        //ambik dari HR_CARUMAN.HR_VOT_CARUMAN
-                        PA_VOT_CARUMAN = "11-03-01-00-29301"
-                    };
-                    spgDb.PA_TRANSAKSI_CARUMAN.Add(spgCaruman);
-                    spgDb.SaveChanges();
-                }
-                else
-                {
-                    //update
-                    //spgCaruman.PA_NO_PEKERJA = noPekerja;
-                    spgCaruman.PA_KOD_CARUMAN = "C0020";
-                    //spgCaruman.PA_TARIKH_PROSES = DateTime.Now;
-                    spgCaruman.PA_JUMLAH_CARUMAN = jumlahCaruman;
-                    spgCaruman.PA_BULAN_CARUMAN = (byte)bulanBekerja;
-                    spgCaruman.PA_PROSES_IND = "P";
-                    spgCaruman.PA_TAHUN_CARUMAN = (short)tahunBekerja;
-                    spgCaruman.PA_TARIKH_KEYIN = DateTime.Now;
-                    //spgCaruman.PA_VOT_CARUMAN = null;
-                    try
-                    {
-                        spgDb.Entry(spgCaruman).State = EntityState.Modified;
-                        spgDb.SaveChanges();
+                        //update data
+                        //spgTrans.PA_NO_PEKERJA = noPekerja;
+                        //spgTrans.PA_KOD_PEMOTONGAN = kodElaun;
+                        spgTrans.PA_JUMLAH_CARUMAN = jumlahCaruman;
+                        //spgTrans.PA_BULAN_POTONGAN = (byte)bulanDibayar;
+                        //spgTrans.PA_TAHUN_POTONGAN = (short)tahunDibayar;
+                        spgTrans.PA_PROSES_IND = "P";
+                        spgTrans.PA_TARIKH_PROSES = DateTime.Now;
+                        //spgTrans.PA_VOT_PEMOTONGAN = "VOT";
+                        spgTrans.PA_TARIKH_KEYIN = DateTime.Now;
+                        try
+                        {
+                            spgDb.Entry(spgTrans).State = EntityState.Modified;
+                            spgDb.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                        }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        Console.WriteLine(ex.ToString());
+                        //insert data
+                        spgTrans = new PA_TRANSAKSI_CARUMAN
+                        {
+                            PA_NO_PEKERJA = noPekerja,
+                            PA_KOD_CARUMAN = kodCaruman,
+                            PA_JUMLAH_CARUMAN = jumlahCaruman,
+                            PA_BULAN_CARUMAN = (byte)bulanDibayar,
+                            PA_TAHUN_CARUMAN = (short)tahunDibayar,
+                            PA_PROSES_IND = "P",
+                            PA_TARIKH_PROSES = DateTime.Now,
+                            PA_VOT_CARUMAN = votCaruman,
+                            PA_TARIKH_KEYIN = DateTime.Now
+                        };
+                        spgDb.PA_TRANSAKSI_CARUMAN.Add(spgTrans);
+                        spgDb.SaveChanges();
                     }
                 }
             }
+        }
 
+        private static string GetKodVOT(string noPekerja, string kodCaruman)
+        {
+            string retString = "11-00-00-00-00000";
+            ApplicationDbContext db = new ApplicationDbContext();
+            HR_MAKLUMAT_PEKERJAAN mWork = db.HR_MAKLUMAT_PEKERJAAN.Where
+                (s => s.HR_NO_PEKERJA == noPekerja).FirstOrDefault();
+            HR_CARUMAN mCaruman = db.HR_CARUMAN.Where
+                (s => s.HR_KOD_CARUMAN == kodCaruman).FirstOrDefault();
+            if (mWork != null && mCaruman != null)
+            {
+                string cropString = string.Empty;
+                if (mCaruman.HR_VOT_CARUMAN.Length > 5)
+                {
+                    var indexChar = mCaruman.HR_VOT_CARUMAN.Length - 5;
+                    cropString = mCaruman.HR_VOT_CARUMAN.Substring(indexChar, 5);
+                }
+                else
+                {
+                    cropString = mCaruman.HR_VOT_CARUMAN;
+                }
+
+                if (cropString.Length == 0)
+                {
+                    cropString = "00000";
+                }
+
+                retString = string.Format("{0}-{1}-{2}-{3}-{4}",
+                    PageSejarahModel.NoVOTKepala,
+                    mWork.HR_JABATAN,
+                    mWork.HR_BAHAGIAN,
+                    mWork.HR_UNIT,
+                    cropString);
+            }
+            return retString;
         }
     }
 }

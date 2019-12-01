@@ -705,8 +705,8 @@ namespace eSPP.Controllers
                 Console.Write(err.ToString());
             }
 
-            SelectListItem ayoma = new SelectListItem { Text = "6", Value = "10" };
-            return Json(ayoma, JsonRequestBehavior.AllowGet);
+            SelectListItem retTest = new SelectListItem { Text = "6", Value = "10" };
+            return Json(retTest, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult ProsesGajiSambilan()
@@ -730,24 +730,28 @@ namespace eSPP.Controllers
             switch (loopCount)
             {
                 case "0":
-                    PA_TRANSAKSI_GAJI.InsertSPGGaji(sppDb, spgDb, tahunDibayar, bulanDibayar);
+                    //PA_TRANSAKSI_GAJI.InsertSPGGaji(sppDb, spgDb, tahunDibayar, bulanDibayar);
                     Console.Write("connected 0");
                     break;
                 case "1":
-                    //
-                    //List<PA_REPORT> reports = PA_REPORT.TestSelect(spgDb);
-                    //
-                    PA_REPORT.InsertSpgReport(sppDb, spgDb, tahunDibayar, bulanDibayar);
+                    //PA_TRANSAKSI_ELAUN.InsertSPGElaun(sppDb, spgDb, tahunDibayar, bulanDibayar);
                     Console.Write("connected 1");
                     break;
                 case "2":
-                    PA_TRANSAKSI_CARUMAN.InsertSpgCaruman(sppDb, spgDb, tahunDibayar, bulanDibayar);
+                    //PA_TRANSAKSI_PEMOTONGAN.InsertSpgPotongan(sppDb, spgDb, tahunDibayar, bulanDibayar);
                     Console.Write("connected 2");
                     break;
                 case "3":
-                    //PA_REPORT.InsertSpgReport(sppDb, spgDb, tahunDibayar, bulanDibayar);
-                    PA_TRANSAKSI_PEMOTONGAN.InsertSpgPotongan(sppDb, spgDb, tahunDibayar, bulanDibayar);
+                    //PA_TRANSAKSI_CARUMAN.InsertSpgCaruman(sppDb, spgDb, tahunDibayar, bulanDibayar);
                     Console.Write("connected 3");
+                    break;
+                case "4":
+                    //PA_TRANSAKSI_GAJI_UPAHAN.InsertSPGGajiUpahan(sppDb, spgDb, tahunDibayar, bulanDibayar);
+                    Console.Write("connected 4");
+                    break;
+                case "5":
+                    PA_REPORT.InsertSpgReport(sppDb, spgDb, tahunDibayar, bulanDibayar);
+                    Console.Write("connected 5");
                     break;
                 default:
                     Console.Write("connected");
@@ -768,7 +772,7 @@ namespace eSPP.Controllers
             SPGContext spgDb = new SPGContext();
             ApplicationDbContext sppDb = new ApplicationDbContext();
 
-            for (int loop = 0; loop < 4; loop++)
+            for (int loop = 0; loop < 6; loop++)
             {
                 string loopStr = loop.ToString();
                 SPGLoopProcess(loopStr, sppDb, spgDb, tahunDibayar, bulanDibayar);

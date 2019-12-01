@@ -19,6 +19,16 @@ namespace eSPP.Models
     #region Variables: ConstHariBekerja, ListElaunKa, ListElaunLain, ListPekerjaBerkecuali etc
     public class PageSejarahModel
     {
+        public static string NoVOTKepala
+        {
+            get
+            {
+                //return comma delimited string
+                return "11";
+                //return "{0:#,0.####}";
+            }
+        }
+
         public static string CurrencyFormat
         {
             get

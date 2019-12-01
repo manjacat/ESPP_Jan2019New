@@ -208,6 +208,11 @@ namespace eSPP.Models
 		public System.Data.Entity.DbSet<eSPP.Models.PA_TRANSAKSI_PEMOTONGAN> PA_TRANSAKSI_PEMOTONGAN { get; set; }
         public System.Data.Entity.DbSet<eSPP.Models.PA_TRANSAKSI_GAJI> PA_TRANSAKSI_GAJI { get; set; }
         public System.Data.Entity.DbSet<eSPP.Models.PA_REPORT> PA_REPORT { get; set; }
+        //added 1/12/2019
+        public System.Data.Entity.DbSet<eSPP.Models.PA_TRANSAKSI_ELAUN> PA_TRANSAKSI_ELAUN  { get; set; }
+        public System.Data.Entity.DbSet<eSPP.Models.PA_TRANSAKSI_GAJI_UPAHAN> PA_TRANSAKSI_GAJI_UPAHAN { get; set; }
+
+
     }
 
    

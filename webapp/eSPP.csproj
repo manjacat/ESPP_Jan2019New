@@ -2073,7 +2073,9 @@
     <Compile Include="Models\SuratPengesahanHospitalModel.cs" />
     <Compile Include="Models\TarikhAcaraModels.cs" />
     <Compile Include="Models\TextFileModel.cs" />
+    <Compile Include="Models\TransaksiElaunModels.cs" />
     <Compile Include="Models\TransaksiGajiModels.cs" />
+    <Compile Include="Models\TransaksiGajiUpahanModels.cs" />
     <Compile Include="Models\TransaksiModels.cs" />
     <Compile Include="Models\AlasanModels.cs" />
     <Compile Include="Models\BonusSambilanModels.cs" />
